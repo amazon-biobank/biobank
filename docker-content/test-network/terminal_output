@@ -1,0 +1,75 @@
+➜  test-network git:(master) ./network.sh up  
+Starting nodes with CLI timeout of '5' tries and CLI delay of '3' seconds and using database 'leveldb' with crypto from 'cryptogen'
+
+LOCAL_VERSION=2.2.0
+DOCKER_IMAGE_VERSION=2.2.0
+/home/toshi/Desktop/biobank/fabric-samples/test-network/../bin/cryptogen
+
+##########################################################
+##### Generate certificates using cryptogen tool #########
+##########################################################
+
+##########################################################
+############ Create Org1 Identities ######################
+##########################################################
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-org1.yaml --output=organizations
+org1.example.com
++ res=0
++ set +x
+##########################################################
+############ Create Org2 Identities ######################
+##########################################################
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-org2.yaml --output=organizations
+org2.example.com
++ res=0
++ set +x
+##########################################################
+############ Create Orderer Org Identities ###############
+##########################################################
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-orderer.yaml --output=organizations
++ res=0
++ set +x
+
+Generate CCP files for Org1 and Org2
+/home/toshi/Desktop/biobank/fabric-samples/test-network/../bin/configtxgen
+#########  Generating Orderer Genesis block ##############
++ configtxgen -profile TwoOrgsOrdererGenesis -channelID system-channel -outputBlock ./system-genesis-block/genesis.block
+2020-07-22 09:11:01.486 -03 [common.tools.configtxgen] main -> INFO 001 Loading configuration
+2020-07-22 09:11:01.546 -03 [common.tools.configtxgen.localconfig] completeInitialization -> INFO 002 orderer type: etcdraft
+2020-07-22 09:11:01.546 -03 [common.tools.configtxgen.localconfig] completeInitialization -> INFO 003 Orderer.EtcdRaft.Options unset, setting to tick_interval:"500ms" election_tick:10 heartbeat_tick:1 max_inflight_blocks:5 snapshot_interval_size:16777216 
+2020-07-22 09:11:01.546 -03 [common.tools.configtxgen.localconfig] Load -> INFO 004 Loaded configuration: /home/toshi/Desktop/biobank/fabric-samples/test-network/configtx/configtx.yaml
+2020-07-22 09:11:01.548 -03 [common.tools.configtxgen] doOutputBlock -> INFO 005 Generating genesis block
+2020-07-22 09:11:01.548 -03 [common.tools.configtxgen] doOutputBlock -> INFO 006 Writing genesis block
++ res=0
++ set +x
+WARNING: The Docker Engine you're using is running in swarm mode.
+
+Compose does not use swarm mode to deploy services to multiple nodes in a swarm. All containers will be scheduled on the current node.
+
+To deploy your application across the swarm, use `docker stack deploy`.
+
+Creating network "net_test" with the default driver
+Creating volume "net_orderer.example.com" with default driver
+Creating volume "net_peer0.org1.example.com" with default driver
+Creating volume "net_peer0.org2.example.com" with default driver
+Creating peer0.org1.example.com ... done
+Creating orderer.example.com    ... done
+Creating peer0.org2.example.com ... done
+CONTAINER ID        IMAGE                               COMMAND                  CREATED             STATUS                    PORTS                              NAMES
+7f48e6ff5aee        hyperledger/fabric-peer:latest      "peer node start"        8 seconds ago       Up Less than a second     7051/tcp, 0.0.0.0:9051->9051/tcp   peer0.org2.example.com
+8c7b80e63f5d        hyperledger/fabric-orderer:latest   "orderer"                9 seconds ago       Up 1 second               0.0.0.0:7050->7050/tcp             orderer.example.com
+779f7f2e0fb5        hyperledger/fabric-peer:latest      "peer node start"        9 seconds ago       Up Less than a second     0.0.0.0:7051->7051/tcp             peer0.org1.example.com
+37992ffb84a3        httpd                               "httpd-foreground"       16 hours ago        Exited (0) 16 hours ago                                      compose-sample-2_web_1
+5773a8bc642b        nginx:1.13                          "nginx -g 'daemon of…"   16 hours ago        Exited (0) 16 hours ago                                      compose-sample-2_proxy_1
+38fa5457ce5c        bretfisher/jekyll-serve             "docker-entrypoint.s…"   17 hours ago        Exited (0) 17 hours ago                                      compassionate_tesla
+fa1d60e76259        express                             "/sbin/tini -- node …"   18 hours ago        Exited (1) 18 hours ago                                      express
+2e6b8fd8bde0        mysql                               "docker-entrypoint.s…"   18 hours ago        Exited (1) 18 hours ago                                      elegant_perlman
+d76c3dec28b0        mysql                               "docker-entrypoint.s…"   18 hours ago        Exited (1) 18 hours ago                                      compassionate_feistel
+36d264b7497a        alpine                              "sh"                     21 hours ago        Exited (1) 20 hours ago                                      nostalgic_dijkstra
+a4a9e5eec474        alpine                              "bash"                   21 hours ago        Created                                                      optimistic_mclaren
+b0c89f6f77b7        alpine                              "bash"                   21 hours ago        Created                                                      reverent_kilby
+1c35e3c09ec2        alpine                              "bash"                   21 hours ago        Created                                                      peaceful_robinson
+6e871959976f        nginx:alpine                        "/docker-entrypoint.…"   23 hours ago        Exited (0) 23 hours ago                                      reverent_heisenberg
+a16973282e2e        nginx                               "/docker-entrypoint.…"   23 hours ago        Exited (0) 23 hours ago                                      proxy
+➜  test-network git:(master) 
+
