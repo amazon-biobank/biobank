@@ -28,5 +28,7 @@ This is the final project in the course of computer engineer, of University of S
 ### Testing a smart contract
 There is some invocations command template's in the sucess_commands file. You can set you parameters and use them to test the chaincode
 
+ps: Dont forget updating your environment variable (set to peer 1)
+
 ### Monitor network
 You can monitor you network by command `./monitordocker.sh net_test`
