@@ -1,8 +1,8 @@
 /*
- * Copyright IBM Corp. All Rights Reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
 
 'use strict';
 
@@ -10,9 +10,20 @@ const { Contract } = require('fabric-contract-api');
 
 class DataContract extends Contract {
 
-    async uploadRawData(ctx, id, url, description, collector, owners, price, conditions) {
+    async dataExists(ctx, dataId) {
+        const buffer = await ctx.stub.getState(dataId);
+        return (!!buffer && buffer.length > 0);
+    }
 
-        console.info('============= START : Upload Raw Data ===========');
+    async uploadRawData(ctx, dataId, dataAttributes) {
+        const {
+            url, description, collector, owners, price, conditions
+        } = JSON.parse(dataAttributes);
+
+        const exists = await this.dataExists(ctx, dataId);
+        if (exists) {
+            throw new Error(`The data ${dataId} already exists`);
+        }
 
         const data = {
             url,
@@ -23,141 +34,73 @@ class DataContract extends Contract {
             conditions,
             docType: 'raw_data',
         };
-
-        console.info(id);
-        await ctx.stub.putState(id, Buffer.from(JSON.stringify(data)));
-        console.info('============= END : Upload Raw Data ===========');
+        const buffer = Buffer.from(JSON.stringify(data));
+        await ctx.stub.putState(dataId, buffer);
     }
 
+    async uploadProcessedData(ctx, dataId, dataAttributes) {
+        const {
+            url, description, collector, processor, owners, price, conditions
+        } = JSON.parse(dataAttributes);
 
-    async initLedger(ctx) {
-        console.info('============= START : Initialize Ledger ===========');
-        const cars = [
-            {
-                color: 'blue',
-                make: 'Toyota',
-                model: 'Prius',
-                owner: 'Tomoko',
-            },
-            {
-                color: 'red',
-                make: 'Ford',
-                model: 'Mustang',
-                owner: 'Brad',
-            },
-            {
-                color: 'green',
-                make: 'Hyundai',
-                model: 'Tucson',
-                owner: 'Jin Soo',
-            },
-            {
-                color: 'yellow',
-                make: 'Volkswagen',
-                model: 'Passat',
-                owner: 'Max',
-            },
-            {
-                color: 'black',
-                make: 'Tesla',
-                model: 'S',
-                owner: 'Adriana',
-            },
-            {
-                color: 'purple',
-                make: 'Peugeot',
-                model: '205',
-                owner: 'Michel',
-            },
-            {
-                color: 'white',
-                make: 'Chery',
-                model: 'S22L',
-                owner: 'Aarav',
-            },
-            {
-                color: 'violet',
-                make: 'Fiat',
-                model: 'Punto',
-                owner: 'Pari',
-            },
-            {
-                color: 'indigo',
-                make: 'Tata',
-                model: 'Nano',
-                owner: 'Valeria',
-            },
-            {
-                color: 'brown',
-                make: 'Holden',
-                model: 'Barina',
-                owner: 'Shotaro',
-            },
-        ];
-
-        for (let i = 0; i < cars.length; i++) {
-            cars[i].docType = 'car';
-            await ctx.stub.putState('CAR' + i, Buffer.from(JSON.stringify(cars[i])));
-            console.info('Added <--> ', cars[i]);
+        const exists = await this.dataExists(ctx, dataId);
+        if (exists) {
+            throw new Error(`The data ${dataId} already exists`);
         }
-        console.info('============= END : Initialize Ledger ===========');
-    }
-
-    async queryCar(ctx, carNumber) {
-        const carAsBytes = await ctx.stub.getState(carNumber); // get the car from chaincode state
-        if (!carAsBytes || carAsBytes.length === 0) {
-            throw new Error(`${carNumber} does not exist`);
-        }
-        console.log(carAsBytes.toString());
-        return carAsBytes.toString();
-    }
-
-    async createCar(ctx, carNumber, make, model, color, owner) {
-        console.info('============= START : Create Car ===========');
-
-        const car = {
-            color,
-            docType: 'car',
-            make,
-            model,
-            owner,
+        
+        const data = {
+            url,
+            description,
+            collector,
+            processor,
+            owners,
+            price,
+            conditions,
+            docType: 'processed_data',
         };
-
-        await ctx.stub.putState(carNumber, Buffer.from(JSON.stringify(car)));
-        console.info('============= END : Create Car ===========');
+        const buffer = Buffer.from(JSON.stringify(data));
+        await ctx.stub.putState(dataId, buffer);
     }
 
-    async queryAllCars(ctx) {
-        const startKey = '';
-        const endKey = '';
-        const allResults = [];
-        for await (const {key, value} of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = Buffer.from(value).toString('utf8');
-            let record;
-            try {
-                record = JSON.parse(strValue);
-            } catch (err) {
-                console.log(err);
-                record = strValue;
-            }
-            allResults.push({ Key: key, Record: record });
+    async readData(ctx, dataId) {
+        const exists = await this.dataExists(ctx, dataId);
+        if (!exists) {
+            throw new Error(`The data ${dataId} does not exist`);
         }
-        console.info(allResults);
-        return JSON.stringify(allResults);
+        const buffer = await ctx.stub.getState(dataId);
+        const asset = JSON.parse(buffer.toString());
+        return asset;
     }
 
-    async changeCarOwner(ctx, carNumber, newOwner) {
-        console.info('============= START : changeCarOwner ===========');
+    async updateData(ctx, dataId, dataAttributes) {
+        const {
+            url, description, collector, processor, owners, price, conditions, docType
+        } = JSON.parse(dataAttributes);
 
-        const carAsBytes = await ctx.stub.getState(carNumber); // get the car from chaincode state
-        if (!carAsBytes || carAsBytes.length === 0) {
-            throw new Error(`${carNumber} does not exist`);
+        const exists = await this.dataExists(ctx, dataId);
+        if (!exists) {
+            throw new Error(`The data ${dataId} does not exist`);
         }
-        const car = JSON.parse(carAsBytes.toString());
-        car.owner = newOwner;
+        const data = {
+            url,
+            description,
+            collector,
+            processor,
+            owners,
+            price,
+            conditions,
+            docType
+        };
+        const buffer = Buffer.from(JSON.stringify(data));
+        await ctx.stub.putState(dataId, buffer);
+    }
 
-        await ctx.stub.putState(carNumber, Buffer.from(JSON.stringify(car)));
-        console.info('============= END : changeCarOwner ===========');
+    async deleteData(ctx, dataId) {
+        const exists = await this.dataExists(ctx, dataId);
+        if (!exists) {
+            throw new Error(`The data ${dataId} does not exist`);
+        }
+        await ctx.stub.deleteState(dataId);
     }
 
 }

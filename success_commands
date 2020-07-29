@@ -10,7 +10,11 @@ peer chaincode invoke \
     --peerAddresses localhost:9051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
     -c '{"function":"uploadRawData", 
-        "Args":[ "2", "teste.com", "descrição stststs", "euzinho", "[eu]", "322", "essas condições"]}'
+        "Args":[ "2", "{ \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"]}'
+
+"{ \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"
+"{ \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"
+"{ \"url\": \"teste.com\", \"description\": \"update this data\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\", \"docType\": \"processed_data\" }"
 
 
 peer chaincode invoke \
@@ -24,7 +28,7 @@ peer chaincode invoke \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
     --peerAddresses localhost:9051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-    -c '{"function":"queryCar", 
+    -c '{"function":"readData", 
         "Args":["2"]}'
 
 
