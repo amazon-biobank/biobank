@@ -1,12 +1,10 @@
-/*
- * Copyright IBM Corp. All Rights Reserved.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 'use strict';
 
-const DataContract = require('./lib/dataContract');
+const DataContract = require('./lib/data/data-contract');
+const ProcessRequestContract = require('./lib/process-request-contract');
+const ProcessorContract = require('./lib/processor/processor-contract');
 
 module.exports.DataContract = DataContract;
-module.exports.contracts = [ DataContract ];
+module.exports.ProcessRequestContract = ProcessRequestContract;
+module.exports.ProcessorContract = ProcessorContract;
+module.exports.contracts = [ DataContract, ProcessRequestContract, ProcessorContract ];

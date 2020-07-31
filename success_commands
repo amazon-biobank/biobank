@@ -4,18 +4,19 @@ peer chaincode invoke \
     --tls \
     --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem \
     -C mychannel \
-    -n dataContract \
+    -n biobank \
     --peerAddresses localhost:7051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
     --peerAddresses localhost:9051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-    -c '{"function":"uploadRawData", 
-        "Args":[ "2", "{ \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"]}'
+    -c '{"function":"DataContract:uploadRawData", 
+        "Args":[ "1", "{ \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"]}'
 
 "{ \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"
 "{ \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"
-"{ \"url\": \"teste.com\", \"description\": \"update this data\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\", \"docType\": \"processed_data\" }"
+"{ \"url\": \"teste.com\", \"description\": \"update this data\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\", \"type\": \"processed_data\" }"
 
+"1", "myProcessor", "organizationX"
 
 peer chaincode invoke \
     -o localhost:7050 \
@@ -23,7 +24,7 @@ peer chaincode invoke \
     --tls \
     --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem \
     -C mychannel \
-    -n dataContract \
+    -n biobank \
     --peerAddresses localhost:7051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
     --peerAddresses localhost:9051 \
@@ -81,5 +82,5 @@ peer lifecycle chaincode commit
  --peerAddresses localhost:9051 
  --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 
-peer lifecycle chaincode querycommitted --channelID mychannel --name fabcar --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+peer lifecycle chaincode querycommitted --channelID mychannel --name biochain --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 

@@ -1,7 +1,7 @@
 # run in /test-network
 
-CHAINCODE_NAME="dataContract" 
-SEQUENCE="1"        # each time you deploy your chaincode, you need to increment this
+CHAINCODE_NAME="biobank" 
+SEQUENCE="2"        # each time you deploy your chaincode, you need to increment this
 PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
 
 #set environment
