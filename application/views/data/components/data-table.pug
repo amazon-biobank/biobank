@@ -1,0 +1,26 @@
+.card.shadow.mb-4
+  .card-header.py-3
+    h6.m-0.font-weight-bold.text-primary Lista de Dados
+  .card-body
+    .table-responsive
+      table#dataTable.table.table-bordered(width='100%' cellspacing='0')
+        thead
+          tr
+            th Tipo
+            th Título
+            th Coletor
+            th Criado em
+            th Preço
+        tbody
+          each data in datas
+            tr
+              td
+                = data.type
+              td
+                = data.title
+              td
+                = data.collector
+              td
+                = data.created_at
+              td
+                = data.price

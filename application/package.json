@@ -1,0 +1,23 @@
+{
+  "name": "application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "fabric-network": "^2.2.0",
+    "pug": "^3.0.0"
+  },
+  "devDependencies": {
+    "express-session": "1.17.0",
+    "hbs": "4.1.0",
+    "method-override": "3.0.0",
+    "morgan": "1.9.1"
+  }
+}

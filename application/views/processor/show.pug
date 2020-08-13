@@ -1,0 +1,27 @@
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .container.mt-4
+    h1 Detalhes do processador
+    .card.mb-4
+      .card-header Processador
+      .card-body
+        form
+          .form-group
+            label.small.mb-1(for='name') Nome
+            input#name.form-control(disabled type='text' value= processor.name)
+          .form-group
+            label.small.mb-1(for='organization') Organização
+            input#organization.form-control(disabled type='text' value= processor.organization)
+          .form-row
+            .form-group.col-md-6
+              label.small.mb-1(for='id') ID
+              input#id.form-control(disabled type='text'  value=processor.id)
+            .form-group.col-md-6
+              label.small.mb-1(for='created_at') Criado em
+              input#id.form-control(disabled type='text'  value=processor.created_at)
+
+
+block append scripts

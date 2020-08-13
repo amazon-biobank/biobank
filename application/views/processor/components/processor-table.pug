@@ -1,0 +1,23 @@
+.card.shadow.mb-4
+  .card-header.py-3
+    h6.m-0.font-weight-bold.text-primary Lista de Processadores
+  .card-body
+    .table-responsive
+      table#dataTable.table.table-bordered(width='100%' cellspacing='0')
+        thead
+          tr
+            th Nome
+            th Organização
+            th Criado em
+            th ID
+        tbody
+          each processor in processors
+            tr
+              td
+                = processor.name
+              td
+                = processor.organization
+              td
+                = processor.created_at
+              td
+                = processor.id
