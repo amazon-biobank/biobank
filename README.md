@@ -33,14 +33,14 @@ Get the dev version in https://github.com/leonardotkimura/biobank-dev
 ### Testing a smart contract
 There is some invocations command template's in the sucess_commands file. You can set you parameters and use them to test the chaincode
 
-ps: Dont forget updating your environment variable (set to peer 1)
+ps: Dont forget updating your environment variable, setting to peer 1 (see commands.sh)
 
 ### Set Up Hyperledger Explorer
 1. Go to explorer/
-2. Modify file app/platform/fabric/connection-profile/first-network.json
-3. correct all paths
-4. Correct the keystore filename, to name in adminPrivateKey <br>
-4.1 ex: "/home/toshi/Desktop/biobank/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/24b525451c164323e9cb21207063d252bb6b53099715c28a6a732787a0de4ae8_sk"
+2. Modify file app/platform/fabric/connection-profile/first-network.json <br>
+2.1. correct all paths <br>
+2.2. Correct the keystore filename, to name in adminPrivateKey <br>
+2.2.1 ex: "/home/toshi/Desktop/biobank/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/24b525451c164323e9cb21207063d252bb6b53099715c28a6a732787a0de4ae8_sk"
 
 
 ### Monitor network
