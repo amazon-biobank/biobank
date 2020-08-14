@@ -35,7 +35,7 @@ There is some invocations command template's in the sucess_commands file. You ca
 
 ps: Dont forget updating your environment variable (set to peer 1)
 
-### set Up Hyperledger Explorer
+### Set Up Hyperledger Explorer
 1. Go to explorer/
 2. Modify file app/platform/fabric/connection-profile/first-network.json
 3. correct all paths
