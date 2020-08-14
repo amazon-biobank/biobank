@@ -10,6 +10,8 @@ This is the final project in the course of computer engineer, of University of S
 
 [Trello board](https://trello.com/b/lbII1kRk/amazonas-40)
 
+Get the dev version in https://github.com/leonardotkimura/biobank-dev
+
 
 ## How to use
 ### Setting up 
