@@ -13,25 +13,33 @@ class ProcessorContext extends Context {
 }
 
 class ProcessorContract extends Contract {
-    constructor() {
-        super('org.biobank.processor');
-    }
-
     createContext() {
         return new ProcessorContext();
     }
-    
 
-    async createProcessor(ctx, processorNumber, name, organization) {
-        const processor = Processor.createInstance(processorNumber, name, organization);
+    async createProcessor(ctx, id, processorAttributes) {
+        const newProcessorAttributes = handleProcessorAttributes(id, processorAttributes)
+        const processor = Processor.createInstance(newProcessorAttributes);
         await ctx.processorList.addProcessor(processor);
         return processor;
     }
 
-    async readProcessor(ctx, processorNumber) {
-        const processor = await ctx.processorList.getProcessor(processorNumber);
+    async readProcessor(ctx, id) {
+        const processor = await ctx.processorList.getProcessor(id);
         return processor;
     }
+
+    async getAllProcessor(ctx) {
+        return await ctx.processorList.getAllProcessor();
+    }
+}
+
+function handleProcessorAttributes(id, processorAttributes) {
+    const { name, organization, created_at } = JSON.parse(processorAttributes);
+    const newDataAttributes = {
+        id, name, organization, created_at
+    }
+    return newDataAttributes;
 }
 
 module.exports = ProcessorContract;

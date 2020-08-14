@@ -1,7 +1,7 @@
 cd test-network
-./network up createChannel
+./network up createChannel -ca
 cd contract
-npm install 
+npm install
 cd test-network
 
 # setar enviroment

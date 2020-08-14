@@ -83,7 +83,7 @@ class State {
      * @param (String[]) keyParts
      */
     static makeKey(keyParts) {
-        return keyParts.map(part => JSON.stringify(part)).join(':');
+        return keyParts.join(':');
     }
 
     static splitKey(key){

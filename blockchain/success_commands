@@ -10,13 +10,28 @@ peer chaincode invoke \
     --peerAddresses localhost:9051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
     -c '{"function":"DataContract:uploadRawData", 
-        "Args":[ "1", "{ \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"]}'
+        "Args":[ "1", "{ \"title\": \"Meu novo dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"1000\", \"conditions\": \"essas condições\" }"]}'
 
 "{ \"title\": \"Meu novo dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"1000\", \"conditions\": \"essas condições\" }"
 "{ \"title\": \"Meu dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"
 "{ \"title\": \"Meu dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"update this data\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\", \"type\": \"processed_data\" }"
 
 "{\"name\": \"myProcessor\", \"organization\": \"organizationX\", \"created_at\": \"Fri Aug 07 2020\"}"
+
+peer chaincode invoke \
+    -o localhost:7050 \
+    --ordererTLSHostnameOverride orderer.example.com \
+    --tls \
+    --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem \
+    -C mychannel \
+    -n qscc \
+    --peerAddresses localhost:7051 \
+    --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
+    --peerAddresses localhost:9051 \
+    --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
+    -c '{"function":"GetTransactionByID", 
+        "Args":["mychannel", "e851a13cec2c088ae6b549cb2cfabf64bdbc75e831a888393fb0af579b755f58"]}'
+
 peer chaincode invoke \
     -o localhost:7050 \
     --ordererTLSHostnameOverride orderer.example.com \
@@ -28,8 +43,8 @@ peer chaincode invoke \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
     --peerAddresses localhost:9051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-    -c '{"function":"GetTransactionByID", 
-        "Args":["mychannel", "4a0a7f5f938c14fc14969df5fdde49ba0c607f7d803ddf6b470444f1ceb489b4"]}'
+    -c '{"function":"getHistoryByKey", 
+        "Args":["mychannel", "e851a13cec2c088ae6b549cb2cfabf64bdbc75e831a888393fb0af579b755f58"]}'
 
 
 peer chaincode query -C mychannel -n basic -c '{"Args":["getAllAssets"]}'

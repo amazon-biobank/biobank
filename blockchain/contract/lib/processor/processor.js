@@ -5,7 +5,7 @@ const State = require('../../ledger-api/state.js');
 
 class Processor extends State {
     constructor(obj) {
-        super(Processor.getClass(), [obj.processorNumber]);
+        super(Processor.getClass(), [obj.id]);
         Object.assign(this, obj);
     }
 
@@ -40,8 +40,8 @@ class Processor extends State {
     /**
      * Factory method to create a commercial paper object
      */
-    static createInstance(processorNumber, name, org) {
-      return new Processor({ processorNumber, name, org });
+    static createInstance(processorAttributes) {
+      return new Processor(processorAttributes);
     }
 
     static getClass() {

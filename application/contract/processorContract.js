@@ -1,27 +1,29 @@
 'use strict';
 
-const { FileSystemWallet, Gateway }  = require('fabric-network');
+const { Gateway, Wallets } = require('fabric-network');
 const path = require('path');
 const fs = require('fs')
 
 class ProcessorContract {
   async connectNetwork() {
-     // Create a new file system based wallet for managing identities.
-     const walletPath = path.join(process.cwd(), 'fabric-details/Org1Wallet');
-     const wallet = new FileSystemWallet(walletPath);
-     console.log(`Wallet path: ${walletPath}`);
+    // Create a new file system based wallet for managing identities.
+    const walletPath = path.join(process.cwd(), 'fabric-details/wallet');
+    const wallet = await Wallets.newFileSystemWallet(walletPath);
+    console.log(`Wallet path: ${walletPath}`);
 
-     // Create a new gateway for connecting to our peer node.
+    const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+    let connectionProfile = JSON.parse(fs.readFileSync(connectionProfilePath, 'utf8'));
+
+    // Create a new gateway for connecting to our peer node.
     this.gateway = new Gateway();
-     const connectionProfile = path.resolve(__dirname, '../fabric-details', 'connection.json');
-     let connectionOptions = { wallet, identity: 'org1Admin', discovery: { enabled: true, asLocalhost: true }};
-     await this.gateway.connect(connectionProfile, connectionOptions);
+    let connectionOptions = { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true }};
+    await this.gateway.connect(connectionProfile, connectionOptions);
 
-     // Get the network (channel) our contract is deployed to.
-     const network = await this.gateway.getNetwork('mychannel');
+    // Get the network (channel) our contract is deployed to.
+    const network = await this.gateway.getNetwork('mychannel');
 
-     // Get the contract from the network.
-     this.contract = network.getContract('chaincode-builder');
+    // Get the contract from the network.
+    this.contract = network.getContract('biobank');
   }
 
   async createProcessor(processor){
