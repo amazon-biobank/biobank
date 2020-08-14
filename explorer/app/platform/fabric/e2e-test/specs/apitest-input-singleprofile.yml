@@ -1,0 +1,95 @@
+organizations:
+  - name: org1
+    connProfilePath: ./connection-profile/connection_profile_org1.yaml
+  - name: org2
+    connProfilePath: ./connection-profile/connection_profile_org2.yaml
+
+createChannel:
+  - channelName: commonchannel
+    channelTxPath: ./channel-artifacts/commonchannel/commonchannel.tx
+    organizations: org1
+  - channelName: org1channel
+    channelTxPath: ./channel-artifacts/org1channel/org1channel.tx
+    organizations: org1
+  - channelName: org2channel
+    channelTxPath: ./channel-artifacts/org2channel/org2channel.tx
+    organizations: org2
+
+anchorPeerUpdate:
+  - channelName: commonchannel
+    organizations: org1
+    anchorPeerUpdateTxPath: ./channel-artifacts/commonchannel/commonchannelorg1anchor.tx
+  - channelName: commonchannel
+    organizations: org2
+    anchorPeerUpdateTxPath: ./channel-artifacts/commonchannel/commonchannelorg2anchor.tx
+  - channelName: org1channel
+    organizations: org1
+    anchorPeerUpdateTxPath: ./channel-artifacts/org1channel/org1channelorg1anchor.tx
+
+joinChannel:
+  - channelName: commonchannel
+    organizations: org1,org2
+  - channelName: org1channel
+    organizations: org1
+
+installChaincode:
+  - name: samplecc
+    sdk: cli
+    version: v1
+    path: github.com/hyperledger/fabric-test/chaincodes/samplecc/go
+    organizations: org1,org2
+    language: golang
+    metadataPath: ""
+
+instantiateChaincode:
+  - channelName: commonchannel
+    sdk: cli
+    name: samplecc
+    version: v1
+    args: ""
+    organizations: org1
+    endorsementPolicy: 2of(org1,org2)
+    collectionPath: ""
+
+invokes:
+  - channelName: commonchannel
+    name: samplecc
+    targetPeers: OrgAnchor
+    nProcPerOrg: 1
+    nRequest: 1
+    runDur: 0
+    organizations: org1,org2
+    txnOpt:
+      - mode: constant
+        options:
+          constFreq: 0
+          devFreq: 0
+    queryCheck: 1
+    eventOpt:
+      type: FilteredBlock
+      listener:  Block
+      timeout: 240000
+    ccOpt:
+      ccType: ccchecker
+      keyStart: 0
+      payLoadMin: 1024
+      payLoadMax: 2048
+    args: "put,a1,1"
+
+queries:
+  - channelName: commonchannel
+    name: samplecc
+    targetPeers: OrgAnchor
+    nProcPerOrg: 1
+    nRequest: 1
+    runDur: 0
+    organizations: org1,org2
+    ccOpt:
+      ccType: ccchecker
+      keyStart: 0
+    txnOpt:
+      - mode: constant
+        options:
+          constFreq: 0
+          devFreq: 0
+    args: "get,a1"
