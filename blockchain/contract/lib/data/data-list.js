@@ -19,16 +19,20 @@ class DataList extends StateList {
         return this.getState(dataId);
     }
 
+    async getDataHistory(dataId) {
+        return this.getHistory(dataId);
+    }
+
     async updateData(data) {
         return this.updateState(data);
     }
 
-    async getAllRawData() {
-        return this.getStateByRange();
-    }
-
-    async getAllProcessedData() {
-        return this.getStateByRange();
+    async getDataByType(type) {
+        const response = await this.getStateByRange();
+        const typeDatas = response.filter(function(data){
+            return data.type == type
+        })
+        return typeDatas
     }
 }
 

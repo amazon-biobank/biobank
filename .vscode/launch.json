@@ -5,14 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      // "name": "Attach to Process",
-      // "type": "node",
-      // "request": "attach",
-      // "port": 9229
-
-      "type": "fabric:node",
-      "request": "launch",
-      "name": "Debug Smart Contract"
+      "name": "Attach to Process",
+      "type": "node",
+      "request": "attach",
+      "port": 9229
     }
   ]
 }

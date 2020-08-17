@@ -1,6 +1,24 @@
-cd test-network
+cd blockchain/test-network
 ./network up createChannel -ca
-cd contract
+setar environment
+./deploy_chaincode
+
+
+cd application/fabric-details
+deletar wallet antigo
+node enrollAdmin.js
+node registerUser.js
+cd application
+node index.js
+
+cd explorer/..../first-network
+renomear o admin pk 
+cd blockchain-explorer/app/persistence/fabric/postgreSQL/db
+sudo -u postgres ./createdb.sh
+./main.sh install
+./start.sh
+deletar /wallet/first-network/exploreradmin.id
+
 npm install
 cd test-network
 

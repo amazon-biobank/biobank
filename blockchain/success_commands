@@ -9,8 +9,8 @@ peer chaincode invoke \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
     --peerAddresses localhost:9051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-    -c '{"function":"DataContract:uploadRawData", 
-        "Args":[ "1", "{ \"title\": \"Meu novo dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"1000\", \"conditions\": \"essas condições\" }"]}'
+    -c '{"function":"DataContract:updateData",
+        "Args":["raw_data", "1", "{ \"title\": \"Meu novo dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"1000\", \"conditions\": \"essas condições\" }"]}'
 
 "{ \"title\": \"Meu novo dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"1000\", \"conditions\": \"essas condições\" }"
 "{ \"title\": \"Meu dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"
@@ -30,7 +30,7 @@ peer chaincode invoke \
     --peerAddresses localhost:9051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
     -c '{"function":"GetTransactionByID", 
-        "Args":["mychannel", "e851a13cec2c088ae6b549cb2cfabf64bdbc75e831a888393fb0af579b755f58"]}'
+        "Args":["mychannel", "2425e8a01cbc865f083c418d7ecbc195df5f8a9cadaf59da9e2be228e16e43d9"]}'
 
 peer chaincode invoke \
     -o localhost:7050 \
@@ -43,8 +43,8 @@ peer chaincode invoke \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
     --peerAddresses localhost:9051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-    -c '{"function":"getHistoryByKey", 
-        "Args":["mychannel", "e851a13cec2c088ae6b549cb2cfabf64bdbc75e831a888393fb0af579b755f58"]}'
+    -c '{"function":"DataContract:GetHistory", 
+        "Args":["1", "{\"name\": \"myProcessor\", \"organization\": \"organizationX\", \"created_at\": \"Fri Aug 07 2020\"}"]}'
 
 
 peer chaincode query -C mychannel -n basic -c '{"Args":["getAllAssets"]}'
