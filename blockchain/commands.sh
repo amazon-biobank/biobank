@@ -1,7 +1,7 @@
 cd blockchain/test-network
-./network up createChannel -ca
+./network.sh up createChannel -ca
 setar environment
-./deploy_chaincode
+./deploy_chaincode.sh
 
 
 cd application/fabric-details
@@ -12,7 +12,7 @@ cd application
 node index.js
 
 cd explorer/..../first-network
-renomear o admin pk 
+renomear o admin pk
 cd blockchain-explorer/app/persistence/fabric/postgreSQL/db
 sudo -u postgres ./createdb.sh
 ./main.sh install

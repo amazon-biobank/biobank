@@ -1,0 +1,17 @@
+.modal.fade(id= "buyModal"+index tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Confirmar compra?
+        button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+      .modal-body Clique em &quot;Comprar&quot; abaixo para confirmar a compra por 
+        = data.price
+        |  moedas
+      .modal-footer
+        button.btn.btn-secondary(type='button' data-dismiss='modal') Cancelar
+        form.user(action='/operation/create' method='post')
+          input#price(hidden name='price' type='text' value=data.price)
+          input#data-id(hidden name='data_id' type='text' value=data.id)
+          input#collector(hidden name='collector' type='text' value=data.collector)
+          input.btn.btn-primary.btn-user(type='submit' value='Comprar')

@@ -19,10 +19,10 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
     | Dados de DNA
   // Nav Item - Pages Collapse Menu
   li.nav-item
-    a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='true' aria-controls='collapseTwo')
+    a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne')
       i.fas.fa-upload
       span Enviar Dados
-    #collapseTwo.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
+    #collapseOne.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
       .bg-white.py-2.collapse-inner.rounded
         a.collapse-item(href='/data/raw-data-new') Dados Brutos
         a.collapse-item(href='/data/processed-data-new') Dados Processados
@@ -30,8 +30,15 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   li.nav-item
     a.nav-link(href='/data')
       i.fab.fa-bitcoin
-      span Comprar Dados
-    
+      span Listar Dados
+  li.nav-item
+    a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='true' aria-controls='collapseTwo')
+      i.fas.fa-upload
+      span Histórico Blockchain
+    #collapseTwo.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
+      .bg-white.py-2.collapse-inner.rounded
+        a.collapse-item(href='/history/data') Histórico de dados
+
   // Divider
   hr.sidebar-divider
   // Heading

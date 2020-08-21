@@ -1,0 +1,47 @@
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .container-fluid
+    h1.mb-4 Histórico de Dados
+    .card.mr-5
+      .card-header.border-bottom
+        ul.nav.nav-tabs.card-header-tabs#cardTab(role='tablist')
+          each data, index in dataHistory
+            - tabId = 'tab-' + index
+            - tabpanelId = 'tabpanel-' + index
+            li.nav-item
+              a.nav-link(
+                class= index===0? 'active':''
+                role='tab',
+                data-toggle='tab',
+                aria-selected='true',
+                href='#'+tabpanelId,
+                aria-controls=tabpanelId,
+              )
+                = index+1
+
+      .card-body
+        .tab-content#cardTabContent
+          each history, index in dataHistory
+            - data = history.state
+            - tabId = 'tab-' + index
+            - tabpanelId = 'tabpanel-' + index
+            .tab-pane.fade(id=tabpanelId role='tabpanel', class= index===0? 'active show':'')
+              h5.mb-3.card-title Detalhes da Transação
+              .row.mb-2
+                strong.col-md-6
+                  | Timestamp:
+                .col-md-6
+                  = history.timestamp
+              .row.mb-5
+                strong.col-md-6
+                  | ID da transação:
+                .col-md-6
+                  = history.txId
+
+              h5.mb-3.card-title Detalhes do Dado
+              .card-text
+                include ../data/components/data-show-form.pug
+

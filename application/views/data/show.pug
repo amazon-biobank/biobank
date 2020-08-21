@@ -1,2 +1,17 @@
-| show.pug
-| 
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .container.mt-4
+    h1 Detalhes do Dado
+    .card.mb-4
+      .card-header.d-flex.justify-content-between.align-items-center
+        | Dado
+        a.btn.btn-primary.btn-sm(href=data.key+'/list-operations') Ver Histórico de Operações 
+      .card-body
+        include components/data-show-form.pug
+
+
+block append scripts
+

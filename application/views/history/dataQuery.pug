@@ -1,0 +1,23 @@
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .card.o-hidden.border-0.shadow-lg.my-5.ml-5.mr-5
+    .card-body.p-0
+      .row
+        .col-lg-12
+          .p-5
+            .text-center
+              h1.h4.text-gray-900.mb-4 Buscar histórico de um dado
+              p.mb-4 Através do histórico é possível verificar todas as alterações no blockchain
+            form.user(action='/history/data' method='post')
+              .form-row
+                .col-md-3
+                .form-group.col-md-6
+                  input#data-id.form-control.form-control-user(name='dataId' type='text' placeholder='ID do dado')
+              hr
+              .float-right.mb-4.inline-block
+                a.btn.btn-danger.btn-user.mr-3.px-5(href='/')
+                  | Cancelar
+                input.btn.btn-primary.btn-user.px-5(type='submit' value='Buscar')

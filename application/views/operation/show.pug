@@ -1,0 +1,46 @@
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .container.mt-4
+    h1 Detalhes da Operação
+    .card.mb-4
+      .card-header Operação
+      .card-body
+        form
+          .form-row
+            .form-group.col-md-6
+              label.mb-1(for='type') Tipo
+              input#type.form-control(disabled type='text' value= operation.type)
+            .form-group.col-md-6
+              label.mb-1(for='id') ID da Operação
+              input#id.form-control(disabled type='text' value= operation.id)
+          .form-row
+            .form-group.col-md-6
+              label.mb-1(for='user') Usuário
+              input#user.form-control(disabled type='text'  value=operation.user)
+            .form-group.col-md-6
+              label.mb-1(for='created-at') Criado em
+              input#created-at.form-control(disabled type='text'  value=operation.created_at)
+          .form-row
+            .form-group.col-md-6
+              label.mb-1(for='data-id') ID do Dado
+              input#data-id.form-control(disabled type='text'  value=operation.data_id)
+            .form-group.col-md-6
+              label.mb-1(for='transaction-id') ID da transação
+              input#transaction-id.form-control(disabled type='text' style='font-size:small' value=operation.transaction_id)
+          .card
+            .card-header Detalhes
+            .card-body
+              if (operation.type == 'Compra')
+                .form-row
+                  .form-group.col-md-6
+                    label.mb-1(for='price') Preço
+                    input#price.form-control(disabled type='text'  value=operation.details.price)
+                  .form-group.col-md-6
+                    label.mb-1(for='seller') Vendedor
+                    input#seller.form-control(disabled type='text'  value=operation.details.seller)
+
+
+block append scripts

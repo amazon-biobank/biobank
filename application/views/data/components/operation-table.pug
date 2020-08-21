@@ -1,0 +1,31 @@
+.card.shadow.mb-4
+  .card-header.py-3
+    h6.m-0.font-weight-bold.text-primary 
+      = data.title
+  .card-body
+    .table-responsive
+      table#dataTable.table.table-bordered(width='100%' cellspacing='0')
+        thead
+          tr
+            th Data
+            th Tipo
+            th Usuário
+            th ID da Operação
+            th Ação
+        tbody
+          each operation in operations
+            tr
+              td
+                = operation.created_at
+              td
+                = operation.type
+              td
+                = operation.user
+              td
+                = operation.id
+              td
+                a.btn.btn-info.btn-sm.btn-circle(
+                  data-toggle="tooltip" data-placement="top" title="Ver Detalhes" href="/operation/" + operation.id
+                )
+                  i.fas.fa-eye
+

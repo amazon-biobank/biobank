@@ -1,29 +1,13 @@
 'use strict';
 
-const { Gateway, Wallets } = require('fabric-network');
-const path = require('path');
-const fs = require('fs')
+const ConnectService = require('./../services/connectService.js');
 
 class ProcessorContract {
   async connectNetwork() {
-    // Create a new file system based wallet for managing identities.
-    const walletPath = path.join(process.cwd(), 'fabric-details/wallet');
-    const wallet = await Wallets.newFileSystemWallet(walletPath);
-    console.log(`Wallet path: ${walletPath}`);
-
-    const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
-    let connectionProfile = JSON.parse(fs.readFileSync(connectionProfilePath, 'utf8'));
-
-    // Create a new gateway for connecting to our peer node.
-    this.gateway = new Gateway();
-    let connectionOptions = { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true }};
-    await this.gateway.connect(connectionProfile, connectionOptions);
-
-    // Get the network (channel) our contract is deployed to.
-    const network = await this.gateway.getNetwork('mychannel');
-
-    // Get the contract from the network.
-    this.contract = network.getContract('biobank');
+    const { network, gateway, contract } = await new ConnectService().connectNetwork()
+    this.network = network;
+    this.gateway = gateway;
+    this.contract = contract
   }
 
   async createProcessor(processor){

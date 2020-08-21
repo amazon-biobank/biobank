@@ -1,0 +1,34 @@
+form
+  .form-row
+    .form-group.col-md-6
+      label.mb-1(for='type') Tipo
+      input#type.form-control(disabled type='text'  value=data.type)
+    .form-group.col-md-6
+      label.mb-1(for='id') ID do dado
+      input#id.form-control(disabled type='text'  value=data.id)
+  .form-group
+    label.mb-1(for='title') Título
+    input#title.form-control(disabled type='text' value= data.title)
+  .form-group
+    label.mb-1(for='description') Descrição
+    input#description.form-control(disabled type='text' value= data.description)
+  .form-group
+    label.mb-1(for='collector') Coletor
+    input#collector.form-control(disabled type='text' value= data.collector)
+  if (data.processor)
+    .form-group
+      label.mb-1(for='processor') Processador
+      input#processor.form-control(disabled type='text' value= data.processor)
+  .form-group
+    label.mb-1(for='conditions') Condições
+    input#conditions.form-control(disabled type='text' value= data.conditions)
+  .form-group
+    label.mb-1(for='owners') Donos
+    input#owners.form-control(disabled type='text' value= data.owners)
+  .form-row
+    .form-group.col-md-6
+      label.mb-1(for='price') Preço
+      input#price.form-control(disabled type='text'  value=data.price)
+    .form-group.col-md-6
+      label.mb-1(for='created_at') Criado em
+      input#created_at.form-control(disabled type='text'  value=data.created_at)

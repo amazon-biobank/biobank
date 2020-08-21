@@ -9,14 +9,15 @@ peer chaincode invoke \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
     --peerAddresses localhost:9051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-    -c '{"function":"DataContract:updateData",
-        "Args":["raw_data", "1", "{ \"title\": \"Meu novo dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"1000\", \"conditions\": \"essas condições\" }"]}'
+    -c '{"function":"DataContract:uploadRawData",
+        "Args":["123", "{ \"title\": \"Meu novo dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"eu\", \"price\": \"1000\", \"conditions\": \"essas condições\" }"]}'
 
-"{ \"title\": \"Meu novo dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"[eu]\", \"price\": \"1000\", \"conditions\": \"essas condições\" }"
-"{ \"title\": \"Meu dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\" }"
-"{ \"title\": \"Meu dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"update this data\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"[eu]\", \"price\": \"322\", \"conditions\": \"essas condições\", \"type\": \"processed_data\" }"
+"{ \"title\": \"Meu novo dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\", \"owners\": \"eu\", \"price\": \"1000\", \"conditions\": \"essas condições\" }"
+"{ \"title\": \"Meu dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"eu\", \"price\": \"322\", \"conditions\": \"essas condições\" }"
+"{ \"title\": \"Meu dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"url\": \"teste.com\", \"description\": \"update this data\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"eu\", \"price\": \"322\", \"conditions\": \"essas condições\", \"type\": \"processed_data\" }"
 
 "{\"name\": \"myProcessor\", \"organization\": \"organizationX\", \"created_at\": \"Fri Aug 07 2020\"}"
+"{\"data_id\": \"2\", \"type\": \"upload\", \"user\": \"usuarioX\", \"transaction_id\": \"123123xxxx\", \"created_at\": \"Fri Aug 07 2020\"}"
 
 peer chaincode invoke \
     -o localhost:7050 \
@@ -43,8 +44,8 @@ peer chaincode invoke \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
     --peerAddresses localhost:9051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
-    -c '{"function":"DataContract:GetHistory", 
-        "Args":["1", "{\"name\": \"myProcessor\", \"organization\": \"organizationX\", \"created_at\": \"Fri Aug 07 2020\"}"]}'
+    -c '{"function":"DataContract:getDataHistory", 
+        "Args":["123"]}'
 
 
 peer chaincode query -C mychannel -n basic -c '{"Args":["getAllAssets"]}'

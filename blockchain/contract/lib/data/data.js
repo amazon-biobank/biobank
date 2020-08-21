@@ -5,7 +5,7 @@ const State = require('../../ledger-api/state.js');
 
 class Data extends State {
     constructor(obj) {
-        super(Data.getClass(), [obj.type, obj.dataNumber]);
+        super(Data.getClass(), [obj.id]);
         Object.assign(this, obj);
     }
 

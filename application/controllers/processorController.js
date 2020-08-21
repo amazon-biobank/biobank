@@ -9,20 +9,19 @@ exports.index = async function(req, res, next){
   const formattedProcessors = processors.map(function(processor){
     processor.created_at = ControllerUtil.formatDate(new Date(processor.created_at))
     return processor
-  })  
+  })
 
   res.render('processor/index', { processors: formattedProcessors });
 };
 
 
 exports.new = async function(req, res, next){
-  
   res.render('processor/new', { });
 };
 
 exports.create = async function(req, res, next){
   let processor = createProcessorFromRequest(req);
-  
+
   const processorContract = new ProcessorContract();
   await processorContract.createProcessor(processor)
 

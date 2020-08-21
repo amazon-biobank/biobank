@@ -19,10 +19,6 @@ class DataList extends StateList {
         return this.getState(dataId);
     }
 
-    async getDataHistory(dataId) {
-        return this.getHistory(dataId);
-    }
-
     async updateData(data) {
         return this.updateState(data);
     }
@@ -33,6 +29,10 @@ class DataList extends StateList {
             return data.type == type
         })
         return typeDatas
+    }
+
+    async getDataHistory(key) {
+        return this.getHistoryForKey(key)
     }
 }
 

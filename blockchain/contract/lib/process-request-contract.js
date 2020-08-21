@@ -34,7 +34,7 @@ class ProcessRequestContract extends Contract {
         rawData.updateProcessRequest(processRequest);
         await ctx.dataList.updateState(rawData);
         return rawData
-    }    
+    }
 }
 
 function initializeDataContract(ctx){

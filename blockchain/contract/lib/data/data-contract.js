@@ -18,23 +18,17 @@ class DataContract extends Contract {
         return new DataContext();
     }
 
-    async uploadRawData(ctx, dataNumber, dataAttributes) {
-        const newDataAttributes = handleDataAttributes( dataNumber, 'raw_data', dataAttributes )
+    async uploadRawData(ctx, dataId, dataAttributes) {
+        const newDataAttributes = handleDataAttributes( dataId, 'raw_data', dataAttributes )
         const data = Data.createInstance(newDataAttributes);
         await ctx.dataList.addData(data);
         return data;
     }
 
-    async uploadProcessedData(ctx, dataNumber, dataAttributes) {
-        const newDataAttributes = handleDataAttributes(dataNumber, 'processed_data', dataAttributes)
+    async uploadProcessedData(ctx, dataId, dataAttributes) {
+        const newDataAttributes = handleDataAttributes(dataId, 'processed_data', dataAttributes)
         const data = Data.createInstance(newDataAttributes);
         await ctx.dataList.addData(data);
-        return data;
-    }
-
-    async readData(ctx, type, dataNumber) {
-        let dataKey = Data.makeKey([type, dataNumber]);
-        let data = await ctx.dataList.getData(dataKey);
         return data;
     }
 
@@ -45,23 +39,29 @@ class DataContract extends Contract {
         return data
     }
 
+    async readData(ctx, dataId) {
+        let dataKey = Data.makeKey([dataId]);
+        let data = await ctx.dataList.getData(dataKey);
+        return data;
+    }
+
     async getAllData(ctx) {
         const allRawData = await ctx.dataList.getDataByType('raw_data');
         const allProcessedData = await ctx.dataList.getDataByType('processed_data');
         return allRawData.concat(allProcessedData);
     }
 
-    async getDataHistory(ctx, type, dataNumber){
-        let dataKey = Data.makeKey([type, dataNumber]);
-        let data = await ctx.dataList.getDataHistory(dataKey);
-        return data;
+    async getDataHistory(ctx, dataId) {
+        let dataKey = Data.makeKey([dataId]);
+        const history = await ctx.dataList.getDataHistory(dataKey);
+        return JSON.stringify(history)
     }
 }
 
-function handleDataAttributes(dataNumber, type, dataAttributes) {
+function handleDataAttributes(id, type, dataAttributes) {
     const { title, url, processor, description, collector, owners, price, created_at, conditions } = JSON.parse(dataAttributes);
     let newDataAttributes = {
-        type, dataNumber, title, url, description, collector, processor, owners, price, created_at, conditions
+        type, id, title, url, description, collector, processor, owners, price, created_at, conditions
     }
     if (type == 'raw_data') { delete  newDataAttributes.processor };
     return newDataAttributes;
