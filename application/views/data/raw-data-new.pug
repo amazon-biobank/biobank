@@ -1,1 +1,31 @@
-| raw-data-new.pug
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .card.o-hidden.border-0.shadow-lg.my-5.ml-5.mr-5
+    .card-body.p-0
+      // Nested Row within Card Body
+      .row
+        .col-lg-12
+          .p-5
+            .text-center
+              h1.h4.text-gray-900.mb-4 Enviar um novo dado bruto de DNA
+              p.mb-4 
+            form.user(action='/data/raw-data-create' method='post')
+              .form-group
+                label(for='name') Nome
+                input#name.form-control.form-control-user(name='name' type='text')
+              .form-group
+                label(for='description') Descrição
+                textarea#exampleFormControlTextarea1.form-control(name='description' rows='3' type = 'text')
+              .form-group
+                label(for='url') URL dos dados
+                input#organization.form-control.form-control-user(name='url' type='text')
+              hr
+              .float-right.mb-4.inline-block
+                a.btn.btn-danger.btn-user.mr-3.px-5(href='/raw-data-create')
+                  | Cancelar
+                input.btn.btn-primary.btn-user.px-5(type='submit' value='Adicionar')
+
+block append scripts

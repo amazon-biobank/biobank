@@ -13,7 +13,7 @@ node index.js
 
 cd explorer/..../first-network
 renomear o admin pk
-cd blockchain-explorer/app/persistence/fabric/postgreSQL/db
+cd app/persistence/fabric/postgreSQL/db
 sudo -u postgres ./createdb.sh
 ./main.sh install
 ./start.sh

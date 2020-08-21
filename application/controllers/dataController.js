@@ -30,7 +30,12 @@ exports.newProcessedData = async function(req, res, next){
 };
 
 exports.createRawData = async function(req, res, next){
-  res.render('data/raw-data-new', { });
+  let rawData = createRawDataFromRequest(req);
+
+  const dataContract = new DataContract();
+  await dataContract.createRawData(rawData)
+
+  res.redirect("/data/" + rawData.id)
 };
 
 exports.createProcessedData = async function(req, res, next){
@@ -67,3 +72,21 @@ exports.listOperations = async function(req, res, next){
 
   res.render('data/list-operations', { data, operations: formattedOperations });
 };
+
+function createRawDataFromRequest(req){
+  // DEFAULT VARIABLES, MUST BE CHANGED
+  let collector = ['USER X']
+  let default_price = 100
+  return {
+    type : 'raw_data',
+    id: ControllerUtil.generateId(),
+    title: req.body.name,
+    url: req.body.url,
+    description: req.body.description,
+    collector: collector,
+    owners: [collector],
+    price: default_price,
+    created_at: new Date().toDateString(),
+    conditions: ''
+  }
+}

@@ -10,6 +10,12 @@ class DataContract {
     this.contract = contract
   }
 
+  async createRawData(data){
+    await this.connectNetwork();
+    await this.contract.submitTransaction('DataContract:uploadRawData', data.id, JSON.stringify(data))
+    await this.gateway.disconnect();
+  }
+
   async readData(dataId) {
     await this.connectNetwork();
 
