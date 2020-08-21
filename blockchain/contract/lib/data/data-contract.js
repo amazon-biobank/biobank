@@ -32,8 +32,8 @@ class DataContract extends Contract {
         return data;
     }
 
-    async updateData(ctx, type, dataNumber, dataAttributes){
-        const newDataAttributes = handleDataAttributes(dataNumber, type, dataAttributes);
+    async updateData(ctx, type, dataId, dataAttributes){
+        const newDataAttributes = handleDataAttributes(dataId, type, dataAttributes);
         const data = Data.createInstance(newDataAttributes);
         await ctx.dataList.updateState(data);
         return data

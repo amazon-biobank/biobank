@@ -75,7 +75,7 @@ exports.listOperations = async function(req, res, next){
 
 function createRawDataFromRequest(req){
   // DEFAULT VARIABLES, MUST BE CHANGED
-  let collector = ['USER X']
+  let collector = 'USER X'
   let default_price = 100
   return {
     type : 'raw_data',

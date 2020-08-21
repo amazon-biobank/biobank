@@ -16,6 +16,12 @@ class DataContract {
     await this.gateway.disconnect();
   }
 
+  async updateData(data){
+    await this.connectNetwork();
+    await this.contract.submitTransaction('DataContract:updateData', data.type, data.id, JSON.stringify(data))
+    await this.gateway.disconnect();
+  }
+
   async readData(dataId) {
     await this.connectNetwork();
 
