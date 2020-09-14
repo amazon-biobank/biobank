@@ -30,10 +30,13 @@ Get the dev version in https://github.com/leonardotkimura/biobank-dev
 3. Use the `./deploy_chaincode.sh` script to deploy your smart contract <br>
 3.1 Make shure you set up the parameters `CHAINCODE_NAME`, and `SEQUENCE`
 
-### Testing a smart contract
-There is some invocations command template's in the sucess_commands file. You can set you parameters and use them to test the chaincode
+### deploy application
+1. go to application/fabric-details
+2. Delete the folder wallet
+3. run `node enrollAdmin.js` and `node registerUser.js` to create user
+4. go to application/
+5. run `node index.js`
 
-ps: Dont forget updating your environment variable, setting to peer 1 (see commands.sh)
 
 ### Set Up Hyperledger Explorer
 1. Go to explorer/
@@ -41,6 +44,10 @@ ps: Dont forget updating your environment variable, setting to peer 1 (see comma
 2.1. correct all paths <br>
 2.2. Correct the keystore filename, to name in adminPrivateKey <br>
 2.2.1 ex: "/home/toshi/Desktop/biobank/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/24b525451c164323e9cb21207063d252bb6b53099715c28a6a732787a0de4ae8_sk"
+3. cd app/persistence/fabric/postgreSQL/db
+4. sudo -u postgres ./createdb.sh
+5. run `./main.sh install` and `./start.sh`
+6. maybe you need to delete /wallet/first-network/exploreradmin.id
 
 
 ### Monitor network
