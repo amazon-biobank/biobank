@@ -1,0 +1,15 @@
+extends ../layout/layout.pug
+
+block append header
+  link(rel='stylesheet', href='/vendor/bootstrap-theme/vendor/datatables/dataTables.bootstrap4.min.css')
+
+block content
+  .container-fluid
+    h1.mb-4 Dados a serem processados
+    include components/data-table.pug
+
+
+block append scripts
+  script(src='/vendor/bootstrap-theme/vendor/datatables/jquery.dataTables.min.js')
+  script(src='/vendor/bootstrap-theme/vendor/datatables/dataTables.bootstrap4.min.js')
+  script(src='/js/datatable.js')

@@ -1,66 +1,40 @@
 'use strict';
 
-const ConnectService = require('./../services/connectService.js');
+const SmartContract = require('./smartContract.js');
 
-class DataContract {
-  async connectNetwork() {
-    const { network, gateway, contract } = await new ConnectService().connectNetwork()
-    this.network = network;
-    this.gateway = gateway;
-    this.contract = contract
+class DataContract extends SmartContract {
+  async createRawData(data){
+    await this.submitTransaction('DataContract:uploadRawData', data.id, JSON.stringify(data))
   }
 
-  async createRawData(data){
-    await this.connectNetwork();
-    await this.contract.submitTransaction('DataContract:uploadRawData', data.id, JSON.stringify(data))
-    await this.gateway.disconnect();
+  async createProcessedData(data){
+    await this.submitTransaction('DataContract:uploadProcessedData', data.id, JSON.stringify(data))
   }
 
   async updateData(data){
-    await this.connectNetwork();
-    await this.contract.submitTransaction('DataContract:updateData', data.type, data.id, JSON.stringify(data))
-    await this.gateway.disconnect();
+    await this.submitTransaction('DataContract:updateData', data.type, data.id, JSON.stringify(data))
   }
 
   async readData(dataId) {
-    await this.connectNetwork();
-
-    const result = await this.contract.evaluateTransaction('DataContract:readData', dataId);
-    console.log(`Transaction has been submitted: ${result.toString()}`);
-
-    await this.gateway.disconnect();
-    return JSON.parse(result.toString());
+    return await this.evaluateTransaction('DataContract:readData', dataId);
   }
 
   async getAllData() {
-    await this.connectNetwork();
+    return await this.evaluateTransaction('DataContract:getAllData');
+  }
 
-    const result = await this.contract.evaluateTransaction('DataContract:getAllData');
-    console.log(`Transaction has been submitted: ${result.toString()}`);
-
-    await this.gateway.disconnect();
-    return JSON.parse(result.toString());
+  async getAllRawData() {
+    return await this.evaluateTransaction('DataContract:getAllRawData');
   }
 
   async getAllOperation(dataId) {
-    await this.connectNetwork();
-
-    const result = await this.contract.evaluateTransaction('OperationContract:getOperationByData', dataId);
-    console.log(`Transaction has been submitted: ${result.toString()}`);
-
-    await this.gateway.disconnect();
-    return JSON.parse(result.toString());
+    return await this.evaluateTransaction('OperationContract:getOperationByData', dataId);
   }
 
   async getDataHistory(dataId) {
-    await this.connectNetwork();
-
-    const result = await this.contract.evaluateTransaction('DataContract:getDataHistory', dataId);
-    console.log(`Transaction has been submitted: ${result.toString()}`);
-
-    await this.gateway.disconnect();
-    return JSON.parse(result.toString());
+    return await this.evaluateTransaction('DataContract:getDataHistory', dataId);
   }
+
 }
 
 module.exports = DataContract;

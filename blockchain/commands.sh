@@ -1,6 +1,10 @@
 cd blockchain/test-network
 ./network.sh up createChannel -ca
-setar environment
+
+# setar enviroment
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=$PWD/../config/
+
 ./deploy_chaincode.sh
 
 
@@ -12,7 +16,7 @@ cd application
 node index.js
 
 cd explorer/..../first-network
-renomear o admin pk
+renomear o admin sk
 cd app/persistence/fabric/postgreSQL/db
 sudo -u postgres ./createdb.sh
 ./main.sh install
@@ -22,9 +26,7 @@ deletar /wallet/first-network/exploreradmin.id
 npm install
 cd test-network
 
-# setar enviroment
-export PATH=${PWD}/../bin:$PATH
-export FABRIC_CFG_PATH=$PWD/../config/
+
 
 # setar para peer 1
 export CORE_PEER_TLS_ENABLED=true

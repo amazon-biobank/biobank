@@ -20,11 +20,11 @@ block content
                 label(for='description') Descrição
                 textarea#exampleFormControlTextarea1.form-control(name='description' rows='3' type = 'text')
               .form-group
-                label(for='url') URL dos dados
-                input#organization.form-control.form-control-user(name='url' type='text')
+                label(for='magnet_link') Link Magnético dos dados
+                input#organization.form-control.form-control-user(name='magnet_link' type='text')
               hr
               .float-right.mb-4.inline-block
-                a.btn.btn-danger.btn-user.mr-3.px-5(href='/raw-data-create')
+                a.btn.btn-danger.btn-user.mr-3.px-5(href='/data')
                   | Cancelar
                 input.btn.btn-primary.btn-user.px-5(type='submit' value='Adicionar')
 

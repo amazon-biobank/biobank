@@ -1,7 +1,7 @@
 # run in /test-network
 
 CHAINCODE_NAME="biobank"
-SEQUENCE="17"        # each time you deploy your chaincode, you need to increment this
+SEQUENCE="2"        # each time you deploy your chaincode, you need to increment this
 PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
 
 #set environment

@@ -12,7 +12,7 @@
         button.btn.btn-secondary(type='button' data-dismiss='modal') Cancelar
         form.user(action='/operation/create' method='post')
           input#price(hidden name='price' type='text' value=data.price)
-          input#data-id(hidden name='data_id' type='text' value=data.id)          
-          input#type(hidden name='type' type='text' value='buy')
+          input#data-id(hidden name='data_id' type='text' value=data.id)
           input#collector(hidden name='collector' type='text' value=data.collector)
+          input#type(hidden name='type' type='text' value='buy')
           input.btn.btn-primary.btn-user(type='submit' value='Comprar')

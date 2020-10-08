@@ -1,16 +1,8 @@
 'use strict';
 
-const ConnectService = require('./../services/connectService.js');
+const SmartContract = require('./smartContract.js');
 
-
-class OperationContract {
-  async connectNetwork() {
-    const { network, gateway, contract } = await new ConnectService().connectNetwork()
-    this.network = network;
-    this.gateway = gateway;
-    this.contract = contract
-  }
-
+class OperationContract extends SmartContract{
   async createOperation(operation){
     await this.connectNetwork();
 
@@ -24,15 +16,7 @@ class OperationContract {
   }
 
   async readOperation(operationId) {
-    await this.connectNetwork();
-
-    const result = await this.contract.evaluateTransaction(
-      'OperationContract:readOperation',
-      operationId
-    );
-
-    await this.gateway.disconnect();
-    return JSON.parse(result.toString());
+    return await this.evaluateTransaction('OperationContract:readOperation', operationId);
   }
 }
 

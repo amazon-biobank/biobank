@@ -44,7 +44,7 @@
 		"Org1MSP": {
 			"mspid": "Org1MSP",
 			"adminPrivateKey": {
-				"path": "/home/toshi/Desktop/biobank/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/1ef9c2021bfd65fafb8fcc222587a311b958140a38bbf7e2b5d263a9789e1759_sk"
+				"path": "/home/toshi/Desktop/biobank/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/8bba0f0e2e877719fa683d85ab2669b2ed4391565905cb793f9ac1ba4d21f162_sk"
 			},
 			"peers": ["peer0.org1.example.com"],
 			"signedCert": {

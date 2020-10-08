@@ -1,6 +1,12 @@
 // Call the dataTables jQuery plugin
+
 $(document).ready(function() {
+  var searchHash = location.search.substr(1),
+      searchString = searchHash.substr(searchHash.indexOf('search='))
+                    .split('&')[0]
+                    .split('=')[1];
   $('#dataTable').DataTable({
+    "oSearch": { "sSearch": searchString },
     "language": {
       "sEmptyTable":   "Não foi encontrado nenhum registo",
       "sLoadingRecords": "A carregar...",

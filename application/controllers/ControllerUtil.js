@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+const magnet = require('magnet-uri')
 
 class ControllerUtil {
   static formatDate (date) {
@@ -20,6 +21,12 @@ class ControllerUtil {
     if (type == "processed_data") return "Processado"
   }
 
+  static formatDataStatus (status) {
+    if (status == "unprocessed") return "Não Processado"
+    if (status == "processing") return "Processando"
+    if (status == "processed") return "Processado"
+  }
+
   static formatOperationType (type) {
     if (type == "buy") return "Compra"
     if (type == "upload") return "Upload"
@@ -27,8 +34,17 @@ class ControllerUtil {
     if (type == "request_process") return "Solicitação de Processamento"
   }
 
+  static formatProcessRequestStatus (type) {
+    if (type == "not_processed") return "Não Processado"
+    if (type == "processed") return "Processado"
+  }
+
   static generateId(){
     return uuidv4();
+  }
+
+  static getHashFromMagneticLink(magnetLink){
+    return magnet.decode(magnetLink).infoHash
   }
 }
 

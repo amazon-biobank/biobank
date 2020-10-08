@@ -8,7 +8,11 @@ block content
     .card.mb-4
       .card-header.d-flex.justify-content-between.align-items-center
         | Dado
-        a.btn.btn-primary.btn-sm(href=data.key+'/list-operations') Ver Histórico de Operações 
+        div
+          a.btn.btn-primary.btn-sm.mr-4(href='/process-request?search='+data.key)
+            | Ver solicitações de processamento
+          a.btn.btn-secondary.btn-sm(href=data.key+'/list-operations')
+            | Ver Histórico de Operações
       .card-body
         include components/data-show-form.pug
 

@@ -10,6 +10,7 @@
             th Organização
             th Criado em
             th ID
+            th Ação
         tbody
           each processor in processors
             tr
@@ -21,3 +22,8 @@
                 = processor.created_at
               td
                 = processor.id
+              td
+                a.btn.btn-info.btn-sm.btn-circle.mr-2(
+                  data-toggle="tooltip" data-placement="top" title="Ver Detalhes" href="/processor/" + processor.id
+                )
+                  i.fas.fa-eye

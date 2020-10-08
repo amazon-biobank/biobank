@@ -44,16 +44,19 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   // Heading
   .sidebar-heading
     | Processamento
-  // Nav Item - Pages Collapse Menu
+  li.nav-item
+    a.nav-link(href='/processable-data')
+      i.fas.fa-cogs
+      span Processar Dados
+  li.nav-item
+    a.nav-link(href='/process-request')
+      i.fas.fa-fw.fa-file-invoice
+      span Solicitações
   li.nav-item
     a.nav-link.collapsed(href='/processor')
       i.fas.fa-fw.fa-server
       span Processadores
   // Nav Item - Charts
-  li.nav-item
-    a.nav-link(href='charts.html')
-      i.fas.fa-fw.fa-file-invoice
-      span Requisições
   // Divider
   hr.sidebar-divider.d-none.d-md-block
   // Sidebar Toggler (Sidebar)

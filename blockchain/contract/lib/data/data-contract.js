@@ -51,19 +51,26 @@ class DataContract extends Contract {
         return allRawData.concat(allProcessedData);
     }
 
+    async getAllRawData(ctx) {
+        const allRawData = await ctx.dataList.getDataByType('raw_data');
+        return allRawData
+    }
+
     async getDataHistory(ctx, dataId) {
         let dataKey = Data.makeKey([dataId]);
         const history = await ctx.dataList.getDataHistory(dataKey);
-        return JSON.stringify(history)
+        return history
     }
 }
 
 function handleDataAttributes(id, type, dataAttributes) {
-    const { title, url, processor, description, collector, owners, price, created_at, conditions } = JSON.parse(dataAttributes);
+    const {
+        title, magnet_link, process_request_id, description, collector, owners, price, process_reward, status, created_at, conditions
+    } = JSON.parse(dataAttributes);
     let newDataAttributes = {
-        type, id, title, url, description, collector, processor, owners, price, created_at, conditions
+        type, id, title, magnet_link, description, collector, process_request_id, owners, price, process_reward, status, created_at, conditions
     }
-    if (type == 'raw_data') { delete  newDataAttributes.processor };
+    if (type == 'raw_data') { delete  newDataAttributes.process_request_id };
     return newDataAttributes;
 }
 
