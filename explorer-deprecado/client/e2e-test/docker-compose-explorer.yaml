@@ -1,0 +1,19 @@
+
+# SPDX-License-Identifier: Apache-2.0
+version: '2.1'
+
+volumes:
+  pgdata:
+
+services:
+  explorerdb.mynetwork.com:
+    image: hyperledger/explorer-db:latest
+    network_mode: "host"
+    container_name: explorerdb.mynetwork.com
+    hostname: explorerdb.mynetwork.com
+    environment:
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    volumes:
+      - pgdata:/var/lib/postgresql/data

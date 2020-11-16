@@ -1,0 +1,79 @@
+{
+	"name": "org2-network",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"client": {
+		"tlsEnable": true,
+		"caCredential": {
+			"id": "admin",
+			"password": "adminpw"
+		},
+		"adminCredential": {
+			"id": "org2exploreradmin",
+			"password": "exploreradminpw",
+			"affiliation": "org2.department1"
+		},
+		"organization": "org2",
+		"enableAuthentication": true,
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"commonchannel": {
+			"peers": {
+				"peer0-org2": {}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		}
+	},
+	"organizations": {
+		"org2": {
+			"mspid": "Org2ExampleCom",
+			"adminPrivateKey": {
+				"path": "./app/platform/fabric/e2e-test/specs/crypto-config/peerOrganizations/org2/users/Admin@org2/msp/keystore/priv_sk"
+			},
+			"peers": ["peer0-org2"],
+			"certificateAuthorities": ["ca0"],
+			"signedCert": {
+				"path": "./app/platform/fabric/e2e-test/specs/crypto-config/peerOrganizations/org2/users/Admin@org2/msp/signcerts/Admin@org2-cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0-org2": {
+			"tlsCACerts": {
+				"path": "./app/platform/fabric/e2e-test/specs/crypto-config/peerOrganizations/org2/peers/peer0-org2.org2/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:31001",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0-org2"
+			}
+		}
+	},
+	"certificateAuthorities": {
+		"ca0": {
+			"url": "https://localhost:32001",
+			"httpOptions": {
+				"verify": false
+			},
+			"tlsCACerts": {
+				"path": "./app/platform/fabric/e2e-test/specs/crypto-config/peerOrganizations/org2/ca/ca.org2-cert.pem"
+			},
+			"caName": "ca0-org2"
+		}
+	}
+}

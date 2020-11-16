@@ -21,21 +21,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import { shape, string } from 'prop-types';
+import Container from '../Container'
 
 import { authSelectors, authOperations } from '../../state/redux/auth';
 
 const styles = theme => ({
-	container: {
-		width: 'auto',
-		display: 'block', // Fix IE 11 issue.
-		marginLeft: theme.spacing.unit * 3,
-		marginRight: theme.spacing.unit * 3,
-		[theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-			width: 400,
-			marginLeft: 'auto',
-			marginRight: 'auto'
-		}
-	},
 	paper: {
 		display: 'flex',
 		flexDirection: 'column',
@@ -118,7 +108,8 @@ export class Register extends Component {
 			error: '',
 			registered,
 			isLoading: false,
-			allValid: false
+			allValid: false,
+			lastSaved: ''
 		};
 	}
 
@@ -182,7 +173,7 @@ export class Register extends Component {
 	submitForm = async e => {
 		e.preventDefault();
 
-		const { register } = this.props;
+		const { register, userlist } = this.props;
 		const {
 			user,
 			password,
@@ -204,11 +195,51 @@ export class Register extends Component {
 		};
 
 		const info = await register(userInfo);
-
+		await userlist();
 		this.setState(() => ({ info }));
-
+		this.setState(() => ({ lastSaved: user.value }));
+		this.resetForm();
 		return true;
 	};
+	resetForm() {
+		const user = {
+			error: null,
+			value: ''
+		};
+		const firstname = {
+			error: null,
+			value: ''
+		};
+		const lastname = {
+			error: null,
+			value: ''
+		};
+		const email = {
+			error: null,
+			value: ''
+		};
+		const password = {
+			error: null,
+			value: ''
+		};
+		const password2 = {
+			error: null,
+			value: ''
+		};
+		const roles = {
+			error: null,
+			value: ''
+		};
+		this.setState({
+			user: user,
+			firstname: firstname,
+			lastname: lastname,
+			email: email,
+			password: password,
+			password2: password2,
+			roles: roles
+		});
+	}
 
 	render() {
 		const {
@@ -221,11 +252,12 @@ export class Register extends Component {
 			lastname,
 			email,
 			rolesList,
-			isLoading
+			isLoading,
+			lastSaved
 		} = this.state;
 		const { classes, error, onClose } = this.props;
 		return (
-			<div className={classes.container}>
+			<Container>
 				<Paper className={classes.paper}>
 					<Typography className={classes.title} component="h5" variant="headline">
 						Register User
@@ -383,14 +415,14 @@ export class Register extends Component {
 								{error}
 							</FormHelperText>
 						)}
-						{info && user.value && (
+						{info && lastSaved && (
 							<FormHelperText
 								id="component-error-text"
 								className={
 									info.status === 'success' ? classes.successtext : classes.errortext
 								}
 							>
-								{`User '${user.value}' ${info.message}`}
+								{`User '${lastSaved}' ${info.message}`}
 							</FormHelperText>
 						)}
 						<Grid
@@ -419,7 +451,7 @@ export class Register extends Component {
 						</Grid>
 					</form>
 				</Paper>
-			</div>
+			</Container>
 		);
 	}
 }
@@ -434,7 +466,8 @@ export default compose(
 			error: errorSelector(state)
 		}),
 		{
-			register: authOperations.register
+			register: authOperations.register,
+			userlist: authOperations.userlist
 		}
 	)
 )(Register);

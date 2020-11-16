@@ -7,7 +7,6 @@ export FABRIC_CFG_PATH=$PWD/../config/
 
 ./deploy_chaincode.sh
 
-
 cd application/fabric-details
 deletar wallet antigo
 node enrollAdmin.js
@@ -20,10 +19,15 @@ renomear o admin sk
 cd app/persistence/fabric/postgreSQL/db
 sudo -u postgres ./createdb.sh
 ./main.sh install
-./start.sh
+npm start
+
 deletar /wallet/first-network/exploreradmin.id
 
+# Para desligar o explorer
+npm run app-stop
 npm install
+
+
 cd test-network
 
 

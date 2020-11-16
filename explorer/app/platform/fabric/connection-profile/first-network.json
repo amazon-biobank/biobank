@@ -44,18 +44,18 @@
 		"Org1MSP": {
 			"mspid": "Org1MSP",
 			"adminPrivateKey": {
-				"path": "/home/toshi/Desktop/biobank/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/8bba0f0e2e877719fa683d85ab2669b2ed4391565905cb793f9ac1ba4d21f162_sk"
+				"path": "/home/toshi/Desktop/poli/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/fa96fa0c3932a8ca1c58c29bc9fe5e3768e6a384148c282b3a36d5345e082130_sk"
 			},
 			"peers": ["peer0.org1.example.com"],
 			"signedCert": {
-				"path": "/home/toshi/Desktop/biobank/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/cert.pem"
+				"path": "/home/toshi/Desktop/poli/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/cert.pem"
 			}
 		}
 	},
 	"peers": {
 		"peer0.org1.example.com": {
 			"tlsCACerts": {
-				"path": "/home/toshi/Desktop/biobank/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+				"path": "/home/toshi/Desktop/poli/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
 			},
 			"url": "grpcs://localhost:7051",
 			"grpcOptions": {
@@ -70,7 +70,7 @@
 				"verify": false
 			},
 			"tlsCACerts": {
-				"path": "/home/toshi/Desktop/biobank/biobank/blockchain/first-network/crypto-config/peerOrganizations/org1/ca/ca.org1-cert.pem"
+				"path": "/home/toshi/Desktop/poli/biobank/blockchain/first-network/crypto-config/peerOrganizations/org1/ca/ca.org1-cert.pem"
 			},
 			"caName": "ca0-org1"
 		}
