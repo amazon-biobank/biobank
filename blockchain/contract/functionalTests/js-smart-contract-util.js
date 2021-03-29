@@ -48,7 +48,7 @@ class SmartContractUtil {
         } else {
             contract = await network.getContract('biobank');
         }
-        const responseBuffer = await contract.evaluate(functionName, ...args);
+        const responseBuffer = await contract.evaluateTransaction(functionName, ...args);
         return responseBuffer;
     }
 

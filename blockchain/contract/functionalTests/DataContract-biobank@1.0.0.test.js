@@ -107,7 +107,7 @@ describe('DataContract-biobank@1.0.0' , () => {
     describe('readData', () =>{
         it('should evaluate readData transaction', async () => {
             // TODO: populate transaction parameters
-            const arg0 = 'EXAMPLE';
+            const arg0 = '123';
             const args = [ arg0];
             const response = await SmartContractUtil.evaluateTransaction('DataContract', 'readData', args, gateway); // Returns buffer of transaction return value
             
