@@ -1,6 +1,6 @@
 {
     "name": "biobank",
-    "version": "3.0.0",
+    "version": "1.0.0",
     "description": "Biobank contract implemented in JavaScript",
     "main": "index.js",
     "engines": {
@@ -17,6 +17,7 @@
     "author": "Hyperledger",
     "license": "Apache-2.0",
     "dependencies": {
+        "crypto": "^1.0.1",
         "fabric-contract-api": "^2.0.0",
         "fabric-shim": "^2.0.0"
     },

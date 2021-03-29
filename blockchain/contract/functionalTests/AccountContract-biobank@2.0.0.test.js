@@ -64,40 +64,39 @@ describe('AccountContract-biobank@2.0.0' , () => {
 
     describe('createAccount', () =>{
         it('should submit createAccount transaction', async () => {
-            const response = await TestAccountUtil.createSampleAccount(123, gateway)
+            const response = await TestAccountUtil.createSampleAccount(gateway)
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response['name'], "John Smith");
-            assert.strictEqual(json_response['public_key'], "blablabla public key");
+            assert.strictEqual(json_response['id'], TestAccountUtil.generatedAddress);
             assert.strictEqual(json_response['balance'], 0);
         }).timeout(10000);
     });
 
     describe('readAccount', () =>{
         it('should evaluate readAccount transaction', async () => {
-            await TestAccountUtil.createSampleAccount(123, gateway)
+            await TestAccountUtil.createSampleAccount(gateway)
 
-            const arg0 = 123;
+            const arg0 = TestAccountUtil.generatedAddress;
             const args = [ arg0];
             const response = await SmartContractUtil.evaluateTransaction('AccountContract', 'readAccount', args, gateway); // Returns buffer of transaction return value
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response['name'], "John Smith");
-            assert.strictEqual(json_response['public_key'], "blablabla public key");
         }).timeout(10000);
     });
 
     describe('getAllAccount', () =>{
         it('should submit getAllAccount transaction', async () => {
-            await TestAccountUtil.createSampleAccount(123,gateway)
-            await TestAccountUtil.createSampleAccount(321, gateway)
+            await TestAccountUtil.createSampleAccount(gateway)
+            await TestAccountUtil.createAnotherSampleAccount(gateway)
 
             const args = [];
             const response = await SmartContractUtil.submitTransaction('AccountContract', 'getAllAccount', args, gateway); // Returns buffer of transaction return value
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response.length, 2);
-            assert.strictEqual(json_response[0]['name'], "John Smith");
-            assert.strictEqual(json_response[1]['public_key'], "blablabla public key");
+            assert.strictEqual(json_response[1]['name'], "John Smith");
+            assert.strictEqual(json_response[0]['name'], "Emma Smith");
         }).timeout(10000);
     });
 

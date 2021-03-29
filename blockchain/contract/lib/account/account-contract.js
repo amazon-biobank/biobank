@@ -3,6 +3,7 @@
 const { Contract, Context } = require('fabric-contract-api');
 const Account = require('./account.js');
 const AccountList = require('./account-list.js');
+const CryptoUtils = require('./../crypto-utils')
 
 
 class AccountContext extends Context {
@@ -17,8 +18,8 @@ class AccountContract extends Contract {
         return new AccountContext();
     }
 
-    async createAccount(ctx, id, accountAttributes) {
-        const newAccontAttributes = handleAccountAttributes(id, accountAttributes)
+    async createAccount(ctx, accountAttributes) {
+        const newAccontAttributes = handleAccountAttributes(accountAttributes)
         const account = Account.createInstance(newAccontAttributes);
         await ctx.accountList.addAccount(account);
         return account;
@@ -34,10 +35,11 @@ class AccountContract extends Contract {
     }
 }
 
-function handleAccountAttributes(id, accountAttributes) {
+function handleAccountAttributes(accountAttributes) {
     const { public_key, name, created_at } = JSON.parse(accountAttributes);
+    const address = CryptoUtils.getAddressFromPublicKey(public_key)
     const newAccountAttributes = {
-        id, public_key, name, created_at, balance: 0
+        id: address, name, created_at, balance: 0
     }
     return newAccountAttributes;
 }
