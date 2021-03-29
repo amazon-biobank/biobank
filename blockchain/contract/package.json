@@ -1,7 +1,7 @@
 {
-    "name": "fabcar",
+    "name": "biobank",
     "version": "1.0.0",
-    "description": "FabCar contract implemented in JavaScript",
+    "description": "Biobank contract implemented in JavaScript",
     "main": "index.js",
     "engines": {
         "node": ">=8",
@@ -23,6 +23,7 @@
     "devDependencies": {
         "chai": "^4.1.2",
         "eslint": "^4.19.1",
+        "fabric-network": "^2.2.0",
         "mocha": "^5.2.0",
         "nyc": "^14.1.1",
         "sinon": "^6.0.0",
