@@ -5,11 +5,13 @@ const ProcessorContract = require('./lib/processor/processor-contract');
 const OperationContract = require('./lib/operation/operation-contract');
 const ProcessRequestContract = require('./lib/process-request/process-request-contract');
 const AccountContract = require('./lib/account/account-contract');
+const BiocoinContract = require('./lib/biocoin/biocoin-contract');
 
 module.exports.DataContract = DataContract;
 module.exports.ProcessRequestContract = ProcessRequestContract;
 module.exports.ProcessorContract = ProcessorContract;
 module.exports.OperationContract = OperationContract;
 module.exports.AccountContract = AccountContract;
+module.exports.BiocoinContract = BiocoinContract;
 
-module.exports.contracts = [ DataContract, ProcessRequestContract, ProcessorContract, OperationContract, AccountContract ];
+module.exports.contracts = [ DataContract, ProcessRequestContract, ProcessorContract, OperationContract, AccountContract, BiocoinContract];

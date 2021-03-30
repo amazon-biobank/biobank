@@ -8,11 +8,13 @@ class ConnectService {
     const wallet = await Wallets.newFileSystemWallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
 
-    const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+    const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'contract', '1OrgLocalFabricOrg1GatewayConnection.json');
+    // const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
     let connectionProfile = JSON.parse(fs.readFileSync(connectionProfilePath, 'utf8'));
 
     const gateway = new Gateway();
-    let connectionOptions = { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true }};
+    // let connectionOptions = { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true }};
+    let connectionOptions = { wallet, identity: 'user', discovery: { enabled: true, asLocalhost: true }};
     await gateway.connect(connectionProfile, connectionOptions);
 
     const network = await gateway.getNetwork('mychannel');

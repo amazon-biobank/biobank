@@ -39,7 +39,7 @@ function handleAccountAttributes(accountAttributes) {
     const { public_key, name, created_at } = JSON.parse(accountAttributes);
     const address = CryptoUtils.getAddressFromPublicKey(public_key)
     const newAccountAttributes = {
-        id: address, name, created_at, balance: 0
+        id: address, name, created_at, balance: 10  //development purpose only: change later
     }
     return newAccountAttributes;
 }
