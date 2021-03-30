@@ -14,7 +14,7 @@ class ConnectService {
 
     const gateway = new Gateway();
     // let connectionOptions = { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true }};
-    let connectionOptions = { wallet, identity: 'user', discovery: { enabled: true, asLocalhost: true }};
+    let connectionOptions = { wallet, identity: 'userCertificate', discovery: { enabled: true, asLocalhost: true }};
     await gateway.connect(connectionProfile, connectionOptions);
 
     const network = await gateway.getNetwork('mychannel');

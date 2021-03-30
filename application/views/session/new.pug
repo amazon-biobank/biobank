@@ -1,0 +1,39 @@
+extends ../layout/loginLayout.pug
+
+block append header
+
+block content
+    .bg-primary
+        .container
+            .row.justify-content-center
+                .col-lg-7
+                    // Basic login form
+                    .card.shadow-lg.border-0.rounded-lg.mt-5
+                        .card-header.justify-content-center
+                            h3.font-weight-light.my-4 Adicionar Certificado
+                        .card-body
+                            // Login form
+                            form.user(action='/session/new' method='post' enctype="multipart/form-data")
+                                // Form Group (email address)
+                                .form-group
+                                    label.small.mb-1(for='inputEmailAddress') Certificado
+                                    input#inputEmailAddress.form-control(name='certificate' type='file' placeholder='Enter email address' )
+                                // Form Group (password)
+                                .form-group
+                                    label.small.mb-1(for='inputPassword') Senha
+                                    input#inputPassword.form-control(name='password' type='password' placeholder='Coloque sua senha')
+                                // Form Group (remember password checkbox)
+                                .form-group
+                                    .custom-control.custom-checkbox
+                                        input#rememberPasswordCheck.custom-control-input(type='checkbox')
+                                        label.custom-control-label(for='rememberPasswordCheck') Lembrar Senha
+                                // Form Group (login box)
+                                .form-group.d-flex.align-items-center.justify-content-between.mt-4.mb-0
+                                    a.small(href='auth-password-basic.html') Esqueci minha Senha
+                                    input.btn.btn-primary.px-3(type='submit' value='Adicionar')
+                        .card-footer.text-center
+                            .small
+                            a(href='auth-register-basic.html') Precisa de um certificado? Crie aqui!
+
+
+block append scripts
