@@ -64,39 +64,42 @@ describe('BiocoinContract-biobank@8.0.0' , () => {
         gateway.disconnect();
     });
 
-    describe('transfer_biocoins', () =>{
-        it('should submit transfer_biocoins transaction', async () => {
-            await TestAccountUtil.createSampleAccount(gateway)
+    describe('transferBiocoins', () =>{
+        it('should submit transferBiocoins transaction', async () => {
+            const testAccountUtil = new TestAccountUtil()
+            const user = await testAccountUtil.createUserAccount(gateway)
             await TestAccountUtil.createAnotherSampleAccount(gateway)
 
-            const arg0 = TestAccountUtil.generatedAddress;
+            const arg0 = user.address;
             const arg1 = TestAccountUtil.anotherGeneratedAddress;
             const arg2 = 10;
             const args = [ arg0, arg1, arg2];
-            const response = await SmartContractUtil.submitTransaction('BiocoinContract', 'transfer_biocoins', args, gateway); // Returns buffer of transaction return value
+            const response = await SmartContractUtil.submitTransaction('BiocoinContract', 'transferBiocoins', args, gateway); // Returns buffer of transaction return value
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response[0]['balance'], 0);
             assert.strictEqual(json_response[1]['balance'], 20);
         }).timeout(10000);
 
-        it('should submit transfer_biocoins transaction', async () => {
-            await TestAccountUtil.createSampleAccount(gateway)
+        it('should submit parcial transferBiocoins transaction', async () => {
+            const testAccountUtil = new TestAccountUtil()
+            const user = await testAccountUtil.createUserAccount(gateway)
             await TestAccountUtil.createAnotherSampleAccount(gateway)
 
-            const arg0 = TestAccountUtil.generatedAddress;
+            const arg0 = user.address;
             const arg1 = TestAccountUtil.anotherGeneratedAddress;
             const arg2 = 5.5;
             const args = [ arg0, arg1, arg2];
-            const response = await SmartContractUtil.submitTransaction('BiocoinContract', 'transfer_biocoins', args, gateway); // Returns buffer of transaction return value
+            const response = await SmartContractUtil.submitTransaction('BiocoinContract', 'transferBiocoins', args, gateway); // Returns buffer of transaction return value
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response[0]['balance'], 4.5);
             assert.strictEqual(json_response[1]['balance'], 15.5);
         }).timeout(10000);
 
-        it('should raise insufficient balance error', async () => {
-            await TestAccountUtil.createSampleAccount(gateway)
+        it('should raise unauthorized balance error', async () => {
+            const testAccountUtil = new TestAccountUtil()
+            const user = await testAccountUtil.createUserAccount(gateway)
             await TestAccountUtil.createAnotherSampleAccount(gateway)
 
             const arg0 = TestAccountUtil.generatedAddress;
@@ -105,7 +108,26 @@ describe('BiocoinContract-biobank@8.0.0' , () => {
             const args = [ arg0, arg1, arg2];
             
             await assert.rejects(
-                SmartContractUtil.submitTransaction('BiocoinContract', 'transfer_biocoins', args, gateway), 
+                SmartContractUtil.submitTransaction('BiocoinContract', 'transferBiocoins', args, gateway), 
+                (err) => {
+                    const regExp = new RegExp("unauthorized")
+                    assert(regExp.test(err.message))
+                    return true
+                })
+        }).timeout(10000);
+
+        it('should raise insufficient balance error', async () => {
+            const testAccountUtil = new TestAccountUtil()
+            const user = await testAccountUtil.createUserAccount(gateway)
+            await TestAccountUtil.createAnotherSampleAccount(gateway)
+
+            const arg0 = user.address;
+            const arg1 = TestAccountUtil.anotherGeneratedAddress;
+            const arg2 = 20;
+            const args = [ arg0, arg1, arg2];
+            
+            await assert.rejects(
+                SmartContractUtil.submitTransaction('BiocoinContract', 'transferBiocoins', args, gateway), 
                 (err) => {
                     const regExp = new RegExp("balance Insuficient")
                     assert(regExp.test(err.message))
@@ -114,16 +136,17 @@ describe('BiocoinContract-biobank@8.0.0' , () => {
         }).timeout(10000);
 
         it('should raise negative balance error', async () => {
-            await TestAccountUtil.createSampleAccount(gateway)
+            const testAccountUtil = new TestAccountUtil()
+            const user = await testAccountUtil.createUserAccount(gateway)
             await TestAccountUtil.createAnotherSampleAccount(gateway)
 
-            const arg0 = TestAccountUtil.generatedAddress;
+            const arg0 = user.address;
             const arg1 = TestAccountUtil.anotherGeneratedAddress;
             const arg2 = -20;
             const args = [ arg0, arg1, arg2];
             
             await assert.rejects(
-                SmartContractUtil.submitTransaction('BiocoinContract', 'transfer_biocoins', args, gateway), 
+                SmartContractUtil.submitTransaction('BiocoinContract', 'transferBiocoins', args, gateway), 
                 (err) => {
                     const regExp = new RegExp("invalid Transaction")
                     assert(regExp.test(err.message))

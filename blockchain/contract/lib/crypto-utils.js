@@ -1,6 +1,19 @@
 const crypto = require('crypto')
+const ClientIdentity = require('fabric-shim').ClientIdentity;
+const { X509Certificate } = require('crypto')
 
-class TestAccountUtil {
+class CryptoUtils {
+    static getUserCertificate(ctx){
+        let cid = new ClientIdentity(ctx.stub)
+        const x509 = new X509Certificate(cid.getIDBytes())
+        return x509
+    }
+    
+    static getPublicKeyFromCertificate(certificate){
+        const publicKey = certificate.publicKey.export({type: 'spki', format: 'pem'})
+        return publicKey
+    }
+
     static getAddressFromPublicKey(public_key) {
         const hash = crypto.createHash('sha256');
         const data = hash.update(public_key, 'utf-8');
@@ -8,4 +21,4 @@ class TestAccountUtil {
     }
 }
 
-module.exports = TestAccountUtil;
+module.exports = CryptoUtils;

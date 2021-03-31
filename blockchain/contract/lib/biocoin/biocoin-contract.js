@@ -4,6 +4,9 @@ const { Contract, Context } = require('fabric-contract-api');
 const AccountList = require('./../account/account-list.js');
 const BiocoinOperations = require('./biocoin-operations.js');
 
+const CryptoUtils = require('./../crypto-utils')
+
+
 
 
 class AccountContext extends Context {
@@ -18,30 +21,36 @@ class BiocoinContract extends Contract {
         return new AccountContext();
     }
 
-    async transfer_biocoins(ctx, sender_address, receiver_address, amount){
-        let sender_account = await ctx.accountList.getAccount(sender_address);
-        let receiver_account = await ctx.accountList.getAccount(receiver_address);
+    async transferBiocoins(ctx, senderAddress, receiverAddress, amount){
+        let senderAccount = await ctx.accountList.getAccount(senderAddress);
+        let receiverAccount = await ctx.accountList.getAccount(receiverAddress);
         
-        if( validate_transference(sender_account, amount) == false ) return
-        // throw new Error(amount)
-        sender_account = await BiocoinOperations.withdraw_biocoins(ctx, sender_account, amount)
-        receiver_address = await BiocoinOperations.deposit_biocoins(ctx, receiver_account, amount)
+        if( validateTransference(ctx, senderAccount, amount) == false ) return
+        senderAccount = await BiocoinOperations.withdraw_biocoins(ctx, senderAccount, amount)
+        receiverAddress = await BiocoinOperations.deposit_biocoins(ctx, receiverAccount, amount)
 
-        return [sender_account, receiver_account]
+        return [senderAccount, receiverAccount]
     }
 }
 
-function validate_transference(sender_account, amount){
+function validateTransference(ctx, senderAccount, amount){
+    if(verifySenderAccount(ctx, senderAccount)){
+        throw new Error('unauthorized')
+    }
     if(amount<0){
         throw new Error('invalid Transaction')
     }
-    if(sender_account.balance < amount){
+    if(senderAccount.balance < amount){
         throw new Error('balance Insuficient')
     }
-    if(false){
-        throw new Error('unauthorized')
-    }
     return true
+}
+
+function verifySenderAccount(ctx, senderAccount){
+    const certificate = CryptoUtils.getUserCertificate(ctx)
+    const publicKey = CryptoUtils.getPublicKeyFromCertificate(certificate)
+    const userAddress = CryptoUtils.getAddressFromPublicKey(publicKey)
+    return ( (userAddress == senderAccount.address)? false : true)
 }
 
 module.exports = BiocoinContract;
