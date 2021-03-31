@@ -12,6 +12,7 @@ router.use('/operation', require('./operationRoute'));
 router.use('/history', require('./historyRoute'));
 router.use('/processable-data', require('./processableDataRoute'));
 router.use('/process-request', require('./processRequestRoute'));
+router.use('/account', require('./accountRoute'));
 
 module.exports = router;
 
