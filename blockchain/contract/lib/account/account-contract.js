@@ -1,21 +1,13 @@
 'use strict';
 
-const { Contract, Context } = require('fabric-contract-api');
 const Account = require('./account.js');
-const AccountList = require('./account-list.js');
 const CryptoUtils = require('./../crypto-utils')
+const { ActiveContext, ActiveContract } = require('./../active-contract')
 
 
-class AccountContext extends Context {
-    constructor() {
-        super();
-        this.accountList = new AccountList(this);
-    }
-}
-
-class AccountContract extends Contract {
+class AccountContract extends ActiveContract {
     createContext() {
-        return new AccountContext();
+        return new ActiveContext();
     }
 
     async createAccount(ctx, accountAttributes) {

@@ -1,6 +1,7 @@
 'use strict';
 
 const { Contract, Context } = require('fabric-contract-api');
+const { ActiveContext, ActiveContract } = require('./../active-contract')
 const AccountList = require('./../account/account-list.js');
 const BiocoinOperations = require('./biocoin-operations.js');
 
@@ -9,14 +10,14 @@ const CryptoUtils = require('./../crypto-utils')
 
 
 
-class AccountContext extends Context {
+class AccountContext extends ActiveContext {
     constructor() {
         super();
         this.accountList = new AccountList(this);
     }
 }
 
-class BiocoinContract extends Contract {
+class BiocoinContract extends ActiveContract {
     createContext() {
         return new AccountContext();
     }
@@ -34,7 +35,7 @@ class BiocoinContract extends Contract {
 }
 
 function validateTransference(ctx, senderAccount, amount){
-    if(verifySenderAccount(ctx, senderAccount)){
+    if(verifySenderAccount(ctx, senderAccount) == false){
         throw new Error('unauthorized')
     }
     if(amount<0){
@@ -47,10 +48,11 @@ function validateTransference(ctx, senderAccount, amount){
 }
 
 function verifySenderAccount(ctx, senderAccount){
-    const certificate = CryptoUtils.getUserCertificate(ctx)
-    const publicKey = CryptoUtils.getPublicKeyFromCertificate(certificate)
-    const userAddress = CryptoUtils.getAddressFromPublicKey(publicKey)
-    return ( (userAddress == senderAccount.address)? false : true)
+    return ctx.user.address == senderAccount.address
+    // const certificate = CryptoUtils.getUserCertificate(ctx)
+    // const publicKey = CryptoUtils.getPublicKeyFromCertificate(certificate)
+    // const userAddress = CryptoUtils.getAddressFromPublicKey(publicKey)
+    // return ( (userAddress == senderAccount.address)? false : true)
 }
 
 module.exports = BiocoinContract;

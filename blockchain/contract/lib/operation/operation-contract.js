@@ -1,18 +1,18 @@
 'use strict';
 
-const { Contract, Context } = require('fabric-contract-api');
 const Operation = require('./operation.js');
 const OperationList = require('./operation-list.js');
+const { ActiveContext, ActiveContract } = require('./../active-contract')
 
 
-class OperationContext extends Context {
+class OperationContext extends ActiveContext {
     constructor() {
         super();
         this.operationList = new OperationList(this);
     }
 }
 
-class OperationContract extends Contract {
+class OperationContract extends ActiveContract {
     createContext() {
         return new OperationContext();
     }

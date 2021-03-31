@@ -1,18 +1,18 @@
 'use strict';
 
-const { Contract, Context } = require('fabric-contract-api');
 const Processor = require('./processor.js');
 const ProcessorList = require('./processor-list.js');
+const { ActiveContext, ActiveContract } = require('./../active-contract')
 
 
-class ProcessorContext extends Context {
+class ProcessorContext extends ActiveContext {
     constructor() {
         super();
         this.processorList = new ProcessorList(this);
     }
 }
 
-class ProcessorContract extends Contract {
+class ProcessorContract extends ActiveContract {
     createContext() {
         return new ProcessorContext();
     }

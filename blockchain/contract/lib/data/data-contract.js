@@ -1,11 +1,10 @@
 'use strict';
 
-const { Contract, Context } = require('fabric-contract-api');
 const Data = require('./data.js');
 const DataList = require('./data-list.js');
+const { ActiveContext, ActiveContract } = require('./../active-contract')
 
-
-class DataContext extends Context {
+class DataContext extends ActiveContext {
     constructor() {
         super();
         this.dataList = new DataList(this);
@@ -13,27 +12,27 @@ class DataContext extends Context {
 }
 
 
-class DataContract extends Contract {
+class DataContract extends ActiveContract {
     createContext() {
         return new DataContext();
     }
 
     async uploadRawData(ctx, dataId, dataAttributes) {
-        const newDataAttributes = handleDataAttributes( dataId, 'raw_data', dataAttributes )
+        const newDataAttributes = handleDataAttributes(ctx,  dataId, 'raw_data', dataAttributes )
         const data = Data.createInstance(newDataAttributes);
         await ctx.dataList.addData(data);
         return data;
     }
 
     async uploadProcessedData(ctx, dataId, dataAttributes) {
-        const newDataAttributes = handleDataAttributes(dataId, 'processed_data', dataAttributes)
+        const newDataAttributes = handleDataAttributes(ctx, dataId, 'processed_data', dataAttributes)
         const data = Data.createInstance(newDataAttributes);
         await ctx.dataList.addData(data);
         return data;
     }
 
     async updateData(ctx, type, dataId, dataAttributes){
-        const newDataAttributes = handleDataAttributes(dataId, type, dataAttributes);
+        const newDataAttributes = handleDataAttributes(ctx, dataId, type, dataAttributes);
         const data = Data.createInstance(newDataAttributes);
         await ctx.dataList.updateState(data);
         return data
@@ -63,10 +62,11 @@ class DataContract extends Contract {
     }
 }
 
-function handleDataAttributes(id, type, dataAttributes) {
+function handleDataAttributes(ctx, id, type, dataAttributes) {
     const {
-        title, magnet_link, process_request_id, description, collector, owners, price, process_reward, status, created_at, conditions
+        title, magnet_link, process_request_id, description, owners, price, process_reward, status, created_at, conditions
     } = JSON.parse(dataAttributes);
+    const collector = ctx.user.address
     let newDataAttributes = {
         type, id, title, magnet_link, description, collector, process_request_id, owners, price, process_reward, status, created_at, conditions
     }
