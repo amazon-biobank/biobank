@@ -10,9 +10,10 @@ block header
     link(rel='stylesheet', href='/vendor/bootstrap-theme/css/sb-admin-2.min.css')
     link(rel='stylesheet', href='/css/style.css')
 
-body.bg-primary
+body
   #wrapper
-    #content-wrapper.d-flex.flex-column
+    include sidebar.pug
+    #content-wrapper.d-flex.flex-column.bg-secondary
       #content
         block content
 
