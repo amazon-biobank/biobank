@@ -100,7 +100,7 @@ describe('BiocoinContract-biobank@8.0.0' , () => {
         it('should raise unauthorized balance error', async () => {
             const testAccountUtil = new TestAccountUtil()
             const user = await testAccountUtil.createUserAccount(gateway)
-            await TestAccountUtil.createAnotherSampleAccount(gateway)
+            await TestAccountUtil.createSampleAccount(gateway)
 
             const arg0 = TestAccountUtil.generatedAddress;
             const arg1 = TestAccountUtil.anotherGeneratedAddress;
