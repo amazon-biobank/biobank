@@ -1,6 +1,6 @@
 {
     "name": "biobank",
-    "version": "13.0.0",
+    "version": "71.0.0",
     "description": "Biobank contract implemented in JavaScript",
     "main": "index.js",
     "engines": {

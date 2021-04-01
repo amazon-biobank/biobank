@@ -25,7 +25,9 @@ const fabricNetwork = require('fabric-network');
 const SmartContractUtil = require('./js-smart-contract-util');
 const os = require('os');
 const path = require('path');
-const dnaContractJson = "{ \"dnaId\": \"123\", \"parameters\": \{ \"price\": 25 \}, \"created_at\": \"Fri Aug 07 2020\" }"
+const TestDnaContractUtil = require('./test-utils/test-dna-contract-util')
+const TestAccountUtil = require('./test-utils/test-account-util')
+const TestDatautil = require('./test-utils/test-data-util')
 
 
 describe('DnaContractContract-biobank@4.0.0' , () => {
@@ -65,37 +67,56 @@ describe('DnaContractContract-biobank@4.0.0' , () => {
 
     describe('createDnaContract', () =>{
         it('should submit createDnaContract transaction', async () => {
-            const arg0 = '1234';
-            const arg1 = dnaContractJson;
-            const args = [ arg0, arg1];
-            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway); // Returns buffer of transaction return value
-            
-            const dnaContract = JSON.parse(response.toString())
+            const dnaContract = await TestDnaContractUtil.createSampleDnaContract(gateway)
             assert.strictEqual(dnaContract['dnaId'], '123');
-            assert.strictEqual(dnaContract['parameters']['price'], 25);
+            assert.strictEqual(dnaContract['parameters']['price'], 10);
         }).timeout(10000);
     });
 
     describe('readDnaContract', () =>{
         it('should evaluate readDnaContract transaction', async () => {
-            // TODO: populate transaction parameters
-            const arg0 = 'EXAMPLE';
+            await TestDnaContractUtil.createSampleDnaContract(gateway)
+            const arg0 = TestDnaContractUtil.generatedId;
             const args = [ arg0];
             const response = await SmartContractUtil.evaluateTransaction('DnaContractContract', 'readDnaContract', args, gateway); // Returns buffer of transaction return value
-            
-            // TODO: Update with return value of transaction
-            // assert.strictEqual(JSON.parse(response.toString()), undefined);
+            const dnaContract = JSON.parse(response.toString())
+            assert.strictEqual(dnaContract['dnaId'], '123');
         }).timeout(10000);
     });
 
     describe('getAllDnaContract', () =>{
         it('should submit getAllDnaContract transaction', async () => {
-            // TODO: Update with parameters of transaction
+            await TestDatautil.createSampleData(gateway)
+            await TestDatautil.createAnotherSampleData(gateway)
+            await TestDnaContractUtil.createSampleDnaContract(gateway)
+            await TestDnaContractUtil.createAnotherSampleDnaContract(gateway)
             const args = [];
             const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'getAllDnaContract', args, gateway); // Returns buffer of transaction return value
             
-            // TODO: Update with return value of transaction
-            // assert.strictEqual(JSON.parse(response.toString()), undefined);
+            const json_response = JSON.parse(response.toString())
+            assert.strictEqual(json_response.length, 2);
+            assert.strictEqual(json_response[1]['dnaId'], "123");
+            assert.strictEqual(json_response[0]['dnaId'], "321");
+        }).timeout(10000);
+    });
+
+    describe('executeContract', () =>{
+        it('should submit executeContract buy_dna transaction', async () => {
+            const testAccountUtil = new TestAccountUtil()
+            const user = await testAccountUtil.createUserAccount(gateway)
+            await TestAccountUtil.createAnotherSampleAccount(gateway)
+
+            await TestDatautil.createSampleData(gateway)
+            await TestDnaContractUtil.createSampleDnaContract(gateway)
+
+            const arg0 = TestDnaContractUtil.generatedId;
+            const arg1 = "{\"type\": \"buy_dna\"}";
+            const args = [ arg0, arg1];
+            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'executeContract', args, gateway); // Returns buffer of transaction return value
+            
+            const json_response = JSON.parse(response.toString())
+            assert.strictEqual(json_response.type, 'buy');
+            assert.strictEqual(json_response.user, user.address);
         }).timeout(10000);
     });
 

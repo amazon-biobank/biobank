@@ -1,5 +1,3 @@
-'use strict';
-
 const { Contract, Context } = require('fabric-contract-api');
 const { ActiveContext, ActiveContract } = require('./../active-contract')
 const AccountList = require('./../account/account-list.js');
@@ -23,36 +21,10 @@ class BiocoinContract extends ActiveContract {
     }
 
     async transferBiocoins(ctx, senderAddress, receiverAddress, amount){
-        let senderAccount = await ctx.accountList.getAccount(senderAddress);
-        let receiverAccount = await ctx.accountList.getAccount(receiverAddress);
-        
-        if( validateTransference(ctx, senderAccount, amount) == false ) return
-        senderAccount = await BiocoinOperations.withdraw_biocoins(ctx, senderAccount, amount)
-        receiverAddress = await BiocoinOperations.deposit_biocoins(ctx, receiverAccount, amount)
-
-        return [senderAccount, receiverAccount]
+        return await BiocoinOperations.transferBiocoins(ctx, senderAddress, receiverAddress, amount)
     }
 }
 
-function validateTransference(ctx, senderAccount, amount){
-    if(verifySenderAccount(ctx, senderAccount) == false){
-        throw new Error('unauthorized')
-    }
-    if(amount<0){
-        throw new Error('invalid Transaction')
-    }
-    if(senderAccount.balance < amount){
-        throw new Error('balance Insuficient')
-    }
-    return true
-}
 
-function verifySenderAccount(ctx, senderAccount){
-    return ctx.user.address == senderAccount.address
-    // const certificate = CryptoUtils.getUserCertificate(ctx)
-    // const publicKey = CryptoUtils.getPublicKeyFromCertificate(certificate)
-    // const userAddress = CryptoUtils.getAddressFromPublicKey(publicKey)
-    // return ( (userAddress == senderAccount.address)? false : true)
-}
 
 module.exports = BiocoinContract;

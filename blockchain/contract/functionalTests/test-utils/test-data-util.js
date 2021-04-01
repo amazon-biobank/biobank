@@ -1,6 +1,3 @@
-// const accountJson = "{ \"public_key\": \"-----BEGIN PUBLIC KEY-----\\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEokKxqiGe3B7Pa7eXFAiEdOte5QGk\\nmPolwHN25oxOKlvUomPeKLf9uX0yrO8K3S6zI1A4ZdgOCqWALJYVFklk4Q==\\n-----END PUBLIC KEY-----\\n\", \"name\": \"John Smith\" ,\"created_at\": \"Fri Aug 07 2020\" }"
-// const accountJson2 = "{ \"public_key\": \"blablabla another public key\", \"name\": \"Emma Smith\" ,\"created_at\": \"Fri Aug 07 2020\" }"
-// const { X509Certificate } = require('crypto')
 const SmartContractUtil = require('./../js-smart-contract-util');
 const dnaJson = "{ \"title\": \"Meu dado de DNA\", \"created_at\": \"Fri Aug 07 2020\", \"magnet_link\": \"magnet:?xt=urn:btih:cd04721d0f1251306c30812bc943193d9c5de79f&dn=ubuntu-18.04.5-desktop-amd64.iso&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce\", \"description\": \"descrição stststs\", \"collector\": \"euzinho\",  \"processor\": \"Intel\", \"owners\": \"eu\", \"price\": \"322\", \"conditions\": \"essas condições\" }"
 const dnaJson2 = "{ \"title\": \"DNA Coronavirus\", \"created_at\": \"Fri Aug 07 2020\", \"magnet_link\": \"magnet:?xt=urn:btih:73cac8c3a63c075a6110d562500f51c90ad9ea9c&dn=coronavirus.txt\", \"description\": \"descrição stststs\", \"price\": \"322\", \"conditions\": \"essas condições\" }"
