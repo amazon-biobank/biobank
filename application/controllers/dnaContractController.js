@@ -1,4 +1,3 @@
-// const InsertCertificateService = require('./../services/insertCertificateService')
 const DnaContractContract = require('../contract/dnaContractContract');
 const ControllerUtil = require('./ControllerUtil.js');
 
@@ -18,7 +17,6 @@ exports.create = async function(req, res, next){
 
 exports.show = async function(req, res, next){
   const dnaContractContract = new DnaContractContract();
-  console.log(req.params.dnacontract)
   const dnaContract = await dnaContractContract.readDnaContract(req.params.dnaContract)
 
   dnaContract.created_at = ControllerUtil.formatDate(new Date(dnaContract.created_at))

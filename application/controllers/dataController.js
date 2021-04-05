@@ -53,14 +53,11 @@ exports.show = async function(req, res, next){
 
   const dataContract = new DataContract();
   const data = await dataContract.readData(dataId);
+  const dnaContract = await getDnaContract(data.id)
 
   data.type = ControllerUtil.formatDataType(data.type);
   data.status = ControllerUtil.formatDataStatus(data.status);
   data.created_at = ControllerUtil.formatDate(new Date(data.created_at));
-
-  const dnaContractId = ControllerUtil.getHash(data.id)
-  const dnaContractContract = new DnaContractContract();
-  const dnaContract = await dnaContractContract.readDnaContract(dnaContractId)
 
   res.render('data/show', { data, dnaContract });
 };
@@ -138,5 +135,11 @@ async function updateProcessRequestAndRawData(processRequestId, processedData){
   let rawData = await dataContract.readData(processRequest.raw_data_id);
   rawData.status = 'processed';
   await dataContract.updateData(rawData);
+}
+
+async function getDnaContract(dnaId){
+  const dnaContractId = ControllerUtil.getHash(dnaId)
+  const dnaContractContract = new DnaContractContract();
+  return await dnaContractContract.readDnaContract(dnaContractId)
 }
 
