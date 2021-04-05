@@ -1,5 +1,6 @@
 const DataContract = require('../contract/dataContract');
 const ProcessRequestContract = require('../contract/processRequestContract');
+const DnaContractContract = require('../contract/dnaContractContract');
 const ControllerUtil = require('./ControllerUtil.js');
 
 exports.index = async function(req, res, next){
@@ -57,7 +58,11 @@ exports.show = async function(req, res, next){
   data.status = ControllerUtil.formatDataStatus(data.status);
   data.created_at = ControllerUtil.formatDate(new Date(data.created_at));
 
-  res.render('data/show', { data });
+  const dnaContractId = ControllerUtil.getHash(data.id)
+  const dnaContractContract = new DnaContractContract();
+  const dnaContract = await dnaContractContract.readDnaContract(dnaContractId)
+
+  res.render('data/show', { data, dnaContract });
 };
 
 exports.listOperations = async function(req, res, next){
