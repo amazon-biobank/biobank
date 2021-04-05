@@ -3,8 +3,8 @@
 const SmartContract = require('./smartContract.js');
 
 class DnaContractContract extends SmartContract{
-  async createDnaContract(processor){
-    await this.submitTransaction('DnaContractContract:createDnaContract', processor.id, JSON.stringify(processor))
+  async createDnaContract(dnaContract){
+    await this.submitTransaction('DnaContractContract:createDnaContract', JSON.stringify(dnaContract))
   }
 
   async readDnaContract(dnaContractID) {

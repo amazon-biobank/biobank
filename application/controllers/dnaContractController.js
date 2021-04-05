@@ -4,13 +4,16 @@ const ControllerUtil = require('./ControllerUtil.js');
 
 
 exports.new = async function(req, res, next){
-  res.render('dnaContract/new', { });
+  const dnaId = req.params.dnaId
+  res.render('dnaContract/new', {dnaId });
 };
 
 exports.create = async function(req, res, next){
-  // insertCertificateService = new InsertCertificateService()
-  // await insertCertificateService.insertCertificate(req)
-  res.redirect("/dnaContract/" + 123)
+  let dnaContract = createDnaContractFromRequest(req);
+
+  const dnaContractContract = new DnaContractContract();
+  await dnaContractContract.createDnaContract(dnaContract)
+  res.redirect("/dnaContract/" + dnaContract.id)
 };
 
 exports.show = async function(req, res, next){
@@ -24,3 +27,11 @@ exports.show = async function(req, res, next){
 
 
 
+function createDnaContractFromRequest(req){
+  return {
+    dnaId: req.body.dnaId,
+    parameters: { price: req.body.price},
+    id: ControllerUtil.getHash(req.body.dnaId),
+    created_at: new Date().toDateString()
+  }
+}

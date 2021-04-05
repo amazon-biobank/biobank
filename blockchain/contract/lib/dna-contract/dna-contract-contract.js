@@ -74,7 +74,7 @@ function handleDnaContractAttributes(dnaContractAttributes) {
 
 async function validateContractCreation(ctx, dnaContractAttributes){
     const dna = await getData(ctx, dnaContractAttributes.dnaId)
-    if(ctx.user.address != dna.collector ){
+    if(dna.collector == undefined || ctx.user.address != dna.collector ){
         throw new Error('Unauthorized')
     }
     // const dnaContractId = CryptoUtils.getHash(dna.id)
