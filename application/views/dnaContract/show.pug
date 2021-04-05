@@ -1,0 +1,30 @@
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .container.mt-4
+    h1 Detalhes do Smart Contract
+    .card.mb-4
+      .card-header Smart Contract
+      .card-body
+        form
+          .form-group
+            label.mb-1(for='dnaId') ID do DNA correspondente
+            input#dnaId.form-control(disabled type='text' value= dnaContract.dnaId)
+          .form-row
+            .form-group.col-md-6
+              label.mb-1(for='id') ID
+              input#id.form-control(disabled type='text'  value=dnaContract.id)
+            .form-group.col-md-6
+              label.mb-1(for='created_at') Criado em
+              input#id.form-control(disabled type='text'  value=dnaContract.created_at)
+          .card
+            .card-header Detalhes
+            .card-body
+              .form-group 
+                label.mb-1(for='price') Preço
+                input#price.form-control(disabled type='text'  value=dnaContract.parameters.price)
+
+
+block append scripts
