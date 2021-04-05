@@ -6,7 +6,10 @@ block content
   .container.mt-4
     h1 Detalhes do Smart Contract
     .card.mb-4
-      .card-header Smart Contract
+      .card-header.card-header.d-flex.justify-content-between.align-items-center Smart Contract
+        div 
+          a.btn.btn-primary.btn-sm.text-white(data-toggle="modal" data-target="#buyModal" title="Comprar o dado")
+            | Comprar o dado
       .card-body
         form
           .form-group
@@ -25,6 +28,7 @@ block content
               .form-group 
                 label.mb-1(for='price') Preço
                 input#price.form-control(disabled type='text'  value=dnaContract.parameters.price)
+  include components/buy-modal.pug
 
 
 block append scripts

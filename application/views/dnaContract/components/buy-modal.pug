@@ -1,0 +1,15 @@
+.modal.fade(id= "buyModal" tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Confirmar compra?
+        button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+      .modal-body Clique em &quot;Comprar&quot; abaixo para confirmar a compra por 
+        = dnaContract.parameters.price
+        |  moedas
+      .modal-footer
+        button.btn.btn-secondary(type='button' data-dismiss='modal') Cancelar
+        form.user(action='execute-contract/' + dnaContract.id method='post')
+          input#type(hidden name='type' type='text' value='buy_dna')
+          input.btn.btn-primary.btn-user(type='submit' value='Comprar')

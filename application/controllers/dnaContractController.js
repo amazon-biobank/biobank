@@ -1,3 +1,4 @@
+const Operation = require('../../blockchain/contract/lib/operation/operation');
 const DnaContractContract = require('../contract/dnaContractContract');
 const ControllerUtil = require('./ControllerUtil.js');
 
@@ -21,6 +22,17 @@ exports.show = async function(req, res, next){
 
   dnaContract.created_at = ControllerUtil.formatDate(new Date(dnaContract.created_at))
   res.render("dnaContract/show", {dnaContract})
+};
+
+exports.execute = async function(req, res, next){
+  const options = { type: req.body.type }
+  const dnaContractId = req.params.dnaContract
+  console.log(options)
+
+  const dnaContractContract = new DnaContractContract();
+  const operation = await dnaContractContract.executeContract(dnaContractId, options)
+
+  res.redirect("/operation/" + operation.id)
 };
 
 

@@ -18,7 +18,7 @@ class OperationContract extends ActiveContract {
     }
 
     async createOperation(ctx, id, operationAttributes) {
-        const newOperationAttributes = handleOperationAttributes(id, operationAttributes)
+        const newOperationAttributes = handleOperationAttributes(ctx, id, operationAttributes)
         const operation = Operation.createInstance(newOperationAttributes);
         await ctx.operationList.addOperation(operation);
         return operation;
@@ -42,10 +42,10 @@ class OperationContract extends ActiveContract {
     }
 }
 
-function handleOperationAttributes(id, operationAttributes) {
-    const { data_id, type, user, transaction_id, created_at, details } = JSON.parse(operationAttributes);
+function handleOperationAttributes(ctx, id, operationAttributes) {
+    const { data_id, type, user, created_at, details } = JSON.parse(operationAttributes);
     const newOperationAttributes = {
-        id, data_id, type, user, transaction_id, created_at, details
+        id, data_id, type, user, transaction_id: ctx.stub.getTxID(), created_at, details
     }
     return newOperationAttributes;
 }
