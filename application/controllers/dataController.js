@@ -50,7 +50,6 @@ exports.createProcessedData = async function(req, res, next){
 
 exports.show = async function(req, res, next){
   const dataId = req.params.dataId;
-
   const dataContract = new DataContract();
   const data = await dataContract.readData(dataId);
   const dnaContract = await getDnaContract(data.id)
@@ -64,7 +63,6 @@ exports.show = async function(req, res, next){
 
 exports.listOperations = async function(req, res, next){
   const dataId = req.params.dataId;
-
   const dataContract = new DataContract();
   const data = await dataContract.readData(dataId);
   const operations = await dataContract.getAllOperation(req.params.dataId);
@@ -82,10 +80,6 @@ exports.listOperations = async function(req, res, next){
 };
 
 function createRawDataFromRequest(req){
-  // DEFAULT VARIABLES, MUST BE CHANGED
-  let collector = 'USER X'
-  let default_price = 100
-  let default_process_reward = 10
   return {
     type : 'raw_data',
     id: ControllerUtil.getHashFromMagneticLink(req.body.magnet_link),
@@ -93,20 +87,11 @@ function createRawDataFromRequest(req){
     status: 'unprocessed',
     magnet_link: req.body.magnet_link,
     description: req.body.description,
-    collector: collector,
-    owners: [collector],
-    price: default_price,
-    process_reward: default_process_reward,
-    created_at: new Date().toDateString(),
-    conditions: ''
+    created_at: new Date().toDateString()
   }
 }
 
 function createProcessedDataFromRequest(req){
-  // DEFAULT VARIABLES, MUST BE CHANGED
-  let collector = 'USER X'
-  let default_price = 1000
-  let default_process_reward = 10
   return {
     type : 'processed_data',
     id: ControllerUtil.getHashFromMagneticLink(req.body.magnet_link),
@@ -114,12 +99,7 @@ function createProcessedDataFromRequest(req){
     status: 'processed',
     magnet_link: req.body.magnet_link,
     description: req.body.description,
-    collector: collector,
-    owners: [collector],
-    price: default_price,
-    process_reward: default_process_reward,
     created_at: new Date().toDateString(),
-    conditions: '',
     process_request_id: req.body.process_request_id
   }
 }

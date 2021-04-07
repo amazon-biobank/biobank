@@ -27,7 +27,6 @@ exports.show = async function(req, res, next){
 exports.execute = async function(req, res, next){
   const options = { type: req.body.type }
   const dnaContractId = req.params.dnaContract
-  console.log(options)
 
   const dnaContractContract = new DnaContractContract();
   const operation = await dnaContractContract.executeContract(dnaContractId, options)

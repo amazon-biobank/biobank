@@ -64,12 +64,12 @@ class DataContract extends ActiveContract {
 
 function handleDataAttributes(ctx, id, type, dataAttributes) {
     const {
-        title, magnet_link, process_request_id, description, price, process_reward, status, created_at, conditions
+        title, magnet_link, process_request_id, description,  status, created_at
     } = JSON.parse(dataAttributes);
     const collector = ctx.user.address
     const owners = [ ctx.user.address ]
     let newDataAttributes = {
-        type, id, title, magnet_link, description, collector, process_request_id, owners, price, process_reward, status, created_at, conditions
+        type, id, title, magnet_link, description, collector, process_request_id, owners, status, created_at
     }
     if (type == 'raw_data') { delete  newDataAttributes.process_request_id };
     return newDataAttributes;
