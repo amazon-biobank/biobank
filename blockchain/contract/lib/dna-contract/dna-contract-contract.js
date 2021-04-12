@@ -57,7 +57,7 @@ class DnaContractContract extends ActiveContract {
             return operation
         }
         return
-    }  
+    }
 }
 
 function handleDnaContractAttributes(dnaContractAttributes) {

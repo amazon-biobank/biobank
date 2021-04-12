@@ -28,8 +28,8 @@ class AccountContract extends ActiveContract {
 }
 
 function handleAccountAttributes(accountAttributes) {
-    const { public_key, name, created_at } = JSON.parse(accountAttributes);
-    const address = CryptoUtils.getAddressFromPublicKey(public_key)
+    const { certificate, name, created_at } = JSON.parse(accountAttributes);
+    const address = CryptoUtils.getAddress(certificate)
     const newAccountAttributes = {
         id: address, address, name, created_at, balance: 10  //development purpose only: change later
     }

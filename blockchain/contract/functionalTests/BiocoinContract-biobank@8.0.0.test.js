@@ -36,6 +36,7 @@ describe('BiocoinContract-biobank@8.0.0' , () => {
     const gateway = new fabricNetwork.Gateway();
     let wallet;
     const identityName = 'Org1 Admin';
+    // const identityName = 'user';
     let connectionProfile;
 
     before(async () => {
