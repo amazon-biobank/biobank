@@ -15,6 +15,7 @@ class SmartContract {
     const result = await this.contract.submitTransaction.apply(this.contract, arguments);
     await this.gateway.disconnect();
     console.log(result.toString())
+    return JSON.parse(result.toString());
   }
 
   async evaluateTransaction(){

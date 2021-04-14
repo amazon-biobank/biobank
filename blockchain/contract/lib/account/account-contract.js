@@ -1,24 +1,17 @@
 'use strict';
 
-const { Contract, Context } = require('fabric-contract-api');
 const Account = require('./account.js');
-const AccountList = require('./account-list.js');
+const CryptoUtils = require('./../crypto-utils')
+const { ActiveContext, ActiveContract } = require('./../active-contract')
 
 
-class AccountContext extends Context {
-    constructor() {
-        super();
-        this.accountList = new AccountList(this);
-    }
-}
-
-class AccountContract extends Contract {
+class AccountContract extends ActiveContract {
     createContext() {
-        return new AccountContext();
+        return new ActiveContext();
     }
 
-    async createAccount(ctx, id, accountAttributes) {
-        const newAccontAttributes = handleAccountAttributes(id, accountAttributes)
+    async createAccount(ctx, accountAttributes) {
+        const newAccontAttributes = handleAccountAttributes(accountAttributes)
         const account = Account.createInstance(newAccontAttributes);
         await ctx.accountList.addAccount(account);
         return account;
@@ -34,10 +27,11 @@ class AccountContract extends Contract {
     }
 }
 
-function handleAccountAttributes(id, accountAttributes) {
-    const { public_key, name, created_at } = JSON.parse(accountAttributes);
+function handleAccountAttributes(accountAttributes) {
+    const { certificate, name, created_at } = JSON.parse(accountAttributes);
+    const address = CryptoUtils.getAddress(certificate)
     const newAccountAttributes = {
-        id, public_key, name, created_at, balance: 0
+        id: address, address, name, created_at, balance: 10  //development purpose only: change later
     }
     return newAccountAttributes;
 }

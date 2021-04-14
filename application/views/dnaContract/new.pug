@@ -1,0 +1,30 @@
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .card.o-hidden.border-0.shadow-lg.my-5.ml-5.mr-5
+    .card-body.p-0
+      .row
+        .col-lg-12
+          .p-5
+            .text-center
+              h1.h4.text-gray-900.mb-4 Adicionar um Smart Contract
+              p.mb-4 Um Smart Contract é responsável por definir as condições de venda do DNA
+            form.user(action='/dnaContract/new' method='post')
+              .form-group
+                label.mb-1(for='dnaId') ID do DNA correspondente
+                input#dnaId.form-control(readonly name='dnaId' type='text' value=dnaId)
+              .card
+                .card-header Detalhes
+                .card-body
+                  .form-group 
+                    label.mb-1(for='price') Preço
+                    input#price.form-control(name='price' type='text' )
+              hr
+              .float-right.mb-4.inline-block
+                a.btn.btn-danger.btn-user.mr-3.px-5(href='/dnaContract')
+                  | Cancelar
+                input.btn.btn-primary.btn-user.px-5(type='submit' value='Adicionar')
+
+block append scripts

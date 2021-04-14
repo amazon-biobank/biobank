@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
-const magnet = require('magnet-uri')
+const magnet = require('magnet-uri');
+const crypto = require('crypto')
 
 class ControllerUtil {
   static formatDate (date) {
@@ -45,6 +46,12 @@ class ControllerUtil {
 
   static getHashFromMagneticLink(magnetLink){
     return magnet.decode(magnetLink).infoHash
+  }
+
+  static getHash(payload) {
+    const hash = crypto.createHash('sha256');
+    const data = hash.update(payload, 'utf-8');
+    return data.digest('hex') 
   }
 }
 

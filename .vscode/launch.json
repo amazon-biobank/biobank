@@ -5,6 +5,21 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "fabric:node",
+      "request": "launch",
+      "name": "Debug Smart Contract"
+    },
+    {
+      "name": "Attach",
+      "port": 9229,
+      "request": "attach",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "pwa-node"
+    },
+ 
+    {
       "name": "Attach to Process",
       "type": "node",
       "request": "attach",

@@ -1,24 +1,24 @@
 'use strict';
 
-const { Contract, Context } = require('fabric-contract-api');
 const Operation = require('./operation.js');
 const OperationList = require('./operation-list.js');
+const { ActiveContext, ActiveContract } = require('./../active-contract')
 
 
-class OperationContext extends Context {
+class OperationContext extends ActiveContext {
     constructor() {
         super();
         this.operationList = new OperationList(this);
     }
 }
 
-class OperationContract extends Contract {
+class OperationContract extends ActiveContract {
     createContext() {
         return new OperationContext();
     }
 
     async createOperation(ctx, id, operationAttributes) {
-        const newOperationAttributes = handleOperationAttributes(id, operationAttributes)
+        const newOperationAttributes = handleOperationAttributes(ctx, id, operationAttributes)
         const operation = Operation.createInstance(newOperationAttributes);
         await ctx.operationList.addOperation(operation);
         return operation;
@@ -42,10 +42,10 @@ class OperationContract extends Contract {
     }
 }
 
-function handleOperationAttributes(id, operationAttributes) {
-    const { data_id, type, user, transaction_id, created_at, details } = JSON.parse(operationAttributes);
+function handleOperationAttributes(ctx, id, operationAttributes) {
+    const { data_id, type, user, created_at, details } = JSON.parse(operationAttributes);
     const newOperationAttributes = {
-        id, data_id, type, user, transaction_id, created_at, details
+        id, data_id, type, user, transaction_id: ctx.stub.getTxID(), created_at, details
     }
     return newOperationAttributes;
 }

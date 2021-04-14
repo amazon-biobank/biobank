@@ -1,18 +1,18 @@
 'use strict';
 
-const { Contract, Context } = require('fabric-contract-api');
 const ProcessRequest = require('./process-request.js');
 const ProcessRequestList = require('./process-request-list.js');
+const { ActiveContext, ActiveContract } = require('./../active-contract')
 
 
-class ProcessRequestContext extends Context {
+class ProcessRequestContext extends ActiveContext {
     constructor() {
         super();
         this.processRequestList = new ProcessRequestList(this);
     }
 }
 
-class ProcessRequestContract extends Contract {
+class ProcessRequestContract extends ActiveContract {
     createContext() {
         return new ProcessRequestContext();
     }

@@ -105,7 +105,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
         img.img-profile.rounded-circle(src='https://source.unsplash.com/QAB-WJcbgJk/60x60')
       // Dropdown - User Information
       .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby='userDropdown')
-        a.dropdown-item(href='#')
+        a.dropdown-item(href='/account/show-my-account')
           i.fas.fa-user.fa-sm.fa-fw.mr-2.text-gray-400
           |                   Profile
         a.dropdown-item(href='#')
@@ -118,3 +118,15 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
         a.dropdown-item(href='#' data-toggle='modal' data-target='#logoutModal')
           i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400
           |                   Logout
+
+#logoutModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Pronto para partir?
+        button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+      .modal-body Clique &quot;Logout&quot; abaixo para deletar o certificado inserido
+      .modal-footer
+        button.btn.btn-secondary(type='button' data-dismiss='modal') Cancelar
+        a.btn.btn-primary(href='/session/destroy') Logout

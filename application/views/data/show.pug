@@ -9,6 +9,12 @@ block content
       .card-header.d-flex.justify-content-between.align-items-center
         | Dado
         div
+          if(dnaContract)
+            a.btn.btn-primary.btn-sm.mr-4(href='/dnaContract/'+ dnaContract.id)
+              | Ver smart contract
+          else 
+            a.btn.btn-danger.btn-sm.mr-4(href='/dnaContract/new/'+data.id)
+              | Criar smart Contract
           a.btn.btn-primary.btn-sm.mr-4(href='/process-request?search='+data.key)
             | Ver solicitações de processamento
           a.btn.btn-secondary.btn-sm(href=data.key+'/list-operations')
