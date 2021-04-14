@@ -45,3 +45,46 @@ export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org2.e
 export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
 export CORE_PEER_ADDRESS=localhost:9051
+
+
+# -------------------------------- IBM BLOCKCHAIN
+export MICROFAB_CONFIG='{"port":8080,  "endorsing_organizations": [{"name": "Org1"}],"channels": [{"name": "mychannel","endorsing_organizations": ["Org1"]}]}'
+START_IMAGE="ibmcom/ibp-microfab:0.0.11"
+docker run -e MICROFAB_CONFIG --label fabric-environment-name="1 Org Local Fabric Microfab" -p 8080:8080 $START_IMAGE
+
+CONTAINER=$(docker ps -f label=fabric-environment-name="1 Org Local Fabric Microfab" -q -a)
+for CONTAINER in $(docker ps -f label=fabric-environment-name="1 Org Local Fabric Microfab" -q -a) 
+do 
+docker rm -f ${CONTAINER}
+done
+
+for VOLUME in $(docker volume ls -f label=fabric-environment-name="1 Org Local Fabric Microfab" -q)
+do 
+docker volume rm -f ${VOLUME} 
+done
+
+
+export MICROFAB_CONFIG='{
+    "port": 8080,
+    "endorsing_organizations":[
+        {
+            "name": "Org1"
+        }
+      ],
+    "channels":[
+        {
+            "name": "channel1",
+            "endorsing_organizations":[
+                "Org1"
+            ]
+        },
+        {
+            "name": "channel2",
+            "endorsing_organizations":[
+                "Org1"
+            ],
+            "capability_level": "V2_0"
+        }
+    ],
+    "timeout": "60s"
+}'
