@@ -1,6 +1,6 @@
 'use strict';
 
-const DataContract = require('./lib/data/data-contract');
+// const DataContract = require('./lib/data/data-contract');
 // const ProcessorContract = require('./lib/processor/processor-contract');
 // const OperationContract = require('./lib/operation/operation-contract');
 // const ProcessRequestContract = require('./lib/process-request/process-request-contract');
@@ -18,4 +18,4 @@ const TestContract = require('./lib/test/test-contract');
 // module.exports.DnaContractContract = DnaContractContract;
 module.exports.TestContract = TestContract;
 
-module.exports.contracts = [ DataContract, ProcessRequestContract, ProcessorContract, OperationContract, AccountContract, BiocoinContract, DnaContractContract];
+module.exports.contracts = [ TestContract ];

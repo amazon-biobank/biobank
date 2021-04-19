@@ -48,7 +48,7 @@ export CORE_PEER_ADDRESS=localhost:9051
 
 
 # -------------------------------- IBM BLOCKCHAIN
-export MICROFAB_CONFIG='{"port":8080,  "endorsing_organizations": [{"name": "Org1"}],"channels": [{"name": "mychannel","endorsing_organizations": ["Org1"]}]}'
+
 START_IMAGE="ibmcom/ibp-microfab:0.0.11"
 docker run -e MICROFAB_CONFIG --label fabric-environment-name="1 Org Local Fabric Microfab" -p 8080:8080 $START_IMAGE
 
@@ -64,6 +64,8 @@ docker volume rm -f ${VOLUME}
 done
 
 
+export MICROFAB_CONFIG='{"port":8080,  "endorsing_organizations": [{"name": "Org1"}],"channels": [{"name": "mychannel","endorsing_organizations": ["Org1"]}]}'
+
 export MICROFAB_CONFIG='{
     "port": 8080,
     "endorsing_organizations":[
@@ -76,10 +78,30 @@ export MICROFAB_CONFIG='{
             "name": "channel1",
             "endorsing_organizations":[
                 "Org1"
-            ]
+            ],
+            "capability_level": "V2_0"
         },
         {
             "name": "channel2",
+            "endorsing_organizations":[
+                "Org1"
+            ],
+            "capability_level": "V2_0"
+        }
+    ],
+    "timeout": "120s"
+}'
+
+export MICROFAB_CONFIG='{
+    "port": 8080,
+    "endorsing_organizations":[
+        {
+            "name": "Org1"
+        }
+      ],
+    "channels":[
+        {
+            "name": "channel1",
             "endorsing_organizations":[
                 "Org1"
             ],
