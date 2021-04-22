@@ -11,7 +11,7 @@ class ConnectService {
     
   }
   
-  async connectNetwork() {
+  async connectNetwork(channel, chaincode) {
     const wallet = await Wallets.newFileSystemWallet(this.walletPath);
     console.log(`Wallet path: ${this.walletPath}`);
 
@@ -24,8 +24,8 @@ class ConnectService {
     let connectionOptions = { wallet, identity: 'userCertificate', discovery: { enabled: true, asLocalhost: true }};
     await gateway.connect(connectionProfile, connectionOptions);
 
-    const network = await gateway.getNetwork('mychannel');
-    const contract = network.getContract('biobank');
+    const network = await gateway.getNetwork(channel);
+    const contract = network.getContract(chaincode);
 
     return { network, contract, gateway }
  }

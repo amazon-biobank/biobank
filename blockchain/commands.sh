@@ -58,10 +58,12 @@ do
 docker rm -f ${CONTAINER}
 done
 
-for VOLUME in $(docker volume ls -f label=fabric-environment-name="1 Org Local Fabric Microfab" -q)
-do 
-docker volume rm -f ${VOLUME} 
-done
+docker volume prune -f
+
+# for VOLUME in $(docker volume ls -f label=fabric-environment-name="1 Org Local Fabric Microfab" -q)
+# do 
+# docker volume rm -f ${VOLUME} 
+# done
 
 
 export MICROFAB_CONFIG='{"port":8080,  "endorsing_organizations": [{"name": "Org1"}],"channels": [{"name": "mychannel","endorsing_organizations": ["Org1"]}]}'
@@ -89,7 +91,7 @@ export MICROFAB_CONFIG='{
             "capability_level": "V2_0"
         }
     ],
-    "timeout": "120s"
+    "timeout": "60s"
 }'
 
 export MICROFAB_CONFIG='{
