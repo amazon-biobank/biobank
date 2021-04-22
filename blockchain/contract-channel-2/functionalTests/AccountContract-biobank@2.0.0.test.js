@@ -99,5 +99,4 @@ describe('AccountContract-biobank@2.0.0' , () => {
             assert.strictEqual(json_response[0]['name'], "Emma Smith");
         }).timeout(10000);
     });
-
 });

@@ -1,5 +1,5 @@
 {
-    "name": "biobank-channel-2",
+    "name": "currency",
     "version": "3.0.0",
     "description": "Biobank contract implemented in JavaScript - channel 2",
     "main": "index.js",

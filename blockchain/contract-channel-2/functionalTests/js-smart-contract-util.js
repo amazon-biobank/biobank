@@ -28,12 +28,12 @@ class SmartContractUtil {
 
     static async submitTransaction(contractName, functionName, args, gateway) {
         // Submit transaction
-        const network = await gateway.getNetwork('channel1');
+        const network = await gateway.getNetwork('channel2');
         let contract;
         if (contractName !== '') {
-            contract = await network.getContract('biobank', contractName);
+            contract = await network.getContract('currency', contractName);
         } else {
-            contract = await network.getContract('biobank');
+            contract = await network.getContract('currency');
         }
         const responseBuffer = await contract.submitTransaction(functionName, ...args);
         return responseBuffer;
@@ -41,12 +41,12 @@ class SmartContractUtil {
 
     static async evaluateTransaction(contractName, functionName, args, gateway) {
         // Evaluate transaction
-        const network = await gateway.getNetwork('channel1');
+        const network = await gateway.getNetwork('channel2');
         let contract;
         if (contractName !== '') {
-            contract = await network.getContract('biobank', contractName);
+            contract = await network.getContract('currency', contractName);
         } else {
-            contract = await network.getContract('biobank');
+            contract = await network.getContract('currency');
         }
         const responseBuffer = await contract.evaluateTransaction(functionName, ...args);
         return responseBuffer;
