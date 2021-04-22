@@ -13,10 +13,6 @@ class ActiveContext extends Context {
 
 class ActiveContract extends Contract {
   async beforeTransaction(ctx){
-    // const certificate = CryptoUtils.getUserCertificate(ctx)
-    // const publicKey = CryptoUtils.getPublicKeyFromCertificate(certificate)
-    // const userAddress = CryptoUtils.getAddressFromPublicKey(publicKey)
-    // const userAddress = certificate.fingerprint256.replace(/:/g,'')
     const userAddress = CryptoUtils.getUserAddressFromContext(ctx)
     const user = await ctx.accountList.getAccount(userAddress);
     ctx.user = user

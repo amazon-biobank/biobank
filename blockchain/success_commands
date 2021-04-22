@@ -99,4 +99,3 @@ peer lifecycle chaincode commit
  --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 
 peer lifecycle chaincode querycommitted --channelID mychannel --name biochain --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
-

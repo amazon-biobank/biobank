@@ -10,7 +10,7 @@ const OperationContract = require('./../operation/operation-contract')
 const OperationList = require('./../operation/operation-list')
 const DataList = require('./../data/data-list.js');
 const Data = require('../data/data.js');
-const BiocoinOperations = require('./../biocoin/biocoin-operations');
+// const BiocoinOperations = require('./../biocoin/biocoin-operations');
 
 
 
@@ -51,7 +51,7 @@ class DnaContractContract extends ActiveContract {
         if (operationType == 'buy_dna'){
             const dnaContract = await ctx.dnaContractList.getDnaContract(contractId);
             let dna = await getData(ctx, dnaContract.dnaId)
-            await BiocoinOperations.transferBiocoins(ctx, ctx.user.address, dna.collector, dnaContract.parameters.price)
+            // await BiocoinOperations.transferBiocoins(ctx, ctx.user.address, dna.collector, dnaContract.parameters.price)
             dna = await addOwnersInData(ctx, dna)
             const operation = createBuyingOperation(ctx, dna, dnaContract)
             return operation

@@ -7,6 +7,8 @@
 const AccountContract = require('./lib/account/account-contract');
 const BiocoinContract = require('./lib/biocoin/biocoin-contract');
 // const DnaContractContract = require('./lib/dna-contract/dna-contract-contract');
+const TestContract = require('./lib/test/test-contract');
+
 
 // module.exports.DataContract = DataContract;
 // module.exports.ProcessRequestContract = ProcessRequestContract;
@@ -14,6 +16,7 @@ const BiocoinContract = require('./lib/biocoin/biocoin-contract');
 // module.exports.OperationContract = OperationContract;
 module.exports.AccountContract = AccountContract;
 module.exports.BiocoinContract = BiocoinContract;
+module.exports.TestContract = TestContract;
 // module.exports.DnaContractContract = DnaContractContract;
 
-module.exports.contracts = [ AccountContract, BiocoinContract ];
+module.exports.contracts = [ AccountContract, BiocoinContract, TestContract ];

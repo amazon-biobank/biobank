@@ -1,12 +1,25 @@
 const { ActiveContext, ActiveContract } = require('./../active-contract')
+const CryptoUtils = require('./../crypto-utils')
+
 
 class TestContract extends ActiveContract {
   // createContext() {
   //     return new OperationContext();
   // }
 
-  async createText(ctx, key, data) {
-      return  await ctx.stub.putState(key, data);;
+  async createText(ctx, data) {
+    const userAddress = CryptoUtils.getUserAddressFromContext(ctx)
+    // const user = await ctx.accountList.getAccount(userAddress);
+    // const data = [
+    //   "AccountContract:readAccount", 
+    //   [userAddress]
+    // ]
+    // throw(new Error(JSON.stringify(data)))
+    const user = await ctx.stub.invokeChaincode('biobank', data.split(','), 'channel1')
+    throw(new Error(JSON.stringify(user)))
+    ctx.user = user
+
+      return  await ctx.stub.InvokeChaincode('biobank', data, 'channel1')
   }
 
   // async readOperation(ctx, id) {

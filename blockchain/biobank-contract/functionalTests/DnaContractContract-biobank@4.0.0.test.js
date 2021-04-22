@@ -102,9 +102,9 @@ describe('DnaContractContract-biobank@4.0.0' , () => {
 
     describe('executeContract', () =>{
         it('should submit executeContract buy_dna transaction', async () => {
-            const testAccountUtil = new TestAccountUtil()
-            const user = await testAccountUtil.createUserAccount(gateway)
-            await TestAccountUtil.createAnotherSampleAccount(gateway)
+            // const testAccountUtil = new TestAccountUtil()
+            // const user = await testAccountUtil.createUserAccount(gateway)
+            // await TestAccountUtil.createAnotherSampleAccount(gateway)
 
             await TestDatautil.createSampleData(gateway)
             await TestDnaContractUtil.createSampleDnaContract(gateway)
@@ -116,7 +116,7 @@ describe('DnaContractContract-biobank@4.0.0' , () => {
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response.type, 'buy');
-            assert.strictEqual(json_response.user, user.address);
+            // assert.strictEqual(json_response.user, user.address);
         }).timeout(10000);
     });
 
