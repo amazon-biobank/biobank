@@ -1,12 +1,6 @@
-const { Contract, Context } = require('fabric-contract-api');
 const { ActiveContext, ActiveContract } = require('./../active-contract')
 const AccountList = require('./../account/account-list.js');
 const BiocoinOperations = require('./biocoin-operations.js');
-
-const CryptoUtils = require('./../crypto-utils')
-
-
-
 
 class AccountContext extends ActiveContext {
     constructor() {
