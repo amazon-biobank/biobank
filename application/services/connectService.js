@@ -15,8 +15,8 @@ class ConnectService {
     const wallet = await Wallets.newFileSystemWallet(this.walletPath);
     console.log(`Wallet path: ${this.walletPath}`);
 
-    const connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', '1OrgLocalFabricOrg1GatewayConnection.json');
-    // const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+    // const connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', '1OrgLocalFabricOrg1GatewayConnection.json');
+    const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
     let connectionProfile = JSON.parse(fs.readFileSync(connectionProfilePath, 'utf8'));
 
     const gateway = new Gateway();
