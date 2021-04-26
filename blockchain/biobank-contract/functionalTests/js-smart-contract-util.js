@@ -17,7 +17,8 @@ class SmartContractUtil {
     static async getConnectionProfile() {
         const homedir = os.homedir();
         const connectionProfilePath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'gateways', 'Org1 Gateway.json');
-
+        // const connectionProfilePath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        
         const connectionProfileContents = await fs.readFile(connectionProfilePath, 'utf8');
         if (connectionProfilePath.endsWith('.json')) {
             return JSON.parse(connectionProfileContents);

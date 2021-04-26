@@ -31,9 +31,11 @@ describe('AccountContract-biobank@2.0.0' , () => {
 
     const homedir = os.homedir();
     const walletPath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'wallets', 'Org1');
+    const identityName = 'Org1 Admin';
+    // const walletPath = path.join(process.cwd(), '..','..','application', 'fabric-details/wallet');
+    // const identityName = 'admin';
     const gateway = new fabricNetwork.Gateway();
     let wallet;
-    const identityName = 'Org1 Admin';
     let connectionProfile;
 
     before(async () => {

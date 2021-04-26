@@ -11,14 +11,17 @@ class ActiveContext extends Context {
 
 class ActiveContract extends Contract {
   async beforeTransaction(ctx){
-    const userAddress = CryptoUtils.getUserAddressFromContext(ctx)
-    const args = [
-      "AccountContract:readAccount", 
-      userAddress
-    ]
-    ctx.user = await this.queryCurrencyChannel(ctx, args)
-    
-    // throw(new Error(JSON.stringify(ctx.user)))
+    if(ctx.called_contract == undefined){
+      throw(new Error(JSON.stringify(ctx.called_contract)))
+      ctx.called_contract = 'biobank'
+
+      const userAddress = CryptoUtils.getUserAddressFromContext(ctx)
+      const args = [
+        "AccountContract:readAccount", 
+        userAddress
+      ]
+      // ctx.user = await this.queryCurrencyChannel(ctx, args)  
+    }
   } 
 
   async queryCurrencyChannel(ctx, args){
