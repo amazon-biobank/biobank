@@ -8,7 +8,7 @@ PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
 export FABRIC_CFG_PATH=$PWD/../config/
 
 
-peer lifecycle chaincode package ${CHAINCODE_NAME}.tar.gz --path ../biobank-contract/ --lang node --label ${PACKAGE_NAME}
+peer lifecycle chaincode package ${CHAINCODE_NAME}.tar.gz --path ../contract/ --lang node --label ${PACKAGE_NAME}
 
 
 

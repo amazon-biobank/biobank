@@ -3,18 +3,15 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-version: '2.4'
+version: '2'
 
 networks:
   test:
-    name: fabric_test
 
 services:
   couchdb0:
     container_name: couchdb0
-    image: couchdb:3.1.1
-    labels:
-      service: hyperledger-fabric
+    image: couchdb:3.1
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
     environment:
@@ -41,9 +38,7 @@ services:
 
   couchdb1:
     container_name: couchdb1
-    image: couchdb:3.1.1
-    labels:
-      service: hyperledger-fabric
+    image: couchdb:3.1
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
     environment:

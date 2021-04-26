@@ -10,6 +10,7 @@ const OperationContract = require('./../operation/operation-contract')
 const OperationList = require('./../operation/operation-list')
 const DataList = require('./../data/data-list.js');
 const Data = require('../data/data.js');
+// const BiocoinOperations = require('./../biocoin/biocoin-operations');
 
 
 
@@ -102,21 +103,14 @@ async function createBuyingOperation(ctx, dna, dnaContract){
     const operation = new OperationContract()
     const id = uuidv4()
     const operationAttributes = JSON.stringify({
+        data_id: dna.id,
         type: 'buy',
         user: ctx.user.address,
         created_at: new Date().toDateString(),
         details: {
-            data_id: dna.id,
+            price: dnaContract.parameters.price,
             contractId: dnaContract.id
-        },
-        input: [{
-            address: ctx.user.address,
-            value: dnaContract.parameters.price
-        }],
-        output: [{
-            address: dna.collector,
-            value: dnaContract.parameters.price
-        }]
+        }
     })
     return await operation.createOperation(ctx, id, operationAttributes)
 }

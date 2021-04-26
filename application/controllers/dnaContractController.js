@@ -1,3 +1,4 @@
+const Operation = require('../../blockchain/contract/lib/operation/operation');
 const DnaContractContract = require('../contract/dnaContractContract');
 const ControllerUtil = require('./ControllerUtil.js');
 
