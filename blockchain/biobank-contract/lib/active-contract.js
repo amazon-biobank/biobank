@@ -17,8 +17,6 @@ class ActiveContract extends Contract {
       userAddress
     ]
     ctx.user = await this.queryCurrencyChannel(ctx, args)
-    
-    // throw(new Error(JSON.stringify(ctx.user)))
   } 
 
   async queryCurrencyChannel(ctx, args){

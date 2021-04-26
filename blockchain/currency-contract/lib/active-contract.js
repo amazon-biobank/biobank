@@ -17,6 +17,17 @@ class ActiveContract extends Contract {
     const user = await ctx.accountList.getAccount(userAddress);
     ctx.user = user
   } 
+
+  async queryBiobankChannel(ctx, args){
+    const userAddress = CryptoUtils.getUserAddressFromContext(ctx)
+    const args2 = [
+      "OperationContract:readOperation", 
+      '123'
+    ]
+    const response = await ctx.stub.invokeChaincode('biobank', args2, 'channel1')
+    const buff = Buffer.from(response.payload, 'base64')
+    return JSON.parse(buff.toString())
+  }
 }
 
 

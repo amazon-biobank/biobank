@@ -30,6 +30,7 @@ npm install
 
 cd test-network
 
+# https://github.com/IBM-Blockchain/blockchain-vscode-extension/issues/2886
 
 
 # setar para peer 1
@@ -49,7 +50,7 @@ export CORE_PEER_ADDRESS=localhost:9051
 
 # -------------------------------- IBM BLOCKCHAIN
 
-START_IMAGE="ibmcom/ibp-microfab:0.0.11"
+START_IMAGE="ibmcom/ibp-microfab:0.0.13"
 docker run -e MICROFAB_CONFIG --label fabric-environment-name="1 Org Local Fabric Microfab" -p 8080:8080 $START_IMAGE
 
 CONTAINER=$(docker ps -f label=fabric-environment-name="1 Org Local Fabric Microfab" -q -a)

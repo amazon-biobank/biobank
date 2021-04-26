@@ -15,6 +15,8 @@ export PATH=${PWD}/../../bin:${PWD}:$PATH
 export FABRIC_CFG_PATH=${PWD}
 export VERBOSE=false
 
+. ../scripts/utils.sh
+
 # Print the usage message
 function printHelp () {
   echo "Usage: "
@@ -29,8 +31,6 @@ function printHelp () {
   echo "    -t <timeout> - CLI timeout duration in seconds (defaults to 10)"
   echo "    -d <delay> - delay duration in seconds (defaults to 3)"
   echo "    -s <dbtype> - the database backend to use: goleveldb (default) or couchdb"
-  echo "    -i <imagetag> - the tag to be used to launch the network (defaults to \"latest\")"
-  echo "    -cai <ca_imagetag> - the image tag to be used for CA (defaults to \"${CA_IMAGETAG}\")"
   echo "    -verbose - verbose mode"
   echo
   echo "Typically, one would first generate the required certificates and "
@@ -52,38 +52,28 @@ function printHelp () {
 
 # Create Organziation crypto material using cryptogen or CAs
 function generateOrg3() {
-
   # Create crypto material using cryptogen
   if [ "$CRYPTO" == "cryptogen" ]; then
     which cryptogen
     if [ "$?" -ne 0 ]; then
-      echo "cryptogen tool not found. exiting"
-      exit 1
+      fatalln "cryptogen tool not found. exiting"
     fi
-    echo
-    echo "##########################################################"
-    echo "##### Generate certificates using cryptogen tool #########"
-    echo "##########################################################"
-    echo
+    infoln "Generating certificates using cryptogen tool"
 
-    echo "##########################################################"
-    echo "############ Create Org1 Identities ######################"
-    echo "##########################################################"
+    infoln "Creating Org3 Identities"
 
     set -x
     cryptogen generate --config=org3-crypto.yaml --output="../organizations"
     res=$?
-    set +x
+    { set +x; } 2>/dev/null
     if [ $res -ne 0 ]; then
-      echo "Failed to generate certificates..."
-      exit 1
+      fatalln "Failed to generate certificates..."
     fi
 
   fi
 
-  # Create crypto material using Fabric CAs
+  # Create crypto material using Fabric CA
   if [ "$CRYPTO" == "Certificate Authorities" ]; then
-
     fabric-ca-client version > /dev/null 2>&1
     if [[ $? -ne 0 ]]; then
       echo "ERROR! fabric-ca-client binary not found.."
@@ -93,27 +83,19 @@ function generateOrg3() {
       exit 1
     fi
 
-    echo
-    echo "##########################################################"
-    echo "##### Generate certificates using Fabric CA's ############"
-    echo "##########################################################"
-
-    IMAGE_TAG=${CA_IMAGETAG} docker-compose -f $COMPOSE_FILE_CA_ORG3 up -d 2>&1
+    infoln "Generating certificates using Fabric CA"
+    docker-compose -f $COMPOSE_FILE_CA_ORG3 up -d 2>&1
 
     . fabric-ca/registerEnroll.sh
 
     sleep 10
 
-    echo "##########################################################"
-    echo "############ Create Org3 Identities ######################"
-    echo "##########################################################"
-
+    infoln "Creating Org3 Identities"
     createOrg3
 
   fi
 
-  echo
-  echo "Generate CCP files for Org3"
+  infoln "Generating CCP files for Org3"
   ./ccp-generate.sh
 }
 
@@ -121,46 +103,36 @@ function generateOrg3() {
 function generateOrg3Definition() {
   which configtxgen
   if [ "$?" -ne 0 ]; then
-    echo "configtxgen tool not found. exiting"
-    exit 1
+    fatalln "configtxgen tool not found. exiting"
   fi
-  echo "##########################################################"
-  echo "#######  Generating Org3 organization definition #########"
-  echo "##########################################################"
-   export FABRIC_CFG_PATH=$PWD
-   set -x
-   configtxgen -printOrg Org3MSP > ../organizations/peerOrganizations/org3.example.com/org3.json
-   res=$?
-   set +x
-   if [ $res -ne 0 ]; then
-     echo "Failed to generate Org3 config material..."
-     exit 1
-   fi
-  echo
+  infoln "Generating Org3 organization definition"
+  export FABRIC_CFG_PATH=$PWD
+  set -x
+  configtxgen -printOrg Org3MSP > ../organizations/peerOrganizations/org3.example.com/org3.json
+  res=$?
+  { set +x; } 2>/dev/null
+  if [ $res -ne 0 ]; then
+    fatalln "Failed to generate Org3 organization definition..."
+  fi
 }
 
 function Org3Up () {
   # start org3 nodes
   if [ "${DATABASE}" == "couchdb" ]; then
-    IMAGE_TAG=${IMAGETAG} docker-compose -f $COMPOSE_FILE_ORG3 -f $COMPOSE_FILE_COUCH_ORG3 up -d 2>&1
+    docker-compose -f $COMPOSE_FILE_ORG3 -f $COMPOSE_FILE_COUCH_ORG3 up -d 2>&1
   else
-    IMAGE_TAG=$IMAGETAG docker-compose -f $COMPOSE_FILE_ORG3 up -d 2>&1
+    docker-compose -f $COMPOSE_FILE_ORG3 up -d 2>&1
   fi
   if [ $? -ne 0 ]; then
-    echo "ERROR !!!! Unable to start Org3 network"
-    exit 1
+    fatalln "ERROR !!!! Unable to start Org3 network"
   fi
 }
 
 # Generate the needed certificates, the genesis block and start the network.
 function addOrg3 () {
-
   # If the test network is not up, abort
   if [ ! -d ../organizations/ordererOrganizations ]; then
-    echo
-    echo "ERROR: Please, run ./network.sh up createChannel first."
-    echo
-    exit 1
+    fatalln "ERROR: Please, run ./network.sh up createChannel first."
   fi
 
   # generate artifacts if they don't exist
@@ -169,53 +141,34 @@ function addOrg3 () {
     generateOrg3Definition
   fi
 
-  CONTAINER_IDS=$(docker ps -a | awk '($2 ~ /fabric-tools/) {print $1}')
-  if [ -z "$CONTAINER_IDS" -o "$CONTAINER_IDS" == " " ]; then
-    echo "Bringing up network"
-    Org3Up
-  fi
+  infoln "Bringing up Org3 peer"
+  Org3Up
 
   # Use the CLI container to create the configuration transaction needed to add
   # Org3 to the network
-  echo
-  echo "###############################################################"
-  echo "####### Generate and submit config tx to add Org3 #############"
-  echo "###############################################################"
-  docker exec Org3cli ./scripts/org3-scripts/step1org3.sh $CHANNEL_NAME $CLI_DELAY $CLI_TIMEOUT $VERBOSE
+  infoln "Generating and submitting config tx to add Org3"
+  docker exec cli ./scripts/org3-scripts/updateChannelConfig.sh $CHANNEL_NAME $CLI_DELAY $CLI_TIMEOUT $VERBOSE
   if [ $? -ne 0 ]; then
-    echo "ERROR !!!! Unable to create config tx"
-    exit 1
+    fatalln "ERROR !!!! Unable to create config tx"
   fi
 
-  echo
-  echo "###############################################################"
-  echo "############### Have Org3 peers join network ##################"
-  echo "###############################################################"
-  docker exec Org3cli ./scripts/org3-scripts/step2org3.sh $CHANNEL_NAME $CLI_DELAY $CLI_TIMEOUT $VERBOSE
+  infoln "Joining Org3 peers to network"
+  docker exec cli ./scripts/org3-scripts/joinChannel.sh $CHANNEL_NAME $CLI_DELAY $CLI_TIMEOUT $VERBOSE
   if [ $? -ne 0 ]; then
-    echo "ERROR !!!! Unable to have Org3 peers join network"
-    exit 1
+    fatalln "ERROR !!!! Unable to join Org3 peers to network"
   fi
-
 }
 
 # Tear down running network
 function networkDown () {
-
     cd ..
     ./network.sh down
 }
 
-
-# Obtain the OS and Architecture string that will be used to select the correct
-# native binaries for your platform
-OS_ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m | sed 's/x86_64/amd64/g')" | awk '{print tolower($0)}')
-# timeout duration - the duration the CLI should wait for a response from
-# another container before giving up
-
 # Using crpto vs CA. default is cryptogen
 CRYPTO="cryptogen"
-
+# timeout duration - the duration the CLI should wait for a response from
+# another container before giving up
 CLI_TIMEOUT=10
 #default for delay
 CLI_DELAY=3
@@ -227,10 +180,6 @@ COMPOSE_FILE_COUCH_ORG3=docker/docker-compose-couch-org3.yaml
 COMPOSE_FILE_ORG3=docker/docker-compose-org3.yaml
 # certificate authorities compose file
 COMPOSE_FILE_CA_ORG3=docker/docker-compose-ca-org3.yaml
-# default image tag
-IMAGETAG="latest"
-# default ca image tag
-CA_IMAGETAG="latest"
 # database
 DATABASE="leveldb"
 
@@ -273,22 +222,12 @@ while [[ $# -ge 1 ]] ; do
     DATABASE="$2"
     shift
     ;;
-  -i )
-    IMAGETAG=$(go env GOARCH)"-""$2"
-    shift
-    ;;
-  -cai )
-    CA_IMAGETAG="$2"
-    shift
-    ;;
   -verbose )
     VERBOSE=true
     shift
     ;;
   * )
-    echo
-    echo "Unknown flag: $key"
-    echo
+    errorln "Unknown flag: $key"
     printHelp
     exit 1
     ;;
@@ -299,7 +238,7 @@ done
 
 # Determine whether starting, stopping, restarting or generating for announce
 if [ "$MODE" == "up" ]; then
-  echo "Add Org3 to channel '${CHANNEL_NAME}' with '${CLI_TIMEOUT}' seconds and CLI delay of '${CLI_DELAY}' seconds and using database '${DATABASE}'"
+  infoln "Adding org3 to channel '${CHANNEL_NAME}' with '${CLI_TIMEOUT}' seconds and CLI delay of '${CLI_DELAY}' seconds and using database '${DATABASE}'"
   echo
 elif [ "$MODE" == "down" ]; then
   EXPMODE="Stopping network"
