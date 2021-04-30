@@ -17,6 +17,18 @@ class BiocoinContract extends ActiveContract {
     async transferBiocoins(ctx, senderAddress, receiverAddress, amount){
         return await BiocoinOperations.transferBiocoins(ctx, senderAddress, receiverAddress, amount)
     }
+
+    async transferOperationBiocoins(ctx, operationId){
+        const args = [
+            "OperationContract:readOperation", 
+            operationId
+        ]
+        const operation = await this.queryBiobankChannel(ctx, args)
+        await this.transferBiocoins(ctx, operation["input"][0].address, operation["output"][0].address, operation["output"][0].value)
+        // TODO: SUPPORT MULTIPLE INPUT/OUTPUT OPERATIONS - VALIDATION INPUT.VALUE == OUTPUT.VALUE
+        return operation
+
+    }
 }
 
 

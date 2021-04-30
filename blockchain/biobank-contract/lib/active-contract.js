@@ -11,16 +11,13 @@ class ActiveContext extends Context {
 
 class ActiveContract extends Contract {
   async beforeTransaction(ctx){
-    if(ctx.called_contract == undefined){
-      throw(new Error(JSON.stringify(ctx.called_contract)))
-      ctx.called_contract = 'biobank'
-
+    if(this.needsQueryUser(ctx)){
       const userAddress = CryptoUtils.getUserAddressFromContext(ctx)
       const args = [
         "AccountContract:readAccount", 
         userAddress
       ]
-      // ctx.user = await this.queryCurrencyChannel(ctx, args)  
+      ctx.user = await this.queryCurrencyChannel(ctx, args)  
     }
   } 
 
@@ -28,6 +25,12 @@ class ActiveContract extends Contract {
     const response = await ctx.stub.invokeChaincode('currency', args, 'channel2')
     const buff = Buffer.from(response.payload, 'base64')
     return JSON.parse(buff.toString())
+  }
+
+  needsQueryUser(ctx){
+    const calledContract = ctx.stub.getArgs()[0]
+    const allowedContracts = ["OperationContract:readOperation"]
+    return !allowedContracts.includes(calledContract)
   }
 }
 

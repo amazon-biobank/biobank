@@ -10,8 +10,6 @@ const OperationContract = require('./../operation/operation-contract')
 const OperationList = require('./../operation/operation-list')
 const DataList = require('./../data/data-list.js');
 const Data = require('../data/data.js');
-// const BiocoinOperations = require('./../biocoin/biocoin-operations');
-
 
 
 class DnaContractContext extends ActiveContext {
@@ -52,7 +50,7 @@ class DnaContractContract extends ActiveContract {
             const dnaContract = await ctx.dnaContractList.getDnaContract(contractId);
             let dna = await getData(ctx, dnaContract.dnaId)
             // await BiocoinOperations.transferBiocoins(ctx, ctx.user.address, dna.collector, dnaContract.parameters.price)
-            dna = await addOwnersInData(ctx, dna)
+            // dna = await addOwnersInData(ctx, dna)
             const operation = createBuyingOperation(ctx, dna, dnaContract)
             return operation
         }
@@ -103,14 +101,21 @@ async function createBuyingOperation(ctx, dna, dnaContract){
     const operation = new OperationContract()
     const id = uuidv4()
     const operationAttributes = JSON.stringify({
-        data_id: dna.id,
         type: 'buy',
         user: ctx.user.address,
         created_at: new Date().toDateString(),
         details: {
-            price: dnaContract.parameters.price,
+            data_id: dna.id,
             contractId: dnaContract.id
-        }
+        },
+        input: [{
+            address: ctx.user.address,
+            value: dnaContract.parameters.price
+        }],
+        output: [{
+            address: dna.collector,
+            value: dnaContract.parameters.price
+        }]
     })
     return await operation.createOperation(ctx, id, operationAttributes)
 }

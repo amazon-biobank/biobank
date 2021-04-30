@@ -156,4 +156,23 @@ describe('BiocoinContract-biobank@8.0.0' , () => {
         }).timeout(10000);
     });
 
+    describe('transferOperationBiocoins', () =>{
+        it('should raise negative balance error', async () => {
+            // const testAccountUtil = new TestAccountUtil()
+            // const user = await testAccountUtil.createUserAccount(gateway)
+            // await TestAccountUtil.createAnotherSampleAccount(gateway)
+
+            // const arg0 = user.address;
+            // const arg1 = TestAccountUtil.anotherGeneratedAddress;
+            // const arg2 = -20;
+            const args = [ "821f75bc-a914-40d8-9298-eb809a3ef5be"];
+            
+            const response = await SmartContractUtil.submitTransaction('BiocoinContract', 'transferOperationBiocoins', args, gateway)
+            const json_response = JSON.parse(response.toString())
+            console.log(json_response)
+            assert.strictEqual(json_response[0]['balance'], 4.5);
+                  
+        }).timeout(10000);
+    });
+
 });
