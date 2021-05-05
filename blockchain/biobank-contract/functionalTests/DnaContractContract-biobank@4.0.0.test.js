@@ -102,10 +102,6 @@ describe('DnaContractContract-biobank@4.0.0' , () => {
 
     describe('executeContract', () =>{
         it('should submit executeContract buy_dna transaction', async () => {
-            // const testAccountUtil = new TestAccountUtil()
-            // const user = await testAccountUtil.createUserAccount(gateway)
-            // await TestAccountUtil.createAnotherSampleAccount(gateway)
-
             await TestDatautil.createSampleData(gateway)
             await TestDnaContractUtil.createSampleDnaContract(gateway)
 
@@ -117,6 +113,20 @@ describe('DnaContractContract-biobank@4.0.0' , () => {
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response.type, 'buy');
             // assert.strictEqual(json_response.user, user.address);
+        }).timeout(10000);
+    });
+
+    describe('executeOperation', () =>{
+        it('should executeOperation, given operation and operationPayment', async () => {
+            await TestDatautil.createSampleData(gateway)
+            await TestDnaContractUtil.createSampleDnaContract(gateway)
+
+            const arg0 = "d210c49d-2d50-413b-a476-0377fe99ca95"
+            const args = [ arg0 ];
+            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'executeOperation', args, gateway); // Returns buffer of transaction return value
+            
+            const json_response = JSON.parse(response.toString())
+            assert.strictEqual(json_response.type, "raw_data");
         }).timeout(10000);
     });
 

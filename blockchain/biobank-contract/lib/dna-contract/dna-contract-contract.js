@@ -10,6 +10,7 @@ const OperationContract = require('./../operation/operation-contract')
 const OperationList = require('./../operation/operation-list')
 const DataList = require('./../data/data-list.js');
 const Data = require('../data/data.js');
+const Operation = require('../operation/operation');
 
 
 class DnaContractContext extends ActiveContext {
@@ -56,6 +57,19 @@ class DnaContractContract extends ActiveContract {
         }
         return
     }
+
+    async executeOperation(ctx, operationId){
+        const operationContract = new OperationContract()
+        const operation = await operationContract.readOperation(ctx, operationId)
+        const args = [ "OperationPaymentContract:readOperationPayment",  operationId ]
+        const payment = await this.queryCurrencyChannel(ctx, args)
+        
+        checkPaymentAndOperation(ctx, payment, operation)
+        let dna = await getData(ctx, operation.details.data_id)
+        await addOwnersInData(ctx, dna)
+
+        return dna
+    }
 }
 
 function handleDnaContractAttributes(dnaContractAttributes) {
@@ -97,12 +111,22 @@ async function getData(ctx, dataId){
     return data
 }
 
+function checkPaymentAndOperation(ctx, payment, operation){
+    if(payment == undefined || payment.status != "paid"){
+        throw new Error("Operation not paid")
+    }
+    if (operation.userAddress != ctx.user.address){
+        throw new Error("user not allowed")
+    }
+    return true
+}
+
 async function createBuyingOperation(ctx, dna, dnaContract){
     const operation = new OperationContract()
     const id = uuidv4()
     const operationAttributes = JSON.stringify({
         type: 'buy',
-        user: ctx.user.address,
+        userAddress: ctx.user.address,
         created_at: new Date().toDateString(),
         details: {
             data_id: dna.id,

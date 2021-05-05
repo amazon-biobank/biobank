@@ -43,10 +43,10 @@ class OperationContract extends ActiveContract {
 }
 
 function handleOperationAttributes(ctx, id, operationAttributes) {
-    const { type, user, created_at, details, input, output } = JSON.parse(operationAttributes);
+    const { type, userAddress, created_at, details, input, output } = JSON.parse(operationAttributes);
     details.transaction_id = ctx.stub.getTxID()
     const newOperationAttributes = {
-        id, type, user, created_at, details, input, output
+        id, type, userAddress, created_at, details, input, output
     }
     return newOperationAttributes;
 }

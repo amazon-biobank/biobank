@@ -77,7 +77,7 @@ describe('OperationContract-biobank@21.0.0' , () => {
     describe('readOperation', () =>{
         it('should evaluate readOperation transaction', async () => {
             // TODO: populate transaction parameters
-            const arg0 = '821f75bc-a914-40d8-9298-eb809a3ef5be';
+            const arg0 = '1b9bbfe7-291f-40b5-a769-f7b8730b9f9b';
             const args = [ arg0];
             const response = await SmartContractUtil.evaluateTransaction('OperationContract', 'readOperation', args, gateway); // Returns buffer of transaction return value
             const json_response = JSON.parse(response.toString())
