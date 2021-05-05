@@ -18,6 +18,10 @@ class DnaContractContract extends SmartContract{
   async executeContract(dnaContractId, options) {
     return await this.submitTransaction('DnaContractContract:executeContract', dnaContractId, JSON.stringify(options));
   }
+
+  async executeOperation(operatioinId) {
+    return await this.submitTransaction('DnaContractContract:executeOperation', operatioinId);
+  }
 }
 
 module.exports = DnaContractContract;

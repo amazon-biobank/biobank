@@ -35,8 +35,7 @@ class ConnectService {
     const id =  await wallet.get('userCertificate')
     if(id){
       const certificate = new X509Certificate(id.credentials.certificate)
-      const publicKey = certificate.publicKey.export({type: 'spki', format: 'pem'})
-      return ControllerUtil.getHash(publicKey)
+      return certificate.fingerprint256.replace(/:/g,'')
     }
   }
 }

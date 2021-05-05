@@ -19,28 +19,48 @@ block content
           .form-row
             .form-group.col-md-6
               label.mb-1(for='user') Usuário
-              input#user.form-control(disabled type='text'  value=operation.user)
+              input#user.form-control(disabled type='text'  value=operation.userAddress)
             .form-group.col-md-6
               label.mb-1(for='created-at') Criado em
               input#created-at.form-control(disabled type='text'  value=operation.created_at)
-          .form-row
-            .form-group.col-md-6
-              label.mb-1(for='data-id') ID do Dado
-              input#data-id.form-control(disabled type='text'  value=operation.data_id)
-            .form-group.col-md-6
-              label.mb-1(for='transaction-id') ID da transação
-              input#transaction-id.form-control(disabled type='text' style='font-size:small' value=operation.transaction_id)
           .card
             .card-header Detalhes
             .card-body
               if (operation.type == 'Compra')
                 .form-row
                   .form-group.col-md-6
-                    label.mb-1(for='price') Preço
-                    input#price.form-control(disabled type='text'  value=operation.details.price)
+                    label.mb-1(for='data_id') ID do Dado
+                    input#data_id.form-control(disabled type='text'  value=operation.details.data_id)
                   .form-group.col-md-6
                     label.mb-1(for='contractId') Id do Smart Contract
                     input#contractId.form-control(disabled type='text'  value=operation.details.contractId)
+                .form-row
+                  .form-group.col-md-6
+                    label.mb-1(for='transaction-id') ID da transação
+                    input#transaction-id.form-control(disabled type='text' style='font-size:small' value=operation.details.transaction_id)
+          .card
+            .card-header Origem
+            .card-body
+              each sender in operation.input
+                .form-row
+                  .form-group.col-md-6
+                    label.mb-1(for='sender-address') Endereço de Origem
+                    input#sender-address.form-control(disabled type='text'  value=sender.address)
+                  .form-group.col-md-6
+                    label.mb-1(for='value') Valor
+                    input#value.form-control(disabled type='text'  value=sender.value)
+          .card
+            .card-header Destino
+            .card-body
+              each receiver in operation.output
+                .form-row
+                  .form-group.col-md-6
+                    label.mb-1(for='receiver-address') Endereço de Destino
+                    input#receiver-address.form-control(disabled type='text'  value=receiver.address)
+                  .form-group.col-md-6
+                    label.mb-1(for='value') Valor
+                    input#value.form-control(disabled type='text'  value=receiver.value)
+                 
 
 
 block append scripts

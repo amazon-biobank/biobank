@@ -32,11 +32,11 @@ const { doesNotMatch } = require('assert');
 describe('BiocoinContract-biobank@8.0.0' , () => {
 
     const homedir = os.homedir();
-    const walletPath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'wallets', 'Org1');
+    const walletPath = path.join(homedir, '.fabric-vscode', 'environments', 'testNetwork', 'wallets', 'Org1');
     const gateway = new fabricNetwork.Gateway();
     let wallet;
-    const identityName = 'Org1 Admin';
-    // const identityName = 'user';
+    // const identityName = 'Org1 Admin';
+    const identityName = 'user';
     let connectionProfile;
 
     before(async () => {

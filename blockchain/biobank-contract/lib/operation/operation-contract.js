@@ -36,7 +36,7 @@ class OperationContract extends ActiveContract {
     async getOperationByData(ctx, dataId) {
         const allOperation = await this.getAllOperation(ctx);
         const filteredOperation = allOperation.filter(function(operation) {
-            return operation.data_id == dataId
+            return operation.details.data_id == dataId
         })
         return filteredOperation
     }
