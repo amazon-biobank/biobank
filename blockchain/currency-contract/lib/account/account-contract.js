@@ -31,7 +31,7 @@ function handleAccountAttributes(accountAttributes) {
     const { certificate, name, created_at } = JSON.parse(accountAttributes);
     const address = CryptoUtils.getAddress(certificate)
     const newAccountAttributes = {
-        id: address, address, name, created_at, balance: 10  //development purpose only: change later
+        id: address, address, name, created_at, balance: 10 
     }
     return newAccountAttributes;
 }

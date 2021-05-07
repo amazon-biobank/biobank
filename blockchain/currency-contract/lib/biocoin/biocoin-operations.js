@@ -21,9 +21,9 @@ class BiocoinOperations {
 
     static async transferBiocoins(ctx, senderAddress, receiverAddress, amount){
         let senderAccount = await ctx.accountList.getAccount(senderAddress);
-        if( this.validateTransference(ctx, senderAccount, amount) == false ) return
-        senderAccount = await BiocoinOperations.withdraw_biocoins(ctx, senderAccount, amount)
+        this.validateTransference(ctx, senderAccount, amount)
 
+        senderAccount = await BiocoinOperations.withdraw_biocoins(ctx, senderAccount, amount)
         let receiverAccount = await this.getReceiverAccount(ctx, senderAddress, receiverAddress, senderAccount)
         receiverAccount = await BiocoinOperations.deposit_biocoins(ctx, receiverAccount, amount)
 

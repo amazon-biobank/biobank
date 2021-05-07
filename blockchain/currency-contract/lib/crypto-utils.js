@@ -6,7 +6,6 @@ class CryptoUtils {
     static getUserAddressFromContext(ctx){
         let cid = new ClientIdentity(ctx.stub)
         const address = CryptoUtils.getAddress(cid.getIDBytes())
-        // const x509 = new X509Certificate(cid.getIDBytes())
         return address
     }
     
