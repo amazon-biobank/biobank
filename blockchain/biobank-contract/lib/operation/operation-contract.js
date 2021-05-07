@@ -1,6 +1,5 @@
 'use strict';
 
-const Operation = require('./operation.js');
 const OperationList = require('./operation-list.js');
 const { ActiveContext, ActiveContract } = require('./../active-contract')
 
@@ -15,13 +14,6 @@ class OperationContext extends ActiveContext {
 class OperationContract extends ActiveContract {
     createContext() {
         return new OperationContext();
-    }
-
-    async createOperation(ctx, id, operationAttributes) {
-        const newOperationAttributes = handleOperationAttributes(ctx, id, operationAttributes)
-        const operation = Operation.createInstance(newOperationAttributes);
-        await ctx.operationList.addOperation(operation);
-        return operation;
     }
 
     async readOperation(ctx, id) {
@@ -40,15 +32,6 @@ class OperationContract extends ActiveContract {
         })
         return filteredOperation
     }
-}
-
-function handleOperationAttributes(ctx, id, operationAttributes) {
-    const { type, userAddress, created_at, details, input, output } = JSON.parse(operationAttributes);
-    details.transaction_id = ctx.stub.getTxID()
-    const newOperationAttributes = {
-        id, type, userAddress, created_at, details, input, output
-    }
-    return newOperationAttributes;
 }
 
 module.exports = OperationContract;
