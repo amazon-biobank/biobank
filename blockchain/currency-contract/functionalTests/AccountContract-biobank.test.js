@@ -1,23 +1,3 @@
-/*
-* Use this file for functional testing of your smart contract.
-* Fill out the arguments and return values for a function and
-* use the CodeLens links above the transaction blocks to
-* invoke/submit transactions.
-* All transactions defined in your smart contract are used here
-* to generate tests, including those functions that would
-* normally only be used on instantiate and upgrade operations.
-* This basic test file can also be used as the basis for building
-* further functional tests to run as part of a continuous
-* integration pipeline, or for debugging locally deployed smart
-* contracts by invoking/submitting individual transactions.
-*/
-/*
-* Generating this test file will also trigger an npm install
-* in the smart contract project directory. This installs any
-* package dependencies, including fabric-network, which are
-* required for this test file to be run locally.
-*/
-
 'use strict';
 
 const assert = require('assert');
@@ -25,16 +5,13 @@ const fabricNetwork = require('fabric-network');
 const SmartContractUtil = require('./js-smart-contract-util');
 const TestAccountUtil = require('./test-utils/test-account-util')
 const os = require('os');
+const CONFIG = require('./config.json');
 const path = require('path');
 
-describe('AccountContract-biobank@2.0.0' , () => {
-
+describe('AccountContract-biobank' , () => {
     const homedir = os.homedir();
-    // const walletPath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'wallets', 'Org1');
-    const walletPath = path.join(homedir, '.fabric-vscode', 'environments', 'testNetwork', 'wallets', 'Org1');
-    const identityName = 'user';
-    // const walletPath = path.join(process.cwd(), '..','..','application', 'fabric-details/wallet');
-    // const identityName = 'admin';
+    const walletPath = path.join(homedir, CONFIG.walletPath);
+    const identityName = CONFIG.identityName
     const gateway = new fabricNetwork.Gateway();
     let wallet;
     let connectionProfile;
@@ -81,7 +58,7 @@ describe('AccountContract-biobank@2.0.0' , () => {
 
             const arg0 = TestAccountUtil.generatedAddress;
             const args = [ arg0];
-            const response = await SmartContractUtil.evaluateTransaction('AccountContract', 'readAccount', args, gateway); // Returns buffer of transaction return value
+            const response = await SmartContractUtil.evaluateTransaction('AccountContract', 'readAccount', args, gateway);
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response['name'], "John Smith");
@@ -94,7 +71,7 @@ describe('AccountContract-biobank@2.0.0' , () => {
             await TestAccountUtil.createAnotherSampleAccount(gateway)
 
             const args = [];
-            const response = await SmartContractUtil.submitTransaction('AccountContract', 'getAllAccount', args, gateway); // Returns buffer of transaction return value
+            const response = await SmartContractUtil.submitTransaction('AccountContract', 'getAllAccount', args, gateway);
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response.length, 2);

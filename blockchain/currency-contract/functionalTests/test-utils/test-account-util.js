@@ -5,26 +5,22 @@ const { X509Certificate } = require('crypto')
 
 
 class TestAccountUtil {
-
     static async createSampleAccount(gateway) {
         const arg1 = accountJson;
         const args = [ arg1];
-        const response = await SmartContractUtil.submitTransaction('AccountContract', 'createAccount', args, gateway); // Returns buffer of transaction return value
-        
-        return response
+        const response = await SmartContractUtil.submitTransaction('AccountContract', 'createAccount', args, gateway);
+        return JSON.parse(response.toString())
     }
 
     static async createAnotherSampleAccount(gateway) {
         const arg1 = accountJson2;
         const args = [ arg1];
-        const response = await SmartContractUtil.submitTransaction('AccountContract', 'createAccount', args, gateway); // Returns buffer of transaction return value
-        
-        return response
+        const response = await SmartContractUtil.submitTransaction('AccountContract', 'createAccount', args, gateway);
+        return JSON.parse(response.toString())
     }
 
     async createUserAccount(gateway){
         const x509 = gateway.identity.credentials.certificate
-
 
         const arg1 = {
             "certificate": x509,
@@ -33,7 +29,7 @@ class TestAccountUtil {
             "created_at": "Fri Aug 07 2020" 
         }
         const args = [ JSON.stringify(arg1)];
-        const response = await SmartContractUtil.submitTransaction('AccountContract', 'createAccount', args, gateway); // Returns buffer of transaction return value
+        const response = await SmartContractUtil.submitTransaction('AccountContract', 'createAccount', args, gateway);
         
         return JSON.parse(response.toString())
     }

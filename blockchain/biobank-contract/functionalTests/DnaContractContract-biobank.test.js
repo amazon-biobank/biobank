@@ -1,23 +1,3 @@
-/*
-* Use this file for functional testing of your smart contract.
-* Fill out the arguments and return values for a function and
-* use the CodeLens links above the transaction blocks to
-* invoke/submit transactions.
-* All transactions defined in your smart contract are used here
-* to generate tests, including those functions that would
-* normally only be used on instantiate and upgrade operations.
-* This basic test file can also be used as the basis for building
-* further functional tests to run as part of a continuous
-* integration pipeline, or for debugging locally deployed smart
-* contracts by invoking/submitting individual transactions.
-*/
-/*
-* Generating this test file will also trigger an npm install
-* in the smart contract project directory. This installs any
-* package dependencies, including fabric-network, which are
-* required for this test file to be run locally.
-*/
-
 'use strict';
 
 const assert = require('assert');
@@ -25,18 +5,17 @@ const fabricNetwork = require('fabric-network');
 const SmartContractUtil = require('./js-smart-contract-util');
 const os = require('os');
 const path = require('path');
+const CONFIG = require('./config.json');
 const TestDnaContractUtil = require('./test-utils/test-dna-contract-util')
-const TestAccountUtil = require('./test-utils/test-account-util')
 const TestDatautil = require('./test-utils/test-data-util')
 
 
-describe('DnaContractContract-biobank@4.0.0' , () => {
-
+describe('DnaContractContract-biobank' , () => {
     const homedir = os.homedir();
-    const walletPath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'wallets', 'Org1');
+    const walletPath = path.join(homedir, CONFIG.walletPath);
+    const identityName = CONFIG.identityName
     const gateway = new fabricNetwork.Gateway();
     let wallet;
-    const identityName = 'Org1 Admin';
     let connectionProfile;
 
     before(async () => {
@@ -45,7 +24,6 @@ describe('DnaContractContract-biobank@4.0.0' , () => {
     });
 
     beforeEach(async () => {
-
         const discoveryAsLocalhost = SmartContractUtil.hasLocalhostURLs(connectionProfile);
         const discoveryEnabled = true;
 
@@ -77,8 +55,8 @@ describe('DnaContractContract-biobank@4.0.0' , () => {
         it('should evaluate readDnaContract transaction', async () => {
             await TestDnaContractUtil.createSampleDnaContract(gateway)
             const arg0 = TestDnaContractUtil.generatedId;
-            const args = [ arg0];
-            const response = await SmartContractUtil.evaluateTransaction('DnaContractContract', 'readDnaContract', args, gateway); // Returns buffer of transaction return value
+            const args = [ arg0 ];
+            const response = await SmartContractUtil.evaluateTransaction('DnaContractContract', 'readDnaContract', args, gateway);
             const dnaContract = JSON.parse(response.toString())
             assert.strictEqual(dnaContract['dnaId'], '123');
         }).timeout(10000);
@@ -91,7 +69,7 @@ describe('DnaContractContract-biobank@4.0.0' , () => {
             await TestDnaContractUtil.createSampleDnaContract(gateway)
             await TestDnaContractUtil.createAnotherSampleDnaContract(gateway)
             const args = [];
-            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'getAllDnaContract', args, gateway); // Returns buffer of transaction return value
+            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'getAllDnaContract', args, gateway);
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response.length, 2);
@@ -108,11 +86,10 @@ describe('DnaContractContract-biobank@4.0.0' , () => {
             const arg0 = TestDnaContractUtil.generatedId;
             const arg1 = "{\"type\": \"buy_dna\"}";
             const args = [ arg0, arg1];
-            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'executeContract', args, gateway); // Returns buffer of transaction return value
+            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'executeContract', args, gateway);
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response.type, 'buy');
-            // assert.strictEqual(json_response.user, user.address);
         }).timeout(10000);
     });
 
@@ -123,7 +100,7 @@ describe('DnaContractContract-biobank@4.0.0' , () => {
 
             const arg0 = "d210c49d-2d50-413b-a476-0377fe99ca95"
             const args = [ arg0 ];
-            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'executeOperation', args, gateway); // Returns buffer of transaction return value
+            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'executeOperation', args, gateway);
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response.type, "raw_data");

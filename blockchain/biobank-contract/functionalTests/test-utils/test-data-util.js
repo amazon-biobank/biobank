@@ -8,8 +8,7 @@ class TestDataUtil {
         const arg0 = '123';
         const arg1 = dnaJson;
         const args = [ arg0, arg1];
-        const response = await SmartContractUtil.submitTransaction('DataContract', 'uploadRawData', args, gateway); // Returns buffer of transaction return value
-        
+        const response = await SmartContractUtil.submitTransaction('DataContract', 'uploadRawData', args, gateway);
         return JSON.parse(response.toString())
     }
 
@@ -17,34 +16,9 @@ class TestDataUtil {
         const arg0 = '321';
         const arg1 = dnaJson2;
         const args = [ arg0, arg1];
-        const response = await SmartContractUtil.submitTransaction('DataContract', 'uploadRawData', args, gateway); // Returns buffer of transaction return value
-        
+        const response = await SmartContractUtil.submitTransaction('DataContract', 'uploadRawData', args, gateway);
         return JSON.parse(response.toString())
     }
-
-    // async createUserAccount(gateway){
-    //     const x509 = new X509Certificate(gateway.identity.credentials.certificate)
-    //     const publicKey = x509.publicKey.export({type: 'spki', format: 'pem'})
-
-
-    //     const arg1 = {
-    //         "public_key": publicKey,
-    //         "name": "Org1 Admin",
-    //         "created_at": "Fri Aug 07 2020" 
-    //     }
-    //     const args = [ JSON.stringify(arg1)];
-    //     const response = await SmartContractUtil.submitTransaction('AccountContract', 'createAccount', args, gateway); // Returns buffer of transaction return value
-        
-    //     return JSON.parse(response.toString())
-    // }
-
-    // static get generatedAddress(){
-    //     return "fdf596792f25bd37d58b40858be9c36b4828aad1f7632301359daea2e224b17b"
-    // }
-
-    // static get anotherGeneratedAddress(){
-    //     return "0b1f9a5303d5d3f8890c50da16ea9f0fc8ea19e0e8f63967c7e1b9954af0fbb4"
-    // }
 }
 
 module.exports = TestDataUtil;

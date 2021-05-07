@@ -7,16 +7,14 @@ class TestDnaContractUtil {
     static async createSampleDnaContract(gateway) {
         const arg0 = dnaContractJson;
         const args = [ arg0];
-        const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway); // Returns buffer of transaction return value
-            
+        const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway);
         return JSON.parse(response.toString())
     }
 
     static async createAnotherSampleDnaContract(gateway) {
         const arg0 = dnaContractJson2;
         const args = [ arg0 ];
-        const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway); // Returns buffer of transaction return value
-        
+        const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway);
         return JSON.parse(response.toString())
     }
 

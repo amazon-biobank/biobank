@@ -1,9 +1,3 @@
-/*
-* This file contains functions for the use of your test file.
-* It doesn't require any changes for immediate use.
-*/
-
-
 'use strict';
 
 const fs = require('fs-extra');
@@ -11,13 +5,12 @@ const yaml = require('js-yaml');
 const URL = require('url');
 const os = require('os');
 const path = require('path');
+const CONFIG = require('./config.json');
 
 class SmartContractUtil {
-
     static async getConnectionProfile() {
         const homedir = os.homedir();
-        const connectionProfilePath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'gateways', 'Org1 Gateway.json');
-        // const connectionProfilePath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        const connectionProfilePath = path.join(homedir, CONFIG.connectionProfilePath);
         
         const connectionProfileContents = await fs.readFile(connectionProfilePath, 'utf8');
         if (connectionProfilePath.endsWith('.json')) {
@@ -28,7 +21,6 @@ class SmartContractUtil {
     }
 
     static async submitTransaction(contractName, functionName, args, gateway) {
-        // Submit transaction
         const network = await gateway.getNetwork('channel1');
         let contract;
         if (contractName !== '') {
@@ -41,7 +33,6 @@ class SmartContractUtil {
     }
 
     static async evaluateTransaction(contractName, functionName, args, gateway) {
-        // Evaluate transaction
         const network = await gateway.getNetwork('channel1');
         let contract;
         if (contractName !== '') {
@@ -53,7 +44,6 @@ class SmartContractUtil {
         return responseBuffer;
     }
 
-    // Checks if URL is localhost
     static isLocalhostURL(url) {
         const parsedURL = URL.parse(url);
         const localhosts = [
@@ -63,7 +53,6 @@ class SmartContractUtil {
         return localhosts.indexOf(parsedURL.hostname) !== -1;
     }
 
-    // Used for determining whether to use discovery
     static hasLocalhostURLs(connectionProfile) {
         const urls = [];
         for (const nodeType of ['orderers', 'peers', 'certificateAuthorities']) {
