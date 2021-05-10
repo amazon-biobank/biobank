@@ -6,11 +6,7 @@ It is advisable to do at least some Hyperledger Fabric tutorials, especially [Us
 Maybe you can find helpful to read the [Key Concepts](https://hyperledger-fabric.readthedocs.io/en/release-2.2/key_concepts.html) section
 
 ## Project
-This is the final project in the course of computer engineer, of University of São Paulo.
-
-[Trello board](https://trello.com/b/lbII1kRk/amazonas-40)
-
-Get the dev version in https://github.com/leonardotkimura/biobank-dev
+This is the master project in the course of computer engineer, of University of São Paulo.
 
 
 ## How to use
