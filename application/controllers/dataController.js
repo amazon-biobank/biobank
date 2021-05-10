@@ -69,7 +69,7 @@ exports.listOperations = async function(req, res, next){
 
   const formattedOperations = operations.map(function(operation){
     return {
-      user: operation.user,
+      userAddress: operation.userAddress,
       id: operation.id,
       type: ControllerUtil.formatOperationType(operation.type),
       created_at: ControllerUtil.formatDate(new Date(operation.created_at)),

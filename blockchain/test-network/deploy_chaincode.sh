@@ -1,14 +1,22 @@
 # run in /test-network
 
-CHAINCODE_NAME="biobank"
-SEQUENCE="1"        # each time you deploy your chaincode, you need to increment this
+# CHAINCODE_NAME="biobank"
+# SEQUENCE="2"        # each time you deploy your chaincode, you need to increment this
+# CHANNEL_NAME="channel1"
+# PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
+# CONTRACT_PATH="../biobank-contract/"
+
+CHAINCODE_NAME="currency"
+SEQUENCE="4"        # each time you deploy your chaincode, you need to increment this
+CHANNEL_NAME="channel2"
 PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
+CONTRACT_PATH="../currency-contract/"
 
 #set environment
 export FABRIC_CFG_PATH=$PWD/../config/
 
 
-peer lifecycle chaincode package ${CHAINCODE_NAME}.tar.gz --path ../contract/ --lang node --label ${PACKAGE_NAME}
+peer lifecycle chaincode package ${CHAINCODE_NAME}.tar.gz --path ${CONTRACT_PATH} --lang node --label ${PACKAGE_NAME}
 
 
 
@@ -29,7 +37,7 @@ CC_PACKAGE_ID=$(echo "${OUTPUT_LINE}" | cut -d ' ' -f3 )
 echo "${CC_PACKAGE_ID}"
 
 #approve on peer 1
-peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID mychannel --name ${CHAINCODE_NAME} --version 1.0 --package-id ${CC_PACKAGE_ID} --sequence ${SEQUENCE} --tls --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --version 1.0 --package-id ${CC_PACKAGE_ID} --sequence ${SEQUENCE} --tls --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
 
 
@@ -43,11 +51,11 @@ export CORE_PEER_ADDRESS=localhost:9051
 
 peer lifecycle chaincode install ${CHAINCODE_NAME}.tar.gz
 
-peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID mychannel --name ${CHAINCODE_NAME} --version 1.0 --package-id ${CC_PACKAGE_ID} --sequence ${SEQUENCE} --tls --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --version 1.0 --package-id ${CC_PACKAGE_ID} --sequence ${SEQUENCE} --tls --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
 
 
 # commit
-peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID mychannel --name ${CHAINCODE_NAME} --version 1.0 --sequence ${SEQUENCE} --tls --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --peerAddresses localhost:7051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
+peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --version 1.0 --sequence ${SEQUENCE} --tls --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --peerAddresses localhost:7051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 
-peer lifecycle chaincode querycommitted --channelID mychannel --name ${CHAINCODE_NAME} --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+peer lifecycle chaincode querycommitted --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem

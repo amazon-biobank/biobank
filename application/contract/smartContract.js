@@ -3,8 +3,13 @@
 const ConnectService = require('./../services/connectService.js');
 
 class SmartContract {
+  constructor(){
+    this.channel = 'channel1'
+    this.chaincode = 'biobank'
+  }
+
   async connectNetwork() {
-    const { network, gateway, contract } = await new ConnectService().connectNetwork()
+    const { network, gateway, contract } = await new ConnectService().connectNetwork(this.channel, this.chaincode)
     this.network = network;
     this.gateway = gateway;
     this.contract = contract

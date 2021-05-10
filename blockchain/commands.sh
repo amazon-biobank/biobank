@@ -1,5 +1,6 @@
 cd blockchain/test-network
-./network.sh up createChannel -ca
+./network.sh up createChannel -c channel1 -ca -s couchdb
+./network.sh createChannel -c channel2
 
 # setar enviroment
 export PATH=${PWD}/../bin:$PATH
@@ -47,23 +48,27 @@ export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org2.examp
 export CORE_PEER_ADDRESS=localhost:9051
 
 
-# -------------------------------- IBM BLOCKCHAIN
-export MICROFAB_CONFIG='{"port":8080,  "endorsing_organizations": [{"name": "Org1"}],"channels": [{"name": "mychannel","endorsing_organizations": ["Org1"]}]}'
-START_IMAGE="ibmcom/ibp-microfab:0.0.11"
+# -------------------------------- IBM BLOCKCHAIN Microfab--------------------------
+
+# Start Microfab
+START_IMAGE="ibmcom/ibp-microfab:0.0.12"
 docker run -e MICROFAB_CONFIG --label fabric-environment-name="1 Org Local Fabric Microfab" -p 8080:8080 $START_IMAGE
 
+
+# clear Microfab
 CONTAINER=$(docker ps -f label=fabric-environment-name="1 Org Local Fabric Microfab" -q -a)
 for CONTAINER in $(docker ps -f label=fabric-environment-name="1 Org Local Fabric Microfab" -q -a) 
 do 
 docker rm -f ${CONTAINER}
 done
 
-for VOLUME in $(docker volume ls -f label=fabric-environment-name="1 Org Local Fabric Microfab" -q)
-do 
-docker volume rm -f ${VOLUME} 
-done
+docker volume prune -f
+
+# Microfab config - 1 channel
+export MICROFAB_CONFIG='{"port":8080,  "endorsing_organizations": [{"name": "Org1"}],"channels": [{"name": "mychannel","endorsing_organizations": ["Org1"]}]}'
 
 
+# Microfab config - 2 channel
 export MICROFAB_CONFIG='{
     "port": 8080,
     "endorsing_organizations":[
@@ -76,7 +81,8 @@ export MICROFAB_CONFIG='{
             "name": "channel1",
             "endorsing_organizations":[
                 "Org1"
-            ]
+            ],
+            "capability_level": "V2_0"
         },
         {
             "name": "channel2",
@@ -88,3 +94,4 @@ export MICROFAB_CONFIG='{
     ],
     "timeout": "60s"
 }'
+

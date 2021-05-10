@@ -11,11 +11,11 @@ class ConnectService {
     
   }
   
-  async connectNetwork() {
+  async connectNetwork(channel, chaincode) {
     const wallet = await Wallets.newFileSystemWallet(this.walletPath);
     console.log(`Wallet path: ${this.walletPath}`);
 
-    const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'contract', '1OrgLocalFabricOrg1GatewayConnection.json');
+    const connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'connection.json');
     // const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
     let connectionProfile = JSON.parse(fs.readFileSync(connectionProfilePath, 'utf8'));
 
@@ -24,8 +24,8 @@ class ConnectService {
     let connectionOptions = { wallet, identity: 'userCertificate', discovery: { enabled: true, asLocalhost: true }};
     await gateway.connect(connectionProfile, connectionOptions);
 
-    const network = await gateway.getNetwork('mychannel');
-    const contract = network.getContract('biobank');
+    const network = await gateway.getNetwork(channel);
+    const contract = network.getContract(chaincode);
 
     return { network, contract, gateway }
  }
@@ -35,8 +35,7 @@ class ConnectService {
     const id =  await wallet.get('userCertificate')
     if(id){
       const certificate = new X509Certificate(id.credentials.certificate)
-      const publicKey = certificate.publicKey.export({type: 'spki', format: 'pem'})
-      return ControllerUtil.getHash(publicKey)
+      return certificate.fingerprint256.replace(/:/g,'')
     }
   }
 }

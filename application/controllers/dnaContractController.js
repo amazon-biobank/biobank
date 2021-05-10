@@ -1,5 +1,5 @@
-const Operation = require('../../blockchain/contract/lib/operation/operation');
 const DnaContractContract = require('../contract/dnaContractContract');
+const BiocoinContract = require('../contract/biocoinContract');
 const ControllerUtil = require('./ControllerUtil.js');
 
 
@@ -29,7 +29,11 @@ exports.execute = async function(req, res, next){
   const dnaContractId = req.params.dnaContract
 
   const dnaContractContract = new DnaContractContract();
+  const biocoinContract = new BiocoinContract();
+  
   const operation = await dnaContractContract.executeContract(dnaContractId, options)
+  await biocoinContract.transferOperationBiocoins(operation.id)
+  await dnaContractContract.executeOperation(operation.id)
 
   res.redirect("/operation/" + operation.id)
 };
