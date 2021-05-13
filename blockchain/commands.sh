@@ -1,3 +1,8 @@
+
+# Installing commands
+curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.3.2 1.5.0
+
+#-----------
 cd blockchain/test-network
 ./network.sh up createChannel -c channel1 -ca -s couchdb
 ./network.sh createChannel -c channel2
@@ -15,6 +20,11 @@ node registerUser.js
 cd application
 node index.js
 
+
+# ------------------- Explorer Docker
+docker-compose up -d
+
+# ------------------------ 
 cd explorer/..../first-network
 renomear o admin sk
 cd app/persistence/fabric/postgreSQL/db

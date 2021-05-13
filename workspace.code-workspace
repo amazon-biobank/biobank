@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"name": "biobank-contract",
+			"path": "blockchain/biobank-contract"
+		},
+		{
+			"name": "currency-contract",
+			"path": "blockchain/currency-contract"
+		},
+		{
+			"name": "biobank",
+			"path": "."
+		}
+	],
+	"settings": {},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+		{
+			"name": "Attach",
+			"port": 9229,
+			"request": "attach",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "node"
+		}
+		]
+	}
+}

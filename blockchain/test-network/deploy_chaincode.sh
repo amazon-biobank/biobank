@@ -1,16 +1,16 @@
 # run in /test-network
 
-# CHAINCODE_NAME="biobank"
-# SEQUENCE="2"        # each time you deploy your chaincode, you need to increment this
-# CHANNEL_NAME="channel1"
-# PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
-# CONTRACT_PATH="../biobank-contract/"
-
-CHAINCODE_NAME="currency"
-SEQUENCE="4"        # each time you deploy your chaincode, you need to increment this
-CHANNEL_NAME="channel2"
+CHAINCODE_NAME="biobank"
+SEQUENCE="3"        # each time you deploy your chaincode, you need to increment this
+CHANNEL_NAME="channel1"
 PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
-CONTRACT_PATH="../currency-contract/"
+CONTRACT_PATH="../biobank-contract/"
+
+# CHAINCODE_NAME="currency"
+# SEQUENCE="3"        # each time you deploy your chaincode, you need to increment this
+# CHANNEL_NAME="channel2"
+# PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
+# CONTRACT_PATH="../currency-contract/"
 
 #set environment
 export FABRIC_CFG_PATH=$PWD/../config/
@@ -34,7 +34,7 @@ peer lifecycle chaincode install ${CHAINCODE_NAME}.tar.gz
 OUTPUT=$(peer lifecycle chaincode queryinstalled)
 OUTPUT_LINE=$(echo "${OUTPUT}" | tr -d , | grep ${PACKAGE_NAME})
 CC_PACKAGE_ID=$(echo "${OUTPUT_LINE}" | cut -d ' ' -f3 )
-echo "${CC_PACKAGE_ID}"
+echo "package_id: ${CC_PACKAGE_ID}"
 
 #approve on peer 1
 peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID ${CHANNEL_NAME} --name ${CHAINCODE_NAME} --version 1.0 --package-id ${CC_PACKAGE_ID} --sequence ${SEQUENCE} --tls --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
