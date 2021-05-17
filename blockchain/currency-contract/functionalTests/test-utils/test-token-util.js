@@ -4,43 +4,24 @@ const SmartContractUtil = require('./../js-smart-contract-util');
 const { X509Certificate } = require('crypto')
 
 
-class TestAccountUtil {
-    static async createSampleAccount(gateway) {
-        const arg1 = accountJson;
-        const args = [ arg1];
-        const response = await SmartContractUtil.submitTransaction('AccountContract', 'createAccount', args, gateway);
+class TestTokenUtil {
+    static async createScrewToken(gateway) {
+        const arg0 = '123'; // This DNA must have been created
+        const arg1 = '2';
+        const arg2 = 'Mon May 16 2024'
+        const args = [ arg0, arg1, arg2];
+        const response = await SmartContractUtil.submitTransaction('TokenContract', 'createScrewToken', args, gateway); 
         return JSON.parse(response.toString())
     }
 
-    static async createAnotherSampleAccount(gateway) {
-        const arg1 = accountJson2;
-        const args = [ arg1 ];
-        const response = await SmartContractUtil.submitTransaction('AccountContract', 'createAccount', args, gateway);
+    static async createExpiredScrewToken(gateway) {
+        const arg0 = '123'; // This DNA must have been created
+        const arg1 = '2';
+        const arg2 = 'Mon May 16 2020'
+        const args = [ arg0, arg1, arg2];
+        const response = await SmartContractUtil.submitTransaction('TokenContract', 'createScrewToken', args, gateway); 
         return JSON.parse(response.toString())
-    }
-
-    async createUserAccount(gateway){
-        const x509 = gateway.identity.credentials.certificate
-
-        const arg1 = {
-            "certificate": x509,
-            "name": "Org1 Admin",
-            // "name": "John Smith",
-            "created_at": "Fri Aug 07 2020" 
-        }
-        const args = [ JSON.stringify(arg1)];
-        const response = await SmartContractUtil.submitTransaction('AccountContract', 'createAccount', args, gateway);
-        
-        return JSON.parse(response.toString())
-    }
-
-    static get generatedAddress(){
-        return "D168029A1BFF465EA21B6CE7B9D0445D2D3BA997A2DA53881CEBB82013D2B0B9"
-    }
-
-    static get anotherGeneratedAddress(){
-        return "33BF3BA2C63BAB2CC546D7A36791FF9763607B365A04CC1F71104A90D83E5F7C"
     }
 }
 
-module.exports = TestAccountUtil;
+module.exports = TestTokenUtil;
