@@ -1,21 +1,13 @@
 const crypto = require('crypto')
 const ClientIdentity = require('fabric-shim').ClientIdentity;
-const { X509Certificate } = require('crypto')
+const jsrsasign = require('jsrsasign')
 
 class CryptoUtils {
     static getUserAddressFromContext(ctx){
         let cid = new ClientIdentity(ctx.stub)
-        const address = CryptoUtils.getAddress(cid.getIDBytes())
+        const certificateString = new TextDecoder().decode(cid.getIDBytes())
+        const address = CryptoUtils.getAddress(certificateString)
         return address
-    }
-    
-    static getPublicKeyFromCertificate(certificate){
-        const publicKey = certificate.publicKey.export({type: 'spki', format: 'pem'})
-        return publicKey
-    }
-
-    static getAddressFromPublicKey(public_key) {
-        return this.getHash(public_key)
     }
 
     static getHash(payload) {
@@ -24,9 +16,12 @@ class CryptoUtils {
         return data.digest('hex') 
     }
 
-    static getAddress(certificate){
-        const x509 = new X509Certificate(certificate)
-        return x509.fingerprint256.replace(/:/g,'')
+    static getAddress(certificateString){
+        var x509 = new jsrsasign.X509()
+        x509.readCertPEM(certificateString)
+        const hex = x509.hex
+        const fingerprint256 = jsrsasign.KJUR.crypto.Util.sha256(x509.hex)
+        return fingerprint256
     }
 }
 

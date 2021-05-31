@@ -49,6 +49,14 @@ describe('AccountContract-biobank' , () => {
             assert.strictEqual(json_response['name'], "John Smith");
             assert.strictEqual(json_response['id'], TestAccountUtil.generatedAddress);
             assert.strictEqual(json_response['balance'], 10);
+        }).timeout(20000);
+    });
+
+    describe('createUserAccount', () =>{
+        it('should submit createAccount transaction', async () => {
+            const response = await TestAccountUtil.createUserAccount(gateway)
+            assert.strictEqual(response['name'], "Org1 Admin");
+            assert.strictEqual(response['balance'], 10);
         }).timeout(10000);
     });
 

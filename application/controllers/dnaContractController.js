@@ -1,7 +1,7 @@
 const DnaContractContract = require('../contract/dnaContractContract');
 const BiocoinContract = require('../contract/biocoinContract');
 const ControllerUtil = require('./ControllerUtil.js');
-
+const { v4: uuidv4 } = require('uuid');
 
 exports.new = async function(req, res, next){
   const dnaId = req.params.dnaId
@@ -25,7 +25,10 @@ exports.show = async function(req, res, next){
 };
 
 exports.execute = async function(req, res, next){
-  const options = { type: req.body.type }
+  const options = {
+    type: req.body.type, 
+    operationId: ControllerUtil.generateId() 
+  }
   const dnaContractId = req.params.dnaContract
 
   const dnaContractContract = new DnaContractContract();

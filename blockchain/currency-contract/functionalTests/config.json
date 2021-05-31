@@ -3,7 +3,7 @@
   "identityName": "Org1 Admin",
   "connectionProfilePath":".fabric-vscode/v2/environments/1 Org Local Fabric/gateways/Org1 Gateway.json",
 
-  "__walletPath": "Desktop/toshi/poli/biobank/application/fabric-details/wallet",
-  "__identityName": "user",
+  "__walletPath": "Desktop/poli/biobank/application/fabric-details/wallet",
+  "__identityName": "admin",
   "__connectionProfilePath": "Desktop/poli/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/connection-org1.json"
 }

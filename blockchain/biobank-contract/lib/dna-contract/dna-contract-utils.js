@@ -1,7 +1,6 @@
 'use strict';
 
 const CryptoUtils = require('./../crypto-utils')
-const { v4: uuidv4 } = require('uuid');
 const InternalOperationContract = require('./../operation/internal-operation-contract')
 const Data = require('../data/data.js');
 
@@ -51,9 +50,8 @@ class DnaContractUtils {
     return true
   }
 
-  static async createBuyingOperation(ctx, dna, dnaContract){
+  static async createBuyingOperation(ctx, dna, dnaContract, operationId){
     const internalOperationContract = new InternalOperationContract()
-    const id = uuidv4()
     const operationAttributes = JSON.stringify({
         type: 'buy',
         userAddress: ctx.user.address,
@@ -71,7 +69,7 @@ class DnaContractUtils {
             value: dnaContract.parameters.price
         }]
     })
-    return await internalOperationContract.createOperation(ctx, id, operationAttributes)
+    return await internalOperationContract.createOperation(ctx, operationId, operationAttributes)
   }
 }
 

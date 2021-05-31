@@ -5,7 +5,7 @@ curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.3.2 1.5.0
 #-----------
 cd blockchain/test-network
 ./network.sh up createChannel -c channel1 -ca -s couchdb
-./network.sh createChannel -c channel2
+./network.sh createChannel -c channel2 -s couchdb
 
 # setar enviroment
 export PATH=${PWD}/../bin:$PATH
@@ -42,6 +42,11 @@ npm install
 cd test-network
 
 
+# --------- Criar User Account
+mudar currency-contract/functionalTests/config.json
+./createUserAccount.sh
+
+
 
 # setar para peer 1
 export CORE_PEER_TLS_ENABLED=true
@@ -61,7 +66,7 @@ export CORE_PEER_ADDRESS=localhost:9051
 # -------------------------------- IBM BLOCKCHAIN Microfab--------------------------
 
 # Start Microfab
-START_IMAGE="ibmcom/ibp-microfab:0.0.12"
+START_IMAGE="ibmcom/ibp-microfab:0.0.13"
 docker run -e MICROFAB_CONFIG --label fabric-environment-name="1 Org Local Fabric Microfab" -p 8080:8080 $START_IMAGE
 
 
@@ -84,20 +89,23 @@ export MICROFAB_CONFIG='{
     "endorsing_organizations":[
         {
             "name": "Org1"
+        }, 
+        {
+            "name": "Org2"
         }
       ],
     "channels":[
         {
             "name": "channel1",
             "endorsing_organizations":[
-                "Org1"
+                "Org1", "Org2"
             ],
             "capability_level": "V2_0"
         },
         {
             "name": "channel2",
             "endorsing_organizations":[
-                "Org1"
+                "Org1", "Org2"
             ],
             "capability_level": "V2_0"
         }

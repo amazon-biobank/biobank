@@ -18,13 +18,18 @@ class ActiveContract extends Contract {
         userAddress
       ]
       ctx.user = await this.queryCurrencyChannel(ctx, args)  
+      if(ctx.user == undefined) {
+        throw new Error(ctx.user + "user account not created")
+      }
     }
   } 
 
   async queryCurrencyChannel(ctx, args){
     const response = await ctx.stub.invokeChaincode('currency', args, 'channel2')
     const buff = Buffer.from(response.payload, 'base64')
-    return JSON.parse(buff.toString())
+    const responseString = buff.toString()
+    if(responseString == ''){ return responseString }
+    else { return JSON.parse(responseString) }
   }
 
   needsQueryUser(ctx){

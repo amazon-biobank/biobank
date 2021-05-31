@@ -13,15 +13,27 @@ class ActiveContext extends Context {
 
 class ActiveContract extends Contract {
   async beforeTransaction(ctx){
-    const userAddress = CryptoUtils.getUserAddressFromContext(ctx)
-    const user = await ctx.accountList.getAccount(userAddress);
-    ctx.user = user
+    if(this.needsQueryUser(ctx)){
+      const userAddress = CryptoUtils.getUserAddressFromContext(ctx)
+      ctx.user = await ctx.accountList.getAccount(userAddress);
+      if(ctx.user == undefined) {
+        throw new Error(ctx.user + "user account not created")
+      }
+    }
   } 
 
   async queryBiobankChannel(ctx, args){
     const response = await ctx.stub.invokeChaincode('biobank', args, 'channel1')
     const buff = Buffer.from(response.payload, 'base64')
-    return JSON.parse(buff.toString())
+    const responseString = buff.toString()
+    if(responseString == ''){ return responseString }
+    else { return JSON.parse(responseString) }
+  }
+
+  needsQueryUser(ctx){
+    const calledContract = ctx.stub.getArgs()[0]
+    const allowedContracts = ["AccountContract:createAccount"]
+    return !allowedContracts.includes(calledContract)
   }
 }
 

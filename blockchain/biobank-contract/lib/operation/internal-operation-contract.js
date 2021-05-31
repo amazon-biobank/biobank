@@ -5,6 +5,9 @@ const OperationContract = require('./operation-contract.js');
 
 class InternalOperationContract extends OperationContract {
   async createOperation(ctx, id, operationAttributes) {
+    if(await this.operationExists(ctx, id)){
+      throw new Error("operation already exists")
+    }
     const newOperationAttributes = handleOperationAttributes(ctx, id, operationAttributes)
     const operation = Operation.createInstance(newOperationAttributes);
     await ctx.operationList.addOperation(operation);

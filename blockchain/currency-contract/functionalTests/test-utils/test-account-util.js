@@ -19,7 +19,7 @@ class TestAccountUtil {
         return JSON.parse(response.toString())
     }
 
-    async createUserAccount(gateway){
+    static async createUserAccount(gateway){
         const x509 = gateway.identity.credentials.certificate
 
         const arg1 = {
@@ -35,11 +35,11 @@ class TestAccountUtil {
     }
 
     static get generatedAddress(){
-        return "D168029A1BFF465EA21B6CE7B9D0445D2D3BA997A2DA53881CEBB82013D2B0B9"
+        return "749a7937a0343fdc441f84729ff035f90c8a5d06f33ff01005a98446c329e108"
     }
 
     static get anotherGeneratedAddress(){
-        return "33BF3BA2C63BAB2CC546D7A36791FF9763607B365A04CC1F71104A90D83E5F7C"
+        return "54e9615526bad824b5810729cb58d16ae8586c2f98e091650cb04512647ae702"
     }
 }
 

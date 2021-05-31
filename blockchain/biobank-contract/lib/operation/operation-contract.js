@@ -21,6 +21,11 @@ class OperationContract extends ActiveContract {
         return operation;
     }
 
+    async operationExists(ctx, id){
+        const operation = await ctx.operationList.getOperation(id);
+        return (operation != undefined)
+    }
+
     async getAllOperation(ctx) {
         return await ctx.operationList.getAllOperation();
     }
