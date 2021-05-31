@@ -53,4 +53,25 @@ describe('OperationContract-biobank' , () => {
             assert.ok(json_response.output);
         }).timeout(10000);
     });
+
+    describe('operationExists', () =>{
+        it('should evaluate readOperation transaction', async () => {
+            const arg0 = 'ee59d1f0-770d-4a93-9645-b8ead51f45f9';
+            const args = [ arg0 ];
+            const response = await SmartContractUtil.evaluateTransaction('OperationContract', 'operationExists', args, gateway);
+            assert.ok(!response.toString())
+        }).timeout(10000);
+    });
+
+    describe('getAllOperation', () =>{
+        it('should submit getAllOperation transaction', async () => {         
+            const args = [];
+            const response = await SmartContractUtil.submitTransaction('OperationContract', 'getAllOperation', args, gateway);
+            
+            const json_response = JSON.parse(response.toString())
+            assert.strictEqual(json_response.length, 2);
+            assert.strictEqual(json_response[0]['title'], "Meu dado de DNA");
+            assert.strictEqual(json_response[1]['title'], "DNA Coronavirus");
+        }).timeout(10000);
+    });
 });

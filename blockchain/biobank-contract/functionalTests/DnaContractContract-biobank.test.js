@@ -84,13 +84,13 @@ describe('DnaContractContract-biobank' , () => {
             await TestDnaContractUtil.createSampleDnaContract(gateway)
 
             const arg0 = TestDnaContractUtil.generatedId;
-            const arg1 = "{\"type\": \"buy_dna\"}";
+            const arg1 = "{\"type\": \"buy_dna\", \"operationId\": \"123\"}";
             const args = [ arg0, arg1];
             const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'executeContract', args, gateway);
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response.type, 'buy');
-        }).timeout(10000);
+        }).timeout(40000);
     });
 
     describe('executeOperation', () =>{

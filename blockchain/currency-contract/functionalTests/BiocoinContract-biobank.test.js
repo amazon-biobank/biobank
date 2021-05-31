@@ -46,7 +46,7 @@ describe('BiocoinContract-biobank' , () => {
     describe('transferBiocoins', () =>{
         it('should submit transferBiocoins transaction', async () => {
             const testAccountUtil = new TestAccountUtil()
-            const user = await testAccountUtil.createUserAccount(gateway)
+            const user = await TestAccountUtil.createUserAccount(gateway)
             await TestAccountUtil.createAnotherSampleAccount(gateway)
 
             const arg0 = user.address;
@@ -58,11 +58,11 @@ describe('BiocoinContract-biobank' , () => {
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response[0]['balance'], 0);
             assert.strictEqual(json_response[1]['balance'], 20);
-        }).timeout(10000);
+        }).timeout(20000);
 
         it('should submit parcial transferBiocoins transaction', async () => {
             const testAccountUtil = new TestAccountUtil()
-            const user = await testAccountUtil.createUserAccount(gateway)
+            const user = await TestAccountUtil.createUserAccount(gateway)
             await TestAccountUtil.createAnotherSampleAccount(gateway)
 
             const arg0 = user.address;
@@ -74,11 +74,11 @@ describe('BiocoinContract-biobank' , () => {
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response[0]['balance'], 4.5);
             assert.strictEqual(json_response[1]['balance'], 15.5);
-        }).timeout(10000);
+        }).timeout(20000);
 
         it('should raise unauthorized balance error', async () => {
             const testAccountUtil = new TestAccountUtil()
-            const user = await testAccountUtil.createUserAccount(gateway)
+            const user = await TestAccountUtil.createUserAccount(gateway)
             await TestAccountUtil.createSampleAccount(gateway)
 
             const arg0 = TestAccountUtil.generatedAddress;
@@ -93,11 +93,11 @@ describe('BiocoinContract-biobank' , () => {
                     assert(regExp.test(err.message))
                     return true
                 })
-        }).timeout(10000);
+        }).timeout(20000);
 
         it('should raise insufficient balance error', async () => {
             const testAccountUtil = new TestAccountUtil()
-            const user = await testAccountUtil.createUserAccount(gateway)
+            const user = await TestAccountUtil.createUserAccount(gateway)
             await TestAccountUtil.createAnotherSampleAccount(gateway)
 
             const arg0 = user.address;
@@ -112,11 +112,11 @@ describe('BiocoinContract-biobank' , () => {
                     assert(regExp.test(err.message))
                     return true
                 })
-        }).timeout(10000);
+        }).timeout(20000);
 
         it('should raise negative balance error', async () => {
             const testAccountUtil = new TestAccountUtil()
-            const user = await testAccountUtil.createUserAccount(gateway)
+            const user = await TestAccountUtil.createUserAccount(gateway)
             await TestAccountUtil.createAnotherSampleAccount(gateway)
 
             const arg0 = user.address;
@@ -131,7 +131,7 @@ describe('BiocoinContract-biobank' , () => {
                     assert(regExp.test(err.message))
                     return true
                 })
-        }).timeout(10000);
+        }).timeout(20000);
     });
 
     describe('transferOperationBiocoins', () =>{
@@ -142,6 +142,6 @@ describe('BiocoinContract-biobank' , () => {
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response['status'], 'paid');
             assert.strictEqual(json_response['id'], "d210c49d-2d50-413b-a476-0377fe99ca95");
-        }).timeout(10000);
+        }).timeout(20000);
     });
 });
