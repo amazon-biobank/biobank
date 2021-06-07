@@ -1,13 +1,13 @@
 # run in /test-network
 
 CHAINCODE_NAME="biobank"
-SEQUENCE="6"        # each time you deploy your chaincode, you need to increment this
+SEQUENCE="1"        # each time you deploy your chaincode, you need to increment this
 CHANNEL_NAME="channel1"
 PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
 CONTRACT_PATH="../biobank-contract/"
 
 # CHAINCODE_NAME="currency"
-# SEQUENCE="3"        # each time you deploy your chaincode, you need to increment this
+# SEQUENCE="1"        # each time you deploy your chaincode, you need to increment this
 # CHANNEL_NAME="channel2"
 # PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
 # CONTRACT_PATH="../currency-contract/"
