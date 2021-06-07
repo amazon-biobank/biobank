@@ -46,28 +46,24 @@ describe('TokenContract-currency' , () => {
 
     describe('createScrewToken', () =>{
         it('should submit createScrewToken transaction', async () => {
-            const testAccountUtil = new TestAccountUtil()
-            await testAccountUtil.createUserAccount(gateway)
+            await TestAccountUtil.createUserAccount(gateway)
             const response =  await TestTokenUtil.createScrewToken(gateway)
-            assert.strictEqual(response.tokens[0].dnaId, '123');
-            assert.strictEqual(response.tokens[0].value, '2');
-            assert.strictEqual(response.balance, 8);
+            assert.strictEqual(response.tokens[0].value, 1);
+            assert.strictEqual(response.balance, 9);
         }).timeout(10000);
     });
 
     // ----------------------------------to test this function, you need to desactivate the redeem date verification from screwTokenCreation
     describe('Redeem Screw Token', () =>{
         it('should submit redeem Screw token transaction', async () => {
-            const testAccountUtil = new TestAccountUtil()
-            await testAccountUtil.createUserAccount(gateway)
+            await TestAccountUtil.createUserAccount(gateway)
             const user =  await TestTokenUtil.createExpiredScrewToken(gateway)
-            assert.strictEqual(user.balance, 8);
+            assert.strictEqual(user.balance, 9);
 
-            const response = await SmartContractUtil.submitTransaction('TokenContract', 'redeemScrewToken', [user.tokens[0].tokenId], gateway); 
+            const response = await SmartContractUtil.submitTransaction('TokenContract', 'redeemExpiredScrewToken', [user.tokens[0].payment_intention_id], gateway); 
             const response_json = JSON.parse(response.toString())
             assert.ok(response_json.tokens.length == 0);
             assert.strictEqual(response_json.balance, 10);
-
         }).timeout(10000);
     });    
 });
