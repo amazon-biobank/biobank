@@ -43,24 +43,27 @@ describe('PaymentIntentionContract-currency@3.0.0' , () => {
 
     describe('createPaymentIntention', () =>{
         it('should submit createPaymentIntention transaction', async () => {
-            const arg0 = '126'
+            const arg0 = '138'
             const arg1 = {
                 "magnetic_link": "asdfajojonn2432",
-                "value_to_freeze": 1,
+                "value_to_freeze": 1e9,
                 "expiration_date": "Fri Out 07 2020",
                 "created_at": "Fri Aug 07 2020"
             }
             const args = [ arg0, JSON.stringify(arg1) ];
             const response = await SmartContractUtil.submitTransaction('PaymentIntentionContract', 'createPaymentIntention', args, gateway);
+            const json_response = JSON.parse(response.toString())
             
-            assert.strictEqual(JSON.parse(response.toString()), undefined);
+            assert.strictEqual(json_response.value_to_freeze, 1e9);
+            assert.ok(json_response.payer_address != undefined);
+            assert.strictEqual(json_response.id, arg0)
         }).timeout(10000);
     });
 
     describe('readPaymentIntention', () =>{
         it('should submit readPaymentIntention transaction', async () => {
             const arg0 = '123';
-            const args = [ arg0];
+            const args = [ arg0 ];
             const response = await SmartContractUtil.submitTransaction('PaymentIntentionContract', 'readPaymentIntention', args, gateway);
             
             assert.strictEqual(JSON.parse(response.toString()), undefined);

@@ -1,7 +1,7 @@
 const AccountContract = require('../contract/accountContract');
 const ControllerUtil = require('./ControllerUtil.js');
 const ConnectService = require('./../services/connectService.js');
-
+const Dinero = require('dinero.js')
 
 exports.show = async function(req, res, next){
 
@@ -13,6 +13,7 @@ exports.show = async function(req, res, next){
     return
   }
 
+  account.balance = Dinero({ amount: account.balance, precision: 9 }).toFormat('0.000000000')
   account.created_at = ControllerUtil.formatDate(new Date(account.created_at))
   res.render('account/show', { account });
 };

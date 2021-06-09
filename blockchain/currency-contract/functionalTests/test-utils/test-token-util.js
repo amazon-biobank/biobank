@@ -9,7 +9,7 @@ class TestTokenUtil {
         const arg0 = {
             "id": "123",
             "magnetic_link": "asdfajojonn2432",
-            "value_to_freeze": 1,
+            "value_to_freeze": 1e9,
             "expiration_date": "Mon May 16 2022",
             "created_at": "Fri Aug 07 2020"
         }
@@ -22,7 +22,7 @@ class TestTokenUtil {
         const arg0 = {
             "id": "123",
             "magnetic_link": "asdfajojonn2432",
-            "value_to_freeze": 1,
+            "value_to_freeze": 1e9,
             "expiration_date": "Mon May 16 2020",
             "created_at": "Fri Aug 07 2020"
         }

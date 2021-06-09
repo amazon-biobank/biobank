@@ -3,6 +3,7 @@
 const Account = require('./account.js');
 const CryptoUtils = require('./../crypto-utils')
 const { ActiveContext, ActiveContract } = require('./../active-contract')
+const Dinero = require('./../dinero.js')
 
 
 class AccountContract extends ActiveContract {
@@ -30,8 +31,9 @@ class AccountContract extends ActiveContract {
 function handleAccountAttributes(accountAttributes) {
     const { certificate, name, created_at } = JSON.parse(accountAttributes);
     const address = CryptoUtils.getAddress(certificate)
+    const balance = Dinero({ amount: 10e9 })
     const newAccountAttributes = {
-        id: address, address, name, tokens: [], created_at, balance: 10 
+        id: address, address, name, tokens: [], created_at, balance: balance.getAmount()
     }
     return newAccountAttributes;
 }

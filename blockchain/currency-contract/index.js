@@ -6,6 +6,8 @@ const OperationPaymentContract = require('./lib/operation-payment/operation-paym
 const TokenContract = require('./lib/token/token-contract');
 const PaymentIntentionContract = require('./lib/payment-intention/payment-intention-contract');
 
+
+
 module.exports.AccountContract = AccountContract;
 module.exports.BiocoinContract = BiocoinContract;
 module.exports.OperationPaymentContract = OperationPaymentContract;

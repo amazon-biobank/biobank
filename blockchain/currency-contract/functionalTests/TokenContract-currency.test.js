@@ -48,8 +48,8 @@ describe('TokenContract-currency' , () => {
         it('should submit createScrewToken transaction', async () => {
             await TestAccountUtil.createUserAccount(gateway)
             const response =  await TestTokenUtil.createScrewToken(gateway)
-            assert.strictEqual(response.tokens[0].value, 1);
-            assert.strictEqual(response.balance, 9);
+            assert.strictEqual(response.tokens[0].value, 1e9);
+            assert.strictEqual(response.balance, 9e9);
         }).timeout(10000);
     });
 
@@ -58,12 +58,12 @@ describe('TokenContract-currency' , () => {
         it('should submit redeem Screw token transaction', async () => {
             await TestAccountUtil.createUserAccount(gateway)
             const user =  await TestTokenUtil.createExpiredScrewToken(gateway)
-            assert.strictEqual(user.balance, 9);
+            assert.strictEqual(user.balance, 9e9);
 
             const response = await SmartContractUtil.submitTransaction('TokenContract', 'redeemExpiredScrewToken', [user.tokens[0].payment_intention_id], gateway); 
             const response_json = JSON.parse(response.toString())
             assert.ok(response_json.tokens.length == 0);
-            assert.strictEqual(response_json.balance, 10);
+            assert.strictEqual(response_json.balance, 10e9);
         }).timeout(10000);
     });    
 });

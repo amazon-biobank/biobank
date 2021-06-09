@@ -46,7 +46,7 @@ class PaymentIntentionContract extends ActiveContract {
 
     async validate(ctx, id, paymentIntentionAttributes){
         if(await this.paymentIntentionExists(ctx, id)) {
-            throw new Error("payment Intention already exists")
+            throw new Error("Payment Intention ID already used")
         }
         if(ctx.user == undefined) {
             throw new Error("user not Found")
