@@ -31,9 +31,10 @@ class AccountContract extends ActiveContract {
 function handleAccountAttributes(accountAttributes) {
     const { certificate, name, created_at } = JSON.parse(accountAttributes);
     const address = CryptoUtils.getAddress(certificate)
+    const public_key = CryptoUtils.getPublicKeyPEM(certificate)
     const balance = Dinero({ amount: 10e9 })
     const newAccountAttributes = {
-        id: address, address, name, tokens: [], created_at, balance: balance.getAmount()
+        id: address, address, name, tokens: [], created_at, balance: balance.getAmount(), public_key
     }
     return newAccountAttributes;
 }

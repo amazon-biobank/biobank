@@ -23,6 +23,13 @@ class CryptoUtils {
         const fingerprint256 = jsrsasign.KJUR.crypto.Util.sha256(x509.hex)
         return fingerprint256
     }
+
+    static getPublicKeyPEM(certificateString){
+        var x509 = new jsrsasign.X509()
+        x509.readCertPEM(certificateString)
+        const public_key = x509.getPublicKey()
+        return jsrsasign.KEYUTIL.getPEM(public_key)
+    }
 }
 
 module.exports = CryptoUtils;
