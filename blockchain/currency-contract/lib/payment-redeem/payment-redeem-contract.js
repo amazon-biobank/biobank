@@ -50,8 +50,8 @@ class PaymentRedeemContract extends ActiveContract {
 
     async redeem(ctx, paymentCommitment, hashLink, hashLinkIndex){
         const commitment = JSON.parse(paymentCommitment)
-        return await verifyCommitment(ctx, commitment)
-
+        await verifyCommitment(ctx, commitment)
+        verifyHashLink(commitment, hashLink, hashLinkIndex)
     }
 
     // async validate(ctx, id, paymentRedeemAttributes){
@@ -85,6 +85,16 @@ async function verifyCommitment(ctx, commitment) {
     const signatureCorrect = CryptoUtils.verifySignature(payer.public_key, commitment.signature, JSON.stringify(commitment.data))
     if(!signatureCorrect) {
         throw new Error("Signature is not correct")
+    }
+}
+
+function verifyHashLink(commitment, hashLink, hashLinkIndex){
+    var hash = hashLink
+    for( var i = 0; i < hashLinkIndex; i++ ) {
+        hash = CryptoUtils.getHash(hash)
+    }
+    if(hash != commitment.data.hash_root){
+        throw new Error("HashLink or hashLinkIndex is incorrect")
     }
 }
 

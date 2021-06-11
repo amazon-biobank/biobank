@@ -88,11 +88,10 @@ describe('PaymentRedeemContract-currency@23.0.0' , () => {
         it('should submit redeem transaction', async () => {
             var arg0 = TestPaymentRedeemUtil.createPaymentCommitment(gateway)
             console.log(arg0)
-            const arg1 = 'EXAMPLE';
-            const arg2 = 'EXAMPLE';
+            const arg1 = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
+            const arg2 = '10';
             const args = [ JSON.stringify(arg0), arg1, arg2];
             const response = await SmartContractUtil.submitTransaction('PaymentRedeemContract', 'redeem', args, gateway);
-            
             
             assert.strictEqual(response.toString(), true);
         }).timeout(10000);
@@ -124,6 +123,21 @@ describe('PaymentRedeemContract-currency@23.0.0' , () => {
                 SmartContractUtil.submitTransaction('PaymentRedeemContract', 'redeem', args, gateway),
                 (err) => {
                     const regExp = new RegExp("Signature is not correct")
+                    assert(regExp.test(err.message))
+                    return true
+                })
+        }).timeout(10000);
+
+        it('should give hashLInk error', async () => {
+            var arg0 = TestPaymentRedeemUtil.createPaymentCommitment(gateway)
+            const arg1 = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
+            const arg2 = '9';
+            const args = [ JSON.stringify(arg0), arg1, arg2];
+            
+            await assert.rejects(
+                SmartContractUtil.submitTransaction('PaymentRedeemContract', 'redeem', args, gateway),
+                (err) => {
+                    const regExp = new RegExp("hashLinkIndex is incorrect")
                     assert(regExp.test(err.message))
                     return true
                 })
