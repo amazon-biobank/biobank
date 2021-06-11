@@ -86,7 +86,6 @@ describe('PaymentRedeemContract-currency@23.0.0' , () => {
 
     describe('redeem', () =>{
         it('should submit redeem transaction', async () => {
-            // TODO: populate transaction parameters
             var arg0 = TestPaymentRedeemUtil.createPaymentCommitment(gateway)
             console.log(arg0)
             const arg1 = 'EXAMPLE';
@@ -95,8 +94,39 @@ describe('PaymentRedeemContract-currency@23.0.0' , () => {
             const response = await SmartContractUtil.submitTransaction('PaymentRedeemContract', 'redeem', args, gateway);
             
             
-            // TODO: Update with return value of transaction
-            // assert.strictEqual(JSON.parse(response.toString()), undefined);
+            assert.strictEqual(response.toString(), true);
+        }).timeout(10000);
+
+        it('should give commitment hash error', async () => {
+            var arg0 = TestPaymentRedeemUtil.createPaymentCommitment(gateway)
+            arg0.commitment_hash = '123'
+            const arg1 = 'EXAMPLE';
+            const arg2 = 'EXAMPLE';
+            const args = [ JSON.stringify(arg0), arg1, arg2];
+            
+            await assert.rejects(
+                SmartContractUtil.submitTransaction('PaymentRedeemContract', 'redeem', args, gateway),
+                (err) => {
+                    const regExp = new RegExp("hash invalid")
+                    assert(regExp.test(err.message))
+                    return true
+                })
+        }).timeout(10000);
+
+        it('should give signature error', async () => {
+            var arg0 = TestPaymentRedeemUtil.createPaymentCommitment(gateway)
+            arg0.signature = '123'
+            const arg1 = 'EXAMPLE';
+            const arg2 = 'EXAMPLE';
+            const args = [ JSON.stringify(arg0), arg1, arg2];
+            
+            await assert.rejects(
+                SmartContractUtil.submitTransaction('PaymentRedeemContract', 'redeem', args, gateway),
+                (err) => {
+                    const regExp = new RegExp("Signature is not correct")
+                    assert(regExp.test(err.message))
+                    return true
+                })
         }).timeout(10000);
     });
 

@@ -30,6 +30,14 @@ class CryptoUtils {
         const public_key = x509.getPublicKey()
         return jsrsasign.KEYUTIL.getPEM(public_key)
     }
+
+    static verifySignature(publicKeyPEM, signature, payload){
+        const publicKey = crypto.createPublicKey(publicKeyPEM)
+        const verify = crypto.createVerify('SHA256');
+        verify.update(payload);
+        verify.end();
+        return verify.verify(publicKey, signature, 'hex')
+    }
 }
 
 module.exports = CryptoUtils;
