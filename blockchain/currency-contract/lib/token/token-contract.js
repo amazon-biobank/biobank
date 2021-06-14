@@ -21,7 +21,7 @@ class TokenContract extends ActiveContract {
         return user
     }
 
-    async redeemExpiredScrewToken(ctx, paymentIntentionId){
+    async redeemExpiredScrewToken(ctx, paymentIntentionId){ // recoverExpiredScrewToken
         const { userToken, index } = findUserToken(ctx.user.tokens, paymentIntentionId)
         if (new Date(userToken.redeemDate) > new Date()){
             throw new Error("cant redeem token: not expired")
@@ -53,4 +53,4 @@ async function deleteUserToken(ctx, user, index){
     return user
 }
 
-module.exports = TokenContract;
+module.exports =  TokenContract;

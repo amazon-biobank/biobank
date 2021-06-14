@@ -1,21 +1,29 @@
-// const { pathToFileURL } = require('url');
-// const { ActiveContext, ActiveContract } = require('./../active-contract')
-// const BiocoinOperations = require('./../biocoin/biocoin-operations.js');
-// const TokenContract = require('./token-contract.js')
-
-// class InternalTokenContract extends TokenContract {
-//     async createScrewToken(ctx, paymentIntention){
-//         var user = await BiocoinOperations.withdraw_biocoins(ctx, ctx.user, paymentIntention.value_to_freeze)
-//         const screwToken = {
-//             payment_intention_id: paymentIntention.id, 
-//             value: paymentIntention.value_to_freeze,
-//             expiration_date: paymentIntention.expiration_date
-//         }
-//         user.tokens.push(screwToken)
-//         await ctx.accountList.updateAccount(user)
-//         return user
-//     }
-// }
+const BiocoinOperations = require('./../biocoin/biocoin-operations.js');
+const TokenContract = require('./token-contract.js');
+const AccountContract = require('./../account/account-contract.js')
 
 
-// module.exports = InternalTokenContract;
+class InternalTokenContract extends TokenContract {
+    async redeemScrewToken(ctx, { paymentIntentionId, payerAddress, receiverAddress, amount }){
+      const accountContract = new AccountContract()
+      var payer = await accountContract.readAccount(ctx, payerAddress)
+      const { userToken, index } = findUserToken(payer.tokens, paymentIntentionId)
+
+      if (userToken == undefined) {
+          throw new Error("cant find token with paymentIntentionId")
+      }
+
+      const { senderAccount } = await BiocoinOperations.transferBiocoins(ctx, payerAddress, receiverAddress, amount)
+      senderAccount.tokens[index].value -= amount  
+      return await ctx.accountList.updateState(senderAccount);
+    }
+}
+
+function findUserToken(tokens, id){
+  const isIdEqual = (element) => element.payment_intention_id == id
+  const index = tokens.findIndex(isIdEqual)
+  const userToken = tokens[index]
+  return { userToken, index }
+}
+
+module.exports = InternalTokenContract;

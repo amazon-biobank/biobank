@@ -27,7 +27,7 @@ class BiocoinOperations {
         let receiverAccount = await this.getReceiverAccount(ctx, senderAddress, receiverAddress, senderAccount)
         receiverAccount = await BiocoinOperations.deposit_biocoins(ctx, receiverAccount, amount)
 
-        return [senderAccount, receiverAccount]
+        return { senderAccount, receiverAccount }
     }
 
     static validateTransference(ctx, senderAccount, amount){

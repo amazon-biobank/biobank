@@ -2,13 +2,16 @@ const { ActiveContext, ActiveContract } = require('./../active-contract')
 const InternalPaymentRedeemContract = require('./../payment-redeem/internal-payment-redeem-contract.js')
 const PaymentRedeemList = require('./payment-redeem-list.js');
 const CryptoUtils = require('./../crypto-utils.js');
-const TokenContract = require('./../token/token-contract.js')
+const InternalTokenContract = require('./../token/internal-token-contract.js')
 const AccountContract = require('../account/account-contract.js');
+const PaymentIntentionContract = require('../payment-intention/payment-intention-contract.js')
+const PaymentIntentionList = require('../payment-intention/payment-intention-list.js')
 
 class RedeemContext extends ActiveContext {
   constructor() {
       super();
       this.paymentRedeemList = new PaymentRedeemList(this);
+      this.paymentIntentionList = new PaymentIntentionList(this);
   }
 }
 
@@ -21,7 +24,8 @@ class RedeemContract extends ActiveContract {
       const commitment = JSON.parse(paymentCommitment)
       await verifyCommitment(ctx, commitment)
       verifyHashLink(commitment, hashLink, hashLinkIndex)
-      const linksToBeRedeemed = getLinkToBeRedeemed(ctx, commitment, hashLinkIndex)
+      const linksToBeRedeemed = await getLinkToBeRedeemed(ctx, commitment, hashLinkIndex)
+      await redeemLinks(ctx, commitment, linksToBeRedeemed)
       return linksToBeRedeemed
   }
 }
@@ -76,6 +80,20 @@ async function getLinkToBeRedeemed(ctx, commitment, hashLinkIndex) {
     return linksToBeRedeemed
 }
 
+async function redeemLinks(ctx, commitment, linksToBeRedeemed) {
+    const paymentIntentionContract = new PaymentIntentionContract()
+    const internalTokenContract = new InternalTokenContract()
+    const paymentIntention = await paymentIntentionContract.readPaymentIntention(ctx, commitment.data.payment_intention_id)
+    // verify paymentIntention
+    options = {
+      paymentIntentionId: paymentIntention.id,
+      payerAddress: paymentIntention.payer_address,
+      receiverAddress: commitment.data.receiver_address,
+      amount: linksToBeRedeemed * 1000
+    }
+    
+    return await internalTokenContract.redeemScrewToken(ctx, options )
+}
 
 
 module.exports = RedeemContract;
