@@ -7,7 +7,7 @@ class TestPaymentRedeemUtil {
         "data": {
           "payment_intention_id": "123",
           "receiver_address": "54e9615526bad824b5810729cb58d16ae8586c2f98e091650cb04512647ae702",
-          "payer_address": "78717df17aad08669b981eb29dfd9220ba421b9e4f09f22e6e5d2ee86098bb06",
+          "payer_address": "fecfabcbb71ebd0d34f6c1bc3dc5f5e1a310a1a2febbc53613029437de57b4e0",
           "hash_root": "d937d5b3bb5fba451e05500b3739e34e2e4bfdd3d1a58c430d810f944f67ec53",
           "data_id": "cd04721d0f1251306c30812bc943193d9c5de79f"
         },

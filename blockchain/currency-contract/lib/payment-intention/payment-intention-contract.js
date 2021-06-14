@@ -20,9 +20,9 @@ class PaymentIntentionContract extends ActiveContract {
 
     async createPaymentIntention(ctx, id, paymentIntentionAttributes) {
         await this.validate(ctx, id, paymentIntentionAttributes)
-        const newAccontAttributes = handlePaymentIntentionAttributes(ctx, id, paymentIntentionAttributes)
+        const newAttributes = handlePaymentIntentionAttributes(ctx, id, paymentIntentionAttributes)
 
-        const paymentIntention = PaymentIntention.createInstance(newAccontAttributes);
+        const paymentIntention = PaymentIntention.createInstance(newAttributes);
         await ctx.paymentIntentionList.addPaymentIntention(paymentIntention);
 
         const tokenContract = new TokenContract()
@@ -47,9 +47,6 @@ class PaymentIntentionContract extends ActiveContract {
     async validate(ctx, id, paymentIntentionAttributes){
         if(await this.paymentIntentionExists(ctx, id)) {
             throw new Error("Payment Intention ID already used")
-        }
-        if(ctx.user == undefined) {
-            throw new Error("user not Found")
         }
         // validate expiration date (maybe)
         return true
