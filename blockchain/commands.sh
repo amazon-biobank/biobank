@@ -4,6 +4,7 @@ curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.3.2 1.5.0
 
 #-----------
 cd blockchain/test-network
+./network.sh down
 ./network.sh up createChannel -c channel1 -ca -s couchdb
 ./network.sh createChannel -c channel2 -s couchdb
 

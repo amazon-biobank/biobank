@@ -48,7 +48,7 @@ services:
     volumes:
       - ./config.json:/opt/explorer/app/platform/fabric/config.json
       - ./connection-profile:/opt/explorer/app/platform/fabric/connection-profile
-      - /home/toshi/Desktop/poli/biobank/blockchain/test-network/organizations:/tmp/crypto
+      - ~/biobank/blockchain/test-network/organizations:/tmp/crypto
       - walletstore:/opt/explorer/wallet
     ports:
       - 8080:8080
