@@ -5,7 +5,7 @@ const yaml = require('js-yaml');
 const URL = require('url');
 const os = require('os');
 const path = require('path');
-const CONFIG = require('./config.json');
+const CONFIG = require('../config.json');
 
 class SmartContractUtil {
     static async getConnectionProfile() {

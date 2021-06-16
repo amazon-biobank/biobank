@@ -5,8 +5,7 @@ const fabricNetwork = require('fabric-network');
 const SmartContractUtil = require('./js-smart-contract-util');
 const os = require('os');
 const path = require('path');
-const CONFIG = require('./config.json');
-const TestPaymentRedeemUtil = require('./test-utils/test-payment-redeem-util.js')
+const CONFIG = require('../config.json');
 
 describe('PaymentRedeemContract-currency@23.0.0' , () => {
     const homedir = os.homedir();

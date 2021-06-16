@@ -1,6 +1,8 @@
+const CONFIG = require('../config.json')
 const Dinero = require('dinero.js')
-Dinero.defaultCurrency = 'BIO'
-Dinero.defaultPrecision = 9
-Dinero.globalFormat= '0.000000000'
+
+Dinero.defaultCurrency = CONFIG.defaultCurrency
+Dinero.defaultPrecision = CONFIG.defaultPrecision
+Dinero.globalFormat= CONFIG.globalFormat
 
 module.exports = Dinero

@@ -7,7 +7,7 @@ const TestTokenUtil = require('./test-utils/test-token-util')
 const TestAccountUtil = require('./test-utils/test-account-util')
 const os = require('os');
 const path = require('path');
-const CONFIG = require('./config.json');
+const CONFIG = require('../config.json');
 
 
 describe('TokenContract-currency' , () => {

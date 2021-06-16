@@ -5,5 +5,9 @@
 
   "__walletPath": "Desktop/poli/biobank/application/fabric-details/wallet",
   "__identityName": "admin",
-  "__connectionProfilePath": "Desktop/poli/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/connection-org1.json"
+  "__connectionProfilePath": "Desktop/poli/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/connection-org1.json",
+
+  "defaultCurrency": "BIO",
+  "defaultPrecision": 9,
+  "globalFormat": "0.000000000"
 }

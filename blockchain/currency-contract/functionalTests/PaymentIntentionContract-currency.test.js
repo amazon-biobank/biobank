@@ -5,14 +5,14 @@ const fabricNetwork = require('fabric-network');
 const SmartContractUtil = require('./js-smart-contract-util');
 const os = require('os');
 const path = require('path');
+const CONFIG = require('../config.json');
 
 describe('PaymentIntentionContract-currency@3.0.0' , () => {
-
     const homedir = os.homedir();
-    const walletPath = path.join(homedir, '.fabric-vscode', 'environments', 'testNetwork', 'wallets', 'Org1');
+    const walletPath = path.join(homedir, CONFIG.walletPath);
+    const identityName = CONFIG.identityName
     const gateway = new fabricNetwork.Gateway();
     let wallet;
-    const identityName = 'Org1 Admin';
     let connectionProfile;
 
     before(async () => {
@@ -40,6 +40,7 @@ describe('PaymentIntentionContract-currency@3.0.0' , () => {
     afterEach(async () => {
         gateway.disconnect();
     });
+
 
     describe('createPaymentIntention', () =>{
         it('should submit createPaymentIntention transaction', async () => {
