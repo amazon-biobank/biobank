@@ -65,7 +65,7 @@ async function getLinkToBeRedeemed(ctx, commitment, hashLinkIndex) {
           "commitment_hash": commitment.commitment_hash,
           "redeemed_hash_amount": hashLinkIndex
         }
-        // await contract.createPaymentRedeem(ctx, JSON.stringify(paymentRedeem))
+        await contract.createPaymentRedeem(ctx, JSON.stringify(paymentRedeem))
         linksToBeRedeemed = hashLinkIndex
     }
     else {
@@ -75,7 +75,7 @@ async function getLinkToBeRedeemed(ctx, commitment, hashLinkIndex) {
             throw new Error("Hash link already redeemed")
           }
         paymentRedeem.redeemed_hash_amount = hashLinkIndex
-        // contract.updatePaymentRedeem(ctx, JSON.stringify(paymentRedeem))
+        contract.updatePaymentRedeem(ctx, JSON.stringify(paymentRedeem))
     }
     return linksToBeRedeemed
 }
