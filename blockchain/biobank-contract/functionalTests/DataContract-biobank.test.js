@@ -5,7 +5,7 @@ const fabricNetwork = require('fabric-network');
 const SmartContractUtil = require('./js-smart-contract-util');
 const os = require('os');
 const path = require('path');
-const CONFIG = require('./config.json');
+const CONFIG = require('../config.json');
 const TestDatautil = require('./test-utils/test-data-util')
 
 describe('DataContract-biobank' , () => {

@@ -23,6 +23,21 @@ class CryptoUtils {
         const fingerprint256 = jsrsasign.KJUR.crypto.Util.sha256(x509.hex)
         return fingerprint256
     }
+
+    static getPublicKeyPEM(certificateString){
+        var x509 = new jsrsasign.X509()
+        x509.readCertPEM(certificateString)
+        const public_key = x509.getPublicKey()
+        return jsrsasign.KEYUTIL.getPEM(public_key)
+    }
+
+    static verifySignature(publicKeyPEM, signature, payload){
+        const publicKey = crypto.createPublicKey(publicKeyPEM)
+        const verify = crypto.createVerify('SHA256');
+        verify.update(payload);
+        verify.end();
+        return verify.verify(publicKey, signature, 'hex')
+    }
 }
 
 module.exports = CryptoUtils;

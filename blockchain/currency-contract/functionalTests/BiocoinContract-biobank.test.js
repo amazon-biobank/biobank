@@ -6,7 +6,7 @@ const SmartContractUtil = require('./js-smart-contract-util');
 const TestAccountUtil = require('./test-utils/test-account-util')
 const os = require('os');
 const path = require('path');
-const CONFIG = require('./config.json');
+const CONFIG = require('../config.json');
 const { Test } = require('mocha');
 const { doesNotMatch } = require('assert');
 
@@ -51,13 +51,13 @@ describe('BiocoinContract-biobank' , () => {
 
             const arg0 = user.address;
             const arg1 = TestAccountUtil.anotherGeneratedAddress;
-            const arg2 = 10;
+            const arg2 = 10e9;
             const args = [ arg0, arg1, arg2];
             const response = await SmartContractUtil.submitTransaction('BiocoinContract', 'transferBiocoins', args, gateway);
             
-            const json_response = JSON.parse(response.toString())
-            assert.strictEqual(json_response[0]['balance'], 0);
-            assert.strictEqual(json_response[1]['balance'], 20);
+            const {senderAccount, receiverAccount} = JSON.parse(response.toString())
+            assert.strictEqual(senderAccount['balance'], 0);
+            assert.strictEqual(receiverAccount['balance'], 20e9);
         }).timeout(20000);
 
         it('should submit parcial transferBiocoins transaction', async () => {
@@ -67,13 +67,13 @@ describe('BiocoinContract-biobank' , () => {
 
             const arg0 = user.address;
             const arg1 = TestAccountUtil.anotherGeneratedAddress;
-            const arg2 = 5.5;
+            const arg2 = 5.5e9;
             const args = [ arg0, arg1, arg2];
             const response = await SmartContractUtil.submitTransaction('BiocoinContract', 'transferBiocoins', args, gateway);
             
-            const json_response = JSON.parse(response.toString())
-            assert.strictEqual(json_response[0]['balance'], 4.5);
-            assert.strictEqual(json_response[1]['balance'], 15.5);
+            const {senderAccount, receiverAccount} = JSON.parse(response.toString())
+            assert.strictEqual(senderAccount['balance'], 4.5e9);
+            assert.strictEqual(receiverAccount['balance'], 15.5e9);
         }).timeout(20000);
 
         it('should raise unauthorized balance error', async () => {
@@ -83,7 +83,7 @@ describe('BiocoinContract-biobank' , () => {
 
             const arg0 = TestAccountUtil.generatedAddress;
             const arg1 = TestAccountUtil.anotherGeneratedAddress;
-            const arg2 = 20;
+            const arg2 = 20e9;
             const args = [ arg0, arg1, arg2];
             
             await assert.rejects(
@@ -102,7 +102,7 @@ describe('BiocoinContract-biobank' , () => {
 
             const arg0 = user.address;
             const arg1 = TestAccountUtil.anotherGeneratedAddress;
-            const arg2 = 20;
+            const arg2 = 20e9;
             const args = [ arg0, arg1, arg2];
             
             await assert.rejects(
@@ -121,7 +121,7 @@ describe('BiocoinContract-biobank' , () => {
 
             const arg0 = user.address;
             const arg1 = TestAccountUtil.anotherGeneratedAddress;
-            const arg2 = -20;
+            const arg2 = -20e9;
             const args = [ arg0, arg1, arg2];
             
             await assert.rejects(

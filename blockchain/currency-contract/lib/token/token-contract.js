@@ -1,6 +1,6 @@
+const { pathToFileURL } = require('url');
 const { ActiveContext, ActiveContract } = require('./../active-contract')
 const BiocoinOperations = require('./../biocoin/biocoin-operations.js');
-const { v4: uuidv4 } = require('uuid');
 
 class AccountContext extends ActiveContext {
     constructor() {
@@ -13,37 +13,44 @@ class TokenContract extends ActiveContract {
         return new AccountContext();
     }
 
-    async createScrewToken(ctx, dnaId, value, redeemDateString){
-        const redeemDate = new Date(redeemDateString)
-        if(redeemDate < new Date()){
-            throw new Error("Inválid redeemDate")
-        }
-
-        var user = await BiocoinOperations.withdraw_biocoins(ctx, ctx.user, value)
-        const tokenId = uuidv4()
-        const screwToken = {
-            tokenId, dnaId, value, redeemDate
-        }
+    async createScrewToken(ctx, paymentIntentionAttributes){
+        const screwToken = createInstanceScrewToken(paymentIntentionAttributes)
+        var user = await BiocoinOperations.withdraw_biocoins(ctx, ctx.user, screwToken.value)
         user.tokens.push(screwToken)
         await ctx.accountList.updateAccount(user)
         return user
     }
 
-    async redeemScrewToken(ctx, tokenId){
-        const userTokens = ctx.user.tokens
-        const isTokenIdEqual = (token) => token.tokenId == tokenId
-        const index = userTokens.findIndex(isTokenIdEqual)
-
-        if (new Date(userTokens[index].redeemDate) > new Date()){
+    async redeemExpiredScrewToken(ctx, paymentIntentionId){ // recoverExpiredScrewToken
+        const { userToken, index } = findUserToken(ctx.user.tokens, paymentIntentionId)
+        if (new Date(userToken.redeemDate) > new Date()){
             throw new Error("cant redeem token: not expired")
         }
-
-        var user = await BiocoinOperations.deposit_biocoins(ctx, ctx.user, userTokens[index].value)
-        user.tokens.splice(index, 1)
-        await ctx.accountList.updateAccount(user)
-        return user
+        var user = await BiocoinOperations.deposit_biocoins(ctx, ctx.user, userToken.value)
+        return await deleteUserToken(ctx, user, index)
     }
 }
 
+function createInstanceScrewToken(paymentIntentionAttributes){
+    const paymentIntention = JSON.parse(paymentIntentionAttributes)
+    return screwToken = {
+        payment_intention_id: paymentIntention.id, 
+        value: paymentIntention.value_to_freeze,
+        expiration_date: paymentIntention.expiration_date
+    }
+}
 
-module.exports = TokenContract;
+function findUserToken(tokens, id){
+    const isIdEqual = (element) => element.payment_intention_id == id
+    const index = tokens.findIndex(isIdEqual)
+    const userToken = tokens[index]
+    return { userToken, index }
+}
+
+async function deleteUserToken(ctx, user, index){
+    user.tokens.splice(index, 1)
+    await ctx.accountList.updateAccount(user)
+    return user
+}
+
+module.exports =  TokenContract;

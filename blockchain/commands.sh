@@ -116,3 +116,29 @@ export MICROFAB_CONFIG='{
     "timeout": "60s"
 }'
 
+# Microfab config - 2 channel
+export MICROFAB_CONFIG='{
+    "port": 8080,
+    "endorsing_organizations":[
+        {
+            "name": "Org1"
+        }
+      ],
+    "channels":[
+        {
+            "name": "channel1",
+            "endorsing_organizations":[
+                "Org1"
+            ],
+            "capability_level": "V2_0"
+        },
+        {
+            "name": "channel2",
+            "endorsing_organizations":[
+                "Org1"
+            ],
+            "capability_level": "V2_0"
+        }
+    ],
+    "timeout": "60s"
+}'

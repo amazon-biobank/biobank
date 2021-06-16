@@ -6,19 +6,27 @@ const { X509Certificate } = require('crypto')
 
 class TestTokenUtil {
     static async createScrewToken(gateway) {
-        const arg0 = '123'; // This DNA must have been created
-        const arg1 = '2';
-        const arg2 = 'Mon May 16 2024'
-        const args = [ arg0, arg1, arg2];
+        const arg0 = {
+            "id": "123",
+            "magnetic_link": "asdfajojonn2432",
+            "value_to_freeze": 1e9,
+            "expiration_date": "Mon May 16 2022",
+            "created_at": "Fri Aug 07 2020"
+        }
+        const args = [ JSON.stringify(arg0)];
         const response = await SmartContractUtil.submitTransaction('TokenContract', 'createScrewToken', args, gateway); 
         return JSON.parse(response.toString())
     }
 
     static async createExpiredScrewToken(gateway) {
-        const arg0 = '123'; // This DNA must have been created
-        const arg1 = '2';
-        const arg2 = 'Mon May 16 2020'
-        const args = [ arg0, arg1, arg2];
+        const arg0 = {
+            "id": "123",
+            "magnetic_link": "asdfajojonn2432",
+            "value_to_freeze": 1e9,
+            "expiration_date": "Mon May 16 2020",
+            "created_at": "Fri Aug 07 2020"
+        }
+        const args = [ JSON.stringify(arg0)];
         const response = await SmartContractUtil.submitTransaction('TokenContract', 'createScrewToken', args, gateway); 
         return JSON.parse(response.toString())
     }

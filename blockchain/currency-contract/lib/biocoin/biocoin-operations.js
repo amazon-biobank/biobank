@@ -1,20 +1,20 @@
-class BiocoinOperations {
-    static async withdraw_biocoins(ctx, account, amount) {
-        account.balance = Number(account.balance) - Number(amount)   
-        if(account.balance < 0 ){
-            throw new Error('insuficient balance')
-        }    
+const Dinero = require('./../dinero.js')
 
+class BiocoinOperations {
+    static async withdraw_biocoins(ctx, account, value) {
+        const accountDinero = Dinero({ amount: account.balance })
+        const valueDinero = Dinero({ amount: Number(value) })
+        account.balance = accountDinero.subtract(valueDinero).getAmount()
+        verify(account, valueDinero)
         await ctx.accountList.updateState(account);
         return account
     }
 
-    static async deposit_biocoins(ctx, account, amount) {
-        account.balance = Number(account.balance) + Number(amount)   
-        if(account.balance < 0 ){
-            throw new Error('insuficient balance')
-        }    
-
+    static async deposit_biocoins(ctx, account, value) {
+        const accountDinero = Dinero({ amount: account.balance })
+        const valueDinero = Dinero({ amount: Number(value) })
+        account.balance = accountDinero.add(valueDinero).getAmount()
+        verify(account, valueDinero)
         await ctx.accountList.updateState(account);
         return account
     }
@@ -27,7 +27,7 @@ class BiocoinOperations {
         let receiverAccount = await this.getReceiverAccount(ctx, senderAddress, receiverAddress, senderAccount)
         receiverAccount = await BiocoinOperations.deposit_biocoins(ctx, receiverAccount, amount)
 
-        return [senderAccount, receiverAccount]
+        return { senderAccount, receiverAccount }
     }
 
     static validateTransference(ctx, senderAccount, amount){
@@ -50,6 +50,19 @@ class BiocoinOperations {
     static async getReceiverAccount(ctx, senderAddress, receiverAddress, senderAccount) {
         return (senderAddress == receiverAddress) ? senderAccount : await ctx.accountList.getAccount(receiverAddress);
     }
+}
+
+function verify(account, valueDinero){
+    if(account.balance < 0 ){
+        throw new Error('insuficient balance')
+    } 
+    if(isNaN(account.balance)){
+        throw new Error('invalid transference')
+    }
+    if(valueDinero.isNegative()){
+        throw new Error('Negative Values are not allowed')
+    }
+    return
 }
 
 
