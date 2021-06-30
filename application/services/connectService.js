@@ -17,7 +17,7 @@ class ConnectService {
     console.log(`Wallet path: ${this.walletPath}`);
 
     const connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'remote-connection.json');
-    // onst connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'connection.json');
+    // const connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'connection.json');
     // const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
     let connectionProfile = JSON.parse(fs.readFileSync(connectionProfilePath, 'utf8'));
 

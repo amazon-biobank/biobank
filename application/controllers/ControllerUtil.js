@@ -18,12 +18,12 @@ class ControllerUtil {
   }
 
   static formatDataType (type) {
-    if (type == "raw_data") return "Bruto"
+    if (type == "raw_data") return "Raw"
     if (type == "processed_data") return "Processado"
   }
 
   static formatDataStatus (status) {
-    if (status == "unprocessed") return "Não Processado"
+    if (status == "unprocessed") return "Not Processed"
     if (status == "processing") return "Processando"
     if (status == "processed") return "Processado"
   }

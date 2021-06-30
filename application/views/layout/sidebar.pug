@@ -11,51 +11,50 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   li.nav-item.active
     a.nav-link(href='/')
       i.fas.fa-fw.fa-tachometer-alt
-      span Página Inicial
+      span Home Page
   // Divider
   hr.sidebar-divider
   // Heading
   .sidebar-heading
-    | Dados de DNA
+    | DNA Data 
   // Nav Item - Pages Collapse Menu
   li.nav-item
     a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne')
       i.fas.fa-upload
-      span Enviar Dados
+      span Upload Data
     #collapseOne.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
       .bg-white.py-2.collapse-inner.rounded
-        a.collapse-item(href='/data/raw-data-new') Dados Brutos
-        a.collapse-item(href='/data/processed-data-new') Dados Processados
+        a.collapse-item(href='/data/raw-data-new') Raw Data
+        a.collapse-item(href='/data/processed-data-new') Processed Data
   // Nav Item - Utilities Collapse Menu
   li.nav-item
     a.nav-link(href='/data')
       i.fab.fa-bitcoin
-      span Listar Dados
+      span List Data
   li.nav-item
     a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='true' aria-controls='collapseTwo')
       i.fas.fa-upload
-      span Histórico Blockchain
+      span Blockchain History
     #collapseTwo.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
       .bg-white.py-2.collapse-inner.rounded
-        a.collapse-item(href='/history/data') Histórico de dados
-
+        a.collapse-item(href='/history/data') Data History
   // Divider
   hr.sidebar-divider
   // Heading
   .sidebar-heading
-    | Processamento
+    | Processing
   li.nav-item
     a.nav-link(href='/processable-data')
       i.fas.fa-cogs
-      span Processar Dados
+      span Processing Data
   li.nav-item
     a.nav-link(href='/process-request')
       i.fas.fa-fw.fa-file-invoice
-      span Solicitações
+      span Solicitations
   li.nav-item
     a.nav-link.collapsed(href='/processor')
       i.fas.fa-fw.fa-server
-      span Processadores
+      span Processors
   // Nav Item - Charts
   // Divider
   hr.sidebar-divider.d-none.d-md-block
