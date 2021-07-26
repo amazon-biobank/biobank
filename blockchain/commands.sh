@@ -47,7 +47,8 @@ cd test-network
 
 
 # --------- Criar User Account
-mudar currency-contract/functionalTests/config.json
+#mudar
+ currency-contract/functionalTests/config.json
 ./createUserAccount.sh
 
 
@@ -113,7 +114,7 @@ export MICROFAB_CONFIG='{
             ],
             "capability_level": "V2_0"
         }
-    ],
+    ]
     "timeout": "60s"
 }'
 
