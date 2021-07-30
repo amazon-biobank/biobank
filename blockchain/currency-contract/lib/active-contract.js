@@ -32,7 +32,7 @@ class ActiveContract extends Contract {
 
   needsQueryUser(ctx){
     const calledContract = ctx.stub.getArgs()[0]
-    const allowedContracts = ["AccountContract:createAccount"]
+    const allowedContracts = ["AccountContract:createAccount", "PaymentIntentionContract:getBlockPrice"]
     return !allowedContracts.includes(calledContract)
   }
 }
