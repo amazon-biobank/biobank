@@ -9,5 +9,7 @@
 
   "defaultCurrency": "BIO",
   "defaultPrecision": 9,
-  "globalFormat": "0.000000000"
+  "globalFormat": "0.000000000",
+
+  "blockPrice": 1000
 }

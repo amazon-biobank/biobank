@@ -80,15 +80,20 @@ exports.listOperations = async function(req, res, next){
 };
 
 function createRawDataFromRequest(req){
+  const magnetic = removeTracker(req.body.magnet_link);
   return {
     type : 'raw_data',
     id: ControllerUtil.getHashFromMagneticLink(req.body.magnet_link),
     title: req.body.name,
     status: 'unprocessed',
-    magnet_link: req.body.magnet_link,
+    magnet_link: magnetic,
     description: req.body.description,
     created_at: new Date().toDateString()
   }
+}
+function removeTracker(magnet_link){
+  const separator = magnet_link.split('&');
+  return separator[0];
 }
 
 function createProcessedDataFromRequest(req){

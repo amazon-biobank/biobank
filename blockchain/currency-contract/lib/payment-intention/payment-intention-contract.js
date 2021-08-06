@@ -4,6 +4,7 @@ const PaymentIntention = require('./payment-intention.js');
 const PaymentIntentionList = require('./payment-intention-list.js');
 const { ActiveContext, ActiveContract } = require('./../active-contract')
 const TokenContract = require('./../token/token-contract.js')
+const CONFIG = require('./../../config.json')
 
 class PaymentIntentionContext extends ActiveContext {
     constructor() {
@@ -50,6 +51,10 @@ class PaymentIntentionContract extends ActiveContract {
         }
         // validate expiration date (maybe)
         return true
+    }
+    
+    async getBlockPrice(ctx){
+        return CONFIG.blockPrice;
     }
 }
 
