@@ -2,3 +2,5 @@ node_modules/
 application/fabric-details/remote-connection.json
 application/fabric-details/remote-certs/remoteadmin.id
 application/fabric-details/remote-certs/remoteAppUser.id
+blockchain/currency-contract/config.json
+blockchain/currency-contract/package-lock.json
