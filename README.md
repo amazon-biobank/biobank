@@ -16,18 +16,9 @@ curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.3.2 1.5.0
 # Clone repository
 git clone https://github.com/amazon-biobank/biobank.git
 
-# Setting Up blockchain network
-cd biobank/blockchain/test-network
-./network.sh down
-./network.sh up createChannel -c channel1 -ca -s couchdb
-./network.sh createChannel -c channel2 -s couchdb
-
-# Installing chaincode
-export PATH=${PWD}/../bin:$PATH
-export FABRIC_CFG_PATH=$PWD/../config/
-./deploy_chaincode.sh
-# Enter in deploy_chaincode.sh, and comment lines 3-7. Uncomment line 9-13
-./deploy_chaincode.sh 
+# Up blockchain
+cd blockchain/test-network
+./start-production-fabric.sh
 
 # Registering some users
 cd ../../application/fabric-details
