@@ -1,1 +1,4 @@
 node_modules/
+application/fabric-details/remote-connection.json
+application/fabric-details/remote-certs/remoteadmin.id
+application/fabric-details/remote-certs/remoteAppUser.id
