@@ -1,16 +1,24 @@
 # run in /test-network
 
-CHAINCODE_NAME="biobank"
-SEQUENCE="1"        # each time you deploy your chaincode, you need to increment this
-CHANNEL_NAME="channel1"
-PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
-CONTRACT_PATH="../biobank-contract/"
+if [ $1 = "biobank" ] 
+then 
+  echo "Deploying biobank chaincode"
+  CHAINCODE_NAME="biobank"
+  SEQUENCE="1"        # each time you deploy your chaincode, you need to increment this
+  CHANNEL_NAME="channel1"
+  PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
+  CONTRACT_PATH="../biobank-contract/"
+fi
 
-# CHAINCODE_NAME="currency"
-# SEQUENCE="1"        # each time you deploy your chaincode, you need to increment this
-# CHANNEL_NAME="channel2"
-# PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
-# CONTRACT_PATH="../currency-contract/"
+if [ $1 = "currency" ] 
+then 
+  echo "Deploying currency chaincode"
+  CHAINCODE_NAME="currency"
+  SEQUENCE="1"        # each time you deploy your chaincode, you need to increment this
+  CHANNEL_NAME="channel2"
+  PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
+  CONTRACT_PATH="../currency-contract/"
+fi
 
 #set environment
 export FABRIC_CFG_PATH=$PWD/../config/
