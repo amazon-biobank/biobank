@@ -4,3 +4,5 @@ application/fabric-details/remote-certs/remoteadmin.id
 application/fabric-details/remote-certs/remoteAppUser.id
 blockchain/currency-contract/config.json
 blockchain/currency-contract/package-lock.json
+blockchain/biobank-contract/config.json
+blockchain/currency-contract/config.json
