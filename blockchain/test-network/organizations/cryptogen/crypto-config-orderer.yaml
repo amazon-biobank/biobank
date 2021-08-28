@@ -20,3 +20,5 @@ OrdererOrgs:
       - Hostname: orderer
         SANS:
           - localhost
+          - amazoniaweb.duckdns.org
+          - hyperledger.larc.usp.br

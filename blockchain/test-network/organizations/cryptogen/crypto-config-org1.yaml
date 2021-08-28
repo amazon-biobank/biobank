@@ -50,6 +50,8 @@ PeerOrgs:
       Count: 1
       SANS:
         - localhost
+        - amazoniaweb.duckdns.org
+        - hyperledger.larc.usp.br
       # Start: 5
       # Hostname: {{.Prefix}}{{.Index}} # default
     # ---------------------------------------------------------------------------
