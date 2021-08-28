@@ -55,6 +55,16 @@ npm install
 node index.js
 ```
 
+obs: maybe it is necessary to configure the hosts archive
+1) Open /etc/hosts (in linux)
+2) Add folowings lines
+```
+<REMOTE IP>   orderer.example.com
+<REMOTE IP>   peer0.org1.example.com
+<REMOTE IP>   peer0.org2.example.com
+<REMOTE IP>   ca.example.com
+```
+
 ## Usage
 From client, just launch the Web Browser to localhost:3000.
 
