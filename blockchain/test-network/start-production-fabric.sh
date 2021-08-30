@@ -1,3 +1,5 @@
+export SANS_HOSTNAMES=amazoniaweb.duckdns.org,hyperledger.larc.usp.br,localhost
+
 ./network.sh down
 ./network.sh up createChannel -c channel1 -ca -s couchdb
 ./network.sh createChannel -c channel2 -s couchdb
