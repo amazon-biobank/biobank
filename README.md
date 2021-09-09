@@ -55,7 +55,20 @@ npm install
 node index.js
 ```
 
+obs: maybe it is necessary to configure the hosts archive
+1) Open /etc/hosts (in linux)
+2) Add folowings lines
+```
+<REMOTE IP>   orderer.example.com
+<REMOTE IP>   peer0.org1.example.com
+<REMOTE IP>   peer0.org2.example.com
+<REMOTE IP>   ca.example.com
+```
+
 ## Usage
 From client, just launch the Web Browser to localhost:3000.
 
-You can do the login using the certificates extracted from the server
+During the setting up, a admin and a user certificate was generated in biobank/application/fabric-details/wallet. Extract these certificates from the server to the client. You can use these certificates to login in the system.
+
+## API
+More informations about the API is on the [wiki](https://github.com/amazon-biobank/biobank/wiki)
