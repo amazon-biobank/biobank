@@ -3,7 +3,7 @@
 const Data = require('./data.js');
 const DataList = require('./data-list.js');
 const { ActiveContext, ActiveContract } = require('./../active-contract');
-const AssetIdExistsError = require('../erros/AssetIdExistsError.js');
+const AssetIdExistsError = require('../erros/asset-id-exists-error.js');
 
 class DataContext extends ActiveContext {
     constructor() {
