@@ -3,7 +3,6 @@ const ControllerUtil = require('./ControllerUtil.js');
 const ConnectService = require('./../services/connectService.js');
 
 exports.show = async function(req, res, next){
-
   const accountContract = new AccountContract();
   const account = await accountContract.readAccount(req.params.account)
 
@@ -12,13 +11,8 @@ exports.show = async function(req, res, next){
     return
   }
 
-  account.balance = ControllerUtil.formatMoney(account.balance)
-  account.created_at = ControllerUtil.formatDate(new Date(account.created_at))
-  account.tokens = account.tokens.map((token) => {
-    token.value = ControllerUtil.formatMoney(token.value)
-    return token
-  })
-  res.render('account/show', { account });
+  const formattedAccount = formatAccount(account)
+  res.render('account/show', { account: formattedAccount });
 };
 
 exports.showMyAccount = async function(req, res, next){
@@ -29,6 +23,15 @@ exports.showMyAccount = async function(req, res, next){
   res.redirect('/account/'+ myAddress)
 };
 
+function formatAccount(account){
+  account.balance = ControllerUtil.formatMoney(account.balance)
+  account.created_at = ControllerUtil.formatDate(new Date(account.created_at))
+  account.tokens = account.tokens.map((token) => {
+    token.value = ControllerUtil.formatMoney(token.value)
+    return token
+  })
+  return account
+}
 
 
 
