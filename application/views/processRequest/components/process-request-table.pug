@@ -8,7 +8,6 @@
           tr
             th Status
             th Criado em
-            th Organização do Processador
             th Título Dado Bruto
             th Id do Dado Bruto
             th Ação
@@ -19,9 +18,6 @@
                 = processRequest.status
               td
                 = processRequest.created_at
-              td
-                if(processRequest.processor)
-                  = processRequest.processor.organization
               td
                 = processRequest.raw_data.title
               td.small

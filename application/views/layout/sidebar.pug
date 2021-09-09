@@ -1,46 +1,33 @@
 ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion
-  // Sidebar - Brand
   a.sidebar-brand.d-flex.align-items-center.justify-content-center(href='/')
     .sidebar-brand-icon.rotate-n-15
       i.fas.fa-dna
     .sidebar-brand-text.mx-3
       | BioBank
-  // Divider
+
   hr.sidebar-divider.my-0
-  // Nav Item - Dashboard
-  li.nav-item.active
+  li.nav-item
     a.nav-link(href='/')
       i.fas.fa-fw.fa-tachometer-alt
       span Home Page
-  // Divider
+
   hr.sidebar-divider
-  // Heading
   .sidebar-heading
     | DNA Data 
-  // Nav Item - Pages Collapse Menu
   li.nav-item
-    a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne')
+    a.nav-link.collapsed(data-toggle='collapse' data-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne')
       i.fas.fa-upload
       span Upload Data
     #collapseOne.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
       .bg-white.py-2.collapse-inner.rounded
         a.collapse-item(href='/data/raw-data-new') Raw Data
         a.collapse-item(href='/data/processed-data-new') Processed Data
-  // Nav Item - Utilities Collapse Menu
   li.nav-item
     a.nav-link(href='/data')
       i.fab.fa-bitcoin
       span List Data
-  li.nav-item
-    a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='true' aria-controls='collapseTwo')
-      i.fas.fa-upload
-      span Blockchain History
-    #collapseTwo.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
-      .bg-white.py-2.collapse-inner.rounded
-        a.collapse-item(href='/history/data') Data History
-  // Divider
+    
   hr.sidebar-divider
-  // Heading
   .sidebar-heading
     | Processing
   li.nav-item
@@ -51,13 +38,21 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
     a.nav-link(href='/process-request')
       i.fas.fa-fw.fa-file-invoice
       span Solicitations
+
+ 
+  hr.sidebar-divider
+  .sidebar-heading
+    | Blockchain 
   li.nav-item
-    a.nav-link.collapsed(href='/processor')
-      i.fas.fa-fw.fa-server
-      span Processors
-  // Nav Item - Charts
-  // Divider
+    a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='true' aria-controls='collapseTwo')
+      i.fas.fa-upload
+      span Blockchain History
+    #collapseTwo.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
+      .bg-white.py-2.collapse-inner.rounded
+        a.collapse-item(href='/history/data') Data History
+
   hr.sidebar-divider.d-none.d-md-block
-  // Sidebar Toggler (Sidebar)
   .text-center.d-none.d-md-inline
     button#sidebarToggle.rounded-circle.border-0
+
+

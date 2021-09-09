@@ -15,7 +15,7 @@ block content
             form.user(action='/data/processed-data-create' method='post')
               .form-group
                 label(for='process_request_id') Id da solicitação de processamento (Se houver)
-                input#process_request_id.form-control.form-control-user(name='process_request_id' type='text')
+                input#process_request_id.form-control.form-control-user(name='process_request_id' type='text' value=queryParams.processRequestId)
               .form-group
                 label(for='name') Nome
                 input#name.form-control.form-control-user(name='name' type='text')
