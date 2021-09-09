@@ -44,7 +44,7 @@ describe('PaymentIntentionContract-currency@3.0.0' , () => {
 
     describe('createPaymentIntention', () =>{
         it('should submit createPaymentIntention transaction', async () => {
-            const arg0 = '125'
+            const arg0 = '123'
             const arg1 = {
                 "data_id": "asdfajojonn2432",
                 "value_to_freeze": 1e9,
