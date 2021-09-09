@@ -5,29 +5,29 @@ const { X509Certificate } = require('crypto')
 
 
 class TestTokenUtil {
-    static async createScrewToken(gateway) {
+    static async createEscrowToken(gateway) {
         const arg0 = {
             "id": "123",
-            "magnetic_link": "asdfajojonn2432",
+            "payment_intention_id": "asdfajojonn2432",
             "value_to_freeze": 1e9,
             "expiration_date": "Mon May 16 2022",
             "created_at": "Fri Aug 07 2020"
         }
         const args = [ JSON.stringify(arg0)];
-        const response = await SmartContractUtil.submitTransaction('TokenContract', 'createScrewToken', args, gateway); 
+        const response = await SmartContractUtil.submitTransaction('TokenContract', 'createEscrowToken', args, gateway); 
         return JSON.parse(response.toString())
     }
 
-    static async createExpiredScrewToken(gateway) {
+    static async createExpiredEscrowToken(gateway) {
         const arg0 = {
             "id": "123",
-            "magnetic_link": "asdfajojonn2432",
+            "payment_intention_id": "asdfajojonn2432",
             "value_to_freeze": 1e9,
             "expiration_date": "Mon May 16 2020",
             "created_at": "Fri Aug 07 2020"
         }
         const args = [ JSON.stringify(arg0)];
-        const response = await SmartContractUtil.submitTransaction('TokenContract', 'createScrewToken', args, gateway); 
+        const response = await SmartContractUtil.submitTransaction('TokenContract', 'createEscrowToken', args, gateway); 
         return JSON.parse(response.toString())
     }
 }

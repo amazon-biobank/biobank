@@ -27,7 +27,7 @@ class PaymentIntentionContract extends ActiveContract {
         await ctx.paymentIntentionList.addPaymentIntention(paymentIntention);
 
         const tokenContract = new TokenContract()
-        await tokenContract.createScrewToken(ctx, JSON.stringify(paymentIntention))
+        await tokenContract.createEscrowToken(ctx, JSON.stringify(paymentIntention))
         return paymentIntention;
     }
 

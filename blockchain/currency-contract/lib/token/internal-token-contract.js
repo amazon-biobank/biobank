@@ -4,7 +4,7 @@ const AccountContract = require('./../account/account-contract.js')
 
 
 class InternalTokenContract extends TokenContract {
-    async redeemScrewToken(ctx, { paymentIntentionId, payerAddress, receiverAddress, amount }){
+    async redeemEscrowToken(ctx, { paymentIntentionId, payerAddress, receiverAddress, amount }){
       const accountContract = new AccountContract()
       var payer = await accountContract.readAccount(ctx, payerAddress)
       const { userToken, index } = findUserToken(payer.tokens, paymentIntentionId)
