@@ -6,8 +6,8 @@ class TestPaymentRedeemUtil {
       var commitment = {
         "data": {
           "payment_intention_id": "123",
-          "receiver_address": "54e9615526bad824b5810729cb58d16ae8586c2f98e091650cb04512647ae702",
-          "payer_address": "d24118f02199ce3b9a78fa7f37b5416da3a7ef83ad6c1976aefb69890dfe8525",
+          "receiver_address": "dbec875335b9be18a34e450ebb16b959c967a4b4c7ee78436bbdfbfa4326dc93",
+          "payer_address": "c6595fc7cbbab614947a6a1e1a9fe11304f36aa866267b54ec350a0f9c2f215f",
           "hash_root": "d937d5b3bb5fba451e05500b3739e34e2e4bfdd3d1a58c430d810f944f67ec53",
           "data_id": "cd04721d0f1251306c30812bc943193d9c5de79f"
         },

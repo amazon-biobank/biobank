@@ -46,7 +46,7 @@ describe('PaymentIntentionContract-currency@3.0.0' , () => {
         it('should submit createPaymentIntention transaction', async () => {
             const arg0 = '123'
             const arg1 = {
-                "magnetic_link": "asdfajojonn2432",
+                "data_id": "asdfajojonn2432",
                 "value_to_freeze": 1e9,
                 "expiration_date": "Fri Out 07 2020",
                 "created_at": "Fri Aug 07 2020"
@@ -56,6 +56,7 @@ describe('PaymentIntentionContract-currency@3.0.0' , () => {
             const json_response = JSON.parse(response.toString())
             
             assert.strictEqual(json_response.value_to_freeze, 1e9);
+            assert.strictEqual(json_response.available_funds, 1e9);
             assert.ok(json_response.payer_address != undefined);
             assert.strictEqual(json_response.id, arg0)
         }).timeout(10000);

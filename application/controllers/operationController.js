@@ -19,10 +19,8 @@ exports.show = async function(req, res, next){
   const operationContract = new OperationContract();
   const operation = await operationContract.readOperation(req.params.operation)
 
-  operation.created_at = ControllerUtil.formatDate(new Date(operation.created_at))
-  operation.type = ControllerUtil.formatOperationType(operation.type)
-
-  res.render('operation/show', { operation });
+  const formattedOperation = formatOperation(operation)
+  res.render('operation/show', { operation: formattedOperation });
 };
 
 function createOperationFromRequest(req){
@@ -37,4 +35,19 @@ function createOperationFromRequest(req){
       seller: req.body.collector
     }
   }
+}
+
+function formatOperation(operation){
+  operation.input = operation.input.map((input) => {
+    input.value = ControllerUtil.formatMoney(input.value)
+    return input
+  })
+  operation.output = operation.output.map((output) => {
+    output.value = ControllerUtil.formatMoney(output.value)
+    return output
+  })
+  operation.created_at = ControllerUtil.formatDate(new Date(operation.created_at))
+  operation.type = ControllerUtil.formatOperationType(operation.type)
+
+  return operation
 }

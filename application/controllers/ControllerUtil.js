@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const magnet = require('magnet-uri');
 const crypto = require('crypto')
+const Dinero = require('dinero.js')
 
 class ControllerUtil {
   static formatDate (date) {
@@ -39,6 +40,11 @@ class ControllerUtil {
     if (type == "not_processed") return "Não Processado"
     if (type == "processed") return "Processado"
   }
+
+  static formatMoney(value){
+    return Dinero({ amount: value, precision: 9 }).toFormat('0.000000000')
+  }
+
 
   static generateId(){
     return uuidv4();

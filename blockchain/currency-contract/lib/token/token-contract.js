@@ -13,15 +13,15 @@ class TokenContract extends ActiveContract {
         return new AccountContext();
     }
 
-    async createScrewToken(ctx, paymentIntentionAttributes){
-        const screwToken = createInstanceScrewToken(paymentIntentionAttributes)
-        var user = await BiocoinOperations.withdraw_biocoins(ctx, ctx.user, screwToken.value)
-        user.tokens.push(screwToken)
+    async createEscrowToken(ctx, paymentIntentionAttributes){
+        const escrowToken = createInstanceEscrowToken(paymentIntentionAttributes)
+        var user = await BiocoinOperations.withdraw_biocoins(ctx, ctx.user, escrowToken.value)
+        user.tokens.push(escrowToken)
         await ctx.accountList.updateAccount(user)
         return user
     }
 
-    async redeemExpiredScrewToken(ctx, paymentIntentionId){ // recoverExpiredScrewToken
+    async redeemExpiredEscrowToken(ctx, paymentIntentionId){ 
         const { userToken, index } = findUserToken(ctx.user.tokens, paymentIntentionId)
         if (new Date(userToken.redeemDate) > new Date()){
             throw new Error("cant redeem token: not expired")
@@ -31,9 +31,10 @@ class TokenContract extends ActiveContract {
     }
 }
 
-function createInstanceScrewToken(paymentIntentionAttributes){
+function createInstanceEscrowToken(paymentIntentionAttributes){
     const paymentIntention = JSON.parse(paymentIntentionAttributes)
-    return screwToken = {
+    return escrowToken = {
+        type: "escrow_token",
         payment_intention_id: paymentIntention.id, 
         value: paymentIntention.value_to_freeze,
         expiration_date: paymentIntention.expiration_date

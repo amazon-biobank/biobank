@@ -27,7 +27,7 @@ class PaymentIntentionContract extends ActiveContract {
         await ctx.paymentIntentionList.addPaymentIntention(paymentIntention);
 
         const tokenContract = new TokenContract()
-        await tokenContract.createScrewToken(ctx, JSON.stringify(paymentIntention))
+        await tokenContract.createEscrowToken(ctx, JSON.stringify(paymentIntention))
         return paymentIntention;
     }
 
@@ -59,10 +59,11 @@ class PaymentIntentionContract extends ActiveContract {
 }
 
 function handlePaymentIntentionAttributes(ctx, id, paymentIntentionAttributes) {
-    const { magnetic_link, value_to_freeze, expiration_date, created_at } = JSON.parse(paymentIntentionAttributes);
+    const { data_id, value_to_freeze, expiration_date, created_at } = JSON.parse(paymentIntentionAttributes);
     const payer_address = ctx.user.address
+    const available_funds = value_to_freeze
     const newPaymentIntentionAttributes = {
-        id, payer_address, magnetic_link, value_to_freeze, expiration_date, created_at
+        id, payer_address, data_id, value_to_freeze, available_funds, expiration_date, created_at
     }
     return newPaymentIntentionAttributes;
 }

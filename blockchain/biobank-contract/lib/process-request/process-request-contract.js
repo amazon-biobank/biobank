@@ -18,7 +18,7 @@ class ProcessRequestContract extends ActiveContract {
     }
 
     async createProcessRequest(ctx, id, processRequestAttributes) {
-        const newProcessRequestAttributes = handleProcessRequestAttributes(id, processRequestAttributes)
+        const newProcessRequestAttributes = handleProcessRequestAttributes(ctx, id, processRequestAttributes)
         const processRequest = ProcessRequest.createInstance(newProcessRequestAttributes);
         await ctx.processRequestList.addProcessRequest(processRequest);
         return processRequest;
@@ -34,15 +34,16 @@ class ProcessRequestContract extends ActiveContract {
     }
 
     async updateProcessRequest(ctx, ProcessRequestId, ProcessRequestAttributes){
-        const newProcessRequestAttributes = handleProcessRequestAttributes(ProcessRequestId, ProcessRequestAttributes);
+        const newProcessRequestAttributes = handleProcessRequestAttributes(ctx, ProcessRequestId, ProcessRequestAttributes);
         const processRequest = ProcessRequest.createInstance(newProcessRequestAttributes);
         await ctx.processRequestList.updateState(processRequest);
         return processRequest
     }
 }
 
-function handleProcessRequestAttributes(id, processRequestAttributes) {
-    const { raw_data_id, processor_id, processed_data_id, status, created_at } = JSON.parse(processRequestAttributes);
+function handleProcessRequestAttributes(ctx, id, processRequestAttributes) {
+    const { raw_data_id, processed_data_id, status, created_at } = JSON.parse(processRequestAttributes);
+    const processor_id = ctx.user.id
     const newOperationAttributes = {
         id, raw_data_id, processor_id, processed_data_id, status, created_at
     }

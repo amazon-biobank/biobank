@@ -35,7 +35,8 @@ exports.createRawData = async function(req, res, next){
 };
 
 exports.newProcessedData = async function(req, res, next){
-  res.render('data/processed-data-new', { });
+  const queryParams = { processRequestId: req.query.processRequest}
+  res.render('data/processed-data-new', { queryParams });
 };
 
 exports.createProcessedData = async function(req, res, next){

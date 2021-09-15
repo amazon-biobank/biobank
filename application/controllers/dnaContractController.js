@@ -21,7 +21,8 @@ exports.show = async function(req, res, next){
   const dnaContract = await dnaContractContract.readDnaContract(req.params.dnaContract)
 
   dnaContract.created_at = ControllerUtil.formatDate(new Date(dnaContract.created_at))
-  res.render("dnaContract/show", {dnaContract})
+  dnaContract.parameters.price = ControllerUtil.formatMoney(dnaContract.parameters.price)
+  res.render("dnaContract/show", { dnaContract })
 };
 
 exports.execute = async function(req, res, next){
@@ -44,9 +45,10 @@ exports.execute = async function(req, res, next){
 
 
 function createDnaContractFromRequest(req){
+  price = req.body.price*1e9  // converting biocoins to Sys
   return {
     dnaId: req.body.dnaId,
-    parameters: { price: req.body.price},
+    parameters: { price },
     id: ControllerUtil.getHash(req.body.dnaId),
     created_at: new Date().toDateString()
   }
