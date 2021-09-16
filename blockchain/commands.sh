@@ -71,7 +71,7 @@ export CORE_PEER_ADDRESS=localhost:9051
 # -------------------------------- IBM BLOCKCHAIN Microfab--------------------------
 
 # Start Microfab
-START_IMAGE="ibmcom/ibp-microfab:0.0.13"
+START_IMAGE="ibmcom/ibp-microfab:0.0.14"
 docker run -e MICROFAB_CONFIG --label fabric-environment-name="1 Org Local Fabric Microfab" -p 8080:8080 $START_IMAGE
 
 

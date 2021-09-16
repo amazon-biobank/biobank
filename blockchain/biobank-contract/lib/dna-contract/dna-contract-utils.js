@@ -7,15 +7,6 @@ const _ = require('lodash');
 
 class DnaContractUtils {
   static handleDnaContractAttributes(dnaContractAttributes) {
-    // const { 
-    //   dna_id, raw_data_price, payment_distribution, royalty_payments, created_at 
-    // } = JSON.parse(dnaContractAttributes);
-
-    // const id = CryptoUtils.getHash(dna_id)
-    // const newDnaContractAttributes = {
-    //   id, dna_id, raw_data_price, payment_distribution, royalty_payments, created_at 
-    // }
-
     let newDnaContractAttributes = _.pick( 
       JSON.parse(dnaContractAttributes), 
       [ 
@@ -40,7 +31,6 @@ class DnaContractUtils {
     }
 
     // Validate payment distribution
-    // validate processing_distribution
     // validate royalty_payments
     return true
   }
