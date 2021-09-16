@@ -3,26 +3,45 @@
 const CryptoUtils = require('./../crypto-utils')
 const InternalOperationContract = require('./../operation/internal-operation-contract')
 const Data = require('../data/data.js');
+const _ = require('lodash');
 
 class DnaContractUtils {
   static handleDnaContractAttributes(dnaContractAttributes) {
-    const { dnaId, parameters, created_at } = JSON.parse(dnaContractAttributes);
-    const { price } = parameters
-    const filteredParameters = { price }
-    const id = CryptoUtils.getHash(dnaId)
+    // const { 
+    //   dna_id, raw_data_price, payment_distribution, royalty_payments, created_at 
+    // } = JSON.parse(dnaContractAttributes);
 
-    const newDnaContractAttributes = {
-        id, dnaId, parameters: filteredParameters, created_at
-    }
+    // const id = CryptoUtils.getHash(dna_id)
+    // const newDnaContractAttributes = {
+    //   id, dna_id, raw_data_price, payment_distribution, royalty_payments, created_at 
+    // }
+
+    let newDnaContractAttributes = _.pick( 
+      JSON.parse(dnaContractAttributes), 
+      [ 
+        'dna_id', 
+        'raw_data_price', 
+        'payment_distribution.collector', 
+        'payment_distribution.processor', 
+        'payment_distribution.curator', 
+        'payment_distribution.validators', 
+        'royalty_payments', 
+        'created_at' 
+      ])
+    newDnaContractAttributes.id = CryptoUtils.getHash(newDnaContractAttributes.dna_id)
     return newDnaContractAttributes;
   }
 
   static async validateContractCreation(ctx, dnaContractAttributes){
-    const dna = await this.getData(ctx, dnaContractAttributes.dnaId)
+    const dna = await this.getData(ctx, dnaContractAttributes.dna_id)
     // only collector can create contract
     if(dna.collector == undefined || ctx.user.address != dna.collector ){
         throw new Error('Unauthorized')
     }
+
+    // Validate payment distribution
+    // validate processing_distribution
+    // validate royalty_payments
     return true
   }
 

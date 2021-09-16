@@ -46,7 +46,7 @@ class DnaContractContract extends ActiveContract {
         const operationId = JSON.parse(options).operationId;
         if (operationType == 'buy_dna'){
             const dnaContract = await ctx.dnaContractList.getDnaContract(contractId);
-            let dna = await DnaContractUtils.getData(ctx, dnaContract.dnaId)
+            let dna = await DnaContractUtils.getData(ctx, dnaContract.dna_id)
             const operation = DnaContractUtils.createBuyingOperation(ctx, dna, dnaContract, operationId)
             return operation
         }

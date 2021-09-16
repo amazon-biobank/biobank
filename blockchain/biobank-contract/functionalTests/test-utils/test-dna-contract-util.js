@@ -1,6 +1,7 @@
 const SmartContractUtil = require('./../js-smart-contract-util');
-const dnaContractJson = "{ \"dnaId\": \"123\", \"parameters\": \{ \"price\": 10 \}, \"created_at\": \"Fri Aug 07 2020\" }"
-const dnaContractJson2 = "{ \"dnaId\": \"321\", \"parameters\": \{ \"price\": 12 \}, \"created_at\": \"Fri Aug 07 2020\" }"
+const dnaContractJson = "{ \"dna_id\": \"123\", \"raw_data_price\": 10, \"payment_distribution\": \{ \"collector\": 50, \"processor\": 30, \"curator\": 10, \"validators\": 10 \}, \"royalty_payments\": \[ \{ \"type\": \"one_time_fee\",   \"value\": 5000000000  \} ,\{ \"type\": \"proportional_periodic_fee\",  \"value\": 5 \}\], \"created_at\": \"Fri Aug 07 2020\"}"
+
+const dnaContractJson2 = "{ \"id\": \"321\", \"parameters\": \{ \"price\": 12 \}, \"created_at\": \"Fri Aug 07 2020\" }"
 
 
 class TestDnaContractUtil {

@@ -46,8 +46,8 @@ describe('DnaContractContract-biobank' , () => {
     describe('createDnaContract', () =>{
         it('should submit createDnaContract transaction', async () => {
             const dnaContract = await TestDnaContractUtil.createSampleDnaContract(gateway)
-            assert.strictEqual(dnaContract['dnaId'], '123');
-            assert.strictEqual(dnaContract['parameters']['price'], 10);
+            assert.strictEqual(dnaContract['dna_id'], '123');
+            assert.strictEqual(dnaContract['raw_data_price'], 10);
         }).timeout(10000);
     });
 
