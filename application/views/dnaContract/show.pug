@@ -15,7 +15,7 @@ block content
         form
           .form-group
             label.mb-1(for='dnaId') ID do DNA correspondente
-            input#dnaId.form-control(disabled type='text' value= dnaContract.dnaId)
+            input#dnaId.form-control(disabled type='text' value= dnaContract.dna_id)
           .form-row
             .form-group.col-md-6
               label.mb-1(for='id') ID
@@ -23,12 +23,37 @@ block content
             .form-group.col-md-6
               label.mb-1(for='created_at') Criado em
               input#id.form-control(disabled type='text'  value=dnaContract.created_at)
-          .card
-            .card-header Detalhes
+          .form-group 
+            label.mb-1(for='raw_data_price') Raw Data Price
+            input#price.form-control.bio-money-input(disabled value=dnaContract.raw_data_price type='text')
+          .card.mb-3
+            .card-header Payment Distribution (in percentage)
             .card-body
-              .form-group 
-                label.mb-1(for='price') Preço
-                input#price.form-control.bio-money(disabled type='text'  value=dnaContract.parameters.price)
+              .form-row
+                .form-group.col-md-3
+                  label.mb-1(for='price') Collector
+                  input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.collector type='text')
+                .form-group.col-md-3
+                  label.mb-1(for='price') Processor 
+                  input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.processor type='text')
+                .form-group.col-md-3 
+                  label.mb-1(for='price') Validators
+                  input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.validators type='text')
+                .form-group.col-md-3
+                  label.mb-1(for='price') Curator
+                  input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.curator type='text')
+          .card
+            .card-header Royalty Payments
+            .card-body
+              each royalty_payment, index in dnaContract.royalty_payments
+                .form-row
+                  .form-group.col-md-4
+                    label.mb-1(for='price') Type
+                    input.form-control(disabled value=royalty_payment.type)
+                  .form-group.col-md-2
+                    label.mb-1(for='value') Value 
+                    input.form-control(disabled value=royalty_payment.value)
+
   include components/buy-modal.pug
 
 
