@@ -4,6 +4,7 @@ const CryptoUtils = require('./../crypto-utils')
 const InternalOperationContract = require('./../operation/internal-operation-contract')
 const Data = require('../data/data.js');
 const _ = require('lodash');
+const CONFIG = require('../../config.json')
 
 class DnaContractUtils {
   static handleDnaContractAttributes(dnaContractAttributes) {
@@ -25,14 +26,40 @@ class DnaContractUtils {
 
   static async validateContractCreation(ctx, dnaContractAttributes){
     const dna = await this.getData(ctx, dnaContractAttributes.dna_id)
+
     // only collector can create contract
     if(dna.collector == undefined || ctx.user.address != dna.collector ){
         throw new Error('Unauthorized')
     }
 
-    // Validate payment distribution
+    this.validatePaymentDistribution(dnaContractAttributes.payment_distribution)
+
     // validate royalty_payments
     return true
+  }
+
+
+  static validatePaymentDistribution(paymentDistribution){
+    if( 
+      paymentDistribution.collector < CONFIG.dnaContract.collector.min ||
+      paymentDistribution.collector > CONFIG.dnaContract.collector.max ||
+      paymentDistribution.processor < CONFIG.dnaContract.processor.min ||
+      paymentDistribution.processor > CONFIG.dnaContract.processor.max ||
+      paymentDistribution.validators < CONFIG.dnaContract.validators.min ||
+      paymentDistribution.validators > CONFIG.dnaContract.validators.max ||
+      paymentDistribution.curator < CONFIG.dnaContract.curator.min ||
+      paymentDistribution.curator > CONFIG.dnaContract.curator.max 
+    ){
+      throw new Error('PaymentDistribution Parameter Error')
+    }
+    if(
+      paymentDistribution.collector + 
+      paymentDistribution.processor + 
+      paymentDistribution.validators + 
+      paymentDistribution.curator != 100
+    ){
+      throw new Error('PaymentDistributionParameters does not sum 100')
+    }
   }
 
   static async addOwnersInData(ctx, dna){

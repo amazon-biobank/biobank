@@ -9,8 +9,8 @@ block content
         .col-lg-12
           .p-5
             .text-center
-              h1.h4.text-gray-900.mb-4 Adicionar um Smart Contract
-              p.mb-4 Um Smart Contract é responsável por definir as condições de venda do DNA
+              h1.h4.text-gray-900.mb-4 Create a Smart Contract
+              p.mb-4 This contract is responsible to define the selling condition of DNA
             form.user(action='/dnaContract/new' method='post')
               .form-group
                 label.mb-1(for='dnaId') DNA ID
@@ -55,7 +55,7 @@ block content
               hr
               .float-right.mb-4.inline-block
                 a.btn.btn-danger.btn-user.mr-3.px-5(href='/dnaContract')
-                  | Cancelar
-                input.btn.btn-primary.btn-user.px-5(type='submit' value='Adicionar')
+                  | Cancel
+                input.btn.btn-primary.btn-user.px-5(type='submit' value='Create')
 
 block append scripts
