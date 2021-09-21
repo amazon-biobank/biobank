@@ -25,41 +25,10 @@ class DnaContractUtils {
   }
 
   static async validateContractCreation(ctx, dnaContractAttributes){
-    const dna = await this.getData(ctx, dnaContractAttributes.dna_id)
-
-    // only collector can create contract
-    if(dna.collector == undefined || ctx.user.address != dna.collector ){
-        throw new Error('Unauthorized')
-    }
-
-    this.validatePaymentDistribution(dnaContractAttributes.payment_distribution)
-
+    await validateCollector(ctx, dnaContractAttributes)
+    validatePaymentDistribution(dnaContractAttributes.payment_distribution)
     // validate royalty_payments
     return true
-  }
-
-
-  static validatePaymentDistribution(paymentDistribution){
-    if( 
-      paymentDistribution.collector < CONFIG.dnaContract.collector.min ||
-      paymentDistribution.collector > CONFIG.dnaContract.collector.max ||
-      paymentDistribution.processor < CONFIG.dnaContract.processor.min ||
-      paymentDistribution.processor > CONFIG.dnaContract.processor.max ||
-      paymentDistribution.validators < CONFIG.dnaContract.validators.min ||
-      paymentDistribution.validators > CONFIG.dnaContract.validators.max ||
-      paymentDistribution.curator < CONFIG.dnaContract.curator.min ||
-      paymentDistribution.curator > CONFIG.dnaContract.curator.max 
-    ){
-      throw new Error('PaymentDistribution Parameter Error')
-    }
-    if(
-      paymentDistribution.collector + 
-      paymentDistribution.processor + 
-      paymentDistribution.validators + 
-      paymentDistribution.curator != 100
-    ){
-      throw new Error('PaymentDistributionParameters does not sum 100')
-    }
   }
 
   static async addOwnersInData(ctx, dna){
@@ -70,11 +39,6 @@ class DnaContractUtils {
     return dna
   }
 
-  static async getData(ctx, dataId){
-    const dataKey = Data.makeKey([dataId]);
-    const data = await ctx.dataList.getData(dataKey); 
-    return data
-  }
 
   static checkPaymentAndOperation(ctx, payment, operation){
     if(payment == undefined || payment.status != "paid"){
@@ -108,5 +72,44 @@ class DnaContractUtils {
     return await internalOperationContract.createOperation(ctx, operationId, operationAttributes)
   }
 }
+
+async function validateCollector(ctx, dnaContractAttributes){
+  const dna = await getData(ctx, dnaContractAttributes.dna_id)
+  if(dna.collector == undefined || ctx.user.address != dna.collector ){
+      throw new Error('Unauthorized')
+  }
+}
+
+async function getData(ctx, dataId){
+  const dataKey = Data.makeKey([dataId]);
+  const data = await ctx.dataList.getData(dataKey); 
+  return data
+}
+
+function validatePaymentDistribution(paymentDistribution){
+  if( 
+    paymentDistribution.collector < CONFIG.dnaContract.collector.min ||
+    paymentDistribution.collector > CONFIG.dnaContract.collector.max ||
+    paymentDistribution.processor < CONFIG.dnaContract.processor.min ||
+    paymentDistribution.processor > CONFIG.dnaContract.processor.max ||
+    paymentDistribution.validators < CONFIG.dnaContract.validators.min ||
+    paymentDistribution.validators > CONFIG.dnaContract.validators.max ||
+    paymentDistribution.curator < CONFIG.dnaContract.curator.min ||
+    paymentDistribution.curator > CONFIG.dnaContract.curator.max 
+  ){
+    throw new Error('PaymentDistribution Parameter Error')
+  }
+  if(
+    paymentDistribution.collector + 
+    paymentDistribution.processor + 
+    paymentDistribution.validators + 
+    paymentDistribution.curator != 100
+  ){
+    throw new Error('PaymentDistributionParameters does not sum 100')
+  }
+}
+
+
+
 
 module.exports = DnaContractUtils;
