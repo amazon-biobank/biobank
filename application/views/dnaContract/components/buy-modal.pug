@@ -2,14 +2,14 @@
   .modal-dialog(role='document')
     .modal-content
       .modal-header
-        h5#exampleModalLabel.modal-title Confirmar compra?
+        h5#exampleModalLabel.modal-title Confirm buying?
         button.close(type='button' data-dismiss='modal' aria-label='Close')
           span(aria-hidden='true') &times;
-      .modal-body Clique em &quot;Comprar&quot; abaixo para confirmar a compra por 
+      .modal-body Click in &quot;Buy &quot; below to buy DNA for 
         = dnaContract.parameters.price
-        |  moedas
+        |  Biocoins
       .modal-footer
-        button.btn.btn-secondary(type='button' data-dismiss='modal') Cancelar
+        button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
         form.user(action='execute-contract/' + dnaContract.id method='post')
           input#type(hidden name='type' type='text' value='buy_dna')
-          input.btn.btn-primary.btn-user(type='submit' value='Comprar')
+          input.btn.btn-primary.btn-user(type='submit' value='BUY')
