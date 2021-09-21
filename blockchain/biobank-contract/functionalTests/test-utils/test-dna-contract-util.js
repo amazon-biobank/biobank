@@ -3,10 +3,10 @@ const dnaContractJson = {
     "dna_id": "123", 
     "raw_data_price": 10,
     "payment_distribution": { 
-        "collector": 50,
-        "processor": 30,
-        "curator": 10,
-        "validators": 10 
+        "collector": 5000,
+        "processor": 3000,
+        "curator": 1000,
+        "validators": 1000 
     },
     "royalty_payments": [ { 
             "type": "one_time_fee",

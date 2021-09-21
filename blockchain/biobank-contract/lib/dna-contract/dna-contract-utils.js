@@ -103,9 +103,9 @@ function validatePaymentDistribution(paymentDistribution){
     paymentDistribution.collector + 
     paymentDistribution.processor + 
     paymentDistribution.validators + 
-    paymentDistribution.curator != 100
+    paymentDistribution.curator != 10000
   ){
-    throw new Error('PaymentDistributionParameters does not sum 100')
+    throw new Error('PaymentDistributionParameters does not sum 100%')
   }
 }
 

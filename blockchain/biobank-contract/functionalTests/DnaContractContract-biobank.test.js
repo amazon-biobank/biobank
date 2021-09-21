@@ -57,7 +57,7 @@ describe('DnaContractContract-biobank' , () => {
 
         it('should throw Payment Distribution Parameter Error', async () => {
             var dnaContract = TestDnaContractUtil.dnaContractJson
-            dnaContract.payment_distribution.collector = 100
+            dnaContract.payment_distribution.collector = 10000
             const args = [ JSON.stringify(dnaContract) ];
 
             await assert.rejects(
@@ -71,16 +71,16 @@ describe('DnaContractContract-biobank' , () => {
 
         it('should throw Payment Distribution Parameter sum 100 error', async () => {
             var dnaContract = TestDnaContractUtil.dnaContractJson
-            dnaContract.payment_distribution.collector = 50
-            dnaContract.payment_distribution.validators = 50
-            dnaContract.payment_distribution.processor = 50
-            dnaContract.payment_distribution.curator = 50
+            dnaContract.payment_distribution.collector = 5000
+            dnaContract.payment_distribution.validators = 5000
+            dnaContract.payment_distribution.processor = 5000
+            dnaContract.payment_distribution.curator = 5000
             const args = [ JSON.stringify(dnaContract) ];
 
             await assert.rejects(
                 SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway), 
                 (err) => {
-                    const regExp = new RegExp("PaymentDistributionParameters does not sum 100")
+                    const regExp = new RegExp("PaymentDistributionParameters does not sum 100%")
                     assert(regExp.test(err.message))
                     return true
                 })

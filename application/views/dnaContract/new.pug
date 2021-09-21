@@ -37,12 +37,12 @@ block content
               .card
                 .card-header Royalty Payments
                 .card-body
-                  .form-row
+                  .form-row.royalty-payment
                     .form-group.col-md-4
                       label.mb-1(for='price') Type
-                      //- input#price.form-control.bio-money-input(name='price' type='text')
-                      select#custom-select.form-control.dropdown-toggle(name='royalty_payments[0][type]' type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                          option(value='no_royalties' selected=true) No Royalties
+                      select#custom-select.form-control.dropdown-toggle.royalty-payment-select(name='royalty_payments[0][type]' type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                          option(disabled=true selected=true) -- select an option -- 
+                          option(value='no_royalties') No Royalties
                           option(value='fixed_one_time_fee') Fixed One Time Fee 
                           option(value='proportional_one_time_fee') Proportional One Time Fee
                           option(value='fixed_periodic_fee') Fixed Periodic Fee
@@ -50,8 +50,8 @@ block content
                           option(value='profit_proportional_periodic_fee') Profit Proportional Periodic Fee
                     .form-group.col-md-2
                       label.mb-1(for='value') Value 
-                      input#price.form-control(name='royalty_payments[0][value]' type='text')
-              
+                      input#price.form-control.royalty-payment-value(name='royalty_payments[0][value]' type='text')
+
               hr
               .float-right.mb-4.inline-block
                 a.btn.btn-danger.btn-user.mr-3.px-5(href='/dnaContract')
@@ -59,3 +59,4 @@ block content
                 input.btn.btn-primary.btn-user.px-5(type='submit' value='Create')
 
 block append scripts
+  script(src='/js/royalty-payment.js')
