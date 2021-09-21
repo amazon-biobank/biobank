@@ -1,26 +1,28 @@
 const SmartContractUtil = require('./../js-smart-contract-util');
-const dnaContractJson = "{ \"dna_id\": \"123\", \"raw_data_price\": 10, \"payment_distribution\": \{ \"collector\": 50, \"processor\": 30, \"curator\": 10, \"validators\": 10 \}, \"royalty_payments\": \[ \{ \"type\": \"one_time_fee\",   \"value\": 5000000000  \} ,\{ \"type\": \"proportional_periodic_fee\",  \"value\": 5 \}\], \"created_at\": \"Fri Aug 07 2020\"}"
-
-const dnaContractJson2 = "{ \"id\": \"321\", \"parameters\": \{ \"price\": 12 \}, \"created_at\": \"Fri Aug 07 2020\" }"
-
+const dnaContractJson = { 
+    "dna_id": "123", 
+    "raw_data_price": 10,
+    "payment_distribution": { 
+        "collector": 50,
+        "processor": 30,
+        "curator": 10,
+        "validators": 10 
+    },
+    "royalty_payments": [ { 
+            "type": "one_time_fee",
+            "value": 5000000000  
+        },
+        { 
+            "type": "proportional_periodic_fee",
+            "value": 5 
+        }
+    ],
+    "created_at": "Fri Aug 07 2020"
+}
 
 class TestDnaContractUtil {
-    static async createSampleDnaContract(gateway) {
-        const arg0 = dnaContractJson;
-        const args = [ arg0];
-        const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway);
-        return JSON.parse(response.toString())
-    }
-
-    static async createAnotherSampleDnaContract(gateway) {
-        const arg0 = dnaContractJson2;
-        const args = [ arg0 ];
-        const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway);
-        return JSON.parse(response.toString())
-    }
-
-    static get dnaContractParameters() {
-        return  JSON.parse(dnaContractJson)
+    static get dnaContractJson() {
+        return  dnaContractJson
     }
 
     static get generatedId(){

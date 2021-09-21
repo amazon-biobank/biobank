@@ -45,15 +45,21 @@ describe('DnaContractContract-biobank' , () => {
 
     describe('createDnaContract', () =>{
         it('should submit createDnaContract transaction', async () => {
-            const dnaContract = await TestDnaContractUtil.createSampleDnaContract(gateway)
+            const arg0 = TestDnaContractUtil.dnaContractJson;
+            const args = [ JSON.stringify(arg0)];
+
+            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway);
+
+            const dnaContract = JSON.parse(response.toString())
             assert.strictEqual(dnaContract['dna_id'], '123');
             assert.strictEqual(dnaContract['raw_data_price'], 10);
         }).timeout(10000);
 
         it('should throw Payment Distribution Parameter Error', async () => {
-            var dnaContract = TestDnaContractUtil.dnaContractParameters
+            var dnaContract = TestDnaContractUtil.dnaContractJson
             dnaContract.payment_distribution.collector = 100
             const args = [ JSON.stringify(dnaContract) ];
+
             await assert.rejects(
                 SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway), 
                 (err) => {
@@ -64,12 +70,13 @@ describe('DnaContractContract-biobank' , () => {
         }).timeout(10000);
 
         it('should throw Payment Distribution Parameter sum 100 error', async () => {
-            var dnaContract = TestDnaContractUtil.dnaContractParameters
+            var dnaContract = TestDnaContractUtil.dnaContractJson
             dnaContract.payment_distribution.collector = 50
             dnaContract.payment_distribution.validators = 50
             dnaContract.payment_distribution.processor = 50
             dnaContract.payment_distribution.curator = 50
             const args = [ JSON.stringify(dnaContract) ];
+
             await assert.rejects(
                 SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway), 
                 (err) => {
@@ -82,39 +89,38 @@ describe('DnaContractContract-biobank' , () => {
 
     describe('readDnaContract', () =>{
         it('should evaluate readDnaContract transaction', async () => {
-            await TestDnaContractUtil.createSampleDnaContract(gateway)
-            const arg0 = TestDnaContractUtil.generatedId;
-            const args = [ arg0 ];
-            const response = await SmartContractUtil.evaluateTransaction('DnaContractContract', 'readDnaContract', args, gateway);
+            const arg0 = TestDnaContractUtil.dnaContractJson;
+            const args = [ JSON.stringify(arg0)];
+            const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'createDnaContract', args, gateway);
             const dnaContract = JSON.parse(response.toString())
-            assert.strictEqual(dnaContract['dnaId'], '123');
+
+            const args2 = [ dnaContract.id ];
+            const response2 = await SmartContractUtil.evaluateTransaction('DnaContractContract', 'readDnaContract', args2, gateway);
+
+            const dnaContract2 = JSON.parse(response2.toString())
+            assert.strictEqual(dnaContract2['dna_id'], '123');
         }).timeout(10000);
     });
 
     describe('getAllDnaContract', () =>{
         it('should submit getAllDnaContract transaction', async () => {
-            await TestDatautil.createSampleData(gateway)
-            await TestDatautil.createAnotherSampleData(gateway)
-            await TestDnaContractUtil.createSampleDnaContract(gateway)
-            await TestDnaContractUtil.createAnotherSampleDnaContract(gateway)
+            // has created at least one Dna Contract
+
             const args = [];
             const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'getAllDnaContract', args, gateway);
             
             const json_response = JSON.parse(response.toString())
             assert.strictEqual(json_response.length, 2);
             assert.strictEqual(json_response[1]['dnaId'], "123");
-            assert.strictEqual(json_response[0]['dnaId'], "321");
         }).timeout(10000);
     });
 
     describe('executeContract', () =>{
         it('should submit executeContract buy_dna transaction', async () => {
-            await TestDatautil.createSampleData(gateway)
-            await TestDnaContractUtil.createSampleDnaContract(gateway)
-
-            const arg0 = TestDnaContractUtil.generatedId;
+            const dnaContractId = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
             const arg1 = "{\"type\": \"buy_dna\", \"operationId\": \"123\"}";
-            const args = [ arg0, arg1];
+            const args = [ dnaContractId, arg1];
+
             const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'executeContract', args, gateway);
             
             const json_response = JSON.parse(response.toString())
@@ -124,11 +130,8 @@ describe('DnaContractContract-biobank' , () => {
 
     describe('executeOperation', () =>{
         it('should executeOperation, given operation and operationPayment', async () => {
-            await TestDatautil.createSampleData(gateway)
-            await TestDnaContractUtil.createSampleDnaContract(gateway)
-
-            const arg0 = "d210c49d-2d50-413b-a476-0377fe99ca95"
-            const args = [ arg0 ];
+            const operationId = "d210c49d-2d50-413b-a476-0377fe99ca95"
+            const args = [ operationId ];
             const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'executeOperation', args, gateway);
             
             const json_response = JSON.parse(response.toString())
