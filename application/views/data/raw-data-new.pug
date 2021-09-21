@@ -10,22 +10,22 @@ block content
         .col-lg-12
           .p-5
             .text-center
-              h1.h4.text-gray-900.mb-4 Enviar um novo dado bruto de DNA
+              h1.h4.text-gray-900.mb-4 Create raw DNA data
               p.mb-4 
             form.user(action='/data/raw-data-create' method='post')
               .form-group
-                label(for='name') Nome
+                label(for='name') Name
                 input#name.form-control.form-control-user(name='name' type='text')
               .form-group
-                label(for='description') Descrição
+                label(for='description') Description
                 textarea#exampleFormControlTextarea1.form-control(name='description' rows='3' type = 'text')
               .form-group
-                label(for='magnet_link') Link Magnético dos dados
+                label(for='magnet_link') Magnetic Link
                 input#organization.form-control.form-control-user(name='magnet_link' type='text')
               hr
               .float-right.mb-4.inline-block
                 a.btn.btn-danger.btn-user.mr-3.px-5(href='/data')
-                  | Cancelar
-                input.btn.btn-primary.btn-user.px-5(type='submit' value='Adicionar')
+                  | Cancel
+                input.btn.btn-primary.btn-user.px-5(type='submit' value='Add')
 
 block append scripts

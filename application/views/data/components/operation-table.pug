@@ -7,11 +7,11 @@
       table#dataTable.table.table-bordered(width='100%' cellspacing='0')
         thead
           tr
-            th Data
-            th Tipo
-            th Usuário
-            th ID da Operação
-            th Ação
+            th Created At
+            th Type
+            th User address
+            th OPeration ID
+            th Action
         tbody
           each operation in operations
             tr
@@ -25,7 +25,7 @@
                 = operation.id
               td
                 a.btn.btn-info.btn-sm.btn-circle(
-                  data-toggle="tooltip" data-placement="top" title="Ver Detalhes" href="/operation/" + operation.id
+                  data-toggle="tooltip" data-placement="top" title="See Details" href="/operation/" + operation.id
                 )
                   i.fas.fa-eye
 

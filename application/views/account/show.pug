@@ -4,24 +4,24 @@ block append header
 
 block content
   .container.mt-4
-    h1 Detalhes do Usuário
+    h1 User Detail
     .card.mb-4
-      .card-header Usuário
+      .card-header User
       .card-body
         form
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='name') Nome
+              label.mb-1(for='name') Name
               input#name.form-control(disabled type='text' value= account.name)
             .form-group.col-md-6
-              label.mb-1(for='address') Endereço
+              label.mb-1(for='address') Address
               input#address.form-control(disabled type='text'  value=account.address)
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='balance') Saldo
+              label.mb-1(for='balance') Balance
               input#balance.form-control.bio-money(disabled type='text' value= account.balance)
             .form-group.col-md-6
-              label.mb-1(for='created_at') Criado em
+              label.mb-1(for='created_at') Created At
               input#id.form-control(disabled type='text'  value=account.created_at)
         .card-header Available Tokens
         .card-body
