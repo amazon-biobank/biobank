@@ -23,16 +23,16 @@ block content
                 .card-body
                   .form-row
                     .form-group.col-md-3
-                      label.mb-1(for='price') Collector
+                      label.mb-1(for='price') Collector ( #{contractParameters.collector.min} - #{contractParameters.collector.max} )
                       input#price.form-control.percentage(name='payment_distribution[collector]' type='text')
                     .form-group.col-md-3
-                      label.mb-1(for='price') Processor 
+                      label.mb-1(for='price') Processor ( #{contractParameters.processor.min} - #{contractParameters.processor.max} )
                       input#price.form-control.percentage(name='payment_distribution[processor]' type='text')
                     .form-group.col-md-3 
-                      label.mb-1(for='price') Validators
+                      label.mb-1(for='price') Validators ( #{contractParameters.validators.min} - #{contractParameters.validators.max} )
                       input#price.form-control.percentage(name='payment_distribution[validators]' type='text')
                     .form-group.col-md-3
-                      label.mb-1(for='price') Curator
+                      label.mb-1(for='price') Curator ( #{contractParameters.curator.min} - #{contractParameters.curator.max} )
                       input#price.form-control.percentage(name='payment_distribution[curator]' type='text')
               .card
                 .card-header Royalty Payments
