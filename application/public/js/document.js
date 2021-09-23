@@ -13,5 +13,13 @@ $(document).ready(function() {
   var pathname = window.location.pathname
   const active = $('.navbar-nav > li a[href="' + pathname + '"]').parents('li')
   active.addClass('active');
+
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+
+  $('.popover-dismiss').popover({
+    trigger: 'focus'
+  })
 })
 
