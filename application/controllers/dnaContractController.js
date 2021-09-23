@@ -25,6 +25,10 @@ exports.show = async function(req, res, next){
 
   dnaContract.created_at = ControllerUtil.formatDate(new Date(dnaContract.created_at))
   dnaContract.raw_data_price = ControllerUtil.formatMoney(dnaContract.raw_data_price)
+  dnaContract.royalty_payments = dnaContract.royalty_payments.map((payment) => {
+    payment.type = ControllerUtil.formatRoyaltyPaymentType(payment.type)
+    return payment
+  })
   res.render("dnaContract/show", { dnaContract })
 };
 

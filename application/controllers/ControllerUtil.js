@@ -41,6 +41,15 @@ class ControllerUtil {
     if (type == "processed") return "Processed"
   }
 
+  static formatRoyaltyPaymentType (type) {
+    if (type == "no_royalties") return "No Royalties"
+    if (type == "fixed_one_time_fee") return "Fixed One Time Fee "
+    if (type == "proportional_one_time_fee") return "Proportional One Time Fee"
+    if (type == "fixed_periodic_fee") return "Fixed Periodic Fee"
+    if (type == "proportional_periodic_fee") return "Proportional Periodic Fee"
+    if (type == "profit_proportional_periodic_fee") return "Profit Proportional Periodic Fee"
+  }
+
   static formatMoney(value){
     return Dinero({ amount: value, precision: 9 }).toFormat('0.000000000')
   }

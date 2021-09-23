@@ -1,7 +1,9 @@
 $(document).ready(function() {
   $('.royalty-payment-select').change(function() {
     let valueInput = $(this).parents('.royalty-payment').find('.royalty-payment-value')
+    let periodInput = $(this).parents('.royalty-payment').find('.royalty-payment-period')
     clearRoyaltyPaymentValue(valueInput)
+    clearRoyaltyPaymentValue(periodInput)
 
     if(this.value == 'no_royalties'){
       valueInput.prop("disabled", true)
@@ -14,12 +16,16 @@ $(document).ready(function() {
         this.value = parseFloat(this.value.replace(/(.*){1}/, '0$1').replace(/[^\d]/g, '').replace(/(\d\d\d\d\d\d\d\d?)$/, '.$1')).toFixed(8);
       });
     }
+
+    if( ['no_royalties', 'proportional_one_time_fee', 'fixed_one_time_fee'].includes(this.value)){
+      periodInput.prop("disabled", true)
+    }
   })
 
-  function clearRoyaltyPaymentValue(valueInput){
-    valueInput.prop("disabled", false)
-    valueInput.val('')
-    valueInput.unbind("keypress");
-    valueInput.unmask()
+  function clearRoyaltyPaymentValue(input){
+    input.prop("disabled", false)
+    input.val('')
+    input.unbind("keypress");
+    input.unmask()
   }
 });
