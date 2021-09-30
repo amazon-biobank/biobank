@@ -25,6 +25,7 @@ exports.show = async function(req, res, next){
 
   dnaContract.created_at = ControllerUtil.formatDate(new Date(dnaContract.created_at))
   dnaContract.raw_data_price = ControllerUtil.formatMoney(dnaContract.raw_data_price)
+  dnaContract.processed_data_price = ControllerUtil.formatMoney(dnaContract.processed_data_price)
   dnaContract.royalty_payments = dnaContract.royalty_payments.map((payment) => {
     payment.type = ControllerUtil.formatRoyaltyPaymentType(payment.type)
     return payment
@@ -54,11 +55,13 @@ exports.execute = async function(req, res, next){
 function createDnaContractFromRequest(req){
   payment_distribution = parsePaymentDistributionPercentage(req.body.payment_distribution)
   raw_data_price = req.body.raw_data_price*1e9  // converting biocoins to Sys
+  processed_data_price = req.body.processed_data_price*1e9  // converting biocoins to Sys
 
   return {
     id: ControllerUtil.getHash(req.body.dnaId),
     dna_id: req.body.dnaId,
     raw_data_price,
+    processed_data_price,
     payment_distribution: req.body.payment_distribution,
     royalty_payments: req.body.royalty_payments,
     created_at: new Date().toDateString()

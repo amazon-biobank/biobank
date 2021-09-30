@@ -35,8 +35,24 @@ block content
               label.mb-1(for='processed_data_price') Processed Data Price
               a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" 
                 data-content="Price that the processed DNA is sold. This value will be transfered acording to the 'payment distribution'")
-              input.form-control.bio-money-input(disabled name='processed_data_price' type='text')
-          .card.mb-3
+              input.form-control.bio-money-input(disabled value=dnaContract.processed_data_price  type='text')
+              
+            if(dnaContract.accepted_processed_data)
+              .card.mb-3
+                .card-header Accepted Processed Data
+                .card-body
+                  .form-row
+                    .form-group.col-md-6
+                      label.mb-1(for='price') Processed data ID
+                      a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="You, who inserts the raw DNA.")
+                      input#price.form-control.percentage(disabled value=dnaContract.accepted_processed_data.processed_data_id type='text')
+                    .form-group.col-md-6
+                      label.mb-1(for='price') Process Request ID
+                      a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who process the DNA")
+                      input#price.form-control.percentage(disabled value=dnaContract.accepted_processed_data.processed_request_id type='text')
+                
+
+            .card.mb-3
             .card-header Payment Distribution (in percentage)
             .card-body
               .form-row
@@ -56,6 +72,7 @@ block content
                   label.mb-1(for='price') Curator
                   a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who certificate that the DNA is legitim and correct")
                   input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.curator type='text')
+
           .card
             .card-header Royalty Payments
             .card-body

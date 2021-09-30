@@ -13,6 +13,7 @@ class DnaContractUtils {
       [ 
         'dna_id', 
         'raw_data_price', 
+        'processed_data_price',
         'payment_distribution.collector', 
         'payment_distribution.processor', 
         'payment_distribution.curator', 
