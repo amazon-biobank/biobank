@@ -44,7 +44,9 @@ exports.createProcessedData = async function(req, res, next){
   const dataContract = new DataContract();
   await dataContract.createProcessedData(processedData);
   if(req.body.process_request_id) {
-    await updateProcessRequestAndRawData(req.body.process_request_id, processedData);
+    const processRequest = await updateProcessRequest(req.body.process_request_id, processedData);
+    const rawData = await updateRawData(processRequest);
+    await updateDnaContract(rawData)
   }
   res.redirect("/data/" + processedData.id)
 };
@@ -110,17 +112,25 @@ function createProcessedDataFromRequest(req){
   }
 }
 
-async function updateProcessRequestAndRawData(processRequestId, processedData){
+async function updateProcessRequest(processRequestId, processedData){
   const processRequestContract = new ProcessRequestContract()
-  const dataContract = new DataContract();
   let processRequest = await processRequestContract.readProcessRequest(processRequestId);
   processRequest.status = 'processed';
   processRequest.processed_data_id = processedData.id;
   await processRequestContract.updateProcessRequest(processRequest);
+  return processRequest
+}
 
+async function updateRawData(processRequest){
+  const dataContract = new DataContract();
   let rawData = await dataContract.readData(processRequest.raw_data_id);
   rawData.status = 'processed';
   await dataContract.updateData(rawData);
+  return rawData
+}
+
+async function updateDnaContract(processRequest){
+  
 }
 
 async function getDnaContract(dnaId){

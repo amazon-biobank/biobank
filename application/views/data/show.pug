@@ -39,7 +39,7 @@ block content
           if(dnaContract)
             a.btn.btn-primary.btn-sm.mr-4(href='/dnaContract/'+ dnaContract.id)
               | See Smart Contract
-          else 
+          else if( !data.process_request_id )
             a.btn.btn-danger.btn-sm.mr-4(href='/dnaContract/new/'+data.id)
               | Create Smart Contract
           a.btn.btn-primary.btn-sm.mr-4(href='/process-request?search='+data.key)
