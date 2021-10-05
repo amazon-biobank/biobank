@@ -47,6 +47,15 @@ class DataContract extends ActiveContract {
         return data
     }
 
+    async addDnaContractInId(ctx, dataId, dnaContractId){
+        let dataKey = Data.makeKey([dataId]);
+        let data = await ctx.dataList.getData(dataKey);
+
+        data.dna_contract = dnaContractId
+        await ctx.dataList.updateState(data);
+        return data
+    }
+
     async readData(ctx, dataId) {
         let dataKey = Data.makeKey([dataId]);
         let data = await ctx.dataList.getData(dataKey);

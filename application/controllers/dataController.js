@@ -42,11 +42,13 @@ exports.newProcessedData = async function(req, res, next){
 exports.createProcessedData = async function(req, res, next){
   let processedData = createProcessedDataFromRequest(req);
   const dataContract = new DataContract();
-  await dataContract.createProcessedData(processedData);
+  const dnaContract = new DnaContractContract()
+  // await dataContract.createProcessedData(processedData);
   if(req.body.process_request_id) {
     const processRequest = await updateProcessRequest(req.body.process_request_id, processedData);
-    const rawData = await updateRawData(processRequest);
-    await updateDnaContract(rawData)
+    await dnaContract.endorseProcessRequestToRawData(req.body.process_request_id)
+    // const rawData = await updateRawData(processRequest);
+    // await updateDnaContract(rawData)
   }
   res.redirect("/data/" + processedData.id)
 };
@@ -83,14 +85,16 @@ exports.listOperations = async function(req, res, next){
 };
 
 function createRawDataFromRequest(req){
-  const magnetic = removeTracker(req.body.magnet_link);
+  const magnetic = removeTracker(req.body.metadata.magnet_link);
   return {
     type : 'raw_data',
-    id: ControllerUtil.getHashFromMagneticLink(req.body.magnet_link),
-    title: req.body.name,
+    id: ControllerUtil.getHashFromMagneticLink(req.body.metadata.magnet_link),
+    metadata: {
+      title: req.body.metadata.title,
+      magnet_link: magnetic,
+      description: req.body.metadata.description
+    },
     status: 'unprocessed',
-    magnet_link: magnetic,
-    description: req.body.description,
     created_at: new Date().toDateString()
   }
 }
@@ -102,13 +106,15 @@ function removeTracker(magnet_link){
 function createProcessedDataFromRequest(req){
   return {
     type : 'processed_data',
-    id: ControllerUtil.getHashFromMagneticLink(req.body.magnet_link),
-    title: req.body.name,
+    id: ControllerUtil.getHashFromMagneticLink(req.body.metadata.magnet_link),
     status: 'processed',
-    magnet_link: req.body.magnet_link,
-    description: req.body.description,
-    created_at: new Date().toDateString(),
-    process_request_id: req.body.process_request_id
+    process_request_id: req.body.process_request_id,
+    metadata: {
+      title: req.body.metadata.title,
+      magnet_link: req.body.metadata.magnet_link,
+      description: req.body.metadata.description
+    },
+    created_at: new Date().toDateString()
   }
 }
 
