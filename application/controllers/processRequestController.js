@@ -1,6 +1,6 @@
 const ProcessRequestContract = require('../contract/processRequestContract');
 const DataContract = require('../contract/dataContract');
-const ProcessorContract = require('../contract/processorContract');
+const AccountContract = require('../contract/accountContract');
 const ControllerUtil = require('./ControllerUtil.js');
 
 exports.index = async function(req, res, next){
@@ -23,6 +23,8 @@ exports.show = async function(req, res, next){
   await getDataAndProcessorForProcessRequest(processRequest)
   formatProcessRequest(processRequest)
 
+  console.log(processRequest)
+
   res.render('processRequest/show', { processRequest });
 };
 
@@ -39,7 +41,6 @@ function createProcessorRequestFromRequest(req){
   return {
     id: ControllerUtil.generateId(),
     raw_data_id: req.body.raw_data_id,
-    processor_id: req.body.processor_id,
     processed_data_id: req.body.processed_data_id,
     status: 'not_processed',
     created_at: new Date().toDateString()
@@ -54,9 +55,9 @@ function formatProcessRequest(processRequest){
 
 async function getDataAndProcessorForProcessRequest(processRequest){
   const dataContract = new DataContract();
-  const processorContract = new ProcessorContract();
+  const accountContract = new AccountContract();
   processRequest.raw_data = await dataContract.readData(processRequest.raw_data_id);
-  processRequest.processor = await processorContract.readProcessor(processRequest.processor_id)
+  processRequest.processor = await accountContract.readAccount(processRequest.processor_id)
   if (processRequest.processed_data_id){
     processRequest.processed_data = await dataContract.readData(processRequest.processed_data_id);
   }

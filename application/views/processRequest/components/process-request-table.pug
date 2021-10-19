@@ -1,17 +1,16 @@
 .card.shadow.mb-4
   .card-header.py-3
-    h6.m-0.font-weight-bold.text-primary Solicitações de processamento
+    h6.m-0.font-weight-bold.text-primary Process Requests
   .card-body
     .table-responsive
       table#dataTable.table.table-bordered(width='100%' cellspacing='0')
         thead
           tr
             th Status
-            th Criado em
-            th Organização do Processador
-            th Título Dado Bruto
-            th Id do Dado Bruto
-            th Ação
+            th Created At
+            th Raw DNA title
+            th Raw DNA ID
+            th Action
         tbody
           each processRequest in processRequests
             tr
@@ -20,14 +19,11 @@
               td
                 = processRequest.created_at
               td
-                if(processRequest.processor)
-                  = processRequest.processor.organization
-              td
                 = processRequest.raw_data.title
               td.small
                 = processRequest.raw_data.id
               td
                 a.btn.btn-info.btn-sm.btn-circle.mr-2(
-                  data-toggle="tooltip" data-placement="top" title="Ver Detalhes" href="/process-request/" + processRequest.id
+                  data-toggle="tooltip" data-placement="top" title="See Details" href="/process-request/" + processRequest.id
                 )
                   i.fas.fa-eye

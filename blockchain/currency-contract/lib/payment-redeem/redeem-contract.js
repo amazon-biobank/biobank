@@ -92,7 +92,7 @@ async function redeemLinks(ctx, commitment, linksToBeRedeemed) {
       amount: linksToBeRedeemed * 1000
     }
     
-    return await internalTokenContract.redeemScrewToken(ctx, options )
+    return await internalTokenContract.redeemEscrowToken(ctx, options )
 }
 
 

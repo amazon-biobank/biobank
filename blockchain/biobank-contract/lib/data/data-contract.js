@@ -2,7 +2,8 @@
 
 const Data = require('./data.js');
 const DataList = require('./data-list.js');
-const { ActiveContext, ActiveContract } = require('./../active-contract')
+const { ActiveContext, ActiveContract } = require('./../active-contract');
+const AssetIdExistsError = require('../erros/asset-id-exists-error.js');
 
 class DataContext extends ActiveContext {
     constructor() {
@@ -18,6 +19,9 @@ class DataContract extends ActiveContract {
     }
 
     async uploadRawData(ctx, dataId, dataAttributes) {
+        if ( await this.dataExists(ctx,dataId)){
+            throw new AssetIdExistsError(dataId);
+        }
         const newDataAttributes = handleDataAttributes(ctx,  dataId, 'raw_data', dataAttributes )
         const data = Data.createInstance(newDataAttributes);
         await ctx.dataList.addData(data);
@@ -25,6 +29,9 @@ class DataContract extends ActiveContract {
     }
 
     async uploadProcessedData(ctx, dataId, dataAttributes) {
+        if ( await this.dataExists(ctx,dataId)){
+            throw new AssetIdExistsError(dataId);
+        }
         const newDataAttributes = handleDataAttributes(ctx, dataId, 'processed_data', dataAttributes)
         const data = Data.createInstance(newDataAttributes);
         await ctx.dataList.addData(data);
@@ -59,6 +66,11 @@ class DataContract extends ActiveContract {
         let dataKey = Data.makeKey([dataId]);
         const history = await ctx.dataList.getDataHistory(dataKey);
         return history
+    }
+
+    async dataExists (ctx, dataId){
+        let asset = await ctx.dataList.getData(dataId);
+        return asset != undefined;
     }
 }
 

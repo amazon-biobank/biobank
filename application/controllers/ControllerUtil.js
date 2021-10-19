@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const magnet = require('magnet-uri');
 const crypto = require('crypto')
+const Dinero = require('dinero.js')
 
 class ControllerUtil {
   static formatDate (date) {
@@ -19,26 +20,31 @@ class ControllerUtil {
 
   static formatDataType (type) {
     if (type == "raw_data") return "Raw"
-    if (type == "processed_data") return "Processado"
+    if (type == "processed_data") return "Processed"
   }
 
   static formatDataStatus (status) {
     if (status == "unprocessed") return "Not Processed"
-    if (status == "processing") return "Processando"
-    if (status == "processed") return "Processado"
+    if (status == "processing") return "Processing"
+    if (status == "processed") return "Processed"
   }
 
   static formatOperationType (type) {
-    if (type == "buy") return "Compra"
+    if (type == "buy") return "Buy"
     if (type == "upload") return "Upload"
-    if (type == "process") return "Processamento"
-    if (type == "request_process") return "Solicitação de Processamento"
+    if (type == "process") return "Processed"
+    if (type == "request_process") return "Process Request"
   }
 
   static formatProcessRequestStatus (type) {
-    if (type == "not_processed") return "Não Processado"
-    if (type == "processed") return "Processado"
+    if (type == "not_processed") return "Not Processed"
+    if (type == "processed") return "Processed"
   }
+
+  static formatMoney(value){
+    return Dinero({ amount: value, precision: 9 }).toFormat('0.000000000')
+  }
+
 
   static generateId(){
     return uuidv4();

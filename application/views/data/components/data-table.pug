@@ -1,16 +1,16 @@
 .card.shadow.mb-4
   .card-header.py-3
-    h6.m-0.font-weight-bold.text-primary Lista de Dados
+    h6.m-0.font-weight-bold.text-primary List Data
   .card-body
     .table-responsive
       table#dataTable.table.table-bordered(width='100%' cellspacing='0')
         thead
           tr
-            th Tipo
-            th Título
-            th Coletor
-            th Criado em
-            th Ações
+            th Type
+            th Title
+            th Collector
+            th Created At
+            th Actions
         tbody
           each data, index in datas
             tr
@@ -25,10 +25,10 @@
 
               td
                 a.btn.btn-info.btn-sm.btn-circle.mr-2(
-                  data-toggle="tooltip" data-placement="top" title="Ver Detalhes" href="/data/" + data.id
+                  data-toggle="tooltip" data-placement="top" title="See Details" href="/data/" + data.id
                 )
                   i.fas.fa-eye
                 a.btn.btn-secondary.btn-sm.btn-circle.mr-2(
-                  data-toggle="tooltip" data-placement="top" title="Ver Histórico" href="/data/" + data.id + "/list-operations"
+                  data-toggle="tooltip" data-placement="top" title="See History" href="/data/" + data.id + "/list-operations"
                 )
                   i.fas.fa-history

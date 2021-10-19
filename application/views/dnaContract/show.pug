@@ -4,31 +4,31 @@ block append header
 
 block content
   .container.mt-4
-    h1 Detalhes do Smart Contract
+    h1 Smart Contract Details
     .card.mb-4
       .card-header.card-header.d-flex.justify-content-between.align-items-center Smart Contract
         div 
-          a.btn.btn-primary.btn-sm.text-white(data-toggle="modal" data-target="#buyModal" title="Comprar o dado")
+          a.btn.btn-primary.btn-sm.text-white(data-toggle="modal" data-target="#buyModal" title="Buy DNA")
             i.fas.fa-shopping-cart.mr-2
-            | Comprar o dado
+            | Buy DNA
       .card-body
         form
           .form-group
-            label.mb-1(for='dnaId') ID do DNA correspondente
+            label.mb-1(for='dnaId') DNA ID
             input#dnaId.form-control(disabled type='text' value= dnaContract.dnaId)
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='id') ID
+              label.mb-1(for='id') Contract ID
               input#id.form-control(disabled type='text'  value=dnaContract.id)
             .form-group.col-md-6
-              label.mb-1(for='created_at') Criado em
+              label.mb-1(for='created_at') Created At
               input#id.form-control(disabled type='text'  value=dnaContract.created_at)
           .card
-            .card-header Detalhes
+            .card-header Details
             .card-body
               .form-group 
-                label.mb-1(for='price') Preço
-                input#price.form-control(disabled type='text'  value=dnaContract.parameters.price)
+                label.mb-1(for='price') Price
+                input#price.form-control.bio-money(disabled type='text'  value=dnaContract.parameters.price)
   include components/buy-modal.pug
 
 

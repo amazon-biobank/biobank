@@ -4,61 +4,61 @@ block append header
 
 block content
   .container.mt-4
-    h1 Detalhes da Operação
+    h1 Operation Details
     .card.mb-4
       .card-header Operação
       .card-body
         form
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='type') Tipo
+              label.mb-1(for='type') Type
               input#type.form-control(disabled type='text' value= operation.type)
             .form-group.col-md-6
-              label.mb-1(for='id') ID da Operação
+              label.mb-1(for='id') Operation ID
               input#id.form-control(disabled type='text' value= operation.id)
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='user') Usuário
+              label.mb-1(for='user') User
               input#user.form-control(disabled type='text'  value=operation.userAddress)
             .form-group.col-md-6
-              label.mb-1(for='created-at') Criado em
+              label.mb-1(for='created-at') Created At
               input#created-at.form-control(disabled type='text'  value=operation.created_at)
           .card
-            .card-header Detalhes
+            .card-header Details
             .card-body
               if (operation.type == 'Compra')
                 .form-row
                   .form-group.col-md-6
-                    label.mb-1(for='data_id') ID do Dado
+                    label.mb-1(for='data_id') Data ID
                     input#data_id.form-control(disabled type='text'  value=operation.details.data_id)
                   .form-group.col-md-6
-                    label.mb-1(for='contractId') Id do Smart Contract
+                    label.mb-1(for='contractId') Contract Id
                     input#contractId.form-control(disabled type='text'  value=operation.details.contractId)
                 .form-row
                   .form-group.col-md-6
-                    label.mb-1(for='transaction-id') ID da transação
+                    label.mb-1(for='transaction-id') Transaction Id
                     input#transaction-id.form-control(disabled type='text' style='font-size:small' value=operation.details.transaction_id)
           .card
-            .card-header Origem
+            .card-header Origin
             .card-body
               each sender in operation.input
                 .form-row
                   .form-group.col-md-6
-                    label.mb-1(for='sender-address') Endereço de Origem
+                    label.mb-1(for='sender-address') Origin Address
                     input#sender-address.form-control(disabled type='text'  value=sender.address)
                   .form-group.col-md-6
-                    label.mb-1(for='value') Valor
+                    label.mb-1(for='value') Value
                     input#value.form-control(disabled type='text'  value=sender.value)
           .card
-            .card-header Destino
+            .card-header Output
             .card-body
               each receiver in operation.output
                 .form-row
                   .form-group.col-md-6
-                    label.mb-1(for='receiver-address') Endereço de Destino
+                    label.mb-1(for='receiver-address') Receiver Address
                     input#receiver-address.form-control(disabled type='text'  value=receiver.address)
                   .form-group.col-md-6
-                    label.mb-1(for='value') Valor
+                    label.mb-1(for='value') Value
                     input#value.form-control(disabled type='text'  value=receiver.value)
                  
 
