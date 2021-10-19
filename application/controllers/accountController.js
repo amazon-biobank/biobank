@@ -44,7 +44,7 @@ exports.createTransfer = async function (req, res, next){
   let transferData = [req.body.senderAddress, req.body.receiverAddress, req.body.amount]
   const biocoinContract = new BiocoinContract();
  // try {
-    await biocoinContract.transferBiocoins(transferData[0], transferData[1], transferData[2])
+    await biocoinContract.transferBiocoins(transferData[0], transferData[1], transferData[2]*1e9)
  // } catch (){
     //res.render('account/transfer/transfer-error')
  // }
