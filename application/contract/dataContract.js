@@ -35,6 +35,9 @@ class DataContract extends SmartContract {
     return await this.evaluateTransaction('DataContract:getDataHistory', dataId);
   }
 
+  async addProcessRequest(dataId, processRequestId) {
+    return await this.submitTransaction('DataContract:addProcessRequest', dataId, processRequestId);
+  }
 }
 
 module.exports = DataContract;

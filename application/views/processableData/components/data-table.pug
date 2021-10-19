@@ -9,20 +9,17 @@
             th Title
             th Collector
             th Created at
-            th Reward
             th Status
             th Action
         tbody
           each data, index in datas
             tr
               td
-                = data.title
+                = data.metadata.title
               td
                 = data.collector
               td
                 = data.created_at
-              td
-                = data.process_reward
               td
                 = data.status
               td

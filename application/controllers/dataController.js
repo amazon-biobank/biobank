@@ -11,8 +11,10 @@ exports.index = async function(req, res, next){
     return {
       id: data.id,
       type: ControllerUtil.formatDataType(data.type),
-      title: data.title,
-      description: data.description,
+      metadata: {
+        title: data.metadata.title,
+        description: data.metadata.description,
+      },
       collector: data.collector,
       created_at: ControllerUtil.formatDate(new Date(data.created_at)),
       price: data.price
@@ -43,12 +45,11 @@ exports.createProcessedData = async function(req, res, next){
   let processedData = createProcessedDataFromRequest(req);
   const dataContract = new DataContract();
   const dnaContract = new DnaContractContract()
-  // await dataContract.createProcessedData(processedData);
+  await dataContract.createProcessedData(processedData);
   if(req.body.process_request_id) {
     const processRequest = await updateProcessRequest(req.body.process_request_id, processedData);
+    await dataContract.addProcessRequest(processRequest.raw_data_id, req.body.process_request_id)
     await dnaContract.endorseProcessRequestToRawData(req.body.process_request_id)
-    // const rawData = await updateRawData(processRequest);
-    // await updateDnaContract(rawData)
   }
   res.redirect("/data/" + processedData.id)
 };

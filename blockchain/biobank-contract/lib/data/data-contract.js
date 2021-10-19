@@ -83,6 +83,17 @@ class DataContract extends ActiveContract {
         let asset = await ctx.dataList.getData(dataId);
         return asset != undefined;
     }
+
+    async addProcessRequest(ctx, dataId, processRequestId){
+        let dataKey = Data.makeKey([dataId]);
+        let data = await ctx.dataList.getData(dataKey);
+
+        if(! data.processed_requests.includes(processRequestId)){
+            data.processed_requests.push(processRequestId)
+        }
+        await ctx.dataList.updateState(data);
+        return data
+    }
 }
 
 function handleDataAttributes(ctx, id, type, dataAttributes) {

@@ -5,11 +5,11 @@
         h5#exampleModalLabel.modal-title Confirm buying?
         button.close(type='button' data-dismiss='modal' aria-label='Close')
           span(aria-hidden='true') &times;
-      .modal-body Click in &quot;Buy &quot; below to buy DNA for 
+      .modal-body Click in &quot;Buy&quot; below to buy DNA for 
         = dnaContract.raw_dna_price
         |  Biocoins
       .modal-footer
         button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
         form.user(action='execute-contract/' + dnaContract.id method='post')
-          input#type(hidden name='type' type='text' value='buy_dna')
+          input#type(hidden name='type' type='text' value='buy_raw_dna')
           input.btn.btn-primary.btn-user(type='submit' value='BUY')

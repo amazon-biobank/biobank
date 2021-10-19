@@ -51,7 +51,7 @@ class DnaContractUtils {
     return true
   }
 
-  static async createBuyingOperation(ctx, dna, dnaContract, operationId){
+  static async createBuyingOperation(ctx, dna, dnaContract, operationId, price){
     const internalOperationContract = new InternalOperationContract()
     const operationAttributes = JSON.stringify({
         type: 'buy',
@@ -63,28 +63,30 @@ class DnaContractUtils {
         },
         input: [{
             address: ctx.user.address,
-            value: dnaContract.parameters.price
+            value: price
         }],
         output: [{
             address: dna.collector,
-            value: dnaContract.parameters.price
+            value: price
         }]
     })
+
+    
     return await internalOperationContract.createOperation(ctx, operationId, operationAttributes)
   }
-}
 
-async function validateCollector(ctx, dnaContractAttributes){
-  const dna = await getData(ctx, dnaContractAttributes.dna_id)
-  if(dna.collector == undefined || ctx.user.address != dna.collector ){
-      throw new Error('Unauthorized')
+  static async validateCollector(ctx, dnaContractAttributes){
+    const dna = await getData(ctx, dnaContractAttributes.dna_id)
+    if(dna.collector == undefined || ctx.user.address != dna.collector ){
+        throw new Error('Unauthorized')
+    }
   }
-}
 
-async function getData(ctx, dataId){
-  const dataKey = Data.makeKey([dataId]);
-  const data = await ctx.dataList.getData(dataKey); 
-  return data
+  static async getData(ctx, dataId){
+    const dataKey = Data.makeKey([dataId]);
+    const data = await ctx.dataList.getData(dataKey); 
+    return data
+  }
 }
 
 function validatePaymentDistribution(paymentDistribution){

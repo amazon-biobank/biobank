@@ -16,6 +16,7 @@ const DnaContract = require('./dna-contract.js');
 
 const DataContract = require('./../data/data-contract.js');
 const DataList = require('./../data/data-list.js');
+const InternalDataContract = require('../data/internal-data-contract');
 
 class DnaContractContext extends ActiveContext {
     constructor() {
@@ -55,15 +56,15 @@ class DnaContractContract extends ActiveContract {
 
     async endorseProcessRequestToRawData(ctx, processRequestId){
         const processRequestContract = new ProcessRequestContract()
+        const internalDataContract = new InternalDataContract()
         const dataContract = new DataContract()
 
         const processRequest = await processRequestContract.readProcessRequest(ctx, processRequestId)
-        let rawData = await dataContract.readData(ctx, processRequest.raw_data_id)
+        const rawData = await dataContract.readData(ctx, processRequest.raw_data_id)
         
-        if(rawData.status == 'unprocessed'){
-            rawData.status = 'processed'
-            await dataContract.updateData(ctx, rawData.type, rawData.id, JSON.stringify(rawData))
-
+        // if(rawData.status == 'unprocessed'){
+            await internalDataContract.changeStatusData(ctx, processRequest.raw_data_id, 'processed')
+            
             // refactor to changeStatusDNA
             let dnaContract = await this.readDnaContract(ctx, rawData.dna_contract)
             dnaContract.accepted_processed_data = {
@@ -71,19 +72,29 @@ class DnaContractContract extends ActiveContract {
                 process_request_id: processRequestId
             }
             await internalUpdateDnaContract(ctx, JSON.stringify(dnaContract))
-        }
+            // throw new Error(JSON.stringify(dnaContract))
+            return dnaContract
+        // } else {
+        //     throw new Error("rawData already processed")
+        // }
     }
 
     async executeContract(ctx, contractId, options ){
         const operationType = JSON.parse(options).type;
         const operationId = JSON.parse(options).operationId;
-        if (operationType == 'buy_dna'){
-            const dnaContract = await ctx.dnaContractList.getDnaContract(contractId);
-            let dna = await DnaContractUtils.getData(ctx, dnaContract.dna_id)
-            const operation = DnaContractUtils.createBuyingOperation(ctx, dna, dnaContract, operationId)
-            return operation
+        
+        const dnaContract = await ctx.dnaContractList.getDnaContract(contractId);
+        let dna = await DnaContractUtils.getData(ctx, dnaContract.dna_id)
+        
+        var price 
+        if(operationType == 'buy_raw_dna'){ 
+            price = dnaContract.raw_data_price 
+        } else if(operationType == 'buy_processed_dna'){
+            price = dnaContract.processed_data_price
         }
-        return
+
+        const operation = DnaContractUtils.createBuyingOperation(ctx, dna, dnaContract, operationId, price)
+        return operation
     }
 
     async executeOperation(ctx, operationId){
