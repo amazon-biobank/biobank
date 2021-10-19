@@ -26,6 +26,29 @@ exports.showMyAccount = async function(req, res, next){
   res.redirect('/account/'+ myAddress)
 };
 
+exports.newTransfer = async function (req, res, next){
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  account.balance = Dinero({ amount: account.balance, precision: 9 }).toFormat('0.000000000')
+  account.created_at = ControllerUtil.formatDate(new Date(account.created_at))
+  res.render('account/new-transfer', { account })
+}
+
+exports.createTransfer = async function (req, res, next){
+  //recebe o formulario
+  //fazer a try{transferencia--chamando bc}
+  //catch{recebe de volta do bc - ou deu ruim }
+  //deu bom
+  res.render('account/transfer/transfer-sucess')
+}
+
 
 
 
