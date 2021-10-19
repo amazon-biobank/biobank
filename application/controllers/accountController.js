@@ -1,6 +1,7 @@
 const AccountContract = require('../contract/accountContract');
 const ControllerUtil = require('./ControllerUtil.js');
 const ConnectService = require('./../services/connectService.js');
+const BiocoinContract = require('../contract/biocoinContract.js')
 const Dinero = require('dinero.js')
 
 exports.show = async function(req, res, next){
@@ -42,11 +43,14 @@ exports.newTransfer = async function (req, res, next){
 }
 
 exports.createTransfer = async function (req, res, next){
-  //recebe o formulario
-  //fazer a try{transferencia--chamando bc}
-  //catch{recebe de volta do bc - ou deu ruim }
-  //deu bom
-  res.render('account/transfer/transfer-sucess')
+  let transferData = [req.body.senderAddress, req.body.receiverAddress, req.body.amount]
+  const biocoinContract = new BiocoinContract();
+ // try {
+    await biocoinContract.transferBiocoins(transferData[0], transferData[1], transferData[2])
+ // } catch (){
+    //res.render('account/transfer/transfer-error')
+ // }
+  res.render('account/transfer/transfer-sucess', {transferData} )
 }
 
 

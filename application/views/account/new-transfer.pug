@@ -8,7 +8,7 @@ block content
     .card.mb-4
       .card-header Dados da tranferência
       .card-body
-        form
+        form(action = '/account/transfer' method = 'post')
           .form-row
             .form-group.col-md-12
               label.mb-1(for='name') Nome
@@ -16,7 +16,7 @@ block content
           .form-row              
             .form-group.col-md-12
               label.mb-1(for='address') Endereço
-              input#address.form-control(disabled type='text'  value=account.address)
+              input#address.form-control(readonly name='senderAddress' type='text'  value=account.address)
           .form-row
             .form-group.col-md-12
               label.mb-1(for='balance') Saldo
@@ -24,11 +24,11 @@ block content
           .form-row 
             .form-group.col-md-12 
               label.mb-1(for='address-reciever') Endereço de destino
-              input#address-reciever.form-control(type='text ')
+              input#address-reciever.form-control(name = 'receiverAddress' type='text ')
           .form-row 
             .form-group.col-md-12 
               label.mb-1(for='amount') Valor da transferência 
-              input#amount.form-control(type = 'text')
+              input#amount.form-control(name = 'amount' type = 'text')
             hr
             .float-right.mb-4.inline-block
             input.btn.btn-primary.btn-user.btn-lg.px-10(type='submit' value = 'Transferir')
