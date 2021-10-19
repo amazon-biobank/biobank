@@ -41,14 +41,18 @@ exports.newTransfer = async function (req, res, next){
 }
 
 exports.createTransfer = async function (req, res, next){
-  let transferData = [req.body.senderAddress, req.body.receiverAddress, req.body.amount]
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  const transferData ={senderAddress: req.body.senderAddress, receiverAddress: req.body.receiverAddress, amount: req.body.amount}
   const biocoinContract = new BiocoinContract();
  // try {
-    await biocoinContract.transferBiocoins(transferData[0], transferData[1], transferData[2]*1e9)
+    await biocoinContract.transferBiocoins(transferData.senderAddress, transferData.receiverAddress, (transferData.amount)*1e9)
  // } catch (){
     //res.render('account/transfer/transfer-error')
  // }
-  res.render('account/transfer/transfer-sucess', {transferData} )
+  res.render('account/transfer/transfer-sucess', {transferData, account} )
 }
 
 function formatAccount(account){

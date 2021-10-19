@@ -1,7 +1,33 @@
 extends ../../layout/layout.pug
 
 block append header
-    h1 oiiii
 
-
+block content
+    .container.mt-4
+        .text-center 
+            h1 The transaction was succeded 
+            .card.mb-4 
+                .card-header Transaction details 
+                .card-body 
+                    form
+                        .form-row
+                            .form-group.col-md-12
+                            label.mb-1(for='name') User of origin
+                            input#name.form-control(disabled type='text' value= account.name)
+                        .form-row              
+                            .form-group.col-md-12
+                            label.mb-1(for='address') Origin address
+                            input#address.form-control(readonly name='senderAddress' type='text'  value=account.address)
+                        .form-row 
+                            .form-group.col-md-12 
+                            label.mb-1(for='address-reciever') Destiny address
+                            input#address-reciever.form-control(disabled name = 'receiverAddress' type='text' value=transferData.receiverAddress)
+                        .form-row 
+                            .form-group.col-md-12 
+                            label.mb-1(for='amount') Value of the transction 
+                            input#amount.form-control.bio-money-input(disabled name = 'amount' type = 'text' value=transferData.amount)
+                        hr
+                        .float-right.mb-4.inline-block
+                          a.btn.btn-primary.btn-user.mr-3.px-5(href='/account/show-my-account') 
+                            | Finish
 block append scripts
