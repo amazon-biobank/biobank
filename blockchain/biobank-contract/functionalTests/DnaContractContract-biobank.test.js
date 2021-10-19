@@ -101,7 +101,7 @@ describe('DnaContractContract-biobank' , () => {
             assert.strictEqual(dnaContract2['dna_id'], '123');
         }).timeout(10000);
     });
-
+    
     describe('getAllDnaContract', () =>{
         it('should submit getAllDnaContract transaction', async () => {
             // has created at least one Dna Contract
@@ -139,4 +139,33 @@ describe('DnaContractContract-biobank' , () => {
         }).timeout(10000);
     });
 
+    // describe('internalUpdateDnaContract', () =>{
+    //     it('should submit createDnaContract transaction', async () => {
+    //         const contract = {
+    //             "class":"org.dnaContract",
+    //             "key":"e7bac42318c3642c279ca3dd89e94e31100d19a2adf2aab74fefca8bb221ba83",
+    //             "dna_id":"5600f620305aa7bc5355fdc85d9e6619a68d1ea5",
+    //             "raw_data_price":1000000000,
+    //             "processed_data_price":5000000000,
+    //             "payment_distribution":{"collector":5000,
+    //             "processor":3000,
+    //             "curator":1000,
+    //             "validators":1000},
+    //             "royalty_payments":[{"type":"no_royalties"}],
+    //             "created_at":"Tue Oct 19 2021",
+    //             "id":"e7bac42318c3642c279ca3dd89e94e31100d19a2adf2aab74fefca8bb221ba83",
+    //             "accepted_processed_data":{
+    //                 "processed_data_id":"5p00f620305aa7bc5355fdc85d9e6619a68d1ea5",
+    //                 "process_request_id":"4f4daffe-4f91-44ec-8481-bcf9dd1b73c5"
+    //             }
+    //         }
+    //         const args = [ JSON.stringify(contract)];
+
+    //         const response = await SmartContractUtil.submitTransaction('DnaContractContract', 'internalUpdateDnaContract', args, gateway);
+
+    //         const dnaContract = JSON.parse(response.toString())
+    //         assert.strictEqual(dnaContract['accepted_processed_data'], '123');
+    //         assert.strictEqual(dnaContract['raw_data_price'], 10);
+    //     }).timeout(10000);
+    // })
 });

@@ -42,14 +42,17 @@ exports.newProcessedData = async function(req, res, next){
 };
 
 exports.createProcessedData = async function(req, res, next){
-  let processedData = createProcessedDataFromRequest(req);
   const dataContract = new DataContract();
-  const dnaContract = new DnaContractContract()
+  const dnaContractContract = new DnaContractContract()
+
+  let processedData = createProcessedDataFromRequest(req);
   await dataContract.createProcessedData(processedData);
+  
   if(req.body.process_request_id) {
-    const processRequest = await updateProcessRequest(req.body.process_request_id, processedData);
+    const processRequest = await updateProcessRequest(req.body.process_request_id, processedData)
     await dataContract.addProcessRequest(processRequest.raw_data_id, req.body.process_request_id)
-    await dnaContract.endorseProcessRequestToRawData(req.body.process_request_id)
+    const dnaContract = await dnaContractContract.endorseProcessRequestToRawData(req.body.process_request_id)
+    await dataContract.addDnaContractInId(processedData.id, dnaContract.id)
   }
   res.redirect("/data/" + processedData.id)
 };
@@ -58,7 +61,7 @@ exports.show = async function(req, res, next){
   const dataId = req.params.dataId;
   const dataContract = new DataContract();
   const data = await dataContract.readData(dataId);
-  const dnaContract = await getDnaContract(data.id)
+  const dnaContract = await getDnaContract(data.dna_contract)
 
   data.type = ControllerUtil.formatDataType(data.type);
   data.status = ControllerUtil.formatDataStatus(data.status);
@@ -140,9 +143,10 @@ async function updateDnaContract(processRequest){
   
 }
 
-async function getDnaContract(dnaId){
-  const dnaContractId = ControllerUtil.getHash(dnaId)
-  const dnaContractContract = new DnaContractContract();
-  return await dnaContractContract.readDnaContract(dnaContractId)
+async function getDnaContract(dnaContractId){
+  if(dnaContractId){
+    const dnaContractContract = new DnaContractContract();
+    return await dnaContractContract.readDnaContract(dnaContractId)
+  }
 }
 

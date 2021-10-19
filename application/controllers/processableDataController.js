@@ -4,7 +4,7 @@ const ControllerUtil = require('./ControllerUtil.js');
 exports.index = async function(req, res, next){
   const dataContract = new DataContract();
   const datas = await dataContract.getAllRawData();
-  const filteredDatas = datas.filter((data) => {return data.status=='processed'})
+  const filteredDatas = datas.filter((data) => {return data.status=='unprocessed'})
 
   const formattedDatas = filteredDatas.map(function(data){
     return {

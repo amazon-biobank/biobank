@@ -18,6 +18,8 @@ class DnaContractUtils {
         'payment_distribution.processor', 
         'payment_distribution.curator', 
         'payment_distribution.validators', 
+        'accepted_processed_data.processed_data_id',
+        'accepted_processed_data.process_request_id',
         'royalty_payments', 
         'created_at' 
       ])
@@ -26,7 +28,7 @@ class DnaContractUtils {
   }
 
   static async validateContractCreation(ctx, dnaContractAttributes){
-    await validateCollector(ctx, dnaContractAttributes)
+    await this.validateCollector(ctx, dnaContractAttributes)
     validatePaymentDistribution(dnaContractAttributes.payment_distribution)
     // validate royalty_payments
     return true
@@ -76,7 +78,7 @@ class DnaContractUtils {
   }
 
   static async validateCollector(ctx, dnaContractAttributes){
-    const dna = await getData(ctx, dnaContractAttributes.dna_id)
+    const dna = await this.getData(ctx, dnaContractAttributes.dna_id)
     if(dna.collector == undefined || ctx.user.address != dna.collector ){
         throw new Error('Unauthorized')
     }

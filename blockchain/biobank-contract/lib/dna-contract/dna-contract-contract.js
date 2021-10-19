@@ -62,21 +62,19 @@ class DnaContractContract extends ActiveContract {
         const processRequest = await processRequestContract.readProcessRequest(ctx, processRequestId)
         const rawData = await dataContract.readData(ctx, processRequest.raw_data_id)
         
-        // if(rawData.status == 'unprocessed'){
+        if(rawData.status == 'unprocessed'){
             await internalDataContract.changeStatusData(ctx, processRequest.raw_data_id, 'processed')
             
-            // refactor to changeStatusDNA
             let dnaContract = await this.readDnaContract(ctx, rawData.dna_contract)
             dnaContract.accepted_processed_data = {
                 processed_data_id: processRequest.processed_data_id,
                 process_request_id: processRequestId
             }
-            await internalUpdateDnaContract(ctx, JSON.stringify(dnaContract))
-            // throw new Error(JSON.stringify(dnaContract))
+            await internalUpdateDnaContract(ctx, dnaContract)
             return dnaContract
-        // } else {
-        //     throw new Error("rawData already processed")
-        // }
+        } else {
+            throw new Error("rawData already processed")
+        }
     }
 
     async executeContract(ctx, contractId, options ){
@@ -111,10 +109,8 @@ class DnaContractContract extends ActiveContract {
     }
 }
 
-async function internalUpdateDnaContract(ctx, dnaContractAttributes){
-    const newDnaContractAttributes = DnaContractUtils.handleDnaContractAttributes(dnaContractAttributes)
-    const dnaContract = DnaContract.createInstance(newDnaContractAttributes);
-    await ctx.dnaContractList.addDnaContract(dnaContract);
+async function internalUpdateDnaContract(ctx, dnaContract){
+    await ctx.dnaContractList.updateState(dnaContract);
     return dnaContract;
 }
 

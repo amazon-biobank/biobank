@@ -37,19 +37,19 @@ block content
                 data-content="Price that the processed DNA is sold. This value will be transfered acording to the 'payment distribution'")
               input.form-control.bio-money-input(disabled value=dnaContract.processed_data_price  type='text')
               
-            if(dnaContract.accepted_processed_data)
-              .card.mb-3
-                .card-header Accepted Processed Data
-                .card-body
-                  .form-row
-                    .form-group.col-md-6
-                      label.mb-1(for='price') Processed data ID
-                      a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="You, who inserts the raw DNA.")
-                      input#price.form-control.percentage(disabled value=dnaContract.accepted_processed_data.processed_data_id type='text')
-                    .form-group.col-md-6
-                      label.mb-1(for='price') Process Request ID
-                      a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who process the DNA")
-                      input#price.form-control.percentage(disabled value=dnaContract.accepted_processed_data.processed_request_id type='text')
+        if(dnaContract.accepted_processed_data)
+          .card.mb-12
+            .card-header Accepted Processed Data
+            .card-body
+              .form-row
+                .form-group.col-md-6
+                  label.mb-1(for='price') Processed data ID
+                  a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="You, who inserts the raw DNA.")
+                  input#price.form-control(disabled value=dnaContract.accepted_processed_data.processed_data_id type='text')
+                .form-group.col-md-6
+                  label.mb-1(for='price') Process Request ID
+                  a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who process the DNA")
+                  input#price.form-control(disabled value=dnaContract.accepted_processed_data.process_request_id type='text')
                 
 
             .card.mb-3
@@ -92,6 +92,9 @@ block content
                   .form-group.col-md-2
                     label.mb-1(for='value') Value 
                     input.form-control(disabled value=royalty_payment.value)
+                  .form-group.col-md-2
+                    label.mb-1(for='period') Period in months 
+                    input#price.form-control.royalty-payment-period(value=royalty_payment.period type='text' disabled=true)
 
   include components/buy-modal.pug
 
