@@ -34,13 +34,8 @@ class DnaContractContract extends ActiveContract {
     }
 
     async createDnaContract(ctx, dnaContractAttributes) {
-        const newDnaContractAttributes = DnaContractUtils.handleDnaContractAttributes(dnaContractAttributes)
-        await DnaContractUtils.validateContractCreation(ctx, newDnaContractAttributes)
-        const dnaContract = DnaContract.createInstance(newDnaContractAttributes);
-        await ctx.dnaContractList.addDnaContract(dnaContract);
-
-        // refactor to addDnaContractInDNA
         const dataContract = new DataContract()
+        const dnaContract = await saveDnaContract(ctx, dnaContractAttributes)
         await dataContract.addDnaContractInId(ctx, dnaContract.dna_id, dnaContract.id)
         return dnaContract;
     }
@@ -64,13 +59,7 @@ class DnaContractContract extends ActiveContract {
         
         if(rawData.status == 'unprocessed'){
             await internalDataContract.changeStatusData(ctx, processRequest.raw_data_id, 'processed')
-            
-            let dnaContract = await this.readDnaContract(ctx, rawData.dna_contract)
-            dnaContract.accepted_processed_data = {
-                processed_data_id: processRequest.processed_data_id,
-                process_request_id: processRequestId
-            }
-            await internalUpdateDnaContract(ctx, dnaContract)
+            const dnaContract = await addAcceptedProcessedData(ctx, rawData, processRequest)
             return dnaContract
         } else {
             throw new Error("rawData already processed")
@@ -112,6 +101,24 @@ class DnaContractContract extends ActiveContract {
 async function internalUpdateDnaContract(ctx, dnaContract){
     await ctx.dnaContractList.updateState(dnaContract);
     return dnaContract;
+}
+
+async function saveDnaContract(ctx, dnaContractAttributes){
+    const newDnaContractAttributes = DnaContractUtils.handleDnaContractAttributes(dnaContractAttributes)
+    await DnaContractUtils.validateContractCreation(ctx, newDnaContractAttributes)
+    const dnaContract = DnaContract.createInstance(newDnaContractAttributes);
+    await ctx.dnaContractList.addDnaContract(dnaContract);
+    return dnaContract
+}
+
+async function addAcceptedProcessedData(ctx, rawData, processRequest) {
+    let dnaContract = await ctx.dnaContractList.getDnaContract(rawData.dna_contract);
+    dnaContract.accepted_processed_data = {
+        processed_data_id: processRequest.processed_data_id,
+        process_request_id: processRequest.id
+    }
+    await internalUpdateDnaContract(ctx, dnaContract)
+    return dnaContract
 }
 
 
