@@ -30,7 +30,8 @@ class ControllerUtil {
   }
 
   static formatOperationType (type) {
-    if (type == "buy") return "Buy"
+    if (type == "buy_raw_data") return "Buy Raw Data"
+    if (type == "buy_processed_data") return "Buy Processed Data"
     if (type == "upload") return "Upload"
     if (type == "process") return "Processed"
     if (type == "request_process") return "Process Request"

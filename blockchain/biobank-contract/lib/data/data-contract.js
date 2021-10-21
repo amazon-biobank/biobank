@@ -111,6 +111,7 @@ function handleDataAttributes(ctx, id, type, dataAttributes) {
     newAttributes.owners = [ctx.user.address]
     newAttributes.type = type
     newAttributes.id = id
+    newAttributes.uploader = ctx.user.address
     if(newAttributes.type == 'raw_data'){
         newAttributes.collector = ctx.user.address
         newAttributes.processed_requests = []

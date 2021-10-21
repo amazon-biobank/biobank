@@ -12,15 +12,15 @@
         form.user(action='execute-contract/' + dnaContract.id method='post')
           .form-row
             .form-check
-              input#radioRawData.form-check-input(type='radio', name='type' value='buy_raw_dna', checked)
+              input#radioRawData.form-check-input(type='radio', name='type' value='buy_raw_data', checked)
               label.form-check-label(for='radioRawData')
                   | Raw Data
-          .form-row
-            .form-check
-                input#radioProcessedData.form-check-input(type='radio', name='type' value='buy_processed_dna')
-                label.form-check-label(for='radioProcessedData')
-                    | Processed Data
+          if(dnaContract.accepted_processed_data)
+            .form-row
+              .form-check
+                  input#radioProcessedData.form-check-input(type='radio', name='type' value='buy_processed_data')
+                  label.form-check-label(for='radioProcessedData')
+                      | Processed Data
           .form-row.justify-content-end.mt-4
             button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
-            //- input#type(hidden name='type' type='text' value='buy_raw_dna')
             input.btn.btn-primary.btn-user(type='submit' value='BUY')
