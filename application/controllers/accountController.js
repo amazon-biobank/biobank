@@ -1,7 +1,8 @@
 const AccountContract = require('../contract/accountContract');
 const ControllerUtil = require('./ControllerUtil.js');
 const ConnectService = require('./../services/connectService.js');
-const BiocoinContract = require('../contract/biocoinContract.js')
+const BiocoinContract = require('../contract/biocoinContract.js');
+const BalanceInsuficient = require('../errors/balanceInsuficient.js')
 const Dinero = require('dinero.js')
 
 exports.show = async function(req, res, next){
@@ -47,11 +48,16 @@ exports.createTransfer = async function (req, res, next){
 
   const transferData ={senderAddress: req.body.senderAddress, receiverAddress: req.body.receiverAddress, amount: req.body.amount}
   const biocoinContract = new BiocoinContract();
- // try {
+try {
     await biocoinContract.transferBiocoins(transferData.senderAddress, transferData.receiverAddress, (transferData.amount)*1e9)
- // } catch (){
-    //res.render('account/transfer/transfer-error')
- // }
+ } catch (e){
+    let message = (e.responses[0].response.message)
+    message = message.split(":")    
+    console.log(message[message.length-1])
+    message = message[message.length-1]
+    res.render('account/transfer/transfer-error', {message} )
+    return
+  }
   res.render('account/transfer/transfer-sucess', {transferData, account} )
 }
 

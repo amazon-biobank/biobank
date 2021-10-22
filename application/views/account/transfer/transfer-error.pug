@@ -4,6 +4,10 @@ block append header
 
 block content
     .container-fluid
+        - var value = "string"
         h1.px-3.mt-4  Error: your transaction was not processed
+            script.
+                message="#{message}"
+                alert( message)
 
 block append scripts
