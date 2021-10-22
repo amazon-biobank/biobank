@@ -42,8 +42,14 @@ block content
           else if( !data.process_request_id )
             a.btn.btn-danger.btn-sm.mr-4(href='/dnaContract/new/'+data.id)
               | Create Smart Contract
-          a.btn.btn-primary.btn-sm.mr-4(href='/process-request?search='+data.key)
-            | See Processing Request
+
+          if(data.process_request_id)
+            a.btn.btn-primary.btn-sm.mr-4(href='/process-request/'+process_request_id)
+              | See Processing Request
+          else
+            a.btn.btn-primary.btn-sm.mr-4(href='/process-request?search='+data.key)
+              | See Processing Request
+              
           a.btn.btn-secondary.btn-sm(href=data.key+'/list-operations')
             | See History Operation
       .card-body

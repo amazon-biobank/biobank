@@ -43,11 +43,11 @@ block content
                     .form-group.col-md-3 
                       label.mb-1(for='price') Validators ( #{contractParameters.validators.min} - #{contractParameters.validators.max} )
                       a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Those who validate the processor work (0-2 validators). The reward will be distributed equaly between then")
-                      input#price.form-control.percentage(name='payment_distribution[validators]' type='text')
+                      input#price.form-control.percentage(name='payment_distribution[validators]' type='text' readonly value=0)
                     .form-group.col-md-3
                       label.mb-1(for='price') Curator ( #{contractParameters.curator.min} - #{contractParameters.curator.max} )
                       a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who certificate that the DNA is legitim and correct")
-                      input#price.form-control.percentage(name='payment_distribution[curator]' type='text')
+                      input#price.form-control.percentage(name='payment_distribution[curator]' type='text' readonly value=0)
               .card
                 .card-header Royalty Payments
                 .card-body

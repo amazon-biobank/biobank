@@ -3,9 +3,9 @@
 const CryptoUtils = require('./../crypto-utils')
 const InternalOperationContract = require('./../operation/internal-operation-contract')
 const Data = require('../data/data.js');
-const DataContract = require('../data/data-contract.js');
+const ProcessRequestContract = require('../process-request/process-request-contract');
 const _ = require('lodash');
-const CONFIG = require('../../config.json')
+const CONFIG = require('../../config.json');
 
 class DnaContractUtils {
   static handleDnaContractAttributes(dnaContractAttributes) {
@@ -31,7 +31,7 @@ class DnaContractUtils {
   static async validateContractCreation(ctx, dnaContractAttributes){
     await this.validateCollector(ctx, dnaContractAttributes)
     validatePaymentDistribution(dnaContractAttributes.payment_distribution)
-    // validate royalty_payments
+    validateRoyaltyPayment(dnaContractAttributes.royalty_payments)
     return true
   }
 
@@ -85,13 +85,13 @@ function validatePaymentDistribution(paymentDistribution){
     paymentDistribution.collector < CONFIG.dnaContract.collector.min ||
     paymentDistribution.collector > CONFIG.dnaContract.collector.max ||
     paymentDistribution.processor < CONFIG.dnaContract.processor.min ||
-    paymentDistribution.processor > CONFIG.dnaContract.processor.max ||
-    paymentDistribution.validators < CONFIG.dnaContract.validators.min ||
-    paymentDistribution.validators > CONFIG.dnaContract.validators.max ||
-    paymentDistribution.curator < CONFIG.dnaContract.curator.min ||
-    paymentDistribution.curator > CONFIG.dnaContract.curator.max 
+    paymentDistribution.processor > CONFIG.dnaContract.processor.max //||
+    // paymentDistribution.validators < CONFIG.dnaContract.validators.min ||
+    // paymentDistribution.validators > CONFIG.dnaContract.validators.max ||
+    // paymentDistribution.curator < CONFIG.dnaContract.curator.min ||
+    // paymentDistribution.curator > CONFIG.dnaContract.curator.max 
   ){
-    throw new Error('PaymentDistribution Parameter Error')
+    throw new Error('PaymentDistribution Parameter Error: value not allowed')
   }
   if(
     paymentDistribution.collector + 
@@ -102,6 +102,14 @@ function validatePaymentDistribution(paymentDistribution){
     throw new Error('PaymentDistributionParameters does not sum 100%')
   }
 }
+
+
+function validateRoyaltyPayment(royaltyPayment){
+  if(royaltyPayment == undefined){
+    throw new Error('Royalty Payment required')
+  }
+}
+
 
 function createRawBuyingOperation(ctx, dna, dnaContract){
   return {
@@ -124,8 +132,8 @@ function createRawBuyingOperation(ctx, dna, dnaContract){
 }
 
 async function createProcessedBuyingOperation(ctx, dna, dnaContract){
-  const dataContract = new DataContract()
-  const processedDna = await dataContract.readData(ctx, dnaContract.accepted_processed_data.processed_data_id)
+  const processRequestContract = new ProcessRequestContract()
+  const processRequest = await processRequestContract.readProcessRequest(ctx, dnaContract.accepted_processed_data.process_request_id)
   return {
     type: 'buy_processed_data',
     userAddress: ctx.user.address,
@@ -142,7 +150,7 @@ async function createProcessedBuyingOperation(ctx, dna, dnaContract){
         address: dna.uploader,
         value: dnaContract.processed_data_price*dnaContract.payment_distribution.collector*1e-4 // paymentDistribution is converted to percentage 
     },{
-      address: processedDna.uploader,
+      address: processRequest.processor_id,
       value: dnaContract.processed_data_price*dnaContract.payment_distribution.processor*1e-4 // paymentDistribution is converted to percentage  
     }]  // TODO: ADD VALIDATOR AND CURATORS
   }

@@ -118,7 +118,7 @@ function handleDataAttributes(ctx, id, type, dataAttributes) {
     } 
     else if(newAttributes.type == 'processed_data') {
         newAttributes.dna_contract = parsedAttributes.dna_contract
-        newAttributes.processed_request = parsedAttributes.processed_request
+        newAttributes.processed_request_id = parsedAttributes.processed_request_id
     }
     return newAttributes;
 }
