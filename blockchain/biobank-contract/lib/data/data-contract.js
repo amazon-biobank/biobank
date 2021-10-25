@@ -88,8 +88,8 @@ class DataContract extends ActiveContract {
         let dataKey = Data.makeKey([dataId]);
         let data = await ctx.dataList.getData(dataKey);
 
-        if(! data.processed_requests.includes(processRequestId)){
-            data.processed_requests.push(processRequestId)
+        if(! data.process_requests.includes(processRequestId)){
+            data.process_requests.push(processRequestId)
         }
         await ctx.dataList.updateState(data);
         return data
@@ -114,11 +114,11 @@ function handleDataAttributes(ctx, id, type, dataAttributes) {
     newAttributes.uploader = ctx.user.address
     if(newAttributes.type == 'raw_data'){
         newAttributes.collector = ctx.user.address
-        newAttributes.processed_requests = []
+        newAttributes.process_requests = []
     } 
     else if(newAttributes.type == 'processed_data') {
         newAttributes.dna_contract = parsedAttributes.dna_contract
-        newAttributes.processed_request_id = parsedAttributes.processed_request_id
+        newAttributes.process_request_id = parsedAttributes.process_request_id
     }
     return newAttributes;
 }

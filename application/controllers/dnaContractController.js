@@ -1,4 +1,5 @@
 const DnaContractContract = require('../contract/dnaContractContract');
+const DataContract = require('../contract/dataContract');
 const BiocoinContract = require('../contract/biocoinContract');
 const ControllerUtil = require('./ControllerUtil.js');
 const { v4: uuidv4 } = require('uuid');
@@ -49,6 +50,17 @@ exports.execute = async function(req, res, next){
 
   res.redirect("/operation/" + operation.id)
 };
+
+exports.endorse = async function(req, res, next) {
+  const dnaContractContract = new DnaContractContract();
+  const dataContract = new DataContract()
+
+  // const dnaContract = await dnaContractContract.endorseProcessRequestToRawData(req.body.process_request_id)
+  // await dataContract.addDnaContractInId(dnaContract.accepted_processed_data.processed_data_id, dnaContract.id)
+  const dnaContract = {id: "92a110ef73aca7d4e23b8e26322981c9e94677a3e16a8f42a36a368d8569d9c5"}
+
+  res.redirect("/dnaContract/" + dnaContract.id)
+}
 
 
 
