@@ -1,6 +1,6 @@
 {
   "walletPath":  ".fabric-vscode/environments/testNetwork/wallets/Org1",
-  "identityName": "vinicius",
+  "identityName": "Org1 Admin",
   "connectionProfilePath":".fabric-vscode/v2/environments/1 Org Local Fabric/gateways/Org1 Gateway.json",
 
   "__walletPath": "biobank/application/fabric-details/wallet",
