@@ -51,10 +51,7 @@ exports.createTransfer = async function (req, res, next){
 try {
     await biocoinContract.transferBiocoins(transferData.senderAddress, transferData.receiverAddress, (transferData.amount)*1e9)
  } catch (e){
-    let message = (e.responses[0].response.message)
-    message = message.split(":")    
-    console.log(message[message.length-1])
-    message = message[message.length-1]
+  let message = getMessageFromError(e)
     res.render('account/transfer/transfer-error', {message} )
     return
   }
@@ -69,6 +66,14 @@ function formatAccount(account){
     return token
   })
   return account
+}
+
+function getMessageFromError(error){
+  let message = (error.responses[0].response.message)
+  message = message.split(":")    
+  console.log(message[message.length-1])
+  message = message[message.length-1]
+  return message
 }
 
 
