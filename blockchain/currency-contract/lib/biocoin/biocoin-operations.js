@@ -1,3 +1,6 @@
+const BalanceInsuficient = require('../errors/balanceInsuficient.js')
+const InvalidTransaction = require('../errors/invalidTransaction.js')
+const Unauthorized = require('../errors/unauthorized.js')
 const Dinero = require('./../dinero.js')
 
 class BiocoinOperations {
@@ -32,13 +35,13 @@ class BiocoinOperations {
 
     static validateTransference(ctx, senderAccount, amount){
         if(this.verifySenderAccount(ctx, senderAccount) == false){
-            throw new Error('unauthorized')
+            throw new Unauthorized();
         }
         if(amount<0){
-            throw new Error('invalid Transaction')
+            throw new InvalidTransaction();
         }
         if(senderAccount.balance < amount){
-            throw new Error('balance Insuficient')
+            throw new BalanceInsuficient();
         }
         return true
     }
@@ -54,13 +57,13 @@ class BiocoinOperations {
 
 function verify(account, valueDinero){
     if(account.balance < 0 ){
-        throw new Error('insuficient balance')
+        throw new BalanceInsuficient();
     } 
     if(isNaN(account.balance)){
-        throw new Error('invalid transference')
+        throw new InvalidTransaction();
     }
     if(valueDinero.isNegative()){
-        throw new Error('Negative Values are not allowed')
+        throw new InvalidTransaction();
     }
     return
 }

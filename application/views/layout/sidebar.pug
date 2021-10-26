@@ -52,7 +52,20 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
         a.collapse-item(href='/history/data') Data History
 
   hr.sidebar-divider.d-none.d-md-block
+  //Nav Item - Account
+  li.nav-item
+    a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseThree' aria-expanded='true' aria-controls='collapseOne')
+      i.fas.fa-upload
+      span My Account
+    #collapseThree.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
+      .bg-white.py-2.collapse-inner.rounded
+        a.collapse-item(href='/account/show-my-account') Profile
+        a.collapse-item(href='/account/transfer') Transfer
+  // Sidebar Toggler (Sidebar)
   .text-center.d-none.d-md-inline
     button#sidebarToggle.rounded-circle.border-0
+ 
 
-
+  
+   
+  
