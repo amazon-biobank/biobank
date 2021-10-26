@@ -59,6 +59,16 @@ class ControllerUtil {
     const data = hash.update(payload, 'utf-8');
     return data.digest('hex') 
   }
+
+  static getMessageFromError(error){
+    let message = (error.responses[0].response.message)
+    message = message.split(":")    
+    console.log(message[message.length-1])
+    message = message[message.length-1]
+    return message
+  }
+  
 }
+
 
 module.exports = ControllerUtil;
