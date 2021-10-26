@@ -1,0 +1,36 @@
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .container.mt-4
+    h1 Solicitação de tranferência
+    .card.mb-4
+      .card-header Dados da tranferência
+      .card-body
+        form(action = '/account/transfer' method = 'post')
+          .form-row
+            .form-group.col-md-12
+              label.mb-1(for='name') Nome
+              input#name.form-control(disabled type='text' value= account.name)
+          .form-row              
+            .form-group.col-md-12
+              label.mb-1(for='address') Endereço
+              input#address.form-control(readonly name='senderAddress' type='text'  value=account.address)
+          .form-row
+            .form-group.col-md-12
+              label.mb-1(for='balance') Saldo
+              input#balance.form-control(disabled type='text' value= account.balance)
+          .form-row 
+            .form-group.col-md-12 
+              label.mb-1(for='address-reciever') Endereço de destino
+              input#address-reciever.form-control(name = 'receiverAddress' type='text ')
+          .form-row 
+            .form-group.col-md-12 
+              label.mb-1(for='amount') Valor da transferência 
+              input#amount.form-control.bio-money-input(name = 'amount' type = 'text')
+            hr
+            .float-right.mb-4.inline-block
+            input.btn.btn-primary.btn-user.btn-lg.px-10(type='submit' value = 'Transferir')
+
+block append scripts

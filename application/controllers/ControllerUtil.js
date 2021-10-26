@@ -73,6 +73,15 @@ class ControllerUtil {
   static parsePercentage(value) {
     return parseFloat(value)*100
   }
+  static getMessageFromError(error){
+    let message = (error.responses[0].response.message)
+    message = message.split(":")    
+    console.log(message[message.length-1])
+    message = message[message.length-1]
+    return message
+  }
+  
 }
+
 
 module.exports = ControllerUtil;
