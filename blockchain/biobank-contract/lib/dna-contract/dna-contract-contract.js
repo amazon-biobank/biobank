@@ -71,9 +71,7 @@ class DnaContractContract extends ActiveContract {
         const operationId = JSON.parse(options).operationId;
         
         const dnaContract = await ctx.dnaContractList.getDnaContract(contractId);
-        let dna = await DnaContractUtils.getData(ctx, dnaContract.dna_id)
-
-        const operation = DnaContractUtils.createBuyingOperation(ctx, dna, dnaContract, operationId, operationType)
+        const operation = DnaContractUtils.createBuyingOperation(ctx, dnaContract, operationId, operationType)
         return operation
     }
 
@@ -84,6 +82,7 @@ class DnaContractContract extends ActiveContract {
         const payment = await this.queryCurrencyChannel(ctx, args)
         
         DnaContractUtils.checkPaymentAndOperation(ctx, payment, operation)
+
         let dna = await DnaContractUtils.getData(ctx, operation.details.data_id)
         await DnaContractUtils.addOwnersInData(ctx, dna)
 

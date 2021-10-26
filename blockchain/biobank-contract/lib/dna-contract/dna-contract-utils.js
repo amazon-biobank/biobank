@@ -54,8 +54,9 @@ class DnaContractUtils {
     return true
   }
 
-  static async createBuyingOperation(ctx, dna, dnaContract, operationId, operationType){
+  static async createBuyingOperation(ctx, dnaContract, operationId, operationType){
     let operation
+    const dna = await DnaContractUtils.getData(ctx, dnaContract.dna_id)
     if(operationType == 'buy_raw_data'){ 
       operation = createRawBuyingOperation(ctx, dna, dnaContract)
     } else if(operationType == 'buy_processed_data'){
@@ -139,7 +140,7 @@ async function createProcessedBuyingOperation(ctx, dna, dnaContract){
     userAddress: ctx.user.address,
     created_at: new Date().toDateString(),
     details: {
-        data_id: dna.id,
+        data_id: dnaContract.accepted_processed_data.processed_data_id,
         contractId: dnaContract.id
     },
     input: [{
