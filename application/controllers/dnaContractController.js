@@ -2,7 +2,6 @@ const DnaContractContract = require('../contract/dnaContractContract');
 const DataContract = require('../contract/dataContract');
 const BiocoinContract = require('../contract/biocoinContract');
 const ControllerUtil = require('./ControllerUtil.js');
-const { v4: uuidv4 } = require('uuid');
 const CONFIG = require('../config.json');
 
 exports.new = async function(req, res, next){
@@ -13,7 +12,6 @@ exports.new = async function(req, res, next){
 
 exports.create = async function(req, res, next){
   let dnaContract = createDnaContractFromRequest(req);
-  console.log(dnaContract)
 
   const dnaContractContract = new DnaContractContract();
   await dnaContractContract.createDnaContract(dnaContract)
@@ -67,8 +65,6 @@ exports.endorse = async function(req, res, next) {
 
   req.flash('success', 'DNA Endorsement has succeeded');
   res.redirect("/dnaContract/" + dnaContract.id)
-  // res.redirect("/dnaContract/92a110ef73aca7d4e23b8e26322981c9e94677a3e16a8f42a36a368d8569d9c5")
-
 }
 
 

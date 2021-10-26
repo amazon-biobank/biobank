@@ -43,7 +43,6 @@ exports.newProcessedData = async function(req, res, next){
 
 exports.createProcessedData = async function(req, res, next){
   const dataContract = new DataContract();
-  const dnaContractContract = new DnaContractContract()
 
   let processedData = createProcessedDataFromRequest(req);
   await dataContract.createProcessedData(processedData);
@@ -99,6 +98,7 @@ function createRawDataFromRequest(req){
     created_at: new Date().toDateString()
   }
 }
+
 function removeTracker(magnet_link){
   const separator = magnet_link.split('&');
   return separator[0];
@@ -126,18 +126,6 @@ async function updateProcessRequest(processRequestId, processedData){
   processRequest.processed_data_id = processedData.id;
   await processRequestContract.updateProcessRequest(processRequest);
   return processRequest
-}
-
-async function updateRawData(processRequest){
-  const dataContract = new DataContract();
-  let rawData = await dataContract.readData(processRequest.raw_data_id);
-  rawData.status = 'processed';
-  await dataContract.updateData(rawData);
-  return rawData
-}
-
-async function updateDnaContract(processRequest){
-  
 }
 
 async function getDnaContract(dnaContractId){

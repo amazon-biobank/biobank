@@ -14,14 +14,4 @@ class InternalDataContract extends DataContract {
   }
 }
 
-// function handleOperationAttributes(ctx, id, operationAttributes) {
-//   const { type, userAddress, created_at, details, input, output } = JSON.parse(operationAttributes);
-//   details.transaction_id = ctx.stub.getTxID()
-//   const newOperationAttributes = {
-//       id, type, userAddress, created_at, details, input, output
-//   }
-//   return newOperationAttributes;
-// }
-
-
 module.exports = InternalDataContract;

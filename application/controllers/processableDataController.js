@@ -20,7 +20,6 @@ exports.index = async function(req, res, next){
     }
   })
 
-  console.log(formattedDatas)
   res.render('processableData/index', { datas: formattedDatas  });
 };
 
