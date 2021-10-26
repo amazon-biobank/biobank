@@ -49,10 +49,7 @@ exports.createProcessedData = async function(req, res, next){
   await dataContract.createProcessedData(processedData);
   
   if(req.body.process_request_id) {
-    const processRequest = await updateProcessRequest(req.body.process_request_id, processedData)
-    // await dataContract.addProcessRequest(processRequest.raw_data_id, req.body.process_request_id)
-    // const dnaContract = await dnaContractContract.endorseProcessRequestToRawData(req.body.process_request_id)
-    // await dataContract.addDnaContractInId(processedData.id, dnaContract.id)
+    await updateProcessRequest(req.body.process_request_id, processedData)
   }
   res.redirect("/data/" + processedData.id)
 };

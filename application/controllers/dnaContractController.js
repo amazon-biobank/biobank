@@ -31,7 +31,7 @@ exports.show = async function(req, res, next){
     payment.type = ControllerUtil.formatRoyaltyPaymentType(payment.type)
     return payment
   })
-  res.render("dnaContract/show", { dnaContract })
+  res.render("dnaContract/show", { dnaContract, flash: req.flash() })
 };
 
 exports.execute = async function(req, res, next){
@@ -54,12 +54,21 @@ exports.execute = async function(req, res, next){
 exports.endorse = async function(req, res, next) {
   const dnaContractContract = new DnaContractContract();
   const dataContract = new DataContract()
+  let dnaContract
 
-  // const dnaContract = await dnaContractContract.endorseProcessRequestToRawData(req.body.process_request_id)
-  // await dataContract.addDnaContractInId(dnaContract.accepted_processed_data.processed_data_id, dnaContract.id)
-  const dnaContract = {id: "92a110ef73aca7d4e23b8e26322981c9e94677a3e16a8f42a36a368d8569d9c5"}
+  try{
+    dnaContract = await dnaContractContract.endorseProcessRequestToRawData(req.body.process_request_id)
+    await dataContract.addDnaContractInId(dnaContract.accepted_processed_data.processed_data_id, dnaContract.id)
+  } catch(e){
+    req.flash('error', JSON.stringify(e.responses[0].response.message))
+    res.redirect('back')
+    return
+  }
 
+  req.flash('success', 'DNA Endorsement has succeeded');
   res.redirect("/dnaContract/" + dnaContract.id)
+  // res.redirect("/dnaContract/92a110ef73aca7d4e23b8e26322981c9e94677a3e16a8f42a36a368d8569d9c5")
+
 }
 
 

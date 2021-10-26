@@ -4,6 +4,18 @@ block append header
 
 block content
   .container.mt-4
+    //- if(flash)
+    //-   if(flash.success)
+    //-     .alert.alert-primary.alert-dismissible.fade.show(role=alert)
+    //-       = flash.success
+    //-       button.close(type="button" data-dismiss="alert" aria-label="Close")
+    //-         span(aria-hidden="true") &times;
+    //-   if(flash.error)
+    //-     .alert.alert-danger.alert-dismissible.fade.show(role=alert)
+    //-       = flash.error
+    //-       button.close(type="button" data-dismiss="alert" aria-label="Close")
+    //-         span(aria-hidden="true") &times;
+
     h1 Smart Contract Details 
     .card.mb-4
       .card-header.card-header.d-flex.justify-content-between.align-items-center Smart Contract

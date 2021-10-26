@@ -21,6 +21,19 @@ body
     #content-wrapper.d-flex.flex-column
       #content
         include navbar.pug
+        .container.mt-4
+          if(messages)
+            if(messages.success)
+              .alert.alert-primary.alert-dismissible.fade.show(role=alert)
+                = messages.success
+                button.close(type="button" data-dismiss="alert" aria-label="Close")
+                  span(aria-hidden="true") &times;
+            if(messages.error)
+              .alert.alert-danger.alert-dismissible.fade.show(role=alert)
+                = messages.error
+                button.close(type="button" data-dismiss="alert" aria-label="Close")
+                  span(aria-hidden="true") &times;
+
         block content
 
   block scripts
