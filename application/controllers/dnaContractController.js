@@ -15,6 +15,7 @@ exports.create = async function(req, res, next){
 
   const dnaContractContract = new DnaContractContract();
   await dnaContractContract.createDnaContract(dnaContract)
+  req.flash('success', "DNA Contract was created with sucess")
   res.redirect("/dnaContract/" + dnaContract.id)
 };
 
@@ -46,6 +47,7 @@ exports.execute = async function(req, res, next){
   await biocoinContract.transferOperationBiocoins(operation.id)
   await dnaContractContract.executeOperation(operation.id)
 
+  req.flash('success', "DNA was bought with sucess")
   res.redirect("/operation/" + operation.id)
 };
 

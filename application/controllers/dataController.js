@@ -33,6 +33,7 @@ exports.createRawData = async function(req, res, next){
   let rawData = createRawDataFromRequest(req);
   const dataContract = new DataContract();
   await dataContract.createRawData(rawData)
+  req.flash('success', "Dna created with sucess")
   res.redirect("/data/" + rawData.id)
 };
 
@@ -50,6 +51,7 @@ exports.createProcessedData = async function(req, res, next){
   if(req.body.process_request_id) {
     await updateProcessRequest(req.body.process_request_id, processedData)
   }
+  req.flash('success', "DNA created with sucess")
   res.redirect("/data/" + processedData.id)
 };
 

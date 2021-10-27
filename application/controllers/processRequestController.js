@@ -36,6 +36,7 @@ exports.create = async function(req, res, next){
   await processRequestContract.createProcessRequest(processRequest)
   await dataContract.addProcessRequest(processRequest.raw_data_id, processRequest.id)
 
+  req.flash('success', "Process Request created with sucess")
   res.redirect("/process-request/" + processRequest.id)
 };
 
