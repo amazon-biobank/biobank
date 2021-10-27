@@ -22,15 +22,12 @@ class BiocoinOperations {
         return account
     }
 
-    static async transferBiocoins(ctx, senderAddress, receiverAddress, amount){
-        let senderAccount = await ctx.accountList.getAccount(senderAddress);
+    static async transferBiocoins(ctx, senderAccount, receiverAccount, amount){
         this.validateTransference(ctx, senderAccount, amount)
 
-        senderAccount = await BiocoinOperations.withdraw_biocoins(ctx, senderAccount, amount)
-        let receiverAccount = await this.getReceiverAccount(ctx, senderAddress, receiverAddress, senderAccount)
-        receiverAccount = await BiocoinOperations.deposit_biocoins(ctx, receiverAccount, amount)
-
-        return { senderAccount, receiverAccount }
+        const newSenderAccount = await BiocoinOperations.withdraw_biocoins(ctx, senderAccount, amount)
+        const newReceiverAccount = await BiocoinOperations.deposit_biocoins(ctx, receiverAccount, amount)
+        return { senderAccount: newSenderAccount, receiverAccount: newReceiverAccount }
     }
 
     static validateTransference(ctx, senderAccount, amount){

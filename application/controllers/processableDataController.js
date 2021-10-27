@@ -4,15 +4,17 @@ const ControllerUtil = require('./ControllerUtil.js');
 exports.index = async function(req, res, next){
   const dataContract = new DataContract();
   const datas = await dataContract.getAllRawData();
+  const filteredDatas = datas.filter((data) => {return data.status=='unprocessed'})
 
-  const formattedDatas = datas.map(function(data){
+  const formattedDatas = filteredDatas.map(function(data){
     return {
       id: data.id,
-      title: data.title,
-      description: data.description,
+      metadata:{
+        title: data.metadata.title,
+        description: data.description
+      },
       collector: data.collector,
       created_at: ControllerUtil.formatDate(new Date(data.created_at)),
-      process_reward: data.process_reward,
       status: ControllerUtil.formatDataStatus(data.status),
       price: data.price
     }

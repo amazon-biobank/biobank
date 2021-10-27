@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "connect-flash": "^0.1.1",
     "dinero.js": "^1.8.1",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",

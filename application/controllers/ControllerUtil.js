@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const magnet = require('magnet-uri');
 const crypto = require('crypto')
-const Dinero = require('dinero.js')
+const Dinero = require('dinero.js');
 
 class ControllerUtil {
   static formatDate (date) {
@@ -30,7 +30,8 @@ class ControllerUtil {
   }
 
   static formatOperationType (type) {
-    if (type == "buy") return "Buy"
+    if (type == "buy_raw_data") return "Buy Raw Data"
+    if (type == "buy_processed_data") return "Buy Processed Data"
     if (type == "upload") return "Upload"
     if (type == "process") return "Processed"
     if (type == "request_process") return "Process Request"
@@ -39,6 +40,15 @@ class ControllerUtil {
   static formatProcessRequestStatus (type) {
     if (type == "not_processed") return "Not Processed"
     if (type == "processed") return "Processed"
+  }
+
+  static formatRoyaltyPaymentType (type) {
+    if (type == "no_royalties") return "No Royalties"
+    if (type == "fixed_one_time_fee") return "Fixed One Time Fee "
+    if (type == "proportional_one_time_fee") return "Proportional One Time Fee"
+    if (type == "fixed_periodic_fee") return "Fixed Periodic Fee"
+    if (type == "proportional_periodic_fee") return "Proportional Periodic Fee"
+    if (type == "profit_proportional_periodic_fee") return "Profit Proportional Periodic Fee"
   }
 
   static formatMoney(value){
@@ -60,6 +70,9 @@ class ControllerUtil {
     return data.digest('hex') 
   }
 
+  static parsePercentage(value) {
+    return parseFloat(value)*100
+  }
   static getMessageFromError(error){
     let message = (error.responses[0].response.message)
     message = message.split(":")    

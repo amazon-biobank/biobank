@@ -12,21 +12,24 @@ form
     .form-group.col-md-6
       label.mb-1(for='id') Data Id
       input#id.form-control(disabled type='text'  value=data.id)
+  .card
+    .card-header Metadata
+    .card-body
+      .form-group
+        label.mb-1(for='title') Title
+        input#title.form-control(disabled type='text' value= data.metadata.title)
+      .form-group
+        label.mb-1(for='description') Description
+        input#description.form-control(disabled type='text' value= data.metadata.description)
+      .form-group
+        label.mb-1(for='magnet_link') Data's Magnetic Link
+        input#owners.form-control(disabled type='text' value= data.metadata.magnet_link)
   .form-group
-    label.mb-1(for='title') Title
-    input#title.form-control(disabled type='text' value= data.title)
-  .form-group
-    label.mb-1(for='description') Description
-    input#description.form-control(disabled type='text' value= data.description)
-  .form-group
-    label.mb-1(for='collector') Collector
-    input#collector.form-control(disabled type='text' value= data.collector)
+    label.mb-1(for='uploader') Uploader
+    input#uploader.form-control(disabled type='text' value= data.uploader)
   .form-group
     label.mb-1(for='owners') Owners
     input#owners.form-control(disabled type='text' value= data.owners)
-  .form-group
-    label.mb-1(for='magnet_link') Data's Magnetic Link
-    input#owners.form-control(disabled type='text' value= data.magnet_link)
   .form-row
     .form-group.col-md-6
       label.mb-1(for='created_at') Created At

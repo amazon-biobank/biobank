@@ -1,0 +1,20 @@
+{
+  "dnaContract": {
+    "collector": {
+      "min": 0,
+      "max": 70
+    },
+    "processor": {
+      "min": 10,
+      "max": 70
+    },
+    "validators": {
+      "min": 10,
+      "max": 70
+    },
+    "curator": {
+      "min": 10,
+      "max": 70
+    }
+  }
+}

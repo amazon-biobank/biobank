@@ -1,11 +1,13 @@
 const DnaContractContract = require('../contract/dnaContractContract');
+const DataContract = require('../contract/dataContract');
 const BiocoinContract = require('../contract/biocoinContract');
 const ControllerUtil = require('./ControllerUtil.js');
-const { v4: uuidv4 } = require('uuid');
+const CONFIG = require('../config.json');
 
 exports.new = async function(req, res, next){
   const dnaId = req.params.dnaId
-  res.render('dnaContract/new', {dnaId });
+  const contractParameters = CONFIG.dnaContract
+  res.render('dnaContract/new', { dnaId, contractParameters });
 };
 
 exports.create = async function(req, res, next){
@@ -21,8 +23,13 @@ exports.show = async function(req, res, next){
   const dnaContract = await dnaContractContract.readDnaContract(req.params.dnaContract)
 
   dnaContract.created_at = ControllerUtil.formatDate(new Date(dnaContract.created_at))
-  dnaContract.parameters.price = ControllerUtil.formatMoney(dnaContract.parameters.price)
-  res.render("dnaContract/show", { dnaContract })
+  dnaContract.raw_data_price = ControllerUtil.formatMoney(dnaContract.raw_data_price)
+  dnaContract.processed_data_price = ControllerUtil.formatMoney(dnaContract.processed_data_price)
+  dnaContract.royalty_payments = dnaContract.royalty_payments.map((payment) => {
+    payment.type = ControllerUtil.formatRoyaltyPaymentType(payment.type)
+    return payment
+  })
+  res.render("dnaContract/show", { dnaContract, flash: req.flash() })
 };
 
 exports.execute = async function(req, res, next){
@@ -42,14 +49,45 @@ exports.execute = async function(req, res, next){
   res.redirect("/operation/" + operation.id)
 };
 
+exports.endorse = async function(req, res, next) {
+  const dnaContractContract = new DnaContractContract();
+  const dataContract = new DataContract()
+  let dnaContract
+
+  try{
+    dnaContract = await dnaContractContract.endorseProcessRequestToRawData(req.body.process_request_id)
+    await dataContract.addDnaContractInId(dnaContract.accepted_processed_data.processed_data_id, dnaContract.id)
+  } catch(e){
+    req.flash('error', JSON.stringify(e.responses[0].response.message))
+    res.redirect('back')
+    return
+  }
+
+  req.flash('success', 'DNA Endorsement has succeeded');
+  res.redirect("/dnaContract/" + dnaContract.id)
+}
+
 
 
 function createDnaContractFromRequest(req){
-  price = req.body.price*1e9  // converting biocoins to Sys
+  payment_distribution = parsePaymentDistributionPercentage(req.body.payment_distribution)
+  raw_data_price = req.body.raw_data_price*1e9  // converting biocoins to Sys
+  processed_data_price = req.body.processed_data_price*1e9  // converting biocoins to Sys
+
   return {
-    dnaId: req.body.dnaId,
-    parameters: { price },
     id: ControllerUtil.getHash(req.body.dnaId),
+    dna_id: req.body.dnaId,
+    raw_data_price,
+    processed_data_price,
+    payment_distribution: req.body.payment_distribution,
+    royalty_payments: req.body.royalty_payments,
     created_at: new Date().toDateString()
   }
+}
+
+function parsePaymentDistributionPercentage(payment_distribution){
+  Object.keys(payment_distribution).forEach(function(key) {
+    payment_distribution[key] = ControllerUtil.parsePercentage(payment_distribution[key])
+  })
+  return payment_distribution
 }

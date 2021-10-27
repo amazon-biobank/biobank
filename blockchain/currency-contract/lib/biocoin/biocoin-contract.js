@@ -18,7 +18,9 @@ class BiocoinContract extends ActiveContract {
     }
 
     async transferBiocoins(ctx, senderAddress, receiverAddress, amount){
-        return await BiocoinOperations.transferBiocoins(ctx, senderAddress, receiverAddress, amount)
+        const senderAccount = await ctx.accountList.getAccount(senderAddress);
+        const receiverAccount = await BiocoinOperations.getReceiverAccount(ctx, senderAddress, receiverAddress, senderAccount)
+        return await BiocoinOperations.transferBiocoins(ctx, senderAccount, receiverAccount, amount)
     }
 
     async transferOperationBiocoins(ctx, operationId){
@@ -27,8 +29,16 @@ class BiocoinContract extends ActiveContract {
             operationId
         ]
         const operation = await this.queryBiobankChannel(ctx, args)
-        await this.transferBiocoins(ctx, operation["input"][0].address, operation["output"][0].address, operation["output"][0].value)
-        // TODO: SUPPORT MULTIPLE INPUT/OUTPUT OPERATIONS - VALIDATION INPUT.VALUE == OUTPUT.VALUE
+
+        const senderAddress = operation["input"][0].address
+        let senderAccount = await ctx.accountList.getAccount(senderAddress);
+        
+        for (const output of operation["output"]){
+            const receiverAccount = await BiocoinOperations.getReceiverAccount(ctx, senderAddress, output.address, senderAccount)
+            const accounts = await BiocoinOperations.transferBiocoins(ctx, senderAccount, receiverAccount, output.value)
+            senderAccount = accounts.senderAccount
+        }
+        // TODO: SUPPORT MULTIPLE INPUT OPERATIONS - VALIDATION INPUT.VALUE == OUTPUT.VALUE
         return await createPaymentReceipt(ctx, operation)
     }
 }

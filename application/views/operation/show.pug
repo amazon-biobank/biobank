@@ -26,18 +26,17 @@ block content
           .card
             .card-header Details
             .card-body
-              if (operation.type == 'Compra')
-                .form-row
-                  .form-group.col-md-6
-                    label.mb-1(for='data_id') Data ID
-                    input#data_id.form-control(disabled type='text'  value=operation.details.data_id)
-                  .form-group.col-md-6
-                    label.mb-1(for='contractId') Contract Id
-                    input#contractId.form-control(disabled type='text'  value=operation.details.contractId)
-                .form-row
-                  .form-group.col-md-6
-                    label.mb-1(for='transaction-id') Transaction Id
-                    input#transaction-id.form-control(disabled type='text' style='font-size:small' value=operation.details.transaction_id)
+              .form-row
+                .form-group.col-md-6
+                  label.mb-1(for='data_id') Data ID
+                  input#data_id.form-control(disabled type='text'  value=operation.details.data_id)
+                .form-group.col-md-6
+                  label.mb-1(for='contractId') Contract Id
+                  input#contractId.form-control(disabled type='text'  value=operation.details.contractId)
+              .form-row
+                .form-group.col-md-6
+                  label.mb-1(for='transaction-id') Transaction Id
+                  input#transaction-id.form-control(disabled type='text' style='font-size:small' value=operation.details.transaction_id)
           .card
             .card-header Origin
             .card-body

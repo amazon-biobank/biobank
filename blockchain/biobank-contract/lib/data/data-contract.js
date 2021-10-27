@@ -4,6 +4,8 @@ const Data = require('./data.js');
 const DataList = require('./data-list.js');
 const { ActiveContext, ActiveContract } = require('./../active-contract');
 const AssetIdExistsError = require('../erros/asset-id-exists-error.js');
+const _ = require('lodash');
+
 
 class DataContext extends ActiveContext {
     constructor() {
@@ -45,6 +47,15 @@ class DataContract extends ActiveContract {
         return data
     }
 
+    async addDnaContractInId(ctx, dataId, dnaContractId){
+        let dataKey = Data.makeKey([dataId]);
+        let data = await ctx.dataList.getData(dataKey);
+
+        data.dna_contract = dnaContractId
+        await ctx.dataList.updateState(data);
+        return data
+    }
+
     async readData(ctx, dataId) {
         let dataKey = Data.makeKey([dataId]);
         let data = await ctx.dataList.getData(dataKey);
@@ -72,19 +83,44 @@ class DataContract extends ActiveContract {
         let asset = await ctx.dataList.getData(dataId);
         return asset != undefined;
     }
+
+    async addProcessRequest(ctx, dataId, processRequestId){
+        let dataKey = Data.makeKey([dataId]);
+        let data = await ctx.dataList.getData(dataKey);
+
+        if(! data.process_requests.includes(processRequestId)){
+            data.process_requests.push(processRequestId)
+        }
+        await ctx.dataList.updateState(data);
+        return data
+    }
 }
 
 function handleDataAttributes(ctx, id, type, dataAttributes) {
-    const {
-        title, magnet_link, process_request_id, description,  status, created_at
-    } = JSON.parse(dataAttributes);
-    const collector = ctx.user.address
-    const owners = [ ctx.user.address ]
-    let newDataAttributes = {
-        type, id, title, magnet_link, description, collector, process_request_id, owners, status, created_at
+    const parsedAttributes = JSON.parse(dataAttributes)
+    let newAttributes = _.pick( 
+        parsedAttributes, 
+        [ 
+          'status', 
+          'created_at', 
+          'metadata.title', 
+          'metadata.magnet_link', 
+          'metadata.description'
+        ])
+    
+    newAttributes.owners = [ctx.user.address]
+    newAttributes.type = type
+    newAttributes.id = id
+    newAttributes.uploader = ctx.user.address
+    if(newAttributes.type == 'raw_data'){
+        newAttributes.collector = ctx.user.address
+        newAttributes.process_requests = []
+    } 
+    else if(newAttributes.type == 'processed_data') {
+        newAttributes.dna_contract = parsedAttributes.dna_contract
+        newAttributes.process_request_id = parsedAttributes.process_request_id
     }
-    if (type == 'raw_data') { delete  newDataAttributes.process_request_id };
-    return newDataAttributes;
+    return newAttributes;
 }
 
 module.exports = DataContract;

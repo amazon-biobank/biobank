@@ -14,14 +14,14 @@ block content
               p.mb-4 
             form.user(action='/data/raw-data-create' method='post')
               .form-group
-                label(for='name') Name
-                input#name.form-control.form-control-user(name='name' type='text')
+                label(for='title') Name
+                input#title.form-control.form-control-user(name='metadata[title]' type='text')
               .form-group
                 label(for='description') Description
-                textarea#exampleFormControlTextarea1.form-control(name='description' rows='3' type = 'text')
+                textarea#exampleFormControlTextarea1.form-control(name='metadata[description]' rows='3' type = 'text')
               .form-group
                 label(for='magnet_link') Magnetic Link
-                input#organization.form-control.form-control-user(name='magnet_link' type='text')
+                input#organization.form-control.form-control-user(name='metadata[magnet_link]' type='text')
               hr
               .float-right.mb-4.inline-block
                 a.btn.btn-danger.btn-user.mr-3.px-5(href='/data')
