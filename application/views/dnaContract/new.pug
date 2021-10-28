@@ -28,35 +28,35 @@ block content
                   a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" 
                     data-content="Price that the processed DNA is sold. This value will be transfered acording to the 'payment distribution'")
                   input.form-control.bio-money-input(name='processed_data_price' type='text')
-              .card.mb-3
-                .card-header Payment Distribution (in percentage)
-                .card-body
-                  .form-row
-                    .form-group.col-md-3
-                      label.mb-1(for='price') Collector ( #{contractParameters.collector.min} - #{contractParameters.collector.max} )
-                      a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="You, who inserts the raw DNA.")
-                      input#price.form-control.percentage(name='payment_distribution[collector]' type='text')
-                    .form-group.col-md-3
-                      label.mb-1(for='price') Processor ( #{contractParameters.processor.min} - #{contractParameters.processor.max} )
-                      a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who process the DNA")
-                      input#price.form-control.percentage(name='payment_distribution[processor]' type='text')
-                    .form-group.col-md-3 
-                      label.mb-1(for='price') Validators ( #{contractParameters.validators.min} - #{contractParameters.validators.max} )
-                      a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Those who validate the processor work (0-2 validators). The reward will be distributed equaly between then")
-                      input#price.form-control.percentage(name='payment_distribution[validators]' type='text' readonly value=0)
-                    .form-group.col-md-3
-                      label.mb-1(for='price') Curator ( #{contractParameters.curator.min} - #{contractParameters.curator.max} )
-                      a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who certificate that the DNA is legitim and correct")
-                      input#price.form-control.percentage(name='payment_distribution[curator]' type='text' readonly value=0)
-              .card
-                .card-header Royalty Payments
-                .card-body
-                  each index in [0, 1, 2, 3, 4]
-                    include components/royalty-payment.pug
+
+              hr.mt-4
+              h6.mb-3  Payment Distribution (in percentage)
+              .form-row
+                .form-group.col-md-3
+                  label.mb-1(for='price') Collector ( #{contractParameters.collector.min} - #{contractParameters.collector.max} )
+                  a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="You, who inserts the raw DNA.")
+                  input#price.form-control.percentage(name='payment_distribution[collector]' type='text')
+                .form-group.col-md-3
+                  label.mb-1(for='price') Processor ( #{contractParameters.processor.min} - #{contractParameters.processor.max} )
+                  a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who process the DNA")
+                  input#price.form-control.percentage(name='payment_distribution[processor]' type='text')
+                .form-group.col-md-3 
+                  label.mb-1(for='price') Validators ( #{contractParameters.validators.min} - #{contractParameters.validators.max} )
+                  a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Those who validate the processor work (0-2 validators). The reward will be distributed equaly between then")
+                  input#price.form-control.percentage(name='payment_distribution[validators]' type='text' readonly value=0)
+                .form-group.col-md-3
+                  label.mb-1(for='price') Curator ( #{contractParameters.curator.min} - #{contractParameters.curator.max} )
+                  a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who certificate that the DNA is legitim and correct")
+                  input#price.form-control.percentage(name='payment_distribution[curator]' type='text' readonly value=0)
+
+              hr.mt-4
+              h6.mb-3  Royalty Payments
+              each index in [0, 1, 2, 3, 4]
+                include components/royalty-payment.pug
 
               hr
               .float-right.mb-4.inline-block
-                a.btn.btn-danger.btn-user.mr-3.px-5(href='/dnaContract')
+                a.btn.btn-danger.btn-user.mr-3.px-5(href='/')
                   | Cancel
                 input.btn.btn-primary.btn-user.px-5(type='submit' value='Create')
 
