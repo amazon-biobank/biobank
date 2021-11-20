@@ -1,26 +1,30 @@
 const crypto = require('crypto')
-
+const path = require('path');
+const fs = require('fs')
 
 class TestPaymentRedeemUtil {
-    static createPaymentCommitment(gateway) {
+    static createPaymentCommitment(walletPath) {
+      const payerIdentityName = 'user.id'
       var commitment = {
         "data": {
           "payment_intention_id": "123",
-          "receiver_address": "dbec875335b9be18a34e450ebb16b959c967a4b4c7ee78436bbdfbfa4326dc93",
-          "payer_address": "c6595fc7cbbab614947a6a1e1a9fe11304f36aa866267b54ec350a0f9c2f215f",
+          "receiver_address": "951ed57d405cd401d9cf912c0404b70015ac36c9c656aa632d8a7eaf6673c38c",
+          "payer_address": "1c71d711cd7360c5f33570487945522a5a4bc87fd7a7ce6b05dff7af17399d2b",
           "hash_root": "d937d5b3bb5fba451e05500b3739e34e2e4bfdd3d1a58c430d810f944f67ec53",
           "data_id": "cd04721d0f1251306c30812bc943193d9c5de79f"
         },
         "hashing_alg": "SHA-256",
         "signature_alg": "ECDSA",
-        "signature": "spoirerwqpoijfsomo"
+        "signature": ""
       }
      
       const hash = crypto.createHash('sha256')
       hash.update(JSON.stringify(commitment.data))
       commitment.commitment_hash = hash.digest('hex')
-      
-      const credential = gateway.identity.credentials
+
+      const idPath = path.join(walletPath, payerIdentityName)
+      const id = fs.readFileSync(idPath)
+      const credential = JSON.parse(id.toString()).credentials
       const privateKey = crypto.createPrivateKey(credential.privateKey)
       
       const sign = crypto.createSign('SHA256')

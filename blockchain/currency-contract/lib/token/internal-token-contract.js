@@ -7,13 +7,14 @@ class InternalTokenContract extends TokenContract {
     async redeemEscrowToken(ctx, { paymentIntentionId, payerAddress, receiverAddress, amount }){
       const accountContract = new AccountContract()
       var payer = await accountContract.readAccount(ctx, payerAddress)
+      const receiver = await accountContract.readAccount(ctx, receiverAddress)
       const { userToken, index } = findUserToken(payer.tokens, paymentIntentionId)
 
       if (userToken == undefined) {
           throw new Error("cant find token with paymentIntentionId")
       }
 
-      const { senderAccount } = await BiocoinOperations.transferBiocoins(ctx, payerAddress, receiverAddress, amount)
+      const { senderAccount } = await BiocoinOperations.transferBiocoins(ctx, payer, receiver, amount)
       senderAccount.tokens[index].value -= amount  
       return await ctx.accountList.updateState(senderAccount);
     }

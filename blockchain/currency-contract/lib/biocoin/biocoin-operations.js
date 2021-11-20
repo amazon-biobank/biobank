@@ -31,9 +31,6 @@ class BiocoinOperations {
     }
 
     static validateTransference(ctx, senderAccount, amount){
-        if(this.verifySenderAccount(ctx, senderAccount) == false){
-            throw new Unauthorized();
-        }
         if(amount<0){
             throw new InvalidTransaction();
         }
@@ -43,8 +40,11 @@ class BiocoinOperations {
         return true
     }
 
-    static verifySenderAccount(ctx, senderAccount){
-        return ctx.user.address == senderAccount.address
+    static verifyUserEqualsSender(ctx, senderAccount){
+        if(ctx.user.address != senderAccount.address){
+            throw new Unauthorized();
+        }
+        return 
     }
 
     static async getReceiverAccount(ctx, senderAddress, receiverAddress, senderAccount) {

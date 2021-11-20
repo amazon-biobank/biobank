@@ -20,6 +20,7 @@ class BiocoinContract extends ActiveContract {
     async transferBiocoins(ctx, senderAddress, receiverAddress, amount){
         const senderAccount = await ctx.accountList.getAccount(senderAddress);
         const receiverAccount = await BiocoinOperations.getReceiverAccount(ctx, senderAddress, receiverAddress, senderAccount)
+        BiocoinOperations.verifyUserEqualsSender(ctx, senderAccount)
         return await BiocoinOperations.transferBiocoins(ctx, senderAccount, receiverAccount, amount)
     }
 
@@ -32,13 +33,15 @@ class BiocoinContract extends ActiveContract {
 
         const senderAddress = operation["input"][0].address
         let senderAccount = await ctx.accountList.getAccount(senderAddress);
-        
+
+        BiocoinOperations.verifyUserEqualsSender(ctx, senderAccount)
         for (const output of operation["output"]){
             const receiverAccount = await BiocoinOperations.getReceiverAccount(ctx, senderAddress, output.address, senderAccount)
             const accounts = await BiocoinOperations.transferBiocoins(ctx, senderAccount, receiverAccount, output.value)
             senderAccount = accounts.senderAccount
         }
-        // TODO: SUPPORT MULTIPLE INPUT OPERATIONS - VALIDATION INPUT.VALUE == OUTPUT.VALUE
+        // TODO: SUPPORT MULTIPLE INPUT OPERATIONS 
+        // TODO: VALIDATION INPUT.VALUE == OUTPUT.VALUE
         return await createPaymentReceipt(ctx, operation)
     }
 }

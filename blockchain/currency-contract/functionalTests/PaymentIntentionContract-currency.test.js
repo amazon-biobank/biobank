@@ -46,7 +46,7 @@ describe('PaymentIntentionContract-currency@3.0.0' , () => {
         it('should submit createPaymentIntention transaction', async () => {
             const arg0 = '123'
             const arg1 = {
-                "data_id": "asdfajojonn2432",
+                "data_id": "123",
                 "value_to_freeze": 1e9,
                 "expiration_date": "Fri Out 07 2020",
                 "created_at": "Fri Aug 07 2020"
