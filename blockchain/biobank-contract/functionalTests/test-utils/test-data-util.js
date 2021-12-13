@@ -20,7 +20,7 @@ const dnaJson2 = {
 
 class TestDataUtil {
     static async createSampleData(gateway) {
-        const arg0 = '123';
+        const arg0 = '125';
         const arg1 = JSON.stringify(dnaJson);
         const args = [ arg0, arg1];
         const response = await SmartContractUtil.submitTransaction('DataContract', 'uploadRawData', args, gateway);
