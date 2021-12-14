@@ -2,6 +2,7 @@ const DataContract = require('../contract/dataContract');
 const ProcessRequestContract = require('../contract/processRequestContract');
 const DnaContractContract = require('../contract/dnaContractContract');
 const ControllerUtil = require('./ControllerUtil.js');
+const KeyguardService = require('../services/keyguardService');
 
 exports.index = async function(req, res, next){
   const dataContract = new DataContract();
@@ -33,6 +34,7 @@ exports.createRawData = async function(req, res, next){
   let rawData = createRawDataFromRequest(req);
   const dataContract = new DataContract();
   await dataContract.createRawData(rawData)
+  await KeyguardService.registerDnaKey(rawData.id, req.body.secret_key)
   req.flash('success', "Dna created with sucess")
   res.redirect("/data/" + rawData.id)
 };
