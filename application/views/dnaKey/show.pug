@@ -1,0 +1,26 @@
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .container.mt-4
+    h1 DnaKey
+    .card.mb-4
+      .card-header Your DNA Decryption   Key
+      .card-body
+        form(action = '/account/transfer' method = 'post')
+          .form-row
+            .form-group.col-md-12
+              label.mb-1(for='dnaId') DnaId
+              input#dnaId.form-control(disabled type='text' value= dnaKey.dnaId)
+          .form-row     
+            .form-group.col-md-12
+              label.mb-1(for='address') Secret Key
+              .input-group
+                input#address.form-control(disabled data-toggle="password" name='senderAddress' type='password'  value=dnaKey.secretKey)
+                .input-group-append
+                  span.input-group-text
+                    i.fa.fa-eye
+
+block append scripts
+  script(src="/js/show-password.js")

@@ -14,6 +14,7 @@ router.use('/processable-data', require('./processableDataRoute'));
 router.use('/process-request', require('./processRequestRoute'));
 router.use('/account', require('./accountRoute'));
 router.use('/dnaContract', require('./dnaContractRoute'));
+router.use('/dnaKey', require('./dnaKeyRoute'));
 
 module.exports = router;
 
