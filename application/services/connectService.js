@@ -9,15 +9,14 @@ const ControllerUtil = require('./../controllers/ControllerUtil')
 class ConnectService {
   constructor() {
     this.walletPath = path.join(process.cwd(), 'fabric-details/wallet');
-    
   }
   
   async connectNetwork(channel, chaincode) {
     const wallet = await Wallets.newFileSystemWallet(this.walletPath);
     console.log(`Wallet path: ${this.walletPath}`);
 
-    const connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'remote-connection-larc.json');
-    // const connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'connection.json');
+    // const connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'remote-connection-larc.json');
+    const connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'connection.json');
     // const connectionProfilePath = path.resolve(__dirname, '..', '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
     let connectionProfile = JSON.parse(fs.readFileSync(connectionProfilePath, 'utf8'));
 

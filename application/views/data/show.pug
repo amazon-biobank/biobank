@@ -24,8 +24,11 @@ block content
             a.btn.btn-primary.btn-sm.mr-4(href='/process-request?search='+data.key)
               | See Processing Request
               
-          a.btn.btn-secondary.btn-sm(href=data.key+'/list-operations')
+          a.btn.btn-secondary.btn-sm.mr-4(href=data.key+'/list-operations')
             | See History Operation
+          
+          a.btn.btn-primary.btn-sm(href='/dnaKey/' + data.id)
+            | See Decryption Key
       include components/data-show-form.pug
     .card
       .card-header List of Owners
