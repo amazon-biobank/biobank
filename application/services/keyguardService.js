@@ -20,22 +20,22 @@ const keyguardRequestOptions = {
 
 class KeyguardService {
   static async registerDnaKey(dnaId, secretKey) {
-    if(process.env.NODE_ENV == 'development'){
-      process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
-    }
-
+    handleTlsAuthorization()
     const postData = JSON.stringify({ dnaId, secretKey })
     const response = postToKeyguard('/register-dna-key', postData)
     return response
   }
 
   static async readDnaKey(dnaId, callback) {
-    if(process.env.NODE_ENV == 'development'){
-      process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
-    }
-
+    handleTlsAuthorization()
     const response = await getToKeyguard('/read-dna-key', '?dnaId='+ dnaId, callback)
     return response
+  }
+}
+
+function handleTlsAuthorization(){
+  if(process.env.NODE_ENV == 'development'){
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
   }
 }
 
@@ -44,7 +44,7 @@ async function getToKeyguard(path, getQuery, callback){
   getRequestOptions = Object.assign(getRequestOptions, {
     path: path + getQuery,
     method: 'GET'
-    })
+  })
 
   const req = https.request(
     getRequestOptions,
@@ -89,7 +89,6 @@ function postToKeyguard(path, postData){
       })
     }
   );   
-
   req.write(postData);
   req.end();
 }
