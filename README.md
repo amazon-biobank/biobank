@@ -1,5 +1,5 @@
 # Biobank
-A community-based genetic Database
+// put a abstract here
 
 ## Requirements
 * Hyperledger Fabric 2.3.0
