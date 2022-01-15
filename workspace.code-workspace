@@ -1,16 +1,16 @@
 {
 	"folders": [
 		{
-			"name": "biobank-contract",
+			"path": "."
+		},
+		{
+			"path": "../keyguard"
+		},
+		{
 			"path": "blockchain/biobank-contract"
 		},
 		{
-			"name": "currency-contract",
 			"path": "blockchain/currency-contract"
-		},
-		{
-			"name": "biobank",
-			"path": "."
 		}
 	],
 	"settings": {},

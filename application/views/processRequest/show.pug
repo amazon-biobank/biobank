@@ -31,7 +31,7 @@ block content
           .form-row
             .form-group.col-md-6
               label.mb-1(for='raw_data_title') Raw DNA title
-              input#raw_data_title.form-control(disabled type='text' value= processRequest.raw_data.title)
+              input#raw_data_title.form-control(disabled type='text' value= processRequest.raw_data.metadata.title)
             .form-group.col-md-6
               label.mb-1(for='raw_data_id') Raw DNA ID
               div.mt-2
@@ -58,7 +58,7 @@ block content
             .form-row
               .form-group.col-md-6
                 label.mb-1(for='processed_data_title') Processed DNA title
-                input#processed_data_title.form-control(disabled type='text' value= processRequest.processed_data.title)
+                input#processed_data_title.form-control(disabled type='text' value= processRequest.processed_data.metadata.title)
               .form-group.col-md-6
                 label.mb-1(for='processed_data_id') Processed DNA ID
                 div.mt-2

@@ -34,7 +34,7 @@ class ActiveContract extends Contract {
 
   needsQueryUser(ctx){
     const calledContract = ctx.stub.getArgs()[0]
-    const allowedContracts = ["OperationContract:readOperation"]
+    const allowedContracts = ["OperationContract:readOperation", "DataContract:readData"]
     return !allowedContracts.includes(calledContract)
   }
 }

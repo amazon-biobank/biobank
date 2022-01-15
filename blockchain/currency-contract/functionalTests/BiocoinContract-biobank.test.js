@@ -136,10 +136,11 @@ describe('BiocoinContract-biobank' , () => {
 
     describe('transferOperationBiocoins', () =>{
         it('should transfer operation biocoins and create a OperationPaymentReceipt', async () => {
-            const args = [ "d210c49d-2d50-413b-a476-0377fe99ca95"];
+            const args = [ "1fa98642-1ebd-4c5c-a7f8-f337e3c67631"];
             
             const response = await SmartContractUtil.submitTransaction('BiocoinContract', 'transferOperationBiocoins', args, gateway)
             const json_response = JSON.parse(response.toString())
+            console.log(json_response)
             assert.strictEqual(json_response['status'], 'paid');
             assert.strictEqual(json_response['id'], "d210c49d-2d50-413b-a476-0377fe99ca95");
         }).timeout(20000);

@@ -25,6 +25,7 @@ node index.js
 # ------------------- Explorer Docker
 # change peer secretKey name in connection-profile/test-network.json
 #if needed, change the volume path in docker-compose.yaml
+docker-compose down -v
 docker-compose up -d
 # explorer Credential login: exploreradmin; password: exploreradminpw
 

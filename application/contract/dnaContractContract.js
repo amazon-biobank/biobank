@@ -15,6 +15,10 @@ class DnaContractContract extends SmartContract{
     return await this.evaluateTransaction('DnaContractContract:getAllDnaContract');
   }
 
+  async endorseProcessRequestToRawData(processRequestId) {
+    return await this.submitTransaction('DnaContractContract:endorseProcessRequestToRawData', processRequestId);
+  }
+
   async executeContract(dnaContractId, options) {
     return await this.submitTransaction('DnaContractContract:executeContract', dnaContractId, JSON.stringify(options));
   }

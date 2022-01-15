@@ -3,26 +3,35 @@
 const CryptoUtils = require('./../crypto-utils')
 const InternalOperationContract = require('./../operation/internal-operation-contract')
 const Data = require('../data/data.js');
+const ProcessRequestContract = require('../process-request/process-request-contract');
+const _ = require('lodash');
+const CONFIG = require('../../config.json');
 
 class DnaContractUtils {
   static handleDnaContractAttributes(dnaContractAttributes) {
-    const { dnaId, parameters, created_at } = JSON.parse(dnaContractAttributes);
-    const { price } = parameters
-    const filteredParameters = { price }
-    const id = CryptoUtils.getHash(dnaId)
-
-    const newDnaContractAttributes = {
-        id, dnaId, parameters: filteredParameters, created_at
-    }
+    let newDnaContractAttributes = _.pick( 
+      JSON.parse(dnaContractAttributes), 
+      [ 
+        'dna_id', 
+        'raw_data_price', 
+        'processed_data_price',
+        'payment_distribution.collector', 
+        'payment_distribution.processor', 
+        'payment_distribution.curator', 
+        'payment_distribution.validators', 
+        'accepted_processed_data.processed_data_id',
+        'accepted_processed_data.process_request_id',
+        'royalty_payments', 
+        'created_at' 
+      ])
+    newDnaContractAttributes.id = CryptoUtils.getHash(newDnaContractAttributes.dna_id)
     return newDnaContractAttributes;
   }
 
   static async validateContractCreation(ctx, dnaContractAttributes){
-    const dna = await this.getData(ctx, dnaContractAttributes.dnaId)
-    // only collector can create contract
-    if(dna.collector == undefined || ctx.user.address != dna.collector ){
-        throw new Error('Unauthorized')
-    }
+    await this.validateCollector(ctx, dnaContractAttributes)
+    validatePaymentDistribution(dnaContractAttributes.payment_distribution)
+    validateRoyaltyPayment(dnaContractAttributes.royalty_payments)
     return true
   }
 
@@ -34,11 +43,6 @@ class DnaContractUtils {
     return dna
   }
 
-  static async getData(ctx, dataId){
-    const dataKey = Data.makeKey([dataId]);
-    const data = await ctx.dataList.getData(dataKey); 
-    return data
-  }
 
   static checkPaymentAndOperation(ctx, payment, operation){
     if(payment == undefined || payment.status != "paid"){
@@ -50,27 +54,109 @@ class DnaContractUtils {
     return true
   }
 
-  static async createBuyingOperation(ctx, dna, dnaContract, operationId){
+  static async createBuyingOperation(ctx, dnaContract, operationId, operationType){
+    let operation
+    const dna = await DnaContractUtils.getData(ctx, dnaContract.dna_id)
+    if(operationType == 'buy_raw_data'){ 
+      operation = createRawBuyingOperation(ctx, dna, dnaContract)
+    } else if(operationType == 'buy_processed_data'){
+      operation = await createProcessedBuyingOperation(ctx, dna, dnaContract)
+    }
+    
     const internalOperationContract = new InternalOperationContract()
-    const operationAttributes = JSON.stringify({
-        type: 'buy',
-        userAddress: ctx.user.address,
-        created_at: new Date().toDateString(),
-        details: {
-            data_id: dna.id,
-            contractId: dnaContract.id
-        },
-        input: [{
-            address: ctx.user.address,
-            value: dnaContract.parameters.price
-        }],
-        output: [{
-            address: dna.collector,
-            value: dnaContract.parameters.price
-        }]
-    })
-    return await internalOperationContract.createOperation(ctx, operationId, operationAttributes)
+    return await internalOperationContract.createOperation(ctx, operationId, JSON.stringify(operation))
+  }
+
+  static async validateCollector(ctx, dnaContractAttributes){
+    const dna = await this.getData(ctx, dnaContractAttributes.dna_id)
+    if(dna.collector == undefined || ctx.user.address != dna.collector ){
+        throw new Error('Unauthorized')
+    }
+  }
+
+  static async getData(ctx, dataId){
+    const dataKey = Data.makeKey([dataId]);
+    const data = await ctx.dataList.getData(dataKey); 
+    return data
   }
 }
+
+function validatePaymentDistribution(paymentDistribution){
+  if( 
+    paymentDistribution.collector < CONFIG.dnaContract.collector.min ||
+    paymentDistribution.collector > CONFIG.dnaContract.collector.max ||
+    paymentDistribution.processor < CONFIG.dnaContract.processor.min ||
+    paymentDistribution.processor > CONFIG.dnaContract.processor.max //||
+    // paymentDistribution.validators < CONFIG.dnaContract.validators.min ||
+    // paymentDistribution.validators > CONFIG.dnaContract.validators.max ||
+    // paymentDistribution.curator < CONFIG.dnaContract.curator.min ||
+    // paymentDistribution.curator > CONFIG.dnaContract.curator.max 
+  ){
+    throw new Error('PaymentDistribution Parameter Error: value not allowed')
+  }
+  if(
+    paymentDistribution.collector + 
+    paymentDistribution.processor + 
+    paymentDistribution.validators + 
+    paymentDistribution.curator != 10000
+  ){
+    throw new Error('PaymentDistributionParameters does not sum 100%')
+  }
+}
+
+
+function validateRoyaltyPayment(royaltyPayment){
+  if(royaltyPayment == undefined){
+    throw new Error('Royalty Payment required')
+  }
+}
+
+
+function createRawBuyingOperation(ctx, dna, dnaContract){
+  return {
+    type: 'buy_raw_data',
+    userAddress: ctx.user.address,
+    created_at: new Date().toDateString(),
+    details: {
+        data_id: dna.id,
+        contractId: dnaContract.id
+    },
+    input: [{
+        address: ctx.user.address,
+        value: dnaContract.raw_data_price 
+    }],
+    output: [{
+        address: dna.collector,
+        value: dnaContract.raw_data_price 
+    }]
+  }
+}
+
+async function createProcessedBuyingOperation(ctx, dna, dnaContract){
+  const processRequestContract = new ProcessRequestContract()
+  const processRequest = await processRequestContract.readProcessRequest(ctx, dnaContract.accepted_processed_data.process_request_id)
+  return {
+    type: 'buy_processed_data',
+    userAddress: ctx.user.address,
+    created_at: new Date().toDateString(),
+    details: {
+        data_id: dnaContract.accepted_processed_data.processed_data_id,
+        contractId: dnaContract.id
+    },
+    input: [{
+        address: ctx.user.address,
+        value: dnaContract.processed_data_price 
+    }],
+    output: [{
+        address: dna.uploader,
+        value: dnaContract.processed_data_price*dnaContract.payment_distribution.collector*1e-4 // paymentDistribution is converted to percentage 
+    },{
+      address: processRequest.processor_id,
+      value: dnaContract.processed_data_price*dnaContract.payment_distribution.processor*1e-4 // paymentDistribution is converted to percentage  
+    }]  // TODO: ADD VALIDATOR AND CURATORS
+  }
+}
+
+
 
 module.exports = DnaContractUtils;

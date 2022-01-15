@@ -8,7 +8,7 @@
           tr
             th Status
             th Created At
-            th Raw DNA title
+            th Processor ID
             th Raw DNA ID
             th Action
         tbody
@@ -18,8 +18,8 @@
                 = processRequest.status
               td
                 = processRequest.created_at
-              td
-                = processRequest.raw_data.title
+              td.small
+                = processRequest.processor.id
               td.small
                 = processRequest.raw_data.id
               td

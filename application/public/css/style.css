@@ -9,3 +9,7 @@ a {
 .sidebar.toggled .sidebar-heading {
   font-size: xx-small;
 }
+
+#content {
+  background-color: #bdc8ea59;
+}

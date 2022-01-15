@@ -29,11 +29,14 @@ exports.show = async function(req, res, next){
 };
 
 exports.create = async function(req, res, next){
-  let processRequest = createProcessorRequestFromRequest(req);
-
   const processRequestContract = new ProcessRequestContract();
+  const dataContract = new DataContract();
+  
+  let processRequest = createProcessorRequestFromRequest(req);
   await processRequestContract.createProcessRequest(processRequest)
+  await dataContract.addProcessRequest(processRequest.raw_data_id, processRequest.id)
 
+  req.flash('success', "Process Request created with sucess")
   res.redirect("/process-request/" + processRequest.id)
 };
 

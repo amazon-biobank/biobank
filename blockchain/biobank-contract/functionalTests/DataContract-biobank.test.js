@@ -44,7 +44,7 @@ describe('DataContract-biobank' , () => {
     describe('uploadRawData', () =>{
         it('should submit uploadRawData transaction', async () => {
             const data = await TestDatautil.createSampleData(gateway)
-            assert.strictEqual(data['title'], "Meu dado de DNA");
+            assert.strictEqual(data['metadata']['title'], "Meu dado de DNA");
         }).timeout(10000);
     });
 

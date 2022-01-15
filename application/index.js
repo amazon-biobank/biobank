@@ -3,6 +3,7 @@ var http = require('http'),
     express = require('express'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
+    flash = require('connect-flash'),
     errorhandler = require('errorhandler');
 
 var isProduction = process.env.NODE_ENV === 'production';
@@ -15,7 +16,7 @@ app.set('view engine', 'pug');
 
 // Normal express config defaults
 app.use(require('morgan')('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(require('method-override')());
@@ -23,6 +24,12 @@ app.use(express.static(__dirname + '/public'));
 
 
 app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
+app.use(flash());
+app.use(function(req, res, next){
+  res.locals.messages = req.flash();
+  res.locals.test = "worked"
+  next();
+});
 
 if (!isProduction) {
   app.use(errorhandler());

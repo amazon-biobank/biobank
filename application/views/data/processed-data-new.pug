@@ -18,13 +18,13 @@ block content
                 input#process_request_id.form-control.form-control-user(name='process_request_id' type='text' value=queryParams.processRequestId)
               .form-group
                 label(for='name') Name
-                input#name.form-control.form-control-user(name='name' type='text')
+                input#name.form-control.form-control-user(name='metadata[title]' type='text')
               .form-group
                 label(for='description') Description
-                textarea#exampleFormControlTextarea1.form-control(name='description' rows='3' type = 'text')
+                textarea#exampleFormControlTextarea1.form-control(name='metadata[description]' rows='3' type = 'text')
               .form-group
                 label(for='magnet_link') DNA magnetic link
-                input#magnet_link.form-control.form-control-user(name='magnet_link' type='text')
+                input#magnet_link.form-control.form-control-user(name='metadata[magnet_link]' type='text')
               hr
               .float-right.mb-4.inline-block
                 a.btn.btn-danger.btn-user.mr-3.px-5(href='/data')

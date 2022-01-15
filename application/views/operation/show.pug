@@ -9,6 +9,11 @@ block content
       .card-header Operação
       .card-body
         form
+          .form-group
+            label.mb-1(for='process_request_id') DNA ID
+            div
+              a(href='/data/' + operation.details.data_id)
+                = operation.details.data_id
           .form-row
             .form-group.col-md-6
               label.mb-1(for='type') Type
@@ -23,43 +28,41 @@ block content
             .form-group.col-md-6
               label.mb-1(for='created-at') Created At
               input#created-at.form-control(disabled type='text'  value=operation.created_at)
-          .card
-            .card-header Details
-            .card-body
-              if (operation.type == 'Compra')
-                .form-row
-                  .form-group.col-md-6
-                    label.mb-1(for='data_id') Data ID
-                    input#data_id.form-control(disabled type='text'  value=operation.details.data_id)
-                  .form-group.col-md-6
-                    label.mb-1(for='contractId') Contract Id
-                    input#contractId.form-control(disabled type='text'  value=operation.details.contractId)
-                .form-row
-                  .form-group.col-md-6
-                    label.mb-1(for='transaction-id') Transaction Id
-                    input#transaction-id.form-control(disabled type='text' style='font-size:small' value=operation.details.transaction_id)
-          .card
-            .card-header Origin
-            .card-body
-              each sender in operation.input
-                .form-row
-                  .form-group.col-md-6
-                    label.mb-1(for='sender-address') Origin Address
-                    input#sender-address.form-control(disabled type='text'  value=sender.address)
-                  .form-group.col-md-6
-                    label.mb-1(for='value') Value
-                    input#value.form-control(disabled type='text'  value=sender.value)
-          .card
-            .card-header Output
-            .card-body
-              each receiver in operation.output
-                .form-row
-                  .form-group.col-md-6
-                    label.mb-1(for='receiver-address') Receiver Address
-                    input#receiver-address.form-control(disabled type='text'  value=receiver.address)
-                  .form-group.col-md-6
-                    label.mb-1(for='value') Value
-                    input#value.form-control(disabled type='text'  value=receiver.value)
+              
+          hr.mt-4
+          h5.mb-3 Details
+          .form-row
+            .form-group.col-md-6
+              label.mb-1(for='data_id') Data ID
+              input#data_id.form-control(disabled type='text'  value=operation.details.data_id)
+            .form-group.col-md-6
+              label.mb-1(for='contractId') Contract Id
+              input#contractId.form-control(disabled type='text'  value=operation.details.contractId)
+          .form-row
+            .form-group.col-md-6
+              label.mb-1(for='transaction-id') Transaction Id
+              input#transaction-id.form-control(disabled type='text' style='font-size:small' value=operation.details.transaction_id)
+          hr.mt-4
+          h5.mb-3 Origin
+          each sender in operation.input
+            .form-row
+              .form-group.col-md-6
+                label.mb-1(for='sender-address') Origin Address
+                input#sender-address.form-control(disabled type='text'  value=sender.address)
+              .form-group.col-md-6
+                label.mb-1(for='value') Value
+                input#value.form-control(disabled type='text'  value=sender.value)
+
+          hr.mt-4
+          h5.mb-3 Output
+          each receiver in operation.output
+            .form-row
+              .form-group.col-md-6
+                label.mb-1(for='receiver-address') Receiver Address
+                input#receiver-address.form-control(disabled type='text'  value=receiver.address)
+              .form-group.col-md-6
+                label.mb-1(for='value') Value
+                input#value.form-control(disabled type='text'  value=receiver.value)
                  
 
 

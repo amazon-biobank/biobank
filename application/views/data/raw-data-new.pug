@@ -14,14 +14,19 @@ block content
               p.mb-4 
             form.user(action='/data/raw-data-create' method='post')
               .form-group
-                label(for='name') Name
-                input#name.form-control.form-control-user(name='name' type='text')
+                label(for='title') Name
+                input#title.form-control.form-control-user(name='metadata[title]' type='text')
               .form-group
                 label(for='description') Description
-                textarea#exampleFormControlTextarea1.form-control(name='description' rows='3' type = 'text')
+                textarea#exampleFormControlTextarea1.form-control(name='metadata[description]' rows='3' type = 'text')
               .form-group
                 label(for='magnet_link') Magnetic Link
-                input#organization.form-control.form-control-user(name='magnet_link' type='text')
+                input#organization.form-control.form-control-user(name='metadata[magnet_link]' type='text')
+              .form-group
+                label(for='secret_key') Secret Key
+                a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" 
+                data-content="Optional. Key used to encrypt and decrypt DNA. It will be securely stored outside Blockchain")
+                input#organization.form-control.form-control-user(name='secret_key' type='text')
               hr
               .float-right.mb-4.inline-block
                 a.btn.btn-danger.btn-user.mr-3.px-5(href='/data')

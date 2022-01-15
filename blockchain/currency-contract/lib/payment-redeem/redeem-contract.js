@@ -24,9 +24,9 @@ class RedeemContract extends ActiveContract {
       const commitment = JSON.parse(paymentCommitment)
       await verifyCommitment(ctx, commitment)
       verifyHashLink(commitment, hashLink, hashLinkIndex)
-      const linksToBeRedeemed = await getLinkToBeRedeemed(ctx, commitment, hashLinkIndex)
+      const { linksToBeRedeemed, paymentRedeem } = await getLinkToBeRedeemed(ctx, commitment, hashLinkIndex)
       await redeemLinks(ctx, commitment, linksToBeRedeemed)
-      return linksToBeRedeemed
+      return paymentRedeem
   }
 }
 
@@ -57,10 +57,10 @@ function verifyHashLink(commitment, hashLink, hashLinkIndex) {
 async function getLinkToBeRedeemed(ctx, commitment, hashLinkIndex) {
     const contract = new InternalPaymentRedeemContract()
     const isNewPaymentRedeem = ! await contract.paymentRedeemExists(ctx, commitment.commitment_hash)
-    var linksToBeRedeemed;
+    var linksToBeRedeemed, paymentRedeem;
 
     if(isNewPaymentRedeem) {
-        const paymentRedeem = {
+        paymentRedeem = {
           "id": commitment.commitment_hash,
           "commitment_hash": commitment.commitment_hash,
           "redeemed_hash_amount": hashLinkIndex
@@ -69,7 +69,7 @@ async function getLinkToBeRedeemed(ctx, commitment, hashLinkIndex) {
         linksToBeRedeemed = hashLinkIndex
     }
     else {
-        const paymentRedeem = await contract.readPaymentRedeem(ctx, commitment.commitment_hash)
+        paymentRedeem = await contract.readPaymentRedeem(ctx, commitment.commitment_hash)
         linksToBeRedeemed = hashLinkIndex - paymentRedeem.redeemed_hash_amount
         if (linksToBeRedeemed <= 0) {
             throw new Error("Hash link already redeemed")
@@ -77,7 +77,7 @@ async function getLinkToBeRedeemed(ctx, commitment, hashLinkIndex) {
         paymentRedeem.redeemed_hash_amount = hashLinkIndex
         contract.updatePaymentRedeem(ctx, JSON.stringify(paymentRedeem))
     }
-    return linksToBeRedeemed
+    return { linksToBeRedeemed, paymentRedeem }
 }
 
 async function redeemLinks(ctx, commitment, linksToBeRedeemed) {
@@ -89,7 +89,7 @@ async function redeemLinks(ctx, commitment, linksToBeRedeemed) {
       paymentIntentionId: paymentIntention.id,
       payerAddress: paymentIntention.payer_address,
       receiverAddress: commitment.data.receiver_address,
-      amount: linksToBeRedeemed * 1000
+      amount: linksToBeRedeemed * 1000 // each link is 10E3 biocoins cents
     }
     
     return await internalTokenContract.redeemEscrowToken(ctx, options )

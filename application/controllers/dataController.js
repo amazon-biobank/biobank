@@ -2,6 +2,7 @@ const DataContract = require('../contract/dataContract');
 const ProcessRequestContract = require('../contract/processRequestContract');
 const DnaContractContract = require('../contract/dnaContractContract');
 const ControllerUtil = require('./ControllerUtil.js');
+const KeyguardService = require('../services/keyguardService');
 
 exports.index = async function(req, res, next){
   const dataContract = new DataContract();
@@ -11,8 +12,10 @@ exports.index = async function(req, res, next){
     return {
       id: data.id,
       type: ControllerUtil.formatDataType(data.type),
-      title: data.title,
-      description: data.description,
+      metadata: {
+        title: data.metadata.title,
+        description: data.metadata.description,
+      },
       collector: data.collector,
       created_at: ControllerUtil.formatDate(new Date(data.created_at)),
       price: data.price
@@ -31,6 +34,8 @@ exports.createRawData = async function(req, res, next){
   let rawData = createRawDataFromRequest(req);
   const dataContract = new DataContract();
   await dataContract.createRawData(rawData)
+  await KeyguardService.registerDnaKey(rawData.id, req.body.secret_key)
+  req.flash('success', "Dna created with sucess")
   res.redirect("/data/" + rawData.id)
 };
 
@@ -40,12 +45,15 @@ exports.newProcessedData = async function(req, res, next){
 };
 
 exports.createProcessedData = async function(req, res, next){
-  let processedData = createProcessedDataFromRequest(req);
   const dataContract = new DataContract();
+
+  let processedData = createProcessedDataFromRequest(req);
   await dataContract.createProcessedData(processedData);
+  
   if(req.body.process_request_id) {
-    await updateProcessRequestAndRawData(req.body.process_request_id, processedData);
+    await updateProcessRequest(req.body.process_request_id, processedData)
   }
+  req.flash('success', "DNA created with sucess")
   res.redirect("/data/" + processedData.id)
 };
 
@@ -53,7 +61,7 @@ exports.show = async function(req, res, next){
   const dataId = req.params.dataId;
   const dataContract = new DataContract();
   const data = await dataContract.readData(dataId);
-  const dnaContract = await getDnaContract(data.id)
+  const dnaContract = await getDnaContract(data.dna_contract)
 
   data.type = ControllerUtil.formatDataType(data.type);
   data.status = ControllerUtil.formatDataStatus(data.status);
@@ -81,17 +89,20 @@ exports.listOperations = async function(req, res, next){
 };
 
 function createRawDataFromRequest(req){
-  const magnetic = removeTracker(req.body.magnet_link);
+  const magnetic = removeTracker(req.body.metadata.magnet_link);
   return {
     type : 'raw_data',
-    id: ControllerUtil.getHashFromMagneticLink(req.body.magnet_link),
-    title: req.body.name,
+    id: ControllerUtil.getHashFromMagneticLink(req.body.metadata.magnet_link),
+    metadata: {
+      title: req.body.metadata.title,
+      magnet_link: magnetic,
+      description: req.body.metadata.description
+    },
     status: 'unprocessed',
-    magnet_link: magnetic,
-    description: req.body.description,
     created_at: new Date().toDateString()
   }
 }
+
 function removeTracker(magnet_link){
   const separator = magnet_link.split('&');
   return separator[0];
@@ -100,32 +111,31 @@ function removeTracker(magnet_link){
 function createProcessedDataFromRequest(req){
   return {
     type : 'processed_data',
-    id: ControllerUtil.getHashFromMagneticLink(req.body.magnet_link),
-    title: req.body.name,
+    id: ControllerUtil.getHashFromMagneticLink(req.body.metadata.magnet_link),
     status: 'processed',
-    magnet_link: req.body.magnet_link,
-    description: req.body.description,
-    created_at: new Date().toDateString(),
-    process_request_id: req.body.process_request_id
+    process_request_id: req.body.process_request_id,
+    metadata: {
+      title: req.body.metadata.title,
+      magnet_link: req.body.metadata.magnet_link,
+      description: req.body.metadata.description
+    },
+    created_at: new Date().toDateString()
   }
 }
 
-async function updateProcessRequestAndRawData(processRequestId, processedData){
+async function updateProcessRequest(processRequestId, processedData){
   const processRequestContract = new ProcessRequestContract()
-  const dataContract = new DataContract();
   let processRequest = await processRequestContract.readProcessRequest(processRequestId);
   processRequest.status = 'processed';
   processRequest.processed_data_id = processedData.id;
   await processRequestContract.updateProcessRequest(processRequest);
-
-  let rawData = await dataContract.readData(processRequest.raw_data_id);
-  rawData.status = 'processed';
-  await dataContract.updateData(rawData);
+  return processRequest
 }
 
-async function getDnaContract(dnaId){
-  const dnaContractId = ControllerUtil.getHash(dnaId)
-  const dnaContractContract = new DnaContractContract();
-  return await dnaContractContract.readDnaContract(dnaContractId)
+async function getDnaContract(dnaContractId){
+  if(dnaContractId){
+    const dnaContractContract = new DnaContractContract();
+    return await dnaContractContract.readDnaContract(dnaContractId)
+  }
 }
 

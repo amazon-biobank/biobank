@@ -9,5 +9,24 @@
 
   "defaultCurrency": "BIO",
   "defaultPrecision": 9,
-  "globalFormat": "0.000000000"
+  "globalFormat": "0.000000000",
+
+  "dnaContract": {
+    "collector": {
+      "min": 0,
+      "max": 7000
+    },
+    "processor": {
+      "min": 10,
+      "max": 7000
+    },
+    "validators": {
+      "min": 1000,
+      "max": 7000
+    },
+    "curator": {
+      "min": 1000,
+      "max": 7000
+    }
+  }
 }

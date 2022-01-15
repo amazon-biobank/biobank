@@ -44,14 +44,16 @@ describe('RedeemContract' , () => {
 
     describe('redeem', () =>{
       it('should submit redeem transaction', async () => {
-          var arg0 = TestPaymentRedeemUtil.createPaymentCommitment(gateway)
+          var arg0 = TestPaymentRedeemUtil.createPaymentCommitment(walletPath)
           console.log(arg0)
-          const arg1 = 'c116fb6ef14ff4a9dc6b681314ec63e9c2853c559b7bf205a035fa438d7d3a21';
-          const arg2 = '3';
-          const args = [ JSON.stringify(arg0), arg1, arg2];
+          const hashLink = 'c116fb6ef14ff4a9dc6b681314ec63e9c2853c559b7bf205a035fa438d7d3a21';
+          const hashLInkIndex = '3';
+          const args = [ JSON.stringify(arg0), hashLink, hashLInkIndex];
           const response = await SmartContractUtil.submitTransaction('RedeemContract', 'redeem', args, gateway);
+          const paymentRedeem = JSON.parse(response.toString())
           
-          assert.strictEqual(response.toString(), true);
+          console.log(paymentRedeem)
+          assert.strictEqual(paymentRedeem.redeemed_hash_amount, hashLInkIndex);
       }).timeout(10000);
 
       it('should give commitment hash error', async () => {
