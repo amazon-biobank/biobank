@@ -11,6 +11,6 @@ app.get('/connection-profile', function(req, res){
   res.end(connectionProfile);
 });
 
-var server = app.listen( process.env.PORT || 3001, function(){
+var server = app.listen( process.env.PORT || 3003, function(){
   console.log('Biobank API listening on port ' + server.address().port);
 });
