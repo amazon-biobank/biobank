@@ -49,7 +49,8 @@ exports.createProcessedData = async function(req, res, next){
 
   let processedData = createProcessedDataFromRequest(req);
   await dataContract.createProcessedData(processedData);
-  
+  await KeyguardService.registerDnaKey(processedData.id, req.body.secret_key)
+
   if(req.body.process_request_id) {
     await updateProcessRequest(req.body.process_request_id, processedData)
   }
