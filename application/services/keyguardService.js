@@ -1,22 +1,8 @@
-const { FileSystemWallet, Gateway }  = require('fabric-network');
 const path = require('path');
 const fs = require('fs')
-const DataContract = require('../contract/dataContract');
 const https = require('https');
-const { throws } = require('assert');
-const { resolve } = require('path');
 require('dotenv').config()
 
-const userIdPath = path.join(process.cwd(), 'fabric-details/wallet/userCertificate.id');
-const caPath = path.join(process.cwd(), 'fabric-details/ca.crt');
-const userId = fs.readFileSync(userIdPath)
-const keyguardRequestOptions = {
-  hostname: process.env.KEYGUARD_HOSTNAME,
-  port: 9443,
-  cert: JSON.parse(userId.toString()).credentials.certificate,
-  key: JSON.parse(userId.toString()).credentials.privateKey,
-  ca: fs.readFileSync(caPath), 
-}
 
 class KeyguardService {
   static async registerDnaKey(dnaId, secretKey) {
@@ -39,8 +25,24 @@ function handleTlsAuthorization(){
   }
 }
 
+function getKeyguardRequestOptions(){
+  const userIdPath = path.join(process.cwd(), 'fabric-details/wallet/userCertificate.id');
+  const caPath = path.join(process.cwd(), 'fabric-details/ca.crt');
+  const userId = fs.readFileSync(userIdPath)
+  const keyguardRequestOptions = {
+    hostname: process.env.KEYGUARD_HOSTNAME,
+    port: 9443,
+    cert: JSON.parse(userId.toString()).credentials.certificate,
+    key: JSON.parse(userId.toString()).credentials.privateKey,
+    ca: fs.readFileSync(caPath), 
+  }
+
+  return keyguardRequestOptions
+
+}
+
 async function getToKeyguard(path, getQuery, callback){
-  let getRequestOptions = Object.assign({}, keyguardRequestOptions)
+  let getRequestOptions = getKeyguardRequestOptions()
   getRequestOptions = Object.assign(getRequestOptions, {
     path: path + getQuery,
     method: 'GET'
@@ -66,7 +68,7 @@ async function getToKeyguard(path, getQuery, callback){
 }
 
 function postToKeyguard(path, postData){
-  let postRequestOptions = Object.assign({}, keyguardRequestOptions)
+  let postRequestOptions = getKeyguardRequestOptions()
   postRequestOptions = Object.assign( postRequestOptions, {
     method: 'POST',
     path,
