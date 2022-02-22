@@ -11,18 +11,21 @@ const FabricCAServices = require('fabric-ca-client');
 const fs = require('fs');
 const path = require('path');
 const userName = process.argv[2]
+const context = process.argv[3]
 var caURL
+
 
 
 async function main() {
     try {
         // load the network configuration
-        if(true){
+        if(context == 'microfabric'){
             const ccpPath = path.resolve(__dirname, '..', 'fabric-details', 'connection.json');
             const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
             caURL = ccp.certificateAuthorities['org1ca-api.127-0-0-1.nip.io:8080'].url;
-        } else {
-            const ccpPath = path.resolve(__dirname, '..', '..',  'biobank', 'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+        } 
+        else if(context == 'remote') {
+            const ccpPath = path.resolve(__dirname, '..', '..', 'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
             const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
             caURL = ccp.certificateAuthorities['ca.org1.example.com'].url;
         }

@@ -30,7 +30,7 @@ function getKeyguardRequestOptions(){
   const caPath = path.join(process.cwd(), 'fabric-details/ca.crt');
   const userId = fs.readFileSync(userIdPath)
   const keyguardRequestOptions = {
-    hostname: process.env.KEYGUARD_HOSTNAME,
+    hostname: getKeyguardHostname(),
     port: 9443,
     cert: JSON.parse(userId.toString()).credentials.certificate,
     key: JSON.parse(userId.toString()).credentials.privateKey,
@@ -39,6 +39,14 @@ function getKeyguardRequestOptions(){
 
   return keyguardRequestOptions
 
+}
+
+function getKeyguardHostname(){
+  if(process.env.CONTEXT=='remote'){
+    return process.env.REMOTE_HOSTNAME
+  } else {
+    return process.env.LOCAL_HOSTNAME
+  }
 }
 
 async function getToKeyguard(path, getQuery, callback){

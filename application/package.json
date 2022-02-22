@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.26.0",
     "connect-flash": "^0.1.1",
     "dinero.js": "^1.8.1",
     "dotenv": "^10.0.0",
