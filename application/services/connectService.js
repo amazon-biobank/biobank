@@ -1,6 +1,7 @@
 const { Gateway, Wallets } = require('fabric-network');
 const path = require('path');
 const fs = require('fs')
+const os = require('os')
 const { X509Certificate } = require('crypto')
 const jsrsasign = require('jsrsasign')
 const ControllerUtil = require('./../controllers/ControllerUtil')
@@ -19,7 +20,7 @@ class ConnectService {
       this.asLocalhost = true
     }
     else if(process.env.CONTEXT=='remote'){
-      this.connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'remote-connection-larc.json');
+      this.connectionProfilePath = path.resolve(os.tmpdir(), 'biobank-app', 'remote-connection-larc.json')
       this.asLocalhost = false
     }
   }
@@ -27,7 +28,6 @@ class ConnectService {
   async connectNetwork(channel, chaincode) {
     const wallet = await Wallets.newFileSystemWallet(this.walletPath);
     console.log(`Wallet path: ${this.walletPath}`);
-
 
 
     let connectionProfile = JSON.parse(fs.readFileSync(this.connectionProfilePath, 'utf8'));
@@ -57,6 +57,7 @@ class ConnectService {
   async updateConnectionProfile(){
     const connectionProfileReq = await (axios.get(process.env.HYPERLEDGER_CONNECTION_PROFILE));
     const connectionProfile = this.connectionProfileAdapt(connectionProfileReq.data)
+    await fs.mkdirSync(path.resolve(os.tmpdir(), 'biobank-app'), { recursive: true })
     await fs.writeFileSync( this.connectionProfilePath, JSON.stringify(connectionProfile) )
   }
 

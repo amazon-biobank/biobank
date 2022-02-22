@@ -3,8 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/**/*",
+      "fabric-details/**/*",
+      "views/**/*",
+      "public/**/*" 
+    ],
+    "targets": [
+      "node16-linux-x64",
+      "node16-win-x64"
+    ],
+    "outputPath": "dist"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +33,7 @@
     "formidable": "^1.2.2",
     "jsrsasign": "^8.0.24",
     "magnet-uri": "^5.3.0",
+    "pkg": "^5.5.2",
     "pug": "^3.0.0"
   },
   "devDependencies": {

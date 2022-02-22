@@ -21,3 +21,6 @@ node registerUser.js appUser remote
 GREEN='\033[0;32m'; echo -e "${GREEN}Criados certificados em "$(pwd)"/wallet"
 cd -
 
+cd ./../../../keyguard/
+./start-keyguard.sh remote
+cd -
