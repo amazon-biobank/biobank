@@ -5,16 +5,16 @@ require('dotenv').config()
 
 
 class KeyguardService {
-  static async registerDnaKey(dnaId, secretKey) {
+  static async registerDnaKey(dnaId, secretKey, callback, errorCallback) {
     handleTlsAuthorization()
     const postData = JSON.stringify({ dnaId, secretKey })
-    const response = postToKeyguard('/register-dna-key', postData)
+    const response = postToKeyguard('/register-dna-key', postData, callback, errorCallback)
     return response
   }
 
-  static async readDnaKey(dnaId, callback) {
+  static async readDnaKey(dnaId, callback, errorCallback) {
     handleTlsAuthorization()
-    const response = await getToKeyguard('/read-dna-key', '?dnaId='+ dnaId, callback)
+    const response = await getToKeyguard('/read-dna-key', '?dnaId='+ dnaId, callback, errorCallback)
     return response
   }
 }
@@ -49,7 +49,7 @@ function getKeyguardHostname(){
   }
 }
 
-async function getToKeyguard(path, getQuery, callback){
+async function getToKeyguard(path, getQuery, callback, errorCallback){
   let getRequestOptions = getKeyguardRequestOptions()
   getRequestOptions = Object.assign(getRequestOptions, {
     path: path + getQuery,
@@ -66,16 +66,15 @@ async function getToKeyguard(path, getQuery, callback){
         }
         callback(response)
       })
-      
-      res.on('error', error => {
-        console.error(error)
-      })
     }
   )
   req.end();
+  req.on('error', function(error) {
+    errorCallback(error)
+  })
 }
 
-function postToKeyguard(path, postData){
+function postToKeyguard(path, postData, callback, errorCallback){
   let postRequestOptions = getKeyguardRequestOptions()
   postRequestOptions = Object.assign( postRequestOptions, {
     method: 'POST',
@@ -90,17 +89,19 @@ function postToKeyguard(path, postData){
     postRequestOptions,
     res => {
       res.on('data', function(data) {
-        console.log(data.toString())
-        return data.toString
-      })
-
-      res.on('error', error => {
-        console.error(error)
+        const response = {
+          statusCode: req.res.statusCode,
+          data: data.toString()
+        }
+        callback(response)
       })
     }
   );   
   req.write(postData);
   req.end();
+  req.on('error', error => {
+    errorCallback(error)
+  })
 }
 
 
