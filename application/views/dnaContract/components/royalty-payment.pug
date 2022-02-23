@@ -19,7 +19,7 @@
       option(value='profit_proportional_periodic_fee') Profit Proportional Periodic Fee
   .form-group.col-md-2
     label.mb-1(for='value') Value 
-    input#price.form-control.royalty-payment-value(name="royalty_payments["+index+"][value]" type='text' disabled=true)
+    input#price.form-control.royalty-payment-value(name="royalty_payments["+index+"][value]" type='text' disabled=true required)
   .form-group.col-md-2
     label.mb-1(for='period') Period in months 
-    input#price.form-control.royalty-payment-period(name="royalty_payments["+index+"][period]" type='text' disabled=true)
+    input#price.form-control.royalty-payment-period(name="royalty_payments["+index+"][period]" type='text' disabled=true required)

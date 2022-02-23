@@ -2,6 +2,7 @@ const DnaContractContract = require('../contract/dnaContractContract');
 const DataContract = require('../contract/dataContract');
 const BiocoinContract = require('../contract/biocoinContract');
 const ControllerUtil = require('./ControllerUtil.js');
+const DnaContractService = require('./../services/dnaContractService')
 const CONFIG = require('../config.json');
 
 exports.new = async function(req, res, next){
@@ -11,12 +12,15 @@ exports.new = async function(req, res, next){
 };
 
 exports.create = async function(req, res, next){
-  let dnaContract = createDnaContractFromRequest(req);
-
-  const dnaContractContract = new DnaContractContract();
-  await dnaContractContract.createDnaContract(dnaContract)
-  req.flash('success', "DNA Contract was created with sucess")
-  res.redirect("/dnaContract/" + dnaContract.id)
+  try{
+    const dnaContract = await DnaContractService.createDnaContract(req)
+    req.flash('success', "DNA Contract was created with sucess")
+    res.redirect("/dnaContract/" + dnaContract.id)
+  } catch(error) {
+    req.flash('error', ControllerUtil.getMessageFromError(error))
+    res.redirect("back")
+    return
+  }
 };
 
 exports.show = async function(req, res, next){
@@ -71,25 +75,3 @@ exports.endorse = async function(req, res, next) {
 
 
 
-function createDnaContractFromRequest(req){
-  payment_distribution = parsePaymentDistributionPercentage(req.body.payment_distribution)
-  raw_data_price = req.body.raw_data_price*1e9  // converting biocoins to Sys
-  processed_data_price = req.body.processed_data_price*1e9  // converting biocoins to Sys
-
-  return {
-    id: ControllerUtil.getHash(req.body.dnaId),
-    dna_id: req.body.dnaId,
-    raw_data_price,
-    processed_data_price,
-    payment_distribution: req.body.payment_distribution,
-    royalty_payments: req.body.royalty_payments,
-    created_at: new Date().toDateString()
-  }
-}
-
-function parsePaymentDistributionPercentage(payment_distribution){
-  Object.keys(payment_distribution).forEach(function(key) {
-    payment_distribution[key] = ControllerUtil.parsePercentage(payment_distribution[key])
-  })
-  return payment_distribution
-}
