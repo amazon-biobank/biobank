@@ -6,6 +6,7 @@ var http = require('http'),
     flash = require('connect-flash'),
     errorhandler = require('errorhandler');
 const ConnectService = require('./services/connectService');
+const result = require('dotenv').config({ path: path.join(__dirname, ".env") })
 
 var isProduction = process.env.NODE_ENV === 'production';
 

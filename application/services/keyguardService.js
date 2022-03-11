@@ -2,13 +2,14 @@ const path = require('path');
 const fs = require('fs')
 const https = require('https');
 require('dotenv').config()
+const WalletSingleton = require('../utils/walletSingleton')
 
 
 class KeyguardService {
   static async registerDnaKey(dnaId, secretKey, callback, errorCallback) {
     handleTlsAuthorization()
     const postData = JSON.stringify({ dnaId, secretKey })
-    const response = postToKeyguard('/register-dna-key', postData, callback, errorCallback)
+    const response = await postToKeyguard('/register-dna-key', postData, callback, errorCallback)
     return response
   }
 
@@ -25,15 +26,16 @@ function handleTlsAuthorization(){
   }
 }
 
-function getKeyguardRequestOptions(){
-  const userIdPath = path.join(process.cwd(), 'fabric-details/wallet/userCertificate.id');
+async function getKeyguardRequestOptions(){
   const caPath = path.join(process.cwd(), 'fabric-details/ca.crt');
-  const userId = fs.readFileSync(userIdPath)
+  const wallet = await new WalletSingleton().getWallet()
+  const userId =  await wallet.get('userCertificate')
+
   const keyguardRequestOptions = {
     hostname: getKeyguardHostname(),
     port: 9443,
-    cert: JSON.parse(userId.toString()).credentials.certificate,
-    key: JSON.parse(userId.toString()).credentials.privateKey,
+    cert: userId.credentials.certificate,
+    key: userId.credentials.privateKey,
     ca: fs.readFileSync(caPath), 
   }
 
@@ -50,7 +52,7 @@ function getKeyguardHostname(){
 }
 
 async function getToKeyguard(path, getQuery, callback, errorCallback){
-  let getRequestOptions = getKeyguardRequestOptions()
+  let getRequestOptions = await getKeyguardRequestOptions()
   getRequestOptions = Object.assign(getRequestOptions, {
     path: path + getQuery,
     method: 'GET'
@@ -74,8 +76,8 @@ async function getToKeyguard(path, getQuery, callback, errorCallback){
   })
 }
 
-function postToKeyguard(path, postData, callback, errorCallback){
-  let postRequestOptions = getKeyguardRequestOptions()
+async function postToKeyguard(path, postData, callback, errorCallback){
+  let postRequestOptions = await getKeyguardRequestOptions()
   postRequestOptions = Object.assign( postRequestOptions, {
     method: 'POST',
     path,

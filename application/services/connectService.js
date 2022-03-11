@@ -2,33 +2,32 @@ const { Gateway, Wallets } = require('fabric-network');
 const path = require('path');
 const fs = require('fs')
 const os = require('os')
-const { X509Certificate } = require('crypto')
 const jsrsasign = require('jsrsasign')
 const ControllerUtil = require('./../controllers/ControllerUtil')
+const WalletSingleton = require('../utils/walletSingleton')
 const axios = require('axios')
-require('dotenv').config()
-
 
 
 
 class ConnectService {
   constructor() {
-    this.walletPath = path.join(process.cwd(), 'fabric-details/wallet');
-
+    
     if(process.env.CONTEXT=='microfabric'){
+      this.walletPath = path.join(process.cwd(), 'fabric-details/wallet');
       this.connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'connection.json');
       this.asLocalhost = true
     }
     else if(process.env.CONTEXT=='remote'){
       this.connectionProfilePath = path.resolve(os.tmpdir(), 'biobank-app', 'remote-connection-larc.json')
+      this.walletPath = path.resolve(os.tmpdir(), 'biobank-app')
       this.asLocalhost = false
     }
+    console.log("connection profile path: ", this.connectionProfilePath)
+    console.log("wallet path: ", this.walletPath)
   }
   
   async connectNetwork(channel, chaincode) {
-    const wallet = await Wallets.newFileSystemWallet(this.walletPath);
-    console.log(`Wallet path: ${this.walletPath}`);
-
+    const wallet = await new WalletSingleton().getWallet()
 
     let connectionProfile = JSON.parse(fs.readFileSync(this.connectionProfilePath, 'utf8'));
 
@@ -43,7 +42,7 @@ class ConnectService {
   }
 
   async getMyAddress() {
-    const wallet = await Wallets.newFileSystemWallet(this.walletPath);
+    const wallet = await new WalletSingleton().getWallet()
     const id =  await wallet.get('userCertificate')
     if(id){
       var x509 = new jsrsasign.X509()

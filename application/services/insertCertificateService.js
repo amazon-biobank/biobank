@@ -1,11 +1,15 @@
 const path = require('path');
 const fs = require('fs')
 const formidable = require('formidable')
+const os = require('os')
+const { Gateway, Wallets, Wallet } = require('fabric-network');
+const WalletSingleton = require('../utils/walletSingleton')
+
 
 
 class InsertCertificateService {
   constructor(){
-    this.walletPath = path.join(process.cwd(), 'fabric-details/wallet', '/userCertificate.id');
+    this.walletPath = path.resolve(os.tmpdir(), 'biobank-app', 'userCertificate.id') 
   }
 
   async insertCertificate(req) {
@@ -22,18 +26,21 @@ class InsertCertificateService {
       })
     })
     
-    const certificatePath = path.join(files.certificate.path, files.certificate.name)
-    await fs.rename(files.certificate.path, this.walletPath, () => {})  
-    console.log(certificatePath, this.walletPath)
-    return
+    const id = JSON.parse(fs.readFileSync(files.certificate.path, 'utf8'))
+    const wallet = await new WalletSingleton().getWallet()
+    await wallet.put('userCertificate', id)
+    return 
   }
 
   async destroyCertificate(req) {
-    await fs.unlink(this.walletPath, () => {})
+    const wallet = await new WalletSingleton().getWallet()
+    await wallet.remove('userCertificate')
   }
 
-  isCertificatePresent(){
-    return fs.existsSync(this.walletPath)
+  async isCertificatePresent(){
+    const wallet = await new WalletSingleton().getWallet()
+    const userId =  await wallet.get('userCertificate')
+    return userId
   }
 }
 
