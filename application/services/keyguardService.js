@@ -66,6 +66,7 @@ async function getToKeyguard(path, getQuery, callback, errorCallback){
           statusCode: req.res.statusCode,
           data: data.toString()
         }
+        console.log(response)
         callback(response)
       })
     }
