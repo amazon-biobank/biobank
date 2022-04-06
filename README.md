@@ -54,15 +54,12 @@ On Client
 # Clone repository
 git clone https://github.com/amazon-biobank/biobank.git
 
-# Configure application/services/connectService.js to use remote-connection.json
-# Configure application/fabric-details/remote-connection.json according to servers' file (biobank/blockchain/organizations/peerOrganizations/org1.example.com/connection-org1.json). Don't forget to change server's IP address
-# Get admin and user certificate, from server. (biobank/application/fabric-details/wallet)
-
 # Up client application
 cd application
 npm install
 node index.js
 ```
+For your convenience, you can get the admin certificate in <REMOTE IP>:3000/admin-id. This user is already created and registered.
 
 obs: maybe it is necessary to configure the hosts archive
 1) Open /etc/hosts (in linux)
