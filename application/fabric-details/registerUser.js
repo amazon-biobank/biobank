@@ -10,15 +10,27 @@ const { Wallets } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
 const fs = require('fs');
 const path = require('path');
+const userName = process.argv[2]
+const context = process.argv[3]
+var caURL
+
+
 
 async function main() {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, '..', '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
-        const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+        if(context == 'microfabric'){
+            const ccpPath = path.resolve(__dirname, '..', 'fabric-details', 'connection.json');
+            const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+            caURL = ccp.certificateAuthorities['org1ca-api.127-0-0-1.nip.io:8080'].url;
+        } 
+        else if(context == 'remote') {
+            const ccpPath = path.resolve(__dirname, '..', '..', 'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+            const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+            caURL = ccp.certificateAuthorities['ca.org1.example.com'].url;
+        }
+        
 
-        // Create a new CA client for interacting with the CA.
-        const caURL = ccp.certificateAuthorities['ca.org1.example.com'].url;
         const ca = new FabricCAServices(caURL);
 
         // Create a new file system based wallet for managing identities.
@@ -27,9 +39,9 @@ async function main() {
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
-        const userIdentity = await wallet.get('appUser');
+        const userIdentity = await wallet.get(userName);
         if (userIdentity) {
-            console.log('An identity for the user "appUser" already exists in the wallet');
+            console.log(`An identity for the user ` + userName + ` already exists in the wallet`);
             return;
         }
 
@@ -48,11 +60,11 @@ async function main() {
         // Register the user, enroll the user, and import the new identity into the wallet.
         const secret = await ca.register({
             affiliation: 'org1.department1',
-            enrollmentID: 'appUser',
+            enrollmentID: userName,
             role: 'client'
         }, adminUser);
         const enrollment = await ca.enroll({
-            enrollmentID: 'appUser',
+            enrollmentID: userName,
             enrollmentSecret: secret
         });
         const x509Identity = {
@@ -63,11 +75,11 @@ async function main() {
             mspId: 'Org1MSP',
             type: 'X.509',
         };
-        await wallet.put('appUser', x509Identity);
-        console.log('Successfully registered and enrolled admin user "appUser" and imported it into the wallet');
+        await wallet.put(userName, x509Identity);
+        console.log(`Successfully registered and enrolled admin user ` + userName + ` and imported it into the wallet`);
 
     } catch (error) {
-        console.error(`Failed to register user "appUser": ${error}`);
+        console.error(`Failed to register user` + userName + `: ${error}`);
         process.exit(1);
     }
 }

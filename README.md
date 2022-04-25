@@ -1,5 +1,14 @@
 # Biobank
-// put a abstract here
+Biodiversity is proposed as a sustainable alternative for the economic development of high-
+biodiversity regions. Especially in the field of biodiversity genomics, the development of low-cost DNA
+sequencing opens an opportunity for new actors beyond academia to engage in genomic sequencing.
+However, it is challenging to adequately compensate local population for their contribution to the innovation
+process, preventing better bioeconomy development. Although many repositories register genomic data
+to support biodiversity research, they do not facilitate the fair sharing of economical benefits. 
+In this work, we propose the creation of the Amazon Biobank, a community-based genetic
+database. By combining blockchain and smart contract technologies, it provides adequate benefit-sharing
+among all participants who collect, insert, process, store and validate genomic data. It also provides
+traceability and auditability, allowing easy association between biotechnological research and DNA data
 
 ## Requirements
 * Hyperledger Fabric 2.3.0
@@ -45,15 +54,12 @@ On Client
 # Clone repository
 git clone https://github.com/amazon-biobank/biobank.git
 
-# Configure application/services/connectService.js to use remote-connection.json
-# Configure application/fabric-details/remote-connection.json according to servers' file (biobank/blockchain/organizations/peerOrganizations/org1.example.com/connection-org1.json). Don't forget to change server's IP address
-# Get admin and user certificate, from server. (biobank/application/fabric-details/wallet)
-
 # Up client application
 cd application
 npm install
 node index.js
 ```
+For your convenience, you can get the admin certificate in <REMOTE IP>:3000/admin-id. This user is already created and registered.
 
 obs: maybe it is necessary to configure the hosts archive
 1) Open /etc/hosts (in linux)

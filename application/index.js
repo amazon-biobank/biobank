@@ -5,6 +5,8 @@ var http = require('http'),
     session = require('express-session'),
     flash = require('connect-flash'),
     errorhandler = require('errorhandler');
+const ConnectService = require('./services/connectService');
+const result = require('dotenv').config({ path: path.join(__dirname, ".env") })
 
 var isProduction = process.env.NODE_ENV === 'production';
 
@@ -77,7 +79,21 @@ app.use(function(err, req, res, next) {
   }});
 });
 
-// finally, let's start our server...
-var server = app.listen( process.env.PORT || 3000, function(){
-  console.log('Listening on port ' + server.address().port);
-});
+
+if(process.env.CONTEXT=='microfabric'){
+  console.log("Starting Biobank-App in local development mode")
+  initServer()
+}
+else if(process.env.CONTEXT=='remote'){
+  console.log("Starting Biobank-App in remote mode...")
+  connectService = new ConnectService()
+  connectService.updateConnectionProfile().then(() => {
+    initServer()
+  })
+}
+
+function initServer(){
+  var server = app.listen( process.env.PORT || 3000, function(){
+    console.log('Listening on port ' + server.address().port);
+  });
+}

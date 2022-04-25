@@ -1,34 +1,21 @@
-const { FileSystemWallet, Gateway }  = require('fabric-network');
 const path = require('path');
 const fs = require('fs')
-const DataContract = require('../contract/dataContract');
 const https = require('https');
-const { throws } = require('assert');
-const { resolve } = require('path');
 require('dotenv').config()
+const WalletSingleton = require('../utils/walletSingleton')
 
-const userIdPath = path.join(process.cwd(), 'fabric-details/wallet/userCertificate.id');
-const caPath = path.join(process.cwd(), 'fabric-details/ca.crt');
-const userId = fs.readFileSync(userIdPath)
-const keyguardRequestOptions = {
-  hostname: process.env.KEYGUARD_HOSTNAME,
-  port: 9443,
-  cert: JSON.parse(userId.toString()).credentials.certificate,
-  key: JSON.parse(userId.toString()).credentials.privateKey,
-  ca: fs.readFileSync(caPath), 
-}
 
 class KeyguardService {
-  static async registerDnaKey(dnaId, secretKey) {
+  static async registerDnaKey(dnaId, secretKey, callback, errorCallback) {
     handleTlsAuthorization()
     const postData = JSON.stringify({ dnaId, secretKey })
-    const response = postToKeyguard('/register-dna-key', postData)
+    const response = await postToKeyguard('/register-dna-key', postData, callback, errorCallback)
     return response
   }
 
-  static async readDnaKey(dnaId, callback) {
+  static async readDnaKey(dnaId, callback, errorCallback) {
     handleTlsAuthorization()
-    const response = await getToKeyguard('/read-dna-key', '?dnaId='+ dnaId, callback)
+    const response = await getToKeyguard('/read-dna-key', '?dnaId='+ dnaId, callback, errorCallback)
     return response
   }
 }
@@ -39,8 +26,33 @@ function handleTlsAuthorization(){
   }
 }
 
-async function getToKeyguard(path, getQuery, callback){
-  let getRequestOptions = Object.assign({}, keyguardRequestOptions)
+async function getKeyguardRequestOptions(){
+  const caPath = path.join(process.cwd(), 'fabric-details/ca.crt');
+  const wallet = await new WalletSingleton().getWallet()
+  const userId =  await wallet.get('userCertificate')
+
+  const keyguardRequestOptions = {
+    hostname: getKeyguardHostname(),
+    port: 9443,
+    cert: userId.credentials.certificate,
+    key: userId.credentials.privateKey,
+    ca: fs.readFileSync(caPath), 
+  }
+
+  return keyguardRequestOptions
+
+}
+
+function getKeyguardHostname(){
+  if(process.env.CONTEXT=='remote'){
+    return process.env.REMOTE_HOSTNAME
+  } else {
+    return process.env.LOCAL_HOSTNAME
+  }
+}
+
+async function getToKeyguard(path, getQuery, callback, errorCallback){
+  let getRequestOptions = await getKeyguardRequestOptions()
   getRequestOptions = Object.assign(getRequestOptions, {
     path: path + getQuery,
     method: 'GET'
@@ -54,19 +66,19 @@ async function getToKeyguard(path, getQuery, callback){
           statusCode: req.res.statusCode,
           data: data.toString()
         }
+        console.log(response)
         callback(response)
-      })
-      
-      res.on('error', error => {
-        console.error(error)
       })
     }
   )
   req.end();
+  req.on('error', function(error) {
+    errorCallback(error)
+  })
 }
 
-function postToKeyguard(path, postData){
-  let postRequestOptions = Object.assign({}, keyguardRequestOptions)
+async function postToKeyguard(path, postData, callback, errorCallback){
+  let postRequestOptions = await getKeyguardRequestOptions()
   postRequestOptions = Object.assign( postRequestOptions, {
     method: 'POST',
     path,
@@ -80,17 +92,19 @@ function postToKeyguard(path, postData){
     postRequestOptions,
     res => {
       res.on('data', function(data) {
-        console.log(data.toString())
-        return data.toString
-      })
-
-      res.on('error', error => {
-        console.error(error)
+        const response = {
+          statusCode: req.res.statusCode,
+          data: data.toString()
+        }
+        callback(response)
       })
     }
   );   
   req.write(postData);
   req.end();
+  req.on('error', error => {
+    errorCallback(error)
+  })
 }
 
 

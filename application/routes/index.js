@@ -18,9 +18,9 @@ router.use('/dnaKey', require('./dnaKeyRoute'));
 
 module.exports = router;
 
-function requireCertificate(req, res, next) {
+async function requireCertificate(req, res, next) {
   const insertCertificateService = new InsertCertificateService()
-  if(insertCertificateService.isCertificatePresent()){
+  if(await insertCertificateService.isCertificatePresent()){
     next()
   }
   else {
