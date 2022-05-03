@@ -31,6 +31,7 @@ exports.show = async function(req, res, next){
 exports.create = async function(req, res, next){
   const processRequestContract = new ProcessRequestContract();
   const dataContract = new DataContract();
+
   
   let processRequest = createProcessorRequestFromRequest(req);
   await processRequestContract.createProcessRequest(processRequest)
@@ -41,6 +42,7 @@ exports.create = async function(req, res, next){
 };
 
 function createProcessorRequestFromRequest(req){
+
   return {
     id: ControllerUtil.generateId(),
     raw_data_id: req.body.raw_data_id,
