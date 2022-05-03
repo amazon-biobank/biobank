@@ -1,6 +1,6 @@
 const { pathToFileURL } = require('url');
-const { ActiveContext, ActiveContract } = require('./../active-contract')
-const BiocoinOperations = require('./../biocoin/biocoin-operations.js');
+const { ActiveContext, ActiveContract } = require('../active-contract')
+const BiocoinOperations = require('../biocoin/biocoin-operations.js');
 
 class AccountContext extends ActiveContext {
     constructor() {
@@ -8,7 +8,7 @@ class AccountContext extends ActiveContext {
     }
 }
 
-class TokenContract extends ActiveContract {
+class EscrowTokenContract extends ActiveContract {
     createContext() {
         return new AccountContext();
     }
@@ -54,4 +54,4 @@ async function deleteUserToken(ctx, user, index){
     return user
 }
 
-module.exports =  TokenContract;
+module.exports =  EscrowTokenContract;

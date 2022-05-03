@@ -1,9 +1,9 @@
-const BiocoinOperations = require('./../biocoin/biocoin-operations.js');
-const TokenContract = require('./token-contract.js');
-const AccountContract = require('./../account/account-contract.js')
+const BiocoinOperations = require('../biocoin/biocoin-operations.js');
+const EscrowTokenContract = require('./escrow-token-contract.js');
+const AccountContract = require('../account/account-contract.js')
 
 
-class InternalTokenContract extends TokenContract {
+class InternalEscrowTokenContract extends EscrowTokenContract {
     async redeemEscrowToken(ctx, { paymentIntentionId, payerAddress, receiverAddress, amount }){
       const accountContract = new AccountContract()
       var payer = await accountContract.readAccount(ctx, payerAddress)
@@ -27,4 +27,4 @@ function findUserToken(tokens, id){
   return { userToken, index }
 }
 
-module.exports = InternalTokenContract;
+module.exports = InternalEscrowTokenContract;

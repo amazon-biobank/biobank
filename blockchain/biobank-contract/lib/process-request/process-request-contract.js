@@ -29,9 +29,12 @@ class ProcessRequestContract extends ActiveContract {
         const newProcessRequestAttributes = handleProcessRequestAttributes(ctx, id, processRequestAttributes)
         const rawDNA = await validateRawDNAOwner(ctx, newProcessRequestAttributes)
         const dnaContractId  = rawDNA.dna_contract
-        const rawDataPrice = await getRawDNAPrice(ctx, dnaContractId)
-        
-
+        const rawDNAPrice = await getRawDNAPrice(ctx, dnaContractId)
+        //createToken
+        const ProcessTokenAttributes = handleProcessTokenAttributes(ctx, rawDNAPrice, newProcessRequestAttributes.id, rawDNA.id)
+        const args = [ "ProcessTokenContract:createProcessToken",  ProcessTokenAttributes ]
+        const token = await this.queryCurrencyChannel(ctx, args)
+        // create process request
         const processRequest = ProcessRequest.createInstance(newProcessRequestAttributes);
         await ctx.processRequestList.addProcessRequest(processRequest);
         return processRequest;
@@ -81,6 +84,14 @@ function handleProcessRequestAttributes(ctx, id, processRequestAttributes) {
         id, raw_data_id, processor_id, processed_data_id, status, created_at
     }
     return newOperationAttributes;
+}
+
+function handleProcessTokenAttributes(ctx, value, process_request_id, raw_dna_id){
+    const owner = ctx.user.id
+    const token_id = process_request_id
+    const ProcessTokenAttributes = {process_request_id, token_id, value,  owner, raw_dna_id}
+
+    return ProcessTokenAttributes
 }
 
 
