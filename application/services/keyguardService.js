@@ -36,7 +36,7 @@ async function getKeyguardRequestOptions(){
     port: 9443,
     cert: userId.credentials.certificate,
     key: userId.credentials.privateKey,
-    ca: fs.readFileSync(caPath), 
+    ca: process.env['CA'], 
   }
 
   return keyguardRequestOptions
