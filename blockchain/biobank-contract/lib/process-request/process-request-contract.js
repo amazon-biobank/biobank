@@ -8,6 +8,7 @@ const DataList = require('./../data/data-list');
 const DnaContractList = require('./../dna-contract/dna-contract-list')
 const DnaContractContract = require('./../dna-contract/dna-contract-contract')
 const DoesntOnwRawDNAError = require('../erros/doesnt-own-rawdna-error');
+const DnaContractUtils = require('../dna-contract/dna-contract-utils')
 
 
 class ProcessRequestContext extends ActiveContext {
@@ -28,7 +29,14 @@ class ProcessRequestContract extends ActiveContract {
     async createProcessRequest(ctx, id, processRequestAttributes) {
         const newProcessRequestAttributes = handleProcessRequestAttributes(ctx, id, processRequestAttributes)
 
-        const rawDNA = await validateRawDNAOwner(ctx, newProcessRequestAttributes)
+        const ownership = await validateRawDNAOwner(ctx, newProcessRequestAttributes)
+        // if rawDNA == false 
+        // then operação de compra do DNA
+        const dataContract = new DataContract()
+        const rawDNA = await dataContract.readData(ctx, newProcessRequestAttributes.raw_data_id)
+        if (ownership == false){
+            await DnaContractUtils.addOwnersInData(ctx, rawDNA)
+        }
 
         const dnaContractId  = rawDNA.dna_contract
         const rawDNAPrice = await getRawDNAPrice(ctx, dnaContractId)
@@ -64,10 +72,10 @@ async function  validateRawDNAOwner(ctx, newProcessRequestAttributes){
     const user = newProcessRequestAttributes.processor_id
     const owners = rawDNA.owners
     if(!owners.includes(user)){
-        throw new DoesntOnwRawDNAError(rawDNA.id)
+        return false
     }
     
-    return rawDNA
+    return true
 }
 
 async function getRawDNAPrice(ctx, dnaContradId){

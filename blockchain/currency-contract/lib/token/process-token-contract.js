@@ -17,6 +17,7 @@ class ProcessTokenContract extends ActiveContract {
         const attributes = JSON.parse(processTokenAttributes)
         const processToken = createInstanceProcessToken(attributes)
         var user = await BiocoinOperations.withdraw_biocoins(ctx, ctx.user, processToken.value)
+        // let user = ctx.user
         user.tokens.push(processToken)
         await ctx.accountList.updateAccount(user)
         return user

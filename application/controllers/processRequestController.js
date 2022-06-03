@@ -35,6 +35,7 @@ exports.create = async function(req, res, next){
 
   //call channel 1
   // verify if the user is owner of the DNA 
+  // if not, buy the DNA
   // and set the token attributes to the process token
   let processRequest = createProcessorRequestFromRequest(req);
   const processRequestCreated = await processRequestContract.createProcessRequest(processRequest)
