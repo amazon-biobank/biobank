@@ -25,7 +25,7 @@ In addition, DNA data is distributed using BitTorrent protocol. So, only BitTorr
 * Time to generate a magnet link from a X GB file: X seconds
 * Time to download a X GB using Torrente and micropayments: X seconds
 
-Below are preliminary numbers about some operations of the system. Note that it was measured using a remote private server, contacted via VPN rather than using the public Internet. Also, we used a Hyperledger Fabric test network, instead of a better production-ready network.
+Below are preliminary numbers about some operations of the system. Note that it was measured using a remote private server, contacted via VPN rather than using the public Internet. Also, we used a Hyperledger Fabric test network, instead of a production-ready one.
 * Time taken to register a DNA on the blockchain: X seconds
 * Time taken to read details about a DNA data: X seconds
 * Time taken to buy a DNA: X seconds (note that it requires 3 transactions to the blockchain)
