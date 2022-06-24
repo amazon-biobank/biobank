@@ -10,6 +10,12 @@ database. By combining blockchain and smart contract technologies, it provides a
 among all participants who collect, insert, process, store and validate genomic data. It also provides
 traceability and auditability, allowing easy association between biotechnological research and DNA data
 
+## Demonstration
+We have a video demonstration of the software, presented at the "Tool Session" on the XXI Brazilian Symposium on Information and Computational Systems Security in 2021
+
+https://youtu.be/PqujKOURc44
+
+
 ## Requirements
 * Hyperledger Fabric 2.3.0
 * Hyperledger Explorer 1.1.5
