@@ -24,7 +24,7 @@ In addition, DNA data is distributed using BitTorrent protocol. So, only BitTorr
 * Size of a BitTorrent magnet link: 20 bytes
 * Time to generate a magnet link from a 1 GB file: 18 seconds
 * Time to download 1 GB using Torrente and micropayments (2MB/s network): 9 minutes
-   - For reference: Time taken to download 1 GB in a conventional BitTorrent without micropayments (2MB/s network): 8 and half minutes
+   - For reference: Time to download 1 GB in a conventional BitTorrent without micropayments (2MB/s network): 8.5 minutes
 
 Below are preliminary numbers about some operations of the system. Note that it was measured using a remote private server, contacted via VPN rather than using the public Internet. Also, we used a Hyperledger Fabric test network, instead of a production-ready one.
 * Time taken to read details about a DNA data: 367 millisecond
