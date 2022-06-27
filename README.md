@@ -22,8 +22,9 @@ Our software was designed to be highly scalable, by using as underlying consensu
 
 In addition, DNA data is distributed using BitTorrent protocol. So, only BitTorrent magnet links are registered on the blockchain. (See [Torrente](https://doi.org/10.5753/sbseg_estendido.2021.17343))
 * Size of a BitTorrent magnet link: 20 bytes
-* Time to generate a magnet link from a X GB file: X seconds
-* Time to download a X GB using Torrente and micropayments: X seconds
+* Time to generate a magnet link from a 1 GB file: 18 seconds
+* Time to download 1 GB using Torrente and micropayments (2MB/s network): 9 minutes
+   - For reference: Time taken to download 1 GB in a conventional BitTorrent without micropayments (2MB/s network): 8 and half minutes
 
 Below are preliminary numbers about some operations of the system. Note that it was measured using a remote private server, contacted via VPN rather than using the public Internet. Also, we used a Hyperledger Fabric test network, instead of a production-ready one.
 * Time taken to register a DNA on the blockchain: X seconds
