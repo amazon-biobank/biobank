@@ -27,8 +27,8 @@ In addition, DNA data is distributed using BitTorrent protocol. So, only BitTorr
    - For reference: Time taken to download 1 GB in a conventional BitTorrent without micropayments (2MB/s network): 8 and half minutes
 
 Below are preliminary numbers about some operations of the system. Note that it was measured using a remote private server, contacted via VPN rather than using the public Internet. Also, we used a Hyperledger Fabric test network, instead of a production-ready one.
-* Time taken to register a DNA on the system: 3.5 seconds
 * Time taken to read details about a DNA data: 367 millisecond
+* Time taken to register a DNA on the system: 3.5 seconds
 * Time taken to buy a DNA: 7.7 seconds (note that it requires 3 writing transactions to the blockchain)
 
 
