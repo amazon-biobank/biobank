@@ -14,7 +14,7 @@ class InsertCertificateService {
 
   async insertCertificate(req) {
     const form = new formidable.IncomingForm()
-  
+    console.log(req)
     const { files, fields } = await new Promise((resolve, reject) => {
       form.parse(req, (err, fields, files) =>{
         if (err) {
@@ -23,6 +23,8 @@ class InsertCertificateService {
           return;
         }
         resolve({ files, fields })
+        console.log(fields)
+        
       })
     })
     
