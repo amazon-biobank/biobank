@@ -3,6 +3,8 @@ const DnaContractContract = require('../contract/dnaContractContract');
 const ControllerUtil = require('./ControllerUtil.js');
 const KeyguardService = require('../services/keyguardService');
 const DataService = require('./../services/dataService')
+const ProcessRequestContract = require('./../contract/processRequestContract')
+const ProcessTokenContract = require('./../contract/processTokenContract')
 
 exports.index = async function(req, res, next){
   const dataContract = new DataContract();
@@ -46,6 +48,28 @@ exports.newProcessedData = async function(req, res, next){
 
 
 exports.createProcessedData = async function(req, res, next){
+
+
+  if(req.body.process_request_id != null){
+    const dataContract = new DataContract();
+    const dnaContractContract = new DnaContractContract();
+    const processRequestContract = new ProcessRequestContract();
+    const processTokenContract = new ProcessTokenContract()
+
+    let processRequest = await processRequestContract.readProcessRequest(req.body.process_request_id)
+    //let rawDna = await dataContract.readData(processRequest.raw_data_id)
+    //let rawDnaContract = await dnaContractContract.readDnaContract(rawDna.dna_contract)
+    //let user = await accountContract.readAccount(processRequest.processor_id) 
+    //
+    
+    let attributes = {accountId: processRequest.processor_id, processRequestId: req.body.process_request_id  }
+    let processTokenAttributes = JSON.stringify(attributes)
+    let user = await processTokenContract.redeemProcessToken(processTokenAttributes)
+    console.log("\n\n Vinicius \n\n")
+    console.log(user) 
+    console.log("\n\n")
+  }
+
   const processedData = await handleCreateProcessedData(req, res)
   if(processedData == undefined){ return }
 

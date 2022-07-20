@@ -2,6 +2,7 @@ const { ActiveContext, ActiveContract } = require('./../active-contract')
 const BiocoinOperations = require('./../biocoin/biocoin-operations.js');
 const TesteError = require('./../errors/teste-error')
 
+
 class AccountContext extends ActiveContext {
     constructor() {
         super();
@@ -23,9 +24,18 @@ class ProcessTokenContract extends ActiveContract {
         return user
     }
 
-    async redeemProcessToken(ctx, paymentIntentionId){ 
+    async redeemProcessToken(ctx, processTokenAttributes){
+    
+        const attributes = JSON.parse(processTokenAttributes)
+        const { userToken, index } = findUserToken(ctx.user.tokens, attributes.processRequestId)
+        //throw new TesteError("ERROOOOOOO")
+        var user = await BiocoinOperations.deposit_biocoins(ctx, ctx.user, userToken.value)
+        return await deleteUserToken(ctx, user, index)
     }
 }
+
+/************* Auxiliary functions **************/
+
 
 function createInstanceProcessToken(processTokenAttributes){
     return processToken = {
@@ -36,6 +46,19 @@ function createInstanceProcessToken(processTokenAttributes){
         owner: processTokenAttributes.owner, 
         raw_dna_id: processTokenAttributes.raw_dna_id
     }
+}
+
+function findUserToken(tokens, id){
+    const isIdEqual = (element) => element.process_request_id == id
+    const index = tokens.findIndex(isIdEqual)
+    const userToken = tokens[index]
+    return { userToken, index }
+}
+
+async function deleteUserToken(ctx, user, index){
+    user.tokens.splice(index, 1)
+    await ctx.accountList.updateAccount(user)
+    return user
 }
 
 module.exports =  ProcessTokenContract;
