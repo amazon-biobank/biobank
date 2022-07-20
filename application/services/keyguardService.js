@@ -36,7 +36,7 @@ async function getKeyguardRequestOptions(){
     port: 9443,
     cert: userId.credentials.certificate,
     key: userId.credentials.privateKey,
-    ca: fs.readFileSync(caPath), 
+    ca: process.env['CA'], 
   }
 
   return keyguardRequestOptions
@@ -67,7 +67,13 @@ async function getToKeyguard(path, getQuery, callback, errorCallback){
           data: data.toString()
         }
         console.log(response)
-        callback(response)
+
+        if(response.statusCode==200){
+          callback(response)
+        }
+        else {
+          errorCallback({message: response.data })
+        }
       })
     }
   )
