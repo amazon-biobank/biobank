@@ -30,7 +30,6 @@ exports.newRawData = async function(req, res, next){
   res.render('data/raw-data-new', { });
 };
 
-
 exports.createRawData = async function(req, res, next){
   const rawData = await handleCreateRawData(req, res)
   if(rawData == undefined){ return }
@@ -55,6 +54,17 @@ exports.createProcessedData = async function(req, res, next){
     await DataService.updateProcessRequest(req.body.process_request_id, processedData)
   }
 };
+
+exports.newTradicionalKnowledgeData = async function(req,res,next){
+  const queryParams = { processRequestId: req.query.processRequest}
+  res.render('data/tradicional-knowledge-new', { queryParams });
+}
+
+exports.createTradicionalKnowledgeData = async function(req,res,next){  //Nova rota para o botão
+    const a = 1;
+    return a;
+
+}
 
 
 exports.show = async function(req, res, next){
