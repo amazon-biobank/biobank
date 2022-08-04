@@ -55,17 +55,6 @@ exports.createProcessedData = async function(req, res, next){
   }
 };
 
-exports.newTradicionalKnowledgeData = async function(req,res,next){
-  const queryParams = { processRequestId: req.query.processRequest}
-  res.render('data/tradicional-knowledge-new', { queryParams });
-}
-
-exports.createTradicionalKnowledgeData = async function(req,res,next){  //Nova rota para o botão
-    const a = 1;
-    return a;
-
-}
-
 
 exports.show = async function(req, res, next){
   const dataId = req.params.dataId;
