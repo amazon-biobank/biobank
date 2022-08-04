@@ -12,7 +12,7 @@ block content
             .text-center
               h1.h4.text-gray-900.mb-4 Send a Tradicional Knowledge data
               p.mb-4
-            form.user(action='/data/tradicional-data-create' method='post')
+            form.user(action='/tk/tradicional-knowledge-create' method='post')
               .form-group
                 label(for='process_request_id') Process request ID (Optional)
                 input#process_request_id.form-control.form-control-user(name='process_request_id' type='text' value=queryParams.processRequestId)
@@ -26,7 +26,7 @@ block content
                 label(for='species') Species 
                 textarea#exampleFormControlTextarea1.form-control(name='metadata[species]' rows = '1' type = 'text' required)
               .form-group
-                label(for='magnet_link') DNA magnetic link
+                label(for='magnet_link') Magnetic link
                 input#magnet_link.form-control.form-control-user(name='metadata[magnet_link]' type='text' required)
               .form-group
                 label(for='secret_key') Secret Key
@@ -35,7 +35,7 @@ block content
                 input#organization.form-control.form-control-user(name='secret_key' type='text' required)
               hr
               .float-right.mb-4.inline-block
-                a.btn.btn-danger.btn-user.mr-3.px-5(href='/data')
+                a.btn.btn-danger.btn-user.mr-3.px-5(href='/tk')
                   | Cancel
                 input.btn.btn-primary.btn-user.px-5(type='submit' value='Add')
 
