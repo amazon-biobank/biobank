@@ -48,26 +48,8 @@ exports.newProcessedData = async function(req, res, next){
 
 
 exports.createProcessedData = async function(req, res, next){
-
-
   if(req.body.process_request_id != null){
-    const dataContract = new DataContract();
-    const dnaContractContract = new DnaContractContract();
-    const processRequestContract = new ProcessRequestContract();
-    const processTokenContract = new ProcessTokenContract()
-
-    let processRequest = await processRequestContract.readProcessRequest(req.body.process_request_id)
-    //let rawDna = await dataContract.readData(processRequest.raw_data_id)
-    //let rawDnaContract = await dnaContractContract.readDnaContract(rawDna.dna_contract)
-    //let user = await accountContract.readAccount(processRequest.processor_id) 
-    //
-    
-    let attributes = {accountId: processRequest.processor_id, processRequestId: req.body.process_request_id  }
-    let processTokenAttributes = JSON.stringify(attributes)
-    let user = await processTokenContract.redeemProcessToken(processTokenAttributes)
-    console.log("\n\n Vinicius \n\n")
-    console.log(user) 
-    console.log("\n\n")
+    await redeemToken(req, res)
   }
 
   const processedData = await handleCreateProcessedData(req, res)
@@ -151,6 +133,16 @@ async function handleRegisterDnaKey(req, res, dnaId){
     req.flash('error', error.message)
     res.redirect("/data/" + dnaId)
   })  
+}
+
+async function redeemToken(req, res){
+  const processRequestContract = new ProcessRequestContract();
+  const processTokenContract = new ProcessTokenContract()
+
+  let processRequest = await processRequestContract.readProcessRequest(req.body.process_request_id)
+  let attributes = {accountId: processRequest.processor_id, processRequestId: req.body.process_request_id  }
+  let processTokenAttributes = JSON.stringify(attributes)
+  await processTokenContract.redeemProcessToken(processTokenAttributes)
 }
 
 

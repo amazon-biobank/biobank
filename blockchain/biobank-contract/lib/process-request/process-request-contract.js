@@ -28,12 +28,10 @@ class ProcessRequestContract extends ActiveContract {
 
     async createProcessRequest(ctx, id, processRequestAttributes) {
         const newProcessRequestAttributes = handleProcessRequestAttributes(ctx, id, processRequestAttributes)
-
         const ownership = await validateRawDNAOwner(ctx, newProcessRequestAttributes)
-        // if rawDNA == false 
-        // then operação de compra do DNA
         const dataContract = new DataContract()
         const rawDNA = await dataContract.readData(ctx, newProcessRequestAttributes.raw_data_id)
+        
         if (ownership == false){
             await DnaContractUtils.addOwnersInData(ctx, rawDNA)
         }

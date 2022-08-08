@@ -18,7 +18,6 @@ class ProcessTokenContract extends ActiveContract {
         const attributes = JSON.parse(processTokenAttributes)
         const processToken = createInstanceProcessToken(attributes)
         var user = await BiocoinOperations.withdraw_biocoins(ctx, ctx.user, processToken.value)
-        // let user = ctx.user
         user.tokens.push(processToken)
         await ctx.accountList.updateAccount(user)
         return user
@@ -28,7 +27,6 @@ class ProcessTokenContract extends ActiveContract {
     
         const attributes = JSON.parse(processTokenAttributes)
         const { userToken, index } = findUserToken(ctx.user.tokens, attributes.processRequestId)
-        //throw new TesteError("ERROOOOOOO")
         var user = await BiocoinOperations.deposit_biocoins(ctx, ctx.user, userToken.value)
         return await deleteUserToken(ctx, user, index)
     }
