@@ -40,13 +40,13 @@ CFLAGS_CC_Debug := \
 	-std=gnu++1y
 
 INCS_Debug := \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/include/node \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/src \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/deps/openssl/config \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/deps/openssl/openssl/include \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/deps/uv/include \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/deps/zlib \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/deps/v8/include \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/include/node \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/src \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/deps/openssl/config \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/deps/openssl/openssl/include \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/deps/uv/include \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/deps/zlib \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/deps/v8/include \
 	-I$(srcdir)/node_modules/node-addon-api
 
 DEFS_Release := \
@@ -84,13 +84,13 @@ CFLAGS_CC_Release := \
 	-std=gnu++1y
 
 INCS_Release := \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/include/node \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/src \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/deps/openssl/config \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/deps/openssl/openssl/include \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/deps/uv/include \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/deps/zlib \
-	-I/home/stefanini/.cache/node-gyp/14.20.0/deps/v8/include \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/include/node \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/src \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/deps/openssl/config \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/deps/openssl/openssl/include \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/deps/uv/include \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/deps/zlib \
+	-I/local/home/hyper/.cache/node-gyp/15.14.0/deps/v8/include \
 	-I$(srcdir)/node_modules/node-addon-api
 
 OBJS := \
