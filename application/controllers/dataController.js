@@ -48,9 +48,7 @@ exports.newProcessedData = async function(req, res, next){
 
 
 exports.createProcessedData = async function(req, res, next){
-  if(req.body.process_request_id != null){
-    await redeemToken(req, res)
-  }
+  
 
   const processedData = await handleCreateProcessedData(req, res)
   if(processedData == undefined){ return }
@@ -59,6 +57,13 @@ exports.createProcessedData = async function(req, res, next){
 
   if(req.body.process_request_id) {
     await DataService.updateProcessRequest(req.body.process_request_id, processedData)
+  }
+
+  const processRequestContract = new ProcessRequestContract()
+  const processRequest = await processRequestContract.readProcessRequest(req.body.process_request_id)
+
+  if(processRequest.status == "processed"){
+    await redeemToken(req, res)
   }
 };
 
@@ -137,12 +142,8 @@ async function handleRegisterDnaKey(req, res, dnaId){
 
 async function redeemToken(req, res){
   const processTokenContract = new ProcessTokenContract()
-  console.log( "body\n\n\n")
-  console.log(req.body)
   let attributes = {processRequestId: req.body.process_request_id  }
   let processTokenAttributes = JSON.stringify(attributes)
-  console.log( "process request id\n\n\n")
-  console.log(processTokenAttributes)
   await processTokenContract.redeemProcessToken(processTokenAttributes)
 }
 
