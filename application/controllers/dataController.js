@@ -136,12 +136,13 @@ async function handleRegisterDnaKey(req, res, dnaId){
 }
 
 async function redeemToken(req, res){
-  const processRequestContract = new ProcessRequestContract();
   const processTokenContract = new ProcessTokenContract()
-
-  let processRequest = await processRequestContract.readProcessRequest(req.body.process_request_id)
-  let attributes = {accountId: processRequest.processor_id, processRequestId: req.body.process_request_id  }
+  console.log( "body\n\n\n")
+  console.log(req.body)
+  let attributes = {processRequestId: req.body.process_request_id  }
   let processTokenAttributes = JSON.stringify(attributes)
+  console.log( "process request id\n\n\n")
+  console.log(processTokenAttributes)
   await processTokenContract.redeemProcessToken(processTokenAttributes)
 }
 

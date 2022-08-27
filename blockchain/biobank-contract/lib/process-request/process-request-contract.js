@@ -7,7 +7,6 @@ const DataContract = require('./../data/data-contract')
 const DataList = require('./../data/data-list');
 const DnaContractList = require('./../dna-contract/dna-contract-list')
 const DnaContractContract = require('./../dna-contract/dna-contract-contract')
-const DoesntOnwRawDNAError = require('../erros/doesnt-own-rawdna-error');
 const DnaContractUtils = require('../dna-contract/dna-contract-utils')
 
 
@@ -28,11 +27,11 @@ class ProcessRequestContract extends ActiveContract {
 
     async createProcessRequest(ctx, id, processRequestAttributes) {
         const newProcessRequestAttributes = handleProcessRequestAttributes(ctx, id, processRequestAttributes)
-        const ownership = await validateRawDNAOwner(ctx, newProcessRequestAttributes)
+        const isUserOwnerOfData = await isUserOwnerOfData(ctx, newProcessRequestAttributes)
         const dataContract = new DataContract()
         const rawDNA = await dataContract.readData(ctx, newProcessRequestAttributes.raw_data_id)
         
-        if (ownership == false){
+        if (isUserOwnerOfData == false){
             await DnaContractUtils.addOwnersInData(ctx, rawDNA)
         }
 
@@ -64,7 +63,7 @@ class ProcessRequestContract extends ActiveContract {
   
 }
 
-async function  validateRawDNAOwner(ctx, newProcessRequestAttributes){
+async function  isUserOwnerOfData(ctx, newProcessRequestAttributes){
     const dataContract = new DataContract()
     const rawDNA = await dataContract.readData(ctx, newProcessRequestAttributes.raw_data_id)
     const user = newProcessRequestAttributes.processor_id

@@ -24,7 +24,6 @@ class ProcessTokenContract extends ActiveContract {
     }
 
     async redeemProcessToken(ctx, processTokenAttributes){
-    
         const attributes = JSON.parse(processTokenAttributes)
         const { userToken, index } = findUserToken(ctx.user.tokens, attributes.processRequestId)
         var user = await BiocoinOperations.deposit_biocoins(ctx, ctx.user, userToken.value)
