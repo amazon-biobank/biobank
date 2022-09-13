@@ -5,13 +5,13 @@ const lyra2 = require ('../build/Release/lyra2');
 const LyraHash = (input, salt, saltLength) => lyra2.getHash(input, salt, saltLength);
 
 const algorithm = 'aes-256-cfb';
-const password = 'teste'; //password used to generate the ciphered certificate
+//const password = 'teste'; //password used to generate the ciphered certificate
 
 const KEY_SIZE = 32;
 const SALT_LENGTH = 16;
 
 const ArrayBufferToBuffer = (arrayBuffer) => {
-  const buffer = Buffer.from(arrayBuffer)
+  const buffer = Buffer.from(arrayBuffer);
 
   return buffer;
 }
@@ -24,11 +24,17 @@ const splitKeyIv = (keyHash) => {
   return [key, iv];
 }
 
-const getCipheredCertificate = () => { //ciphered certificate in local folder
-  const jsonString = fs.readFileSync('../credentials/encryptedCredentials.json')
-  const credentials = JSON.parse(jsonString)
-  return [credentials.encrypted_content, credentials.salt]
-  
+const getCipheredCertificateLocal = () => { //ciphered certificate in credentials folder (DEBUGGING)
+  const jsonString = fs.readFileSync('../credentials/encryptedCredentials.json');
+  const credentials = JSON.parse(jsonString);
+
+  return [credentials.encrypted_content, credentials.salt];
+}
+
+const getCipheredCertificate = (certificate) => {
+  const credentials = JSON.parse(certificate);
+
+  return [credentials.encrypted_content, credentials.salt];
 }
 
 const generateHash = (password, salt) => {
@@ -52,8 +58,36 @@ const writeDecrypted = (decrypted) => {
   }); 
 }
 
-const [encrypted_content, salt] = getCipheredCertificate(); //encrypted certificate and salt used to hash password
-const passwordHash = generateHash(password, salt);
-const decrypted = decrypt(passwordHash, encrypted_content);
-writeDecrypted(decrypted);
+const formatCredentials = (certificate) => {
+  const credentials = JSON.parse(certificate);
+  
+  if(credentials.hasOwnProperty("credentials")){
+    return certificate;
+  }
+  else{
+
+    const Credentials = {
+      "credentials" : {
+        "certificate" : credentials.certificate,
+        "privateKey" : credentials.privateKey
+      },
+      "mspId": credentials.orgMSPID,
+      "type": "X.509",
+      "version": 1
+    }
+
+    return JSON.stringify(Credentials)
+  }
+}
+
+const decryptionScript = (password, certificate) => {
+  const [encrypted_content, salt] = getCipheredCertificate(certificate); //encrypted certificate and salt used to hash password
+  const passwordHash = generateHash(password, salt);
+  const decrypted = decrypt(passwordHash, encrypted_content);
+  const formattedDecrypted = formatCredentials(decrypted)
+
+  return formattedDecrypted;
+}
+
+exports.decryptionScript = decryptionScript;
 
