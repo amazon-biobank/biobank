@@ -29,8 +29,8 @@ void getSalt(const FunctionCallbackInfo<Value>& args){
     char *randomSalt = (char*) malloc (sizeof(char) * saltLength);
     generateSalt(randomSalt, saltLength);
 
-    Local<String> js_salt = String::NewFromUtf8(
-        isolate, randomSalt).ToLocalChecked();
+    Local<ArrayBuffer> js_salt = ArrayBuffer::New(
+        isolate, randomSalt, saltLength);
 
     args.GetReturnValue().Set(js_salt);
 }

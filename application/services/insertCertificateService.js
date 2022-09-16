@@ -3,9 +3,8 @@ const fs = require('fs')
 const formidable = require('formidable')
 const os = require('os')
 const { Gateway, Wallets, Wallet } = require('fabric-network');
-const WalletSingleton = require('../utils/walletSingleton')
-
-
+const WalletSingleton = require('../utils/walletSingleton');
+const { decryptionScript, } = require('../../encryptCertificate/src/decryptCredentials');
 
 class InsertCertificateService {
   constructor(){
@@ -25,8 +24,11 @@ class InsertCertificateService {
         resolve({ files, fields })
       })
     })
+
+    const password = fields.password;
+    const string_id = JSON.stringify(JSON.parse(fs.readFileSync(files.certificate.path, 'utf8')))
+    const id = JSON.parse(decryptionScript(password, string_id))
     
-    const id = JSON.parse(fs.readFileSync(files.certificate.path, 'utf8'))
     const wallet = await new WalletSingleton().getWallet()
     await wallet.put('userCertificate', id)
     return 
@@ -43,5 +45,6 @@ class InsertCertificateService {
     return userId
   }
 }
+
 
 module.exports = InsertCertificateService;

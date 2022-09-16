@@ -31,8 +31,11 @@ block content
                                     a.small(href='auth-password-basic.html') Forgot my password
                                     input.btn.btn-primary.px-3(type='submit' value='Add')
                         .card-footer.text-center
-                            .small
-                            a(href='auth-register-basic.html') YOu need Certificate? Click here!
+                          if(messages.error)
+                            .alert.alert-danger.alert-dismissible.fade.show(role=alert)
+                              = messages.error
+                          .small
+                            a(href='auth-register-basic.html') You need Certificate? Click here!
 
 
 block append scripts

@@ -6,8 +6,14 @@ exports.new = async function(req, res, next){
 
 exports.create = async function(req, res, next){
   insertCertificateService = new InsertCertificateService()
-  await insertCertificateService.insertCertificate(req)
-  res.redirect("/")
+  try{
+    await insertCertificateService.insertCertificate(req)
+    res.redirect("/")
+  }
+  catch{
+    req.flash('error', 'Certificado inválido ou senha incorreta.')
+    res.redirect("/session/new")
+  }
 };
 
 exports.destroy = async function(req, res, next){

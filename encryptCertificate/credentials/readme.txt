@@ -1,0 +1,1 @@
+O certificado cifrado presente foi extraído diretamente do AmazoniaWeb com a senha 'teste' 
