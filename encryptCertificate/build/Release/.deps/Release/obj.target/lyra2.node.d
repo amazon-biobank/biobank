@@ -1,1 +1,0 @@
-cmd_Release/obj.target/lyra2.node := g++ -o Release/obj.target/lyra2.node -shared -pthread -rdynamic -m64  -Wl,-soname=lyra2.node -Wl,--start-group Release/obj.target/lyra2/lyra2/Lyra2.o Release/obj.target/lyra2/lyra2/LyraHash.o Release/obj.target/lyra2/lyra2/Sponge.o Release/obj.target/lyra2/lyra2/lyra2-addon.o -Wl,--end-group 
