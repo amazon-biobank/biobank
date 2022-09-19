@@ -62,12 +62,17 @@ async function getToKeyguard(path, getQuery, callback, errorCallback){
     getRequestOptions,
     res => {
       res.on('data', function(data) {
-        const response = {
-          statusCode: req.res.statusCode,
-          data: data.toString()
+        if(req.res.statusCode == 200){
+          const response = {
+            statusCode: req.res.statusCode,
+            data: data.toString()
+          }
+          console.log(response)
+          callback(response)
         }
-        console.log(response)
-        callback(response)
+        else {
+          errorCallback({ message: data.toString() })
+        }
       })
     }
   )
