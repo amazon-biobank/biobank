@@ -3,5 +3,7 @@ var ProcessableDataController = require('./../controllers/processableDataControl
 
 router.get('/', ProcessableDataController.index);
 router.get('/:dataId', ProcessableDataController.show);
+router.get('/show-data/:dataId', ProcessableDataController.showData);
+router.get('/show-contract/:dnaContract', ProcessableDataController.showContract);
 
 module.exports = router;
