@@ -1,0 +1,53 @@
+extends ../layout/layout.pug
+
+block append header
+  link(rel='stylesheet', href='/vendor/bootstrap-theme/vendor/datatables/dataTables.bootstrap4.min.css')
+
+block content
+  .container.mt-4
+    h1 Show Data
+    .card.mb-4
+      .card-header.d-flex.justify-content-between.align-items-center
+        | Data
+        div
+          if(dnaContract)
+            a.btn.btn-primary.btn-sm.mr-4(href='/dnaContract/'+ dnaContract.id)
+              | See Smart Contract
+          else if(data.process_request_id)
+            a.btn.btn-primary.btn-sm.text-white.mr-2(data-toggle="modal" data-target="#endorseModal" title="Buy DNA")
+              | Endorse DNA
+          else if( !data.process_request_id )
+            a.btn.btn-danger.btn-sm.mr-4(href='/data-buy')
+              | No Contract Avaliable
+
+          if(data.type=='Raw')
+            a.btn.btn-primary.btn-sm.mr-4(href='/process-request?search='+data.key)
+              | See Processing Request
+              
+      include components/data-show-form.pug
+    .card
+      .card-header List of Owners
+      .card-body
+        .table-responsive
+          table#dataTable.table.table-bordered(width='100%' cellspacing='0')
+            thead
+              tr 
+                th Owner ID
+            tbody
+              each ownerId, index in data.owners
+                tr
+                  td
+                    = ownerId
+
+    include components/endorse-modal.pug
+
+block append scripts
+  script(src='/vendor/bootstrap-theme/vendor/datatables/jquery.dataTables.min.js')
+  script(src='/vendor/bootstrap-theme/vendor/datatables/dataTables.bootstrap4.min.js')
+  script(src='/js/datatable.js')
+  script.
+    let process_request_id = "#{data.process_request_id}"
+    function endorseDna(){
+        $.post("/dnaContract/endorse/", { process_request_id } );
+    }
+
