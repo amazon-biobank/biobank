@@ -1,0 +1,69 @@
+extends ../layout/layout.pug
+
+block append header
+
+block content
+  .container.mt-4
+    h1 Process request details
+    .card.mb-4
+      .card-header.d-flex.justify-content-between.align-items-center
+        | Process Request
+        if(processRequest.status != "Processed")
+          a.btn.btn-primary.btn-sm.mr-4(href='/data/processed-data-new/?processRequest=' + processRequest.id)
+            | Insert Processed DNA
+            
+      .card-body
+        form
+          .form-row
+            .form-group.col-md-6
+              label.mb-1(for='status') Status
+              input#status.form-control(disabled type='text' value= processRequest.status)
+            .form-group.col-md-6
+              label.mb-1(for='id') ID
+              input#id.form-control(disabled type='text'  value=processRequest.id)
+          .form-group
+            label.mb-1(for='created_at') Created At
+            input#created_at.form-control(disabled type='text'  value=processRequest.created_at)
+
+          hr
+          .mb-4.mt-4.font-weight-bold
+            | Raw DNA
+          .form-row
+            .form-group.col-md-6
+              label.mb-1(for='raw_data_title') Raw DNA title
+              input#raw_data_title.form-control(disabled type='text' value= processRequest.raw_data.metadata.title)
+            .form-group.col-md-6
+              label.mb-1(for='raw_data_id') Raw DNA ID
+              div.mt-2
+                a(href='/data/' + processRequest.raw_data_id)
+                  = processRequest.raw_data_id
+
+          if (processRequest.processor)
+            hr
+            .mb-4.mt-4.font-weight-bold
+              | Processor
+            .form-row
+              .form-group.col-md-6
+                label.mb-1(for='processor_name') Processor Name
+                input#processor_name.form-control(disabled type='text' value= processRequest.processor.name)
+              .form-group.col-md-6
+                label.mb-1(for='processor_id') Processor ID
+                div.mt-2
+                  a(href='/processor/' + processRequest.processor_id)
+                    = processRequest.processor_id
+
+          if (processRequest.processed_data)
+            hr
+            .mb-4.mt-4.font-weight-bold Processed DNA
+            .form-row
+              .form-group.col-md-6
+                label.mb-1(for='processed_data_title') Processed DNA title
+                input#processed_data_title.form-control(disabled type='text' value= processRequest.processed_data.metadata.title)
+              .form-group.col-md-6
+                label.mb-1(for='processed_data_id') Processed DNA ID
+                div.mt-2
+                  a(href='/data/' + processRequest.processed_data_id)
+                    = processRequest.processed_data_id
+
+
+block append scripts
