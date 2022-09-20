@@ -1,0 +1,31 @@
+.card.shadow.mb-4
+  .card-header.py-3
+    h6.m-0.font-weight-bold.text-primary Choose Data to Buy
+  .card-body
+    .table-responsive
+      table#dataTable.table.table-bordered(width='100%' cellspacing='0')
+        thead
+          tr
+            th Type
+            th Title
+            th ID
+            th Created At
+            th Action
+        tbody
+          div
+                each data, index in datas
+                  tr
+                    td
+                      = data.type
+                    td
+                      = data.metadata.title
+                    td
+                      = data.id
+                    td
+                      = data.created_at
+                    td
+                          a.btn.btn-primary.btn-sm.text-white(
+                            data-toggle="tooltip" data-placement="top" title="Buy DNA" href="/data-buy/" + data.id
+                          )
+                            i.fas.fa-shopping-cart.mr-2
+                            | Buy DNA
