@@ -1,8 +1,6 @@
 const DataContract = require('../contract/dataContract');
 const DnaContractContract = require('../contract/dnaContractContract');
 const ControllerUtil = require('./ControllerUtil.js');
-const KeyguardService = require('../services/keyguardService');
-const DataService = require('./../services/dataService')
 
 exports.index = async function(req, res, next){
   const dataContract = new DataContract();
@@ -22,43 +20,9 @@ exports.index = async function(req, res, next){
     }
   })
 
-  res.render('data/index', { datas: formattedDatas });
+  res.render('data/index-buy', { datas: formattedDatas });
 };
 
-
-exports.newRawData = async function(req, res, next){
-  res.render('data/raw-data-new', { });
-};
-
-
-exports.createRawData = async function(req, res, next){
-  const rawData = await handleCreateRawData(req, res)
-  if(rawData == undefined){ return }
-
-  await handleRegisterDnaKey(req, res, rawData.id)
-};
-
-
-exports.newProcessedData = async function(req, res, next){
-  const queryParams = { processRequestId: req.query.processRequest}
-  res.render('data/processed-data-new', { queryParams });
-};
-
-
-exports.createProcessedData = async function(req, res, next){
-  const processedData = await handleCreateProcessedData(req, res)
-  if(processedData == undefined){ return }
-
-  await handleRegisterDnaKey(req, res, processedData.id)
-
-  if(req.body.process_request_id) {
-    await DataService.updateProcessRequest(req.body.process_request_id, processedData)
-  }
-};
-
-exports.new = async function(req, res, next){
-  res.render('data/data-new', { });
-};
 
 exports.show = async function(req, res, next){
   const dataId = req.params.dataId;
@@ -70,7 +34,7 @@ exports.show = async function(req, res, next){
   data.status = ControllerUtil.formatDataStatus(data.status);
   data.created_at = ControllerUtil.formatDate(new Date(data.created_at));
 
-  res.render('data/show', { data, dnaContract });
+  res.render('data/show-buy', { data, dnaContract });
 };
 
 
@@ -93,49 +57,7 @@ exports.listOperations = async function(req, res, next){
 };
 
 
-
-
-
 //---------------------- Auxiliary functions --------------------------//
-
-async function handleCreateRawData(req, res){
-  try {
-    const rawData = await DataService.createRawData(req)
-    return rawData
-  } catch (error){
-    req.flash('error', ControllerUtil.getMessageFromError(error))
-    res.redirect("back")
-    return
-  }
-}
-
-async function handleCreateProcessedData(req, res){
-  try{
-    const processedData = await DataService.createProcessedData(req)
-    return processedData
-  } catch (error){
-    req.flash('error', ControllerUtil.getMessageFromError(error))
-    res.redirect("back")
-    return
-  }
-
-}
-
-async function handleRegisterDnaKey(req, res, dnaId){
-  await KeyguardService.registerDnaKey(dnaId, req.body.secret_key, (response) => {
-    req.flash('success', "Dna created with sucess")
-    res.redirect("/data/" + dnaId)
-  }, 
-  (error) => {
-    req.flash('error', error.message)
-    res.redirect("/data/" + dnaId)
-  })  
-}
-
-
-
-
-
 async function getDnaContract(dnaContractId){
   if(dnaContractId){
     const dnaContractContract = new DnaContractContract();
