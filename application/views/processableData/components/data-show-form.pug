@@ -1,0 +1,36 @@
+.card-body
+  form
+    .form-group
+      label.mb-1(for='title') Title
+      input#title.form-control(disabled type='text' value= data.metadata.title)
+    .form-group
+      label.mb-1(for='description') Description
+      input#description.form-control(disabled type='text' value= data.metadata.description)
+    hr.mt-4
+    h5.mb-3 Details
+    if (data.process_request_id)
+      .form-group
+        label.mb-1(for='process_request_id') Process Request ID
+        div
+          a(href='/process-request/' + data.process_request_id)
+            = data.process_request_id
+    .form-row
+      .form-group.col-md-6
+        label.mb-1(for='type') Type
+        input#type.form-control(disabled type='text'  value=data.type)
+      .form-group.col-md-6
+        label.mb-1(for='id') Data Id
+        input#id.form-control(disabled type='text'  value=data.id)
+    .form-group
+        label.mb-1(for='magnet_link') Data's Magnetic Link
+        input#owners.form-control(disabled type='text' value= data.metadata.magnet_link)
+    .form-group
+      label.mb-1(for='uploader') Uploader
+      input#uploader.form-control(disabled type='text' value= data.uploader)
+    .form-row
+      .form-group.col-md-6
+        label.mb-1(for='created_at') Created At
+        input#created_at.form-control(disabled type='text' value=data.created_at)
+      .form-group.col-md-6
+        label.mb-1(for='status') Status
+        input#status.form-control(disabled type='text' value=data.status)
