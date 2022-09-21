@@ -7,7 +7,7 @@ exports.new = async function(req, res, next){
 exports.create = async function(req, res, next){
   insertCertificateService = new InsertCertificateService()
   await insertCertificateService.insertCertificate(req)
-  res.redirect("/account/show-my-account")
+  res.redirect("/")
 };
 
 exports.destroy = async function(req, res, next){
