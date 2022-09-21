@@ -6,3 +6,5 @@ blockchain/currency-contract/config.json
 blockchain/biobank-contract/config.json
 blockchain/currency-contract/package-lock.json
 application/.env
+application/package-lock.json
+blockchain/currency-contract/config.json

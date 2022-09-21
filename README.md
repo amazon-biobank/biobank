@@ -1,5 +1,33 @@
-# Biobank
-// put a abstract here
+# Amazon Biobank: A community-based genetic database
+A blockchain-based genetic database that provides benefit-sharing
+
+## Overview
+Amazon Biobank combines blockchain and smart contract technologies to provide adequate benefit-sharing among all participants who collect, insert, process, store and validate genomic data. 
+
+It also provides traceability and auditability, allowing easy association between biotechnological research and DNA data
+
+## Resources
+* [Project page](https://sites.usp.br/ubri/amazon-biobank-preserving-the-biodiversity-of-the-amazon-rainforest-with-blockchain/)
+* XXI Brazilian Symposium on Information and Computational Systems Security (2021) - [Article](https://doi.org/10.5753/sbseg_estendido.2021.17342) and [Video](https://youtu.be/PqujKOURc44)
+
+
+
+## About the performance of the system
+Our software was designed to be highly scalable, by using as underlying consensus a lightweight RAFT protocol. (See [Wang 2020]( https://doi.org/10.1109/ICDCS47774.2020.00165))
+*  Takes less than 1 second to add a new block
+*  Can support a throughput of at least 200 transactions per second
+
+In addition, DNA data is distributed using BitTorrent protocol. So, only BitTorrent magnet links are registered on the blockchain. (See [Torrente](https://doi.org/10.5753/sbseg_estendido.2021.17343))
+* Size of a BitTorrent magnet link: 20 bytes
+* Time to generate a magnet link from a 1 GB file: 18 seconds
+* Time to download 1 GB using Torrente and micropayments (2MB/s network): 9 minutes
+   - For reference: Time to download 1 GB in a conventional BitTorrent without micropayments (2MB/s network): 8.5 minutes
+
+Below are preliminary numbers about some operations of the system. Note that it was measured using a remote private server, contacted via VPN rather than using the public Internet. Also, we used a Hyperledger Fabric test network, instead of a production-ready one.
+* Time taken to read details about a DNA data: 367 millisecond
+* Time taken to register a DNA on the system: 3.5 seconds
+* Time taken to buy a DNA: 7.7 seconds (note that it requires 3 writing transactions to the blockchain)
+
 
 ## Requirements
 * Hyperledger Fabric 2.3.0
@@ -45,15 +73,12 @@ On Client
 # Clone repository
 git clone https://github.com/amazon-biobank/biobank.git
 
-# Configure application/services/connectService.js to use remote-connection.json
-# Configure application/fabric-details/remote-connection.json according to servers' file (biobank/blockchain/organizations/peerOrganizations/org1.example.com/connection-org1.json). Don't forget to change server's IP address
-# Get admin and user certificate, from server. (biobank/application/fabric-details/wallet)
-
 # Up client application
 cd application
 npm install
 node index.js
 ```
+For your convenience, you can get the admin certificate in <REMOTE IP>:3000/admin-id. This user is already created and registered.
 
 obs: maybe it is necessary to configure the hosts archive
 1) Open /etc/hosts (in linux)
@@ -71,4 +96,7 @@ From client, just launch the Web Browser to localhost:3000.
 During the setting up, a admin and a user certificate was generated in biobank/application/fabric-details/wallet. Extract these certificates from the server to the client. You can use these certificates to login in the system.
 
 ## API
-More informations about the API is on the [wiki](https://github.com/amazon-biobank/biobank/wiki)
+Informations about the API is on the [wiki](https://github.com/amazon-biobank/biobank/wiki)
+
+
+

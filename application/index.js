@@ -95,5 +95,6 @@ else if(process.env.CONTEXT=='remote'){
 function initServer(){
   var server = app.listen( process.env.PORT || 3000, function(){
     console.log('Listening on port ' + server.address().port);
+    console.log('Open http://127.0.0.1:3000 in your browser')
   });
 }
