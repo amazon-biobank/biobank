@@ -8,3 +8,4 @@ blockchain/currency-contract/package-lock.json
 application/.env
 application/package-lock.json
 encryptCertificate/build/*
+encryptCertificate/package-lock.json
