@@ -5,7 +5,3 @@ application/fabric-details/remote-certs/remoteAppUser.id
 blockchain/currency-contract/config.json
 blockchain/biobank-contract/config.json
 blockchain/currency-contract/package-lock.json
-application/.env
-application/package-lock.json
-encryptCertificate/build/*
-encryptCertificate/package-lock.json

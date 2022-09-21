@@ -4,7 +4,7 @@ const formidable = require('formidable')
 const os = require('os')
 const { Gateway, Wallets, Wallet } = require('fabric-network');
 const WalletSingleton = require('../utils/walletSingleton');
-const { decryptionScript, } = require('../../encryptCertificate/src/decryptCredentials');
+const { decryptionScript, } = require('../encryptCertificate/src/decryptCredentials');
 
 class InsertCertificateService {
   constructor(){

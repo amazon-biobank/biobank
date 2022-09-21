@@ -1,2 +1,5 @@
 /fabric-details/wallet
 /executables/*
+/.env
+/package-lock.json
+/build/*

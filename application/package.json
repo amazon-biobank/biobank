@@ -14,7 +14,8 @@
       "fabric-details/**/*",
       "views/**/*",
       "public/**/*",
-      ".env"
+      ".env",
+      "encryptCertificate/**/*"
     ],
     "targets": [
       "node14-linux-x64",
@@ -38,7 +39,11 @@
     "magnet-uri": "^5.3.0",
     "pkg": "^5.5.2",
     "pug": "^3.0.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "bindings": "~1.2.1",
+    "crypto-js": "^4.0.0",
+    "node-addon-api": "^5.0.0",
+    "node-gyp": "^9.0.0"
   },
   "devDependencies": {
     "express-session": "1.17.0",
