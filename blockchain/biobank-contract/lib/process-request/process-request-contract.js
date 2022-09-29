@@ -6,7 +6,6 @@ const { ActiveContext, ActiveContract } = require('./../active-contract')
 const DataContract = require('./../data/data-contract')
 const DataList = require('./../data/data-list');
 const DnaContractList = require('./../dna-contract/dna-contract-list')
-const DnaContractContract = require('./../dna-contract/dna-contract-contract')
 const DnaContractUtils = require('../dna-contract/dna-contract-utils')
 
 
@@ -27,7 +26,7 @@ class ProcessRequestContract extends ActiveContract {
 
     async createProcessRequest(ctx, id, processRequestAttributes) {
         const newProcessRequestAttributes = handleProcessRequestAttributes(ctx, id, processRequestAttributes)
-        const isUserOwnerOfData = await isUserOwnerOfData(ctx, newProcessRequestAttributes)
+        const isUserOwnerOfData = await checkIsUserOwnerOfData(ctx, newProcessRequestAttributes)
         const dataContract = new DataContract()
         const rawDNA = await dataContract.readData(ctx, newProcessRequestAttributes.raw_data_id)
         
@@ -59,11 +58,9 @@ class ProcessRequestContract extends ActiveContract {
         await ctx.processRequestList.updateState(processRequest);
         return processRequest
     }
-
-  
 }
 
-async function  isUserOwnerOfData(ctx, newProcessRequestAttributes){
+async function  checkIsUserOwnerOfData(ctx, newProcessRequestAttributes){
     const dataContract = new DataContract()
     const rawDNA = await dataContract.readData(ctx, newProcessRequestAttributes.raw_data_id)
     const user = newProcessRequestAttributes.processor_id
@@ -76,9 +73,8 @@ async function  isUserOwnerOfData(ctx, newProcessRequestAttributes){
 }
 
 async function getRawDNAPrice(ctx, dnaContradId){
-    const dnaContractContract = new DnaContractContract()
-    const rawDNAContract = await dnaContractContract.readDnaContract(ctx, dnaContradId)
-    return rawDNAContract.raw_data_price
+    const dnaContract = await ctx.dnaContractList.getDnaContract(dnaContradId);
+    return dnaContract.raw_data_price
 }
 
 function handleProcessRequestAttributes(ctx, id, processRequestAttributes) {
