@@ -61,6 +61,10 @@ class ControllerUtil {
   }
 
   static getHashFromMagneticLink(magnetLink){
+    const hash = magnet.decode(magnetLink).infoHash
+    if (hash == undefined){
+      throw new TypeError('Invalid magnetic link')
+    }
     return magnet.decode(magnetLink).infoHash
   }
 
