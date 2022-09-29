@@ -48,8 +48,6 @@ exports.newProcessedData = async function(req, res, next){
 
 
 exports.createProcessedData = async function(req, res, next){
-  
-
   const processedData = await handleCreateProcessedData(req, res)
   if(processedData == undefined){ return }
 
@@ -64,6 +62,7 @@ exports.createProcessedData = async function(req, res, next){
 
   if(processRequest.status == "processed"){
     await redeemToken(req, res)
+    req.flash('success', "Your process tokens have been redeemed with success")
   }
 };
 
