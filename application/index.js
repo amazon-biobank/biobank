@@ -27,11 +27,19 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
 app.use(flash());
-app.use(function(req, res, next){
-  res.locals.messages = req.flash();
-  res.locals.test = "worked"
+
+// using custom render
+app.use(function(req, res, next) {
+  var _render = res.render;
+  res.render = function(view, options, fn) {
+    // get flash messags
+    res.locals.messages = req.flash();
+    // call original render
+    _render.call(this, view, options, fn)
+  }
   next();
-});
+})
+
 
 if (!isProduction) {
   app.use(errorhandler());

@@ -145,13 +145,13 @@ async function handleCreateProcessedData(req, res){
 
 async function handleRegisterDnaKey(req, res, dnaId){
   await KeyguardService.registerDnaKey(dnaId, req.body.secret_key, (response) => {
-    req.flash('success', "Dna created with sucess")
+    req.flash('success', "Dna created with sucess")  
     res.redirect("/data/" + dnaId)
   }, 
   (error) => {
     req.flash('error', error.message)
     res.redirect("/data/" + dnaId)
-  })  
+  })
 }
 
 async function redeemToken(req, res){
