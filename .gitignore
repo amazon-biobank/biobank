@@ -7,3 +7,4 @@ blockchain/biobank-contract/config.json
 blockchain/currency-contract/package-lock.json
 application/.env
 application/package-lock.json
+encryptCertificate/build
