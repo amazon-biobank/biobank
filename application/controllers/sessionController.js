@@ -11,7 +11,7 @@ exports.create = async function(req, res, next){
     res.redirect("/")
   }
   catch{
-    req.flash('error', 'Certificado inválido ou senha incorreta.')
+    req.flash('error', 'Invalid certificate or incorrect password')
     res.redirect("/session/new")
   }
 };
