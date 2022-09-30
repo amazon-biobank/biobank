@@ -10,7 +10,7 @@ class ProcessTokenContract extends SmartContract{
   }
 
     async createProcessToken(processTokenAttributes){
-        return await this.submitTransaction('ProcessTokenContract:createProcessToken', processTokenAttributes)
+        return await this.submitTransaction('ProcessTokenContract:createProcessToken', JSON.stringify(processTokenAttributes))
     }
 
     async redeemProcessToken(processTokenAttributes){

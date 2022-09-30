@@ -33,6 +33,12 @@ exports.create = async function(req, res, next){
   const processRequestContract = new ProcessRequestContract();
   const dataContract = new DataContract();
 
+  //call channel 2
+
+  const processTokenContract = new ProcessTokenContract()
+  const processTokenAttributes = handleProcessTokenAttributes(req)
+  await processTokenContract.createProcessToken(processTokenAttributes)
+
   //call channel 1
   // verify if the user is owner of the DNA 
   // if not, buy the DNA
@@ -41,18 +47,13 @@ exports.create = async function(req, res, next){
   const processRequestCreated = await processRequestContract.createProcessRequest(processRequest)
   await dataContract.addProcessRequest(processRequest.raw_data_id, processRequest.id)
 
-  //call channel 2
-
-  const processTokenContract = new ProcessTokenContract()
-  const processTokenAttributes = handleProcessTokenAttributes(processRequestCreated)
-  await processTokenContract.createProcessToken(processTokenAttributes)
+  
 
   req.flash('success', "Process Request created with sucess")
   res.redirect("/process-request/" + processRequest.id)
 };
 
 function createProcessorRequestFromRequest(req){
-
   return {
     id: ControllerUtil.generateId(),
     raw_data_id: req.body.raw_data_id,
@@ -79,8 +80,12 @@ async function getDataAndProcessorForProcessRequest(processRequest){
   return processRequest
 }
 
-function handleProcessTokenAttributes(processRequestCreated){
-  const processTokenAttributes = {process_request_id: processRequestCreated.id, token_id: processRequestCreated.id, value: processRequestCreated.price,  owner: processRequestCreated.processor_id, raw_dna_id: processRequestCreated.raw_data_id}
-  const final = JSON.stringify(processTokenAttributes)
-  return final
+function handleProcessTokenAttributes(req){
+  const generatedId = ControllerUtil.generateId()
+  const processTokenAttributes = {
+    process_request_id: generatedId, 
+    token_id: generatedId, 
+    raw_dna_id: req.body.raw_data_id
+  }
+  return processTokenAttributes
 }

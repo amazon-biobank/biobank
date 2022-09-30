@@ -15,12 +15,11 @@ class ProcessTokenContract extends ActiveContract {
     }
 
     async createProcessToken(ctx, processTokenAttributes){
-        const attributes = JSON.parse(processTokenAttributes)
-        const processToken = createInstanceProcessToken(attributes)
+        const processToken = createInstanceProcessToken(ctx, processTokenAttributes)
         var user = await BiocoinOperations.withdraw_biocoins(ctx, ctx.user, processToken.value)
         user.tokens.push(processToken)
         await ctx.accountList.updateAccount(user)
-        return user
+        return processToken
     }
 
     async redeemProcessToken(ctx, processTokenAttributes){
@@ -34,14 +33,15 @@ class ProcessTokenContract extends ActiveContract {
 /************* Auxiliary functions **************/
 
 
-function createInstanceProcessToken(processTokenAttributes){
+function createInstanceProcessToken(ctx, processTokenAttributes){
+    const parsedAttributes = JSON.parse(processTokenAttributes)
     return processToken = {
-        process_request_id: processTokenAttributes.process_request_id,
-        token_id: processTokenAttributes.token_id,
+        process_request_id: parsedAttributes.process_request_id,
+        token_id: parsedAttributes.token_id,
         type: "process_token",
-        value: processTokenAttributes.value,
-        owner: processTokenAttributes.owner, 
-        raw_dna_id: processTokenAttributes.raw_dna_id
+        value: 10,
+        owner: ctx.user.id, 
+        raw_dna_id: parsedAttributes.raw_dna_id
     }
 }
 
