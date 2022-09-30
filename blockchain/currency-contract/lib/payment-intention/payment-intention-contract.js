@@ -3,7 +3,7 @@
 const PaymentIntention = require('./payment-intention.js');
 const PaymentIntentionList = require('./payment-intention-list.js');
 const { ActiveContext, ActiveContract } = require('./../active-contract')
-const TokenContract = require('./../token/token-contract.js')
+const EscrowTokenContract = require('./../token/escrow-token-contract')
 const CONFIG = require('./../../config.json')
 
 class PaymentIntentionContext extends ActiveContext {
@@ -26,7 +26,7 @@ class PaymentIntentionContract extends ActiveContract {
         const paymentIntention = PaymentIntention.createInstance(newAttributes);
         await ctx.paymentIntentionList.addPaymentIntention(paymentIntention);
 
-        const tokenContract = new TokenContract()
+        const tokenContract = new EscrowTokenContract()
         await tokenContract.createEscrowToken(ctx, JSON.stringify(paymentIntention))
         return paymentIntention;
     }

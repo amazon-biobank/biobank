@@ -8,7 +8,7 @@ const DnaContractUtils = require('./dna-contract-utils.js');
 const OperationContract = require('./../operation/operation-contract')
 const OperationList = require('./../operation/operation-list')
 
-const ProcessRequestContract = require('./../process-request/process-request-contract')
+const ProcessRequestContract = require('./../process-request/process-request-contract.js')
 const ProcessRequestList = require('./../process-request/process-request-list')
 
 const DnaContractList = require('./dna-contract-list.js');

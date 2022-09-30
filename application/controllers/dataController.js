@@ -3,6 +3,8 @@ const DnaContractContract = require('../contract/dnaContractContract');
 const ControllerUtil = require('./ControllerUtil.js');
 const KeyguardService = require('../services/keyguardService');
 const DataService = require('./../services/dataService')
+const ProcessRequestContract = require('./../contract/processRequestContract')
+const ProcessTokenContract = require('./../contract/processTokenContract')
 
 exports.index = async function(req, res, next){
   const dataContract = new DataContract();
@@ -53,6 +55,14 @@ exports.createProcessedData = async function(req, res, next){
 
   if(req.body.process_request_id) {
     await DataService.updateProcessRequest(req.body.process_request_id, processedData)
+  }
+
+  const processRequestContract = new ProcessRequestContract()
+  const processRequest = await processRequestContract.readProcessRequest(req.body.process_request_id)
+
+  if(processRequest.status == "processed"){
+    await redeemToken(req, res)
+    req.flash('success', "Your process tokens have been redeemed with success")
   }
 };
 
@@ -135,13 +145,20 @@ async function handleCreateProcessedData(req, res){
 
 async function handleRegisterDnaKey(req, res, dnaId){
   await KeyguardService.registerDnaKey(dnaId, req.body.secret_key, (response) => {
-    req.flash('success', "Dna created with sucess")
+    req.flash('success', "Dna created with sucess")  
     res.redirect("/data/" + dnaId)
   }, 
   (error) => {
     req.flash('error', error.message)
     res.redirect("/data/" + dnaId)
-  })  
+  })
+}
+
+async function redeemToken(req, res){
+  const processTokenContract = new ProcessTokenContract()
+  let attributes = {processRequestId: req.body.process_request_id  }
+  let processTokenAttributes = JSON.stringify(attributes)
+  await processTokenContract.redeemProcessToken(processTokenAttributes)
 }
 
 

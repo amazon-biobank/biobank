@@ -16,6 +16,7 @@ class SmartContract {
   }
 
   async submitTransaction(){
+    console.log("sending transaction", arguments)
     await this.connectNetwork();
     const result = await this.contract.submitTransaction.apply(this.contract, arguments);
     await this.gateway.disconnect();

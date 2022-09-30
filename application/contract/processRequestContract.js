@@ -4,7 +4,7 @@ const SmartContract = require('./smartContract.js');
 
 class ProcessRequestContract extends SmartContract {
   async createProcessRequest(processRequest){
-    const result = await this.submitTransaction('ProcessRequestContract:createProcessRequest', processRequest.id, JSON.stringify(processRequest))
+     return await this.submitTransaction('ProcessRequestContract:createProcessRequest', processRequest.id, JSON.stringify(processRequest))
   }
 
   async readProcessRequest(processRequestId) {
