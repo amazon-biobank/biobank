@@ -102,10 +102,18 @@ async function handleCreateRawData(req, res){
   try {
     const rawData = await DataService.createRawData(req)
     return rawData
-  } catch (error){
-    req.flash('error', ControllerUtil.getMessageFromError(error))
-    res.redirect("back")
-    return
+  }  
+  catch (error){
+    if (error instanceof TypeError){
+      req.flash('error', error.message)
+      res.redirect("back")
+      return
+    } 
+    else {
+      req.flash('error', ControllerUtil.getMessageFromError(error))
+      res.redirect("back")
+      return
+    }
   }
 }
 
@@ -114,9 +122,16 @@ async function handleCreateProcessedData(req, res){
     const processedData = await DataService.createProcessedData(req)
     return processedData
   } catch (error){
-    req.flash('error', ControllerUtil.getMessageFromError(error))
-    res.redirect("back")
-    return
+    if (error instanceof TypeError){
+      req.flash('error', error.message)
+      res.redirect("back")
+      return
+    } 
+    else {
+      req.flash('error', ControllerUtil.getMessageFromError(error))
+      res.redirect("back")
+      return
+    }
   }
 
 }

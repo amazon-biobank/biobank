@@ -24,6 +24,10 @@ fi
 export FABRIC_CFG_PATH=$PWD/../config/
 
 
+cd ${CONTRACT_PATH}
+npm install
+cd -
+
 peer lifecycle chaincode package ${CHAINCODE_NAME}.tar.gz --path ${CONTRACT_PATH} --lang node --label ${PACKAGE_NAME}
 
 
