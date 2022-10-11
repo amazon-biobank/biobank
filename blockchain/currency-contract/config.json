@@ -1,11 +1,11 @@
 {
-  "walletPath":  ".fabric-vscode/environments/testNetwork/wallets/Org1",
-  "identityName": "Org1 Admin",
-  "connectionProfilePath":".fabric-vscode/v2/environments/1 Org Local Fabric/gateways/Org1 Gateway.json",
+  "_walletPath":  ".fabric-vscode/environments/testNetwork/wallets/Org1",
+  "_identityName": "Org1 Admin",
+  "_connectionProfilePath":".fabric-vscode/v2/environments/1 Org Local Fabric/gateways/Org1 Gateway.json",
 
-  "__walletPath": "biobank/application/fabric-details/wallet",
-  "__identityName": "admin",
-  "__connectionProfilePath": "/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/connection-org1.json",
+  "walletPath": "biobank/application/fabric-details/wallet",
+  "identityName": "admin",
+  "connectionProfilePath": "/biobank/blockchain/test-network/organizations/peerOrganizations/org1.example.com/connection-org1.json",
 
   "defaultCurrency": "BIO",
   "defaultPrecision": 9,
