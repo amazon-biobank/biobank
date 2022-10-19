@@ -1,6 +1,6 @@
 ./network.sh down
-./network.sh up createChannel -c channel1 -ca -s couchdb
-./network.sh createChannel -c channel2 -s couchdb
+./network.sh up createChannel -c mychannel -ca -s couchdb
+# ./network.sh createChannel -c channel2 -s couchdb
 
 
 export PATH=${PWD}/../bin:$PATH

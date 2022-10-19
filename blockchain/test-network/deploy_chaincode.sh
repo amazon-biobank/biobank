@@ -5,7 +5,7 @@ then
   echo "Deploying biobank chaincode"
   CHAINCODE_NAME="biobank"
   SEQUENCE="1"        # each time you deploy your chaincode, you need to increment this
-  CHANNEL_NAME="channel1"
+  CHANNEL_NAME="mychannel"
   PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
   CONTRACT_PATH="../biobank-contract/"
 fi
@@ -15,7 +15,7 @@ then
   echo "Deploying currency chaincode"
   CHAINCODE_NAME="currency"
   SEQUENCE="1"        # each time you deploy your chaincode, you need to increment this
-  CHANNEL_NAME="channel2"
+  CHANNEL_NAME="mychannel"
   PACKAGE_NAME=${CHAINCODE_NAME}_${SEQUENCE}
   CONTRACT_PATH="../currency-contract/"
 fi
@@ -25,7 +25,7 @@ export FABRIC_CFG_PATH=$PWD/../config/
 
 
 cd ${CONTRACT_PATH}
-npm install
+# npm install
 cd -
 
 peer lifecycle chaincode package ${CHAINCODE_NAME}.tar.gz --path ${CONTRACT_PATH} --lang node --label ${PACKAGE_NAME}
