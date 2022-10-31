@@ -11,11 +11,7 @@ block header
     link(rel='stylesheet', href='/css/style.css')
 
 body
-  #wrapper
-    include sidebar.pug
-    #content-wrapper.d-flex.flex-column.bg-secondary
-      #content
-        block content
+    block content
 
 block scripts
   // Bootstrap core JavaScript

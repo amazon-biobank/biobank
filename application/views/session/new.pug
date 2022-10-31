@@ -3,6 +3,7 @@ extends ../layout/loginLayout.pug
 block append header
 
 block content
+      body.bkimg
         .container
             .row.justify-content-center
                 .col-lg-7
@@ -35,7 +36,7 @@ block content
                                 .alert.alert-danger.alert-dismissible.fade.show(role=alert)
                                     = messages.error
                             .small
-                                a(href='http://hyperledger.larc.usp.br:3000/') You need Certificate? Click here!
+                                a(href='http://amazonbiobank.duckdns.org:3000/home') You need Certificate? Click here!
 
 
 block append scripts

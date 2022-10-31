@@ -10,11 +10,12 @@ exports.show = async function(req, res, next){
   const account = await accountContract.readAccount(req.params.account)
 
   if(account == null) {
-    res.render('5xx')
-    return
-  }
+     res.render('5xx')
+     return
+   }
 
   const formattedAccount = formatAccount(account)
+
   res.render('account/show', { account: formattedAccount });
 };
 
@@ -67,7 +68,4 @@ function formatAccount(account){
   })
   return account
 }
-
-
-
 

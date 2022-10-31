@@ -1,5 +1,7 @@
 const DataContract = require('../contract/dataContract');
 const ControllerUtil = require('./ControllerUtil.js');
+const AccountContract = require('../contract/accountContract');
+const ConnectService = require('./../services/connectService.js');
 
 exports.index = async function(req, res, next){
   const dataContract = new DataContract();
@@ -20,9 +22,31 @@ exports.index = async function(req, res, next){
     }
   })
 
-  res.render('processableData/index', { datas: formattedDatas  });
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
+  res.render('processableData/index', { datas: formattedDatas, account: formattedAccount});
 };
 
 exports.show = async function(req, res, next){
-  res.render('processableData/show', {  });
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
+  res.render('processableData/show', { account: formattedAccount});
 };
