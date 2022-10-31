@@ -13,3 +13,6 @@ blockchain/currency-contract/config.json
 encryptCertificate/build
 blockchain/biobank-contract/package-lock.json
 blockchain/currency-contract/package-lock.json
+blockchain/bin/*
+application/package-lock.json
+api/package-lock.json

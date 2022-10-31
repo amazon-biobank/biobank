@@ -11,8 +11,13 @@ export FABRIC_CFG_PATH=$PWD/../config/
 
 
 cd ./../../api
+npm install
 node index.js &
 cd -
+
+cd ./../../application/
+npm install
+cd - 
 
 cd ./../../application/fabric-details/
 rm -r wallet
@@ -24,5 +29,6 @@ cd -
 ./createUserAccount.sh
 
 cd ./../../../keyguard/
+npm install
 ./start-keyguard.sh remote
 cd -
