@@ -1,5 +1,7 @@
 const ProcessorContract = require('../contract/processorContract');
 const ControllerUtil = require('./ControllerUtil.js');
+const AccountContract = require('../contract/accountContract');
+const ConnectService = require('./../services/connectService.js');
 
 
 exports.index = async function(req, res, next){
@@ -11,12 +13,34 @@ exports.index = async function(req, res, next){
     return processor
   })
 
-  res.render('processor/index', { processors: formattedProcessors });
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
+  res.render('processor/index', { processors: formattedProcessors, account: formattedAccount });
 };
 
 
 exports.new = async function(req, res, next){
-  res.render('processor/new', { });
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
+  res.render('processor/new', { account: formattedAccount });
 };
 
 exports.create = async function(req, res, next){
@@ -34,7 +58,18 @@ exports.show = async function(req, res, next){
 
   processor.created_at = ControllerUtil.formatDate(new Date(processor.created_at))
 
-  res.render('processor/show', { processor });
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
+  res.render('processor/show', { processor, account: formattedAccount});
 };
 
 function createProcessorFromRequest(req){

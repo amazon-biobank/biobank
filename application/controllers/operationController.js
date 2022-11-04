@@ -1,6 +1,8 @@
 const OperationContract = require('../contract/operationContract');
 const ControllerUtil = require('./ControllerUtil.js');
 const OperationService = require('./../services/operationService.js');
+const AccountContract = require('../contract/accountContract');
+const ConnectService = require('./../services/connectService.js');
 
 
 exports.create = async function(req, res, next){
@@ -20,7 +22,19 @@ exports.show = async function(req, res, next){
   const operation = await operationContract.readOperation(req.params.operation)
 
   const formattedOperation = formatOperation(operation)
-  res.render('operation/show', { operation: formattedOperation });
+
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
+  res.render('operation/show', { operation: formattedOperation, account: formattedAccount});
 };
 
 function createOperationFromRequest(req){

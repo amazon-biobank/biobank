@@ -1,6 +1,6 @@
 ./network.sh down
-./network.sh up createChannel -c channel1 -ca -s couchdb
-./network.sh createChannel -c channel2 -s couchdb
+./network.sh up createChannel -c mychannel -ca -s couchdb
+# ./network.sh createChannel -c channel2 -s couchdb
 
 
 export PATH=${PWD}/../bin:$PATH
@@ -11,8 +11,13 @@ export FABRIC_CFG_PATH=$PWD/../config/
 
 
 cd ./../../api
+npm install
 node index.js &
 cd -
+
+cd ./../../application/
+npm install
+cd - 
 
 cd ./../../application/fabric-details/
 rm -r wallet
@@ -24,5 +29,6 @@ cd -
 ./createUserAccount.sh
 
 cd ./../../../keyguard/
+npm install
 ./start-keyguard.sh remote
 cd -

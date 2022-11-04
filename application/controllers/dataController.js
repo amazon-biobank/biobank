@@ -3,10 +3,23 @@ const DnaContractContract = require('../contract/dnaContractContract');
 const ControllerUtil = require('./ControllerUtil.js');
 const KeyguardService = require('../services/keyguardService');
 const DataService = require('./../services/dataService')
+const AccountContract = require('../contract/accountContract');
+const ConnectService = require('./../services/connectService.js');
+
 
 exports.index = async function(req, res, next){
   const dataContract = new DataContract();
   const datas = await dataContract.getAllData();
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
 
   const formattedDatas = datas.map(function(data){
     return {
@@ -22,12 +35,23 @@ exports.index = async function(req, res, next){
     }
   })
 
-  res.render('data/index', { datas: formattedDatas });
+  res.render('data/index', { datas: formattedDatas, account: formattedAccount});
 };
 
 
 exports.newRawData = async function(req, res, next){
-  res.render('data/raw-data-new', { });
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
+  res.render('data/raw-data-new', { account: formattedAccount});
 };
 
 
@@ -40,8 +64,19 @@ exports.createRawData = async function(req, res, next){
 
 
 exports.newProcessedData = async function(req, res, next){
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
   const queryParams = { processRequestId: req.query.processRequest}
-  res.render('data/processed-data-new', { queryParams });
+  res.render('data/processed-data-new', { queryParams, account: formattedAccount});
 };
 
 
@@ -56,8 +91,22 @@ exports.createProcessedData = async function(req, res, next){
   }
 };
 
+exports.new = async function(req, res, next){
+  res.render('data/data-new', { });
+};
 
 exports.show = async function(req, res, next){
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
   const dataId = req.params.dataId;
   const dataContract = new DataContract();
   const data = await dataContract.readData(dataId);
@@ -67,11 +116,22 @@ exports.show = async function(req, res, next){
   data.status = ControllerUtil.formatDataStatus(data.status);
   data.created_at = ControllerUtil.formatDate(new Date(data.created_at));
 
-  res.render('data/show', { data, dnaContract });
+  res.render('data/show', { data, dnaContract, account: formattedAccount });
 };
 
 
 exports.listOperations = async function(req, res, next){
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
   const dataId = req.params.dataId;
   const dataContract = new DataContract();
   const data = await dataContract.readData(dataId);
@@ -86,7 +146,7 @@ exports.listOperations = async function(req, res, next){
     }
   })
 
-  res.render('data/list-operations', { data, operations: formattedOperations });
+  res.render('data/list-operations', { data, operations: formattedOperations, account: formattedAccount});
 };
 
 

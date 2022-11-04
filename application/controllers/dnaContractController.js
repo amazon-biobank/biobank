@@ -4,11 +4,25 @@ const BiocoinContract = require('../contract/biocoinContract');
 const ControllerUtil = require('./ControllerUtil.js');
 const DnaContractService = require('./../services/dnaContractService')
 const CONFIG = require('../config.json');
+const AccountContract = require('../contract/accountContract');
+const ConnectService = require('./../services/connectService.js');
 
 exports.new = async function(req, res, next){
   const dnaId = req.params.dnaId
   const contractParameters = CONFIG.dnaContract
-  res.render('dnaContract/new', { dnaId, contractParameters });
+
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
+  res.render('dnaContract/new', { dnaId, contractParameters, account: formattedAccount});
 };
 
 exports.create = async function(req, res, next){
@@ -27,6 +41,17 @@ exports.show = async function(req, res, next){
   const dnaContractContract = new DnaContractContract();
   const dnaContract = await dnaContractContract.readDnaContract(req.params.dnaContract)
 
+  const accountContract = new AccountContract();
+  const connectService = new ConnectService()
+  const account = await accountContract.readAccount(await connectService.getMyAddress())
+
+  if(account == null) {
+    res.render('5xx')
+    return
+  }
+
+  const formattedAccount = ControllerUtil.formatAccount(account)
+
   dnaContract.created_at = ControllerUtil.formatDate(new Date(dnaContract.created_at))
   dnaContract.raw_data_price = ControllerUtil.formatMoney(dnaContract.raw_data_price)
   dnaContract.processed_data_price = ControllerUtil.formatMoney(dnaContract.processed_data_price)
@@ -34,7 +59,7 @@ exports.show = async function(req, res, next){
     payment.type = ControllerUtil.formatRoyaltyPaymentType(payment.type)
     return payment
   })
-  res.render("dnaContract/show", { dnaContract, flash: req.flash() })
+  res.render("dnaContract/show", { dnaContract, flash: req.flash(), account: formattedAccount})
 };
 
 exports.execute = async function(req, res, next){
