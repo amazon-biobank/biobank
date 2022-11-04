@@ -23,7 +23,7 @@ class ActiveContract extends Contract {
   } 
 
   async queryBiobankChannel(ctx, args){
-    const response = await ctx.stub.invokeChaincode('biobank', args, 'channel1')
+    const response = await ctx.stub.invokeChaincode('biobank', args, 'mychannel')
     const buff = Buffer.from(response.payload, 'base64')
     const responseString = buff.toString()
     if(responseString == ''){ return responseString }
