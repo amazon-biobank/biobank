@@ -7,6 +7,8 @@ router.use('/session', require('./sessionRoute'));
 router.use(requireCertificate)
 router.use('/', require('./homeRoute'));
 router.use('/data', require('./dataRoute'));
+router.use('/data-buy',require('./dataBuyRoute'));
+router.use('/tk', require('./TkRoute'));
 router.use('/processor', require('./processorRoute'));
 router.use('/operation', require('./operationRoute'));
 router.use('/history', require('./historyRoute'));

@@ -56,6 +56,9 @@ exports.createProcessedData = async function(req, res, next){
   }
 };
 
+exports.new = async function(req, res, next){
+  res.render('data/data-new', { });
+};
 
 exports.show = async function(req, res, next){
   const dataId = req.params.dataId;
