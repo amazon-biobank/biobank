@@ -3,7 +3,7 @@ peer chaincode invoke \
     --ordererTLSHostnameOverride orderer.example.com \
     --tls \
     --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem \
-    -C mychannel \
+    -C channel1 \
     -n biobank \
     --peerAddresses localhost:7051 \
     --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
