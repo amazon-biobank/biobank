@@ -12,13 +12,13 @@ It also provides traceability and auditability, allowing easy association betwee
 |-------|---------|-------|
 | ![inserting-dna](https://user-images.githubusercontent.com/28439483/191984389-24a5c96a-07a2-4063-a087-4e6b173a8a7d.png) | ![buy-dna-data](https://user-images.githubusercontent.com/28439483/191984861-0b1b139f-ebe0-4b2a-afb2-17462a27152f.png) | ![explorer_transaction_detail](https://user-images.githubusercontent.com/28439483/191983731-a57e07b1-4f70-4e9f-b658-8196a8c98900.png) |
 
-
+## Install
+* [Windows](https://github.com/amazon-biobank/biobank/releases/tag/v0.1.2)
 
 
 ## Resources
 * [Project page](https://sites.usp.br/ubri/amazon-biobank-preserving-the-biodiversity-of-the-amazon-rainforest-with-blockchain/)
 * XXI Brazilian Symposium on Information and Computational Systems Security (2021) - [Article](https://doi.org/10.5753/sbseg_estendido.2021.17342) and [Video](https://youtu.be/PqujKOURc44)
-
 
 
 ## About the performance of the system
@@ -38,74 +38,8 @@ Below are preliminary numbers about some operations of the system. Note that it 
 * Time taken to buy a DNA: 7.7 seconds (note that it requires 3 writing transactions to the blockchain)
 
 
-## Requirements
-* Hyperledger Fabric 2.3.0
-* Hyperledger Explorer 1.1.5
-* Node.js 15.12.0
-* Express.js 4.17.1
 
-### Setting Up
-On server
-```bash
-# Install Hyperledger Fabric
-curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.3.2 1.5.0
 
-# Clone repository
-git clone https://github.com/amazon-biobank/biobank.git
-
-# Up blockchain
-cd blockchain/test-network
-./start-production-fabric.sh
-
-# Registering some users
-cd ../../application/fabric-details
-rm -r wallet
-node enrollAdmin.js
-node registerUser.js
-
-# Creating userAccount in blockchain
-cd ../../blockchain/test-network
-./createUserAccont.sh
-
-# Setting Up Hyperledger Explorer
-cd ../../explorer
-# change peer secretKey name in connection-profile/test-network.json
-#if needed, change the volume path in docker-compose.yaml
-docker-compose up -d
-
-# You can monitor you network 
-./monitordocker.sh fabric_network
-```
-
-On Client
-```bash
-# Clone repository
-git clone https://github.com/amazon-biobank/biobank.git
-
-# Up client application
-cd application
-npm install
-node index.js
-```
-For your convenience, you can get the admin certificate in <REMOTE IP>:3000/admin-id. This user is already created and registered.
-
-obs: maybe it is necessary to configure the hosts archive
-1) Open /etc/hosts (in linux)
-2) Add folowings lines
-```
-<REMOTE IP>   orderer.example.com
-<REMOTE IP>   peer0.org1.example.com
-<REMOTE IP>   peer0.org2.example.com
-<REMOTE IP>   ca.example.com
-```
-
-## Usage
-From client, just launch the Web Browser to localhost:3000.
-
-During the setting up, a admin and a user certificate was generated in biobank/application/fabric-details/wallet. Extract these certificates from the server to the client. You can use these certificates to login in the system.
-
-## API
-Informations about the API is on the [wiki](https://github.com/amazon-biobank/biobank/wiki)
 
 
 

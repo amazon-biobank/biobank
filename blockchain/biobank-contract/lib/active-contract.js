@@ -25,7 +25,7 @@ class ActiveContract extends Contract {
   } 
 
   async queryCurrencyChannel(ctx, args){
-    const response = await ctx.stub.invokeChaincode('currency', args, 'channel2')
+    const response = await ctx.stub.invokeChaincode('currency', args, 'mychannel')
     const buff = Buffer.from(response.payload, 'base64')
     const responseString = buff.toString()
     if(responseString == ''){ return responseString }
