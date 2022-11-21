@@ -5,7 +5,7 @@ const SmartContract = require('./smartContract.js');
 class BiocoinContract extends SmartContract{
   constructor(){
     super();
-    this.channel = 'channel2'
+    this.channel = 'mychannel'
     this.chaincode = 'currency'
   }
 

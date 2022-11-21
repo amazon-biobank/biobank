@@ -21,7 +21,7 @@ class SmartContractUtil {
     }
 
     static async submitTransaction(contractName, functionName, args, gateway) {
-        const network = await gateway.getNetwork('channel2');
+        const network = await gateway.getNetwork('mychannel');
         let contract;
         if (contractName !== '') {
             contract = await network.getContract('currency', contractName);

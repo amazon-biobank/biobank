@@ -4,7 +4,7 @@ const ConnectService = require('./../services/connectService.js');
 
 class SmartContract {
   constructor(){
-    this.channel = 'channel1'
+    this.channel = 'mychannel'
     this.chaincode = 'biobank'
   }
 

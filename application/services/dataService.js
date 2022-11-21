@@ -19,6 +19,13 @@ class DataService {
     return processedData
   }
 
+  static async createTkData(req){
+    const TkData = createTkDataFromRequest(req);
+    const dataContract = new DataContract();
+    await dataContract.createTkData(TkData); //Falta o contrato 
+    return TkData
+  }
+
   static async updateProcessRequest(processRequestId, processedData){
     const processRequestContract = new ProcessRequestContract()
     let processRequest = await processRequestContract.readProcessRequest(processRequestId);
@@ -58,6 +65,24 @@ function createProcessedDataFromRequest(req){
     created_at: new Date().toDateString()
   }
 }
+
+function createTkDataFromRequest(req){
+  return{
+    type: "Tradicional_Knowledge",
+    id:ControllerUtil.getHashFromMagneticLink(req.body.metadata.magnet_link),
+    status:'processed',
+    process_request_id: req.body.process_request_id,
+    metadata: {
+      title: req.body.metadata.title,
+      magnet_link: req.body.metadata.magnet_link,
+      description: req.body.metadata.description,
+      species: req.body.metadata.species
+
+    },
+    created_at: new Date().toDateString()
+  }
+}
+
 
 function removeTracker(magnet_link){
   const separator = magnet_link.split('&');
