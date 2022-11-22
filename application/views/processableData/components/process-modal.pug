@@ -2,7 +2,10 @@
   .modal-dialog(role='document')
     .modal-content
       .modal-header
-        h5#exampleModalLabel.modal-title Process this DNA?
+        if(language == 0)
+          h5#exampleModalLabel.modal-title Process this DNA?
+        else 
+          h5#exampleModalLabel.modal-title Processar este DNA?
         button.close(type='button' data-dismiss='modal' aria-label='Close')
           span(aria-hidden='true') &times;
       .modal-body 
@@ -11,9 +14,12 @@
           input#collector(hidden name='collector' type='text' value=data.collector)
           input#type(hidden name='type' type='text' value='process')
 
-          .mb-3
-            | Click in &quot;Process&quot; below to create a process request
-
+          if(language == 0)
+            .mb-3
+              | Click in &quot;Process&quot; below to create a process request
+          else 
+            .mb-3
+              | Clique em &quot;Processar&quot; abaixo para criar uma requisição de processamento          
           .modal-footer
             button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
             input.btn.btn-primary.btn-user(type='submit' value='Process')

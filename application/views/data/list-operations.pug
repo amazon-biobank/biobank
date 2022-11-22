@@ -5,7 +5,10 @@ block append header
 
 block content
   .container-fluid
-    h1.mb-4 Operation History
+    if(language == 0)
+      h1.mb-4 Operation History
+    else 
+      h1.mb-4 Histórico de Operação
     include components/operation-table.pug
 
 

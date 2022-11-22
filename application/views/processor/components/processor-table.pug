@@ -1,16 +1,27 @@
 .card.shadow.mb-4
   .card-header.py-3
-    h6.m-0.font-weight-bold.text-primary Lista de Processadores
+    if(language == 0)
+      h6.m-0.font-weight-bold.text-primary Lista de Processadores
+    else 
+      h6.m-0.font-weight-bold.text-primary Processor List
   .card-body
     .table-responsive
       table#dataTable.table.table-bordered(width='100%' cellspacing='0')
         thead
-          tr
-            th Nome
-            th Organização
-            th Criado em
-            th ID
-            th Ação
+          if(language == 0)
+            tr
+              th Name
+              th Organization
+              th Created at
+              th ID
+              th Action
+          else 
+            tr
+              th Nome
+              th Organização
+              th Criado em
+              th ID
+              th Ação            
         tbody
           each processor in processors
             tr

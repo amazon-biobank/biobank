@@ -9,59 +9,127 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   li.nav-item
     a.nav-link(href='/')
       i.fas.fa-fw.fa-tachometer-alt
-      span Home Page
+      if(language == 0)    
+        span Home Page
+      else
+        span Página Inicial
+      
 
   hr.sidebar-divider
   .sidebar-heading
-    | DNA Data 
+    if(language == 0)  
+      | DNA Data 
+    else
+      | Dados de DNA
+
   li.nav-item
     a.nav-link.collapsed(data-toggle='collapse' data-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne')
       i.fas.fa-upload
-      span Upload Data
-    #collapseOne.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
-      .bg-white.py-2.collapse-inner.rounded
-        a.collapse-item(href='/data/raw-data-new') Raw Data
-        a.collapse-item(href='/data/processed-data-new') Processed Data
-        a.collapse-item(href='/tk/tradicional-knowledge-new') Tradicional Knowledge
+      if(language == 0)  
+        span Upload Data
+      else
+        span Envio de Dados
+      
+    if(language == 0)
+      #collapseOne.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
+        .bg-white.py-2.collapse-inner.rounded
+            a.collapse-item(href='/data/raw-data-new') Raw Data
+            a.collapse-item(href='/data/processed-data-new') Processed Data
+            a.collapse-item(href='/tk/tradicional-knowledge-new') Tradicional Knowledge
+    else
+      #collapseOne.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
+        .bg-white.py-2.collapse-inner.rounded
+            a.collapse-item(href='/data/raw-data-new') Dado Bruto
+            a.collapse-item(href='/data/processed-data-new') Dado Processado
+            a.collapse-item(href='/tk/tradicional-knowledge-new') Conhecimento Tradicional
+  
   li.nav-item
     a.nav-link(href='/data')
       i.fab.fa-bitcoin
-      span List Data
+      if(language == 0)  
+        span List Data
+      else
+        span Lista de Dados
     
   hr.sidebar-divider
   .sidebar-heading
-    | Processing
+    if(language == 0)
+      | Processing
+    else
+      | Processamento
   li.nav-item
     a.nav-link(href='/processable-data')
       i.fas.fa-cogs
-      span Process Data
+      if(language == 0)  
+        span Process Data
+      else
+        span Processar Dados
+
   li.nav-item
     a.nav-link(href='/process-request')
       i.fas.fa-fw.fa-file-invoice
-      span Process Requests
+      if(language == 0) 
+        span Process Requests
+      else
+        span Pedidos de Processos
 
- 
   hr.sidebar-divider
   .sidebar-heading
     | Blockchain 
   li.nav-item
     a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='true' aria-controls='collapseTwo')
       i.fas.fa-upload
-      span Blockchain History
+      if(language == 0)  
+        span Blockchain History
+      else
+        span Histórico
     #collapseTwo.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
+      if(language == 0)  
+        .bg-white.py-2.collapse-inner.rounded
+          a.collapse-item(href='/history/data') Data History
+      else 
+        .bg-white.py-2.collapse-inner.rounded
+          a.collapse-item(href='/history/data') Histórico de Dados
+  
+  hr.sidebar-divider
+  .sidebar-heading
+    if(language == 0)
+      | Language 
+    else 
+      | Língua 
+  li.nav-item
+    a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseFour' aria-expanded='true' aria-controls='collapseTwo')
+      i.fas.fa-book-open
+      if(language == 0)  
+        span Language selector
+      else
+        span Seletor de Língua
+    #collapseFour.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
       .bg-white.py-2.collapse-inner.rounded
-        a.collapse-item(href='/history/data') Data History
+        a.collapse-item(href='/language/EN') English
+        a.collapse-item(href='/language/PTBR') Português
+      
 
   hr.sidebar-divider.d-none.d-md-block
   //Nav Item - Account
   li.nav-item
     a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseThree' aria-expanded='true' aria-controls='collapseOne')
       i.fas.fa-upload
-      span My Account
-    #collapseThree.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
-      .bg-white.py-2.collapse-inner.rounded
-        a.collapse-item(href='/account/show-my-account') Profile
-        a.collapse-item(href='/account/transfer') Transfer
+      if(language == 0)
+        span My Account
+      else
+        span Minha Conta
+      
+    if(language == 0)  
+      #collapseThree.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
+        .bg-white.py-2.collapse-inner.rounded
+          a.collapse-item(href='/account/show-my-account') Profile
+          a.collapse-item(href='/account/transfer') Transfer
+    else
+      #collapseThree.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
+        .bg-white.py-2.collapse-inner.rounded
+          a.collapse-item(href='/account/show-my-account') Perfil
+          a.collapse-item(href='/account/transfer') Transferência
   // Sidebar Toggler (Sidebar)
   .text-center.d-none.d-md-inline
     button#sidebarToggle.rounded-circle.border-0

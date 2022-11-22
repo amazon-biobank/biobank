@@ -5,7 +5,10 @@ block append header
 
 block content
   .container-fluid
-    h1.mb-4 Data to be processed
+    if(language == 0)
+      h1.mb-4 Data to be processed
+    else 
+      h1.mb-4 Dados para serem processados
     include components/data-table.pug
 
 

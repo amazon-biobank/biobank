@@ -6,7 +6,10 @@ block append header
 block content
   .container-fluid
     .d-flex.flex-row.justify-content-between.mb-4
-      h1.d-inline Process Requests
+      if(language == 0)
+        h1.d-inline Process Requests
+      else 
+        h1.d-inline Requisição de Processo
     include components/process-request-table.pug
 
 

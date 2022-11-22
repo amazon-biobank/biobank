@@ -5,7 +5,10 @@ block append header
 
 block content
   .container-fluid
-    h1.mb-4 List Data
+    if(language == 0)
+      h1.mb-4 List Data
+    else 
+      h1.mb-4 Listar Dados
     include components/data-table.pug
 
 

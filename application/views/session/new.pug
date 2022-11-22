@@ -9,30 +9,48 @@ block content
                     // Basic login form
                     .card.shadow-lg.border-0.rounded-lg.mt-5
                         .card-header.justify-content-center
-                            h3.font-weight-light.my-4 Add Certificate
+                            if(language == 0)
+                                h3.font-weight-light.my-4 Add Certificate
+                            else 
+                                h3.font-weight-light.my-4 Adicionar Certificado
                         .card-body
                             // Login form
                             form.user(action='/session/new' method='post' enctype="multipart/form-data")
                                 // Form Group (email address)
                                 .form-group
-                                    label.small.mb-1(for='inputEmailAddress') Certificate
+                                    if(language == 0)
+                                        label.small.mb-1(for='inputEmailAddress') Certificate
+                                    else    
+                                        label.small.mb-1(for='inputEmailAddress') Certificado
                                     input#inputEmailAddress.form-control(name='certificate' type='file' placeholder='Enter email address' )
                                 // Form Group (password)
                                 .form-group
-                                    label.small.mb-1(for='inputPassword') Password
+                                    if(language == 0)
+                                        label.small.mb-1(for='inputPassword') Password
+                                    else 
+                                        label.small.mb-1(for='inputPassword') Senha
                                     input#inputPassword.form-control(name='password' type='password' placeholder='Enter your password')
                                 // Form Group (remember password checkbox)
                                 .form-group
                                     .custom-control.custom-checkbox
                                         input#rememberPasswordCheck.custom-control-input(type='checkbox')
-                                        label.custom-control-label(for='rememberPasswordCheck') Remember Password
+                                        if(language == 0)
+                                            label.custom-control-label(for='rememberPasswordCheck') Remember Password
+                                        else 
+                                            label.custom-control-label(for='rememberPasswordCheck') Lembrar Senha
                                 // Form Group (login box)
                                 .form-group.d-flex.align-items-center.justify-content-between.mt-4.mb-0
-                                    a.small(href='auth-password-basic.html') Forgot my password
+                                    if(language == 0)
+                                        a.small(href='auth-password-basic.html') Forgot my password
+                                    else 
+                                        a.small(href='auth-password-basic.html') Esqueci minha senha
                                     input.btn.btn-primary.px-3(type='submit' value='Add')
                         .card-footer.text-center
                             .small
-                            a(href='auth-register-basic.html') YOu need Certificate? Click here!
+                            if(language == 0)
+                                a(href='auth-register-basic.html') YOu need Certificate? Click here!
+                            else 
+                                a(href='auth-register-basic.html') Você precisa de um Certificado? Clique aqui!
 
 
 block append scripts

@@ -22,7 +22,10 @@ block content
               label.mb-1(for='id') ID
               input#id.form-control(disabled type='text'  value=processRequest.id)
           .form-group
-            label.mb-1(for='created_at') Created At
+            if(language == 0)  
+              label.mb-1(for='created_at') Created At
+            else 
+              label.mb-1(for='created_at') Criado em
             input#created_at.form-control(disabled type='text'  value=processRequest.created_at)
 
           hr
