@@ -6,10 +6,17 @@ block append header
 block content
   .container-fluid
     .d-flex.flex-row.justify-content-between.mb-4
-      h1.d-inline Lista de Processadores
+      if(language == 0)
+        h1.d-inline Processor List
+      else 
+        h1.d-inline Lista de Processadores
       .align-self-center
-        a.btn.btn-primary.btn-user(href='processor/new')
-          span.text Adicionar Novo
+        if(language == 0)
+          a.btn.btn-primary.btn-user(href='processor/new')
+            span.text Add New
+        else 
+          a.btn.btn-primary.btn-user(href='processor/new')
+            span.text Adicionar Novo          
     include components/processor-table.pug
 
 

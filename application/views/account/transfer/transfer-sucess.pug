@@ -5,29 +5,51 @@ block append header
 block content
     .container.mt-4
         .text-center 
-            h1 The transaction was succeded 
+            if(language == 0)  
+                h1 The transaction was succeded
+            else 
+                h1 A transação foi bem sucedida
             .card.mb-4 
-                .card-header Transaction details 
+                if(language == 0)  
+                    .card-header Transaction details 
+                else 
+                    .card-header Detalhes da transação
                 .card-body 
                     form
                         .form-row
                             .form-group.col-md-12
-                            label.mb-1(for='name') User of origin
+                            if(language == 0)  
+                                label.mb-1(for='name') User of origin
+                            else 
+                                label.mb-1(for='name') Usuário de origem
                             input#name.form-control(disabled type='text' value= account.name)
                         .form-row              
                             .form-group.col-md-12
-                            label.mb-1(for='address') Origin address
+                            if(language == 0)  
+                                label.mb-1(for='address') Origin address
+                            else 
+                                label.mb-1(for='address') Endereço de origem
                             input#address.form-control(readonly name='senderAddress' type='text'  value=account.address)
                         .form-row 
                             .form-group.col-md-12 
-                            label.mb-1(for='address-reciever') Destiny address
+                            if(language == 0)    
+                                label.mb-1(for='address-reciever') Destiny address
+                            else 
+                                label.mb-1(for='address-reciever') Endereço de Destino
                             input#address-reciever.form-control(disabled name = 'receiverAddress' type='text' value=transferData.receiverAddress)
                         .form-row 
                             .form-group.col-md-12 
-                            label.mb-1(for='amount') Value of the transction 
+                            if(language == 0)  
+                                label.mb-1(for='amount') Value of the transction
+                            else 
+                                label.mb-1(for='amount') Valor da transação
                             input#amount.form-control.bio-money-input(disabled name = 'amount' type = 'text' value=transferData.amount)
                         hr
                         .float-right.mb-4.inline-block
-                          a.btn.btn-primary.btn-user.mr-3.px-5(href='/account/show-my-account') 
-                            | Finish
+                          if(language == 0)  
+                            a.btn.btn-primary.btn-user.mr-3.px-5(href='/account/show-my-account') 
+                                | Finish
+                          else 
+                            a.btn.btn-primary.btn-user.mr-3.px-5(href='/account/show-my-account') 
+                                | Finalizar
 block append scripts

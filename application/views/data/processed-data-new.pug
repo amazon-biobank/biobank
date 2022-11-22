@@ -10,30 +10,52 @@ block content
         .col-lg-12
           .p-5
             .text-center
-              h1.h4.text-gray-900.mb-4 Send a processed DNA data
+              if(language == 0)
+                h1.h4.text-gray-900.mb-4 Send a processed DNA data
+              else  
+                h1.h4.text-gray-900.mb-4 Envie um dado de DNA processado
+
               p.mb-4
             form.user(action='/data/processed-data-create' method='post')
               .form-group
-                label(for='process_request_id') Process request ID (Optional)
+                if(language == 0)
+                  label(for='process_request_id') Process request ID (Optional)
+                else 
+                  label(for='process_request_id') ID da requisição (Opcional)
                 input#process_request_id.form-control.form-control-user(name='process_request_id' type='text' value=queryParams.processRequestId)
               .form-group
-                label(for='name') Name
+                if(language == 0)
+                  label(for='name') Name
+                else 
+                  label(for='name') Nome
                 input#name.form-control.form-control-user(name='metadata[title]' type='text' required)
               .form-group
-                label(for='description') Description
+                if(language == 0)
+                  label(for='description') Description
+                else
+                  label(for='description') Descrição
                 textarea#exampleFormControlTextarea1.form-control(name='metadata[description]' rows='3' type = 'text' required)
               .form-group
-                label(for='magnet_link') DNA magnetic link
+                if(language == 0)
+                  label(for='magnet_link') DNA magnetic link
+                else
+                  label(for='magnet_link') Link magnético do DNA
                 input#magnet_link.form-control.form-control-user(name='metadata[magnet_link]' type='text' required)
               .form-group
-                label(for='secret_key') Secret Key
+                if(language == 0)
+                  label(for='secret_key') Secret Key
+                else
+                  label(for='secret_key') Chave Secreta
                 a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" 
                 data-content="Optional. Key used to encrypt and decrypt DNA. It will be securely stored outside Blockchain")
                 input#organization.form-control.form-control-user(name='secret_key' type='text' required)
               hr
               .float-right.mb-4.inline-block
                 a.btn.btn-danger.btn-user.mr-3.px-5(href='/data')
-                  | Cancel
+                  if(language == 0)
+                    | Cancel
+                  else 
+                    | Cancelar
                 input.btn.btn-primary.btn-user.px-5(type='submit' value='Add')
 
 block append scripts

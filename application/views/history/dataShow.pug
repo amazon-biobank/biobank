@@ -4,7 +4,10 @@ block append header
 
 block content
   .container-fluid
-    h1.mb-4 Histórico de Dados
+    if(language == 0)
+      h1.mb-4 Histórico de Dados
+    else 
+      h1.mb-4 Data History
     .card.mr-5
       .card-header.border-bottom
         ul.nav.nav-tabs.card-header-tabs#cardTab(role='tablist')
@@ -29,19 +32,33 @@ block content
             - tabId = 'tab-' + index
             - tabpanelId = 'tabpanel-' + index
             .tab-pane.fade(id=tabpanelId role='tabpanel', class= index===0? 'active show':'')
-              h5.mb-3.card-title Detalhes da Transação
+              if(language == 0)
+                h5.mb-3.card-title Transaction Details
+              else 
+                h5.mb-3.card-title Detalhes da Transação
               .row.mb-2
-                strong.col-md-6
-                  | Timestamp:
+                if(language == 0)
+                  strong.col-md-6
+                    | Timestamp:
+                else 
+                  strong.col-md-6
+                    | Tempo:
                 .col-md-6
                   = history.timestamp
               .row.mb-5
-                strong.col-md-6
-                  | ID da transação:
+                if(language == 0)
+                  strong.col-md-6
+                    | Transaction ID:
+                else 
+                  strong.col-md-6
+                    | ID da transação:
                 .col-md-6
                   = history.txId
 
-              h5.mb-3.card-title Detalhes do Dado
+              if(language == 0)
+                h5.mb-3.card-title Data Details
+              else 
+                h5.mb-3.card-title Detalhes do Dado
               .card-text
                 include ../data/components/data-show-form.pug
 

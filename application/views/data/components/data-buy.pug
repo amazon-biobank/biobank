@@ -1,16 +1,27 @@
 .card.shadow.mb-4
   .card-header.py-3
-    h6.m-0.font-weight-bold.text-primary Choose Data to Buy
+    if(language == 0)
+      h6.m-0.font-weight-bold.text-primary Choose Data to Buy
+    else
+      h6.m-0.font-weight-bold.text-primary Escolher dado para comprar
   .card-body
     .table-responsive
       table#dataTable.table.table-bordered(width='100%' cellspacing='0')
         thead
-          tr
-            th Type
-            th Title
-            th ID
-            th Created At
-            th Action
+          if(language == 0)
+            tr
+              th Type
+              th Title
+              th ID
+              th Created At
+              th Action
+          else
+            tr
+              th Tipo
+              th Título
+              th ID
+              th Criado em
+              th Ação
         tbody
           div
                 each data, index in datas
@@ -28,4 +39,7 @@
                             data-toggle="tooltip" data-placement="top" title="Buy DNA" href="/data-buy/" + data.id
                           )
                             i.fas.fa-shopping-cart.mr-2
-                            | Buy DNA
+                              if(language == 0)
+                                | Buy DNA
+                              else 
+                                | Comprar DNA

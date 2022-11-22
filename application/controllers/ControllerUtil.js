@@ -23,10 +23,15 @@ class ControllerUtil {
     if (type == "processed_data") return "Processed"
   }
 
-  static formatDataStatus (status) {
-    if (status == "unprocessed") return "Not Processed"
-    if (status == "processing") return "Processing"
-    if (status == "processed") return "Processed"
+  static formatDataStatus (status,language) {
+    if(language == 0)
+      if (status == "unprocessed") return "Not Processed"
+      if (status == "processing") return "Processing"
+      if (status == "processed") return "Processed"
+    else
+      if (status == "unprocessed") return "Não processado"
+      if (status == "processing") return "Processando"
+      if (status == "processed") return "Processado"
   }
 
   static formatOperationType (type) {
@@ -37,9 +42,13 @@ class ControllerUtil {
     if (type == "request_process") return "Process Request"
   }
 
-  static formatProcessRequestStatus (type) {
-    if (type == "not_processed") return "Not Processed"
-    if (type == "processed") return "Processed"
+  static formatProcessRequestStatus (type,language) {
+    if(language == 0)  
+      if (type == "not_processed") return "Not Processed"
+      if (type == "processed") return "Processed"
+    else
+      if (type == "not_processed") return "Não processado"
+      if (type == "processed") return "Processado"
   }
 
   static formatRoyaltyPaymentType (type) {
