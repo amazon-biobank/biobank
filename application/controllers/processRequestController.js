@@ -2,7 +2,6 @@ const ProcessRequestContract = require('../contract/processRequestContract');
 const DataContract = require('../contract/dataContract');
 const AccountContract = require('../contract/accountContract');
 const ControllerUtil = require('./ControllerUtil.js');
-const ConnectService = require('./../services/connectService.js');
 
 exports.index = async function(req, res, next){
   const processRequestContract = new ProcessRequestContract();
@@ -14,18 +13,7 @@ exports.index = async function(req, res, next){
     return processRequest
   }))
 
-  const accountContract = new AccountContract();
-  const connectService = new ConnectService()
-  const account = await accountContract.readAccount(await connectService.getMyAddress())
-
-  if(account == null) {
-    res.render('5xx')
-    return
-  }
-
-  const formattedAccount = ControllerUtil.formatAccount(account)
-
-  res.render('processRequest/index', { processRequests: formattedProcessRequests, account: formattedAccount });
+  res.render('processRequest/index', { processRequests: formattedProcessRequests });
 };
 
 exports.show = async function(req, res, next){
@@ -37,18 +25,7 @@ exports.show = async function(req, res, next){
 
   console.log(processRequest)
 
-  const accountContract = new AccountContract();
-  const connectService = new ConnectService()
-  const account = await accountContract.readAccount(await connectService.getMyAddress())
-
-  if(account == null) {
-    res.render('5xx')
-    return
-  }
-
-  const formattedAccount = ControllerUtil.formatAccount(account)
-
-  res.render('processRequest/show', { processRequest, account: formattedAccount });
+  res.render('processRequest/show', { processRequest });
 };
 
 exports.create = async function(req, res, next){

@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const fs = require('fs');
 
-const lyra2 = require ('../../build/Release/lyra2');
+const lyra2 = require ('../build/Release/lyra2');
 const LyraHash = (input, salt, saltLength) => lyra2.getHash(input, salt, saltLength);
 
 const algorithm = 'aes-256-cfb';

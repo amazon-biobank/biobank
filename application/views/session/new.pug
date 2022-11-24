@@ -22,14 +22,9 @@ block content
                                 .form-group
                                     label.small.mb-1(for='inputPassword') Password
                                     input#inputPassword.form-control(name='password' type='password' placeholder='Enter your password')
-                                // Form Group (remember password checkbox)
-                                .form-group
-                                    .custom-control.custom-checkbox
-                                        input#rememberPasswordCheck.custom-control-input(type='checkbox')
-                                        label.custom-control-label(for='rememberPasswordCheck') Remember Password
                                 // Form Group (login box)
                                 .form-group.d-flex.align-items-center.justify-content-between.mt-4.mb-0
-                                    a.small(href='auth-password-basic.html') Forgot my password
+                                    a.small(href='#') 
                                     input.btn.btn-primary.px-3(type='submit' value='Add')
                         .card-footer.text-center
                             if(messages.error)

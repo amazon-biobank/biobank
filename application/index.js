@@ -6,8 +6,6 @@ var http = require('http'),
     flash = require('connect-flash'),
     errorhandler = require('errorhandler');
 const ConnectService = require('./services/connectService');
-const AccountContract = require('./contract/accountContract');
-const ControllerUtil = require('./controllers/ControllerUtil.js');
 const result = require('dotenv').config({ path: path.join(__dirname, ".env") })
 
 var isProduction = process.env.NODE_ENV === 'production';
@@ -93,17 +91,6 @@ else if(process.env.CONTEXT=='remote'){
     initServer()
   })
 }
-
-function formatAccount(account){
-  account.balance = ControllerUtil.formatMoney(account.balance)
-  account.created_at = ControllerUtil.formatDate(new Date(account.created_at))
-  account.tokens = account.tokens.map((token) => {
-    token.value = ControllerUtil.formatMoney(token.value)
-    return token
-  })
-  return account
-}
-
 
 function initServer(){
   var server = app.listen( process.env.PORT || 3000, function(){

@@ -3,3 +3,4 @@
 /.env
 /package-lock.json
 /build/*
+/encryptCertificate/binding.gyp

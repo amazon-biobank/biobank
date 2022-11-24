@@ -1,8 +1,5 @@
 const ProcessorContract = require('../contract/processorContract');
 const ControllerUtil = require('./ControllerUtil.js');
-const AccountContract = require('../contract/accountContract');
-const ConnectService = require('./../services/connectService.js');
-
 
 exports.index = async function(req, res, next){
   const processorContract = new ProcessorContract();
@@ -13,34 +10,12 @@ exports.index = async function(req, res, next){
     return processor
   })
 
-  const accountContract = new AccountContract();
-  const connectService = new ConnectService()
-  const account = await accountContract.readAccount(await connectService.getMyAddress())
-
-  if(account == null) {
-    res.render('5xx')
-    return
-  }
-
-  const formattedAccount = ControllerUtil.formatAccount(account)
-
-  res.render('processor/index', { processors: formattedProcessors, account: formattedAccount });
+  res.render('processor/index', { processors: formattedProcessors });
 };
 
 
 exports.new = async function(req, res, next){
-  const accountContract = new AccountContract();
-  const connectService = new ConnectService()
-  const account = await accountContract.readAccount(await connectService.getMyAddress())
-
-  if(account == null) {
-    res.render('5xx')
-    return
-  }
-
-  const formattedAccount = ControllerUtil.formatAccount(account)
-
-  res.render('processor/new', { account: formattedAccount });
+  res.render('processor/new', { });
 };
 
 exports.create = async function(req, res, next){
@@ -58,18 +33,7 @@ exports.show = async function(req, res, next){
 
   processor.created_at = ControllerUtil.formatDate(new Date(processor.created_at))
 
-  const accountContract = new AccountContract();
-  const connectService = new ConnectService()
-  const account = await accountContract.readAccount(await connectService.getMyAddress())
-
-  if(account == null) {
-    res.render('5xx')
-    return
-  }
-
-  const formattedAccount = ControllerUtil.formatAccount(account)
-
-  res.render('processor/show', { processor, account: formattedAccount});
+  res.render('processor/show', { processor });
 };
 
 function createProcessorFromRequest(req){
