@@ -4,23 +4,43 @@ block append header
 
 block content
   .container.mt-4
-    h1 Smart Contract Details 
+    if(language == 0)
+      h1 Smart Contract Details
+    else 
+      h1 Detalhes do Contrato Inteligente 
     .card.mb-4
-      .card-header.card-header.d-flex.justify-content-between.align-items-center Smart Contract
-        div 
-          .modal-body 
-            form.user(action='/process-request/create' method='post')
-              input#data-id(hidden name='raw_data_id' type='text' value=dnaContract.dna_id)
-              input#collector(hidden name='collector' type='text' value=dnaContract.id)
-              input#type(hidden name='type' type='text' value='process')
+      if(language == 0)
+        .card-header.card-header.d-flex.justify-content-between.align-items-center Smart Contract
+          div 
+            .modal-body 
+              form.user(action='/process-request/create' method='post')
+                input#data-id(hidden name='raw_data_id' type='text' value=dnaContract.dna_id)
+                input#collector(hidden name='collector' type='text' value=dnaContract.id)
+                input#type(hidden name='type' type='text' value='process')
 
-              .mb-3
-                | Click in &quot;Process&quot; below to create a process request
+                .mb-3
+                  | Click in &quot;Process&quot; below to create a process request
 
-              .modal-footer
-                a.btn.btn-danger.btn-sm.mr-4(href='/processable-data') 
-                  | Cancel
-                input.btn.btn-primary.btn-sm.mr-4(type='submit' value='Process')
+                .modal-footer
+                  a.btn.btn-danger.btn-sm.mr-4(href='/processable-data') 
+                    | Cancel
+                  input.btn.btn-primary.btn-sm.mr-4(type='submit' value='Process')
+      else 
+        .card-header.card-header.d-flex.justify-content-between.align-items-center Contrato Inteligente
+          div 
+            .modal-body 
+              form.user(action='/process-request/create' method='post')
+                input#data-id(hidden name='raw_data_id' type='text' value=dnaContract.dna_id)
+                input#collector(hidden name='collector' type='text' value=dnaContract.id)
+                input#type(hidden name='type' type='text' value='process')
+
+                .mb-3
+                  | Clique em &quot;Processar&quot; abaixo para criar uma requisição de processo
+
+                .modal-footer
+                  a.btn.btn-danger.btn-sm.mr-4(href='/processable-data') 
+                    | Cancelar
+                  input.btn.btn-primary.btn-sm.mr-4(type='submit' value='Process')
 
       .card-body
         form
@@ -29,65 +49,107 @@ block content
             input#dnaId.form-control(disabled type='text' value= dnaContract.dna_id)
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='id') Contract ID
+              if(language==0)
+                label.mb-1(for='id') Contract ID
+              else 
+                label.mb-1(for='id') ID do Contrato
               input#id.form-control(disabled type='text'  value=dnaContract.id style='font-size: small')
             .form-group.col-md-6
-              label.mb-1(for='created_at') Created At
+              if(language==0)
+                label.mb-1(for='created_at') Created At
+              else 
+                label.mb-1(for='created_at') Criado em
               input#id.form-control(disabled type='text'  value=dnaContract.created_at)
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='raw_data_price') Raw Data Price
+              if(language==0)
+                label.mb-1(for='raw_data_price') Raw Data Price
+              else 
+                label.mb-1(for='raw_data_price') Preço do Dado Bruto
               a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" 
                 data-content="Price that the raw DNA is sold, being fully transfered to the collector. \
                   <br> The processors, to obtain the raw DNA to be processed, must deposit this value in escrow. \
                   The escrow will be closed after the insertion of processed DNA")
               input#price.form-control.bio-money-input(disabled value=dnaContract.raw_data_price type='text')
             .form-group.col-md-6
-              label.mb-1(for='processed_data_price') Processed Data Price
+              if(language == 0)  
+                label.mb-1(for='processed_data_price') Processed Data Price
+              else 
+                label.mb-1(for='processed_data_price') Preço do Dado Processado
               a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" 
                 data-content="Price that the processed DNA is sold. This value will be transfered acording to the 'payment distribution'")
               input.form-control.bio-money-input(disabled value=dnaContract.processed_data_price  type='text')
               
         if(dnaContract.accepted_processed_data)
           hr.mt-4
-          h6.mb-3 Accepted Processed Data
+          if(language == 0)  
+            h6.mb-3 Accepted Processed Data
+          else 
+            h6.mb-3 Dado Processado aceito
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='price') Processed data ID
+              if(language == 0)  
+                label.mb-1(for='price') Processed data ID
+              else 
+                label.mb-1(for='price') ID do Dado Processado
               a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="You, who inserts the raw DNA.")
               input#price.form-control(disabled value=dnaContract.accepted_processed_data.processed_data_id type='text')
             .form-group.col-md-6
-              label.mb-1(for='price') Process Request ID
+              if(language == 0) 
+                label.mb-1(for='price') Process Request ID
+              else 
+                label.mb-1(for='price') ID da Requisição
               a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who process the DNA")
               input#price.form-control(disabled value=dnaContract.accepted_processed_data.process_request_id type='text')
                 
 
         hr.mt-4
-        h6.mb-3 Payment Distribution (in percentage)
+        if(language == 0) 
+          h6.mb-3 Payment Distribution (in percentage)
+        else 
+          h6.mb-3 Distribuição de pagamento (em porcentagem)
         .form-row
           .form-group.col-md-3
-            label.mb-1(for='price') Collector
+            if(language == 0) 
+              label.mb-1(for='price') Collector
+            else 
+              label.mb-1(for='price') Coletor
             a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="You, who inserts the raw DNA.")
             input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.collector type='text')
           .form-group.col-md-3
-            label.mb-1(for='price') Processor
+            if(language == 0) 
+              label.mb-1(for='price') Processor
+            else 
+              label.mb-1(for='price') Processador
             a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who process the DNA")
             input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.processor type='text')
           .form-group.col-md-3 
-            label.mb-1(for='price') Validators
+            if(language == 0) 
+              label.mb-1(for='price') Validators
+            else 
+              label.mb-1(for='price') Validadores
             a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Those who validate the processor work (0-2 validators). The reward will be distributed equaly between then")
             input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.validators type='text')
           .form-group.col-md-3
-            label.mb-1(for='price') Curator
+            if(language == 0) 
+              label.mb-1(for='price') Curator
+            else
+              label.mb-1(for='price') Curador?
             a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who certificate that the DNA is legitim and correct")
             input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.curator type='text')
 
         hr.mt-4
-        h6.mb-3 Royalty Payments
+        if(language == 0) 
+          h6.mb-3 Royalty Payments
+        else
+          h6.mb-3 Parte Pagamentos
         each royalty_payment, index in dnaContract.royalty_payments
           .form-row
             .form-group.col-md-4
-              label.mb-1(for='price') Type
+              if(language == 0) 
+                label.mb-1(for='price') Type
+              else 
+                label.mb-1(for='price') Tipo
               a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" 
                 data-content="'no_royalties'- without any type of royalties; <br>\
                   'fixed_one_time_fee'- with an unique payment, when buying DNA; <br>\
@@ -98,10 +160,16 @@ block content
                   ")
               input.form-control(disabled value=royalty_payment.type)
             .form-group.col-md-2
-              label.mb-1(for='value') Value 
+              if(language == 0) 
+                label.mb-1(for='value') Value
+              else 
+                label.mb-1(for='value') Valor
               input.form-control(disabled value=royalty_payment.value)
             .form-group.col-md-2
-              label.mb-1(for='period') Period in months 
+              if(language == 0) 
+                label.mb-1(for='period') Period in months 
+              else 
+                label.mb-1(for='period') Período em meses
               input#price.form-control.royalty-payment-period(value=royalty_payment.period type='text' disabled=true)
 
   include components/buy-modal.pug

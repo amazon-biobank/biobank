@@ -16,23 +16,36 @@ block content
                   .col-xl-550.col-md-10.mb-4
                       .col.mr-6
                         .align.center.mb-10.inline-block
-                          a.btn.btn-success.btn-user.btn-block.btn-lg.mr-0.px-5(href='/data/new')
-                              | Insert DNA
+                          if(language == 0)
+                            a.btn.btn-success.btn-user.btn-block.btn-lg.mr-0.px-5(href='/data/new')
+                                | Insert DNA
+                          else
+                            a.btn.btn-success.btn-user.btn-block.btn-lg.mr-0.px-5(href='/data/new')
+                                | Inserir DNA
                         .col-auto
                   
                   // Pending Requests Card Example
                   .col-xl-550.col-md-10.mb-4
                       .col.mr-6
                         .align.center.mb-10.inline-block
-                          a.btn.btn-success.btn-user.btn-block.btn-lg.mr-0.px-5(href='/processable-data')
-                            | Process DNA                     
+                          if(language == 0)
+                            a.btn.btn-success.btn-user.btn-block.btn-lg.mr-0.px-5(href='/processable-data')
+                              | Process DNA  
+                          else
+                            a.btn.btn-success.btn-user.btn-block.btn-lg.mr-0.px-5(href='/processable-data')
+                              | Processar DNA              
                         .col-auto
 
                   // Pending Requests Card Example
                   .col-xl-550.col-md-10.mb-4
                       .col.mr-6
                         .align.center.mb-10.inline-block
-                          a.btn.btn-success.btn-user.btn-block.btn-lg.mr-0.px-5(href='/data-buy')
-                            | Buy DNA
-                        .col-a
+                          if(language == 0)
+                            a.btn.btn-success.btn-user.btn-block.btn-lg.mr-0.px-5(href='/data-buy')
+                              | Buy DNA
+                          else
+                            a.btn.btn-success.btn-user.btn-block.btn-lg.mr-0.px-5(href='/data-buy')
+                              | Comprar DNA
+                        .col-a                        
 
+block append scripts

@@ -1,16 +1,27 @@
 .card.shadow.mb-4
   .card-header.py-3
-    h6.m-0.font-weight-bold.text-primary Process Requests
+    if(language == 0)
+      h6.m-0.font-weight-bold.text-primary Process Requests
+    else  
+      h6.m-0.font-weight-bold.text-primary Requisições de Processo
   .card-body
     .table-responsive
       table#dataTable.table.table-bordered(width='100%' cellspacing='0')
         thead
-          tr
-            th Status
-            th Created At
-            th Processor ID
-            th Raw DNA ID
-            th Action
+          if(language == 0)
+            tr
+              th Status
+              th Created At
+              th Processor ID
+              th Raw DNA ID
+              th Action
+          else 
+            tr
+              th Status
+              th Criado em
+              th ID do Processador
+              th ID do Dna Bruto
+              th Ação            
         tbody
           each processRequest in processRequests
             tr

@@ -4,30 +4,51 @@ block append header
 
 block content
   .container.mt-4
-    h1 Solicitação de tranferência
+    if(language == 0)
+      h1 Transfer Request
+    else   
+      h1 Solicitação de tranferência
     .card.mb-4
-      .card-header Dados da tranferência
+      if(language == 0)
+        .card-header Transfer Data 
+      else
+        .card-header Dados da tranferência
       .card-body
         form(action = '/account/transfer' method = 'post')
           .form-row
             .form-group.col-md-12
-              label.mb-1(for='name') Nome
+              if(language == 0)
+                label.mb-1(for='name') Name 
+              else 
+                label.mb-1(for='name') Nome
               input#name.form-control(disabled type='text' value= account.name)
           .form-row              
             .form-group.col-md-12
-              label.mb-1(for='address') Endereço
+              if(language == 0)
+                label.mb-1(for='address') Address 
+              else
+                label.mb-1(for='address') Endereço
               input#address.form-control(readonly name='senderAddress' type='text'  value=account.address)
           .form-row
             .form-group.col-md-12
-              label.mb-1(for='balance') Saldo
+              if(language == 0)
+                label.mb-1(for='balance') Balance 
+              else 
+                label.mb-1(for='balance') Saldo
               input#balance.form-control(disabled type='text' value= account.balance)
           .form-row 
             .form-group.col-md-12 
-              label.mb-1(for='address-reciever') Endereço de destino
+              if(language == 0)
+                label.mb-1(for='address-reciever') Destination Address 
+              else
+                label.mb-1(for='address-reciever') Endereço de destino
               input#address-reciever.form-control(name = 'receiverAddress' type='text ')
           .form-row 
             .form-group.col-md-12 
-              label.mb-1(for='amount') Valor da transferência 
+              if(language == 0)
+                label.mb-1(for='amount') Transfer Amount 
+              else
+                label.mb-1(for='amount') Valor da transferência 
               input#amount.form-control.bio-money-input(name = 'amount' type = 'text')
             hr
             .float-right.mb-4.inline-block

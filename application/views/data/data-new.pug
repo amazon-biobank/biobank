@@ -2,7 +2,10 @@ extends ../layout/layout.pug
   
 block content
   .container-fluid
-    h1 Choose Data to insert 
+    if(language == 0)
+      h1 Choose Data to insert 
+    else
+      h1 Escolha o Dado para inserir 
 
     .row
       .col-xl-2.col-md-4.mb-2
@@ -17,7 +20,10 @@ block content
                       .col.mr-6
                         .align.center.mb-10.inline-block
                           a.btn.btn-primary.btn-user.btn-block.btn-lg.mr-0.px-5(href='/data/raw-data-new')
+                            if(language == 0)  
                               | Raw Data
+                            else 
+                              | Dado Bruto
                         .col-auto
                   
                   // Pending Requests Card Example
@@ -25,7 +31,10 @@ block content
                       .col.mr-6
                         .align.center.mb-10.inline-block
                           a.btn.btn-primary.btn-user.btn-block.btn-lg.mr-0.px-5(href='/data/processed-data-new')
-                            | Processed Data                   
+                            if(language == 0)  
+                              | Processed Data 
+                            else 
+                              | Dado Processado                  
                         .col-auto
 
                   // Pending Requests Card Example
@@ -33,6 +42,9 @@ block content
                       .col.mr-6
                         .align.center.mb-10.inline-block
                           a.btn.btn-primary.btn-user.btn-block.btn-lg.mr-0.px-5(href='/')
-                            | Cancel
+                            if(language == 0)
+                              | Cancel
+                            else 
+                              | Cancelar
                         .col-a
 

@@ -1,35 +1,59 @@
 .card-body
   form
     .form-group
-      label.mb-1(for='title') Title
+      if(language == 0)
+        label.mb-1(for='title') Title
+      else 
+        label.mb-1(for='title') Título
       input#title.form-control(disabled type='text' value= data.metadata.title)
     .form-group
-      label.mb-1(for='description') Description
+      if(language == 0)
+        label.mb-1(for='description') Description
+      else 
+        label.mb-1(for='description') Descrição
       input#description.form-control(disabled type='text' value= data.metadata.description)
     hr.mt-4
     h5.mb-3 Details
     if (data.process_request_id)
       .form-group
-        label.mb-1(for='process_request_id') Process Request ID
+        if(language == 0)
+          label.mb-1(for='process_request_id') Process Request ID
+        else 
+          label.mb-1(for='process_request_id') ID de requisição
         div
           a(href='/process-request/' + data.process_request_id)
             = data.process_request_id
     .form-row
       .form-group.col-md-6
-        label.mb-1(for='type') Type
+        if(language == 0)
+          label.mb-1(for='type') Type
+        else 
+          label.mb-1(for='type') Tipo
         input#type.form-control(disabled type='text'  value=data.type)
       .form-group.col-md-6
-        label.mb-1(for='id') Data Id
+        if(language == 0)
+          label.mb-1(for='id') Data Id
+        else 
+          label.mb-1(for='id') ID do Dado
         input#id.form-control(disabled type='text'  value=data.id)
     .form-group
-        label.mb-1(for='magnet_link') Data's Magnetic Link
+        if(language == 0)
+          label.mb-1(for='magnet_link') Data's Magnetic Link
+        else 
+          label.mb-1(for='magnet_link') Link Magnético do Dado
         input#owners.form-control(disabled type='text' value= data.metadata.magnet_link)
     .form-group
-      label.mb-1(for='uploader') Uploader
+      if(language == 0)
+        label.mb-1(for='uploader') Uploader
+      else 
+        label.mb-1(for='uploader') Dono
       input#uploader.form-control(disabled type='text' value= data.uploader)
     .form-row
       .form-group.col-md-6
-        label.mb-1(for='created_at') Created At
+        if(language == 0)
+          label.mb-1(for='created_at') Created At
+        else 
+          label.mb-1(for='created_at') Criado em
         input#created_at.form-control(disabled type='text' value=data.created_at)
       .form-group.col-md-6
         label.mb-1(for='status') Status

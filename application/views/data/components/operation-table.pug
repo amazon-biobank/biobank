@@ -6,12 +6,20 @@
     .table-responsive
       table#dataTable.table.table-bordered(width='100%' cellspacing='0')
         thead
-          tr
-            th Created At
-            th Type
-            th User address
-            th Operation ID
-            th Action
+          if(language == 0)  
+            tr
+              th Created At
+              th Type
+              th User address
+              th Operation ID
+              th Action
+          else
+            tr
+              th Criado em
+              th Tipo
+              th Endereço de Usuário
+              th ID de operação
+              th Ação
         tbody
           each operation in operations
             tr

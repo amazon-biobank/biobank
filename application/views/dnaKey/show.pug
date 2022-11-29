@@ -4,9 +4,15 @@ block append header
 
 block content
   .container.mt-4
-    h1 DnaKey
+    if(language == )
+      h1 DnaKey
+    else 
+      h1 Chave de DNA
     .card.mb-4
-      .card-header Your DNA Decryption   Key
+      if(language == 0)
+        .card-header Your DNA Decryption Key
+      else 
+        .card-header Sua Chave de descriptografia de DNA
       .card-body
         form(action = '/account/transfer' method = 'post')
           .form-row
@@ -15,7 +21,10 @@ block content
               input#dnaId.form-control(disabled type='text' value= dnaKey.dnaId)
           .form-row     
             .form-group.col-md-12
-              label.mb-1(for='address') Secret Key
+              if(language == 0)
+                label.mb-1(for='address') Secret Key
+              else 
+                label.mb-1(for='address') Chave Secreta
               .input-group
                 input#address.form-control(disabled data-toggle="password" name='senderAddress' type='password'  value=dnaKey.secretKey)
                 .input-group-append

@@ -5,7 +5,13 @@ block append header
 block content
     .container-fluid
         - var value = "string"
-        h1.px-3.mt-4  Error: your transaction was not processed
+        if(language == 0)
+            h1.px-3.mt-4  Error: your transaction was not processed
+            script.
+                message="#{message}"
+                alert( message)
+        else 
+            h1.px-3.mt-4  Erro: Sua transação não foi processada
             script.
                 message="#{message}"
                 alert( message)

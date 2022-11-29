@@ -4,41 +4,77 @@ block append header
 
 block content
   .container.mt-4
-    h1 User Detail
+    if(language == 0)
+      h1 User Detail
+    else 
+      h1 Detalhes de usuário
     .card.mb-4
-      .card-header User
+      if(language == 0)
+        .card-header User
+      else
+        .card-header Usuário
       .card-body
         form
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='name') Name
-              input#name.form-control(disabled type='text' value=account.name)
+              if(language == 0)
+                label.mb-1(for='name') Name
+              else 
+                label.md-1(for='name') Nome
+              input#name.form-control(disabled type='text' value= account.name)
             .form-group.col-md-6
-              label.mb-1(for='address') Address
+              if(language == 0)
+                label.mb-1(for='address') Address
+              else 
+                label.mb-1(for='address') Endereço
+
               input#address.form-control(disabled type='text'  value=account.address)
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='balance') Balance
+              if(language == 0)
+                label.mb-1(for='balance') Balance
+              else 
+                label.mb-1(for='balance') Balanço
+
               input#balance.form-control.bio-money(disabled type='text' value= account.balance)
             .form-group.col-md-6
-              label.mb-1(for='created_at') Created At
+              if(language == 0)
+                label.mb-1(for='created_at') Created At
+              else 
+                label.mb-1(for='created_at') Criado em
+
               input#id.form-control(disabled type='text'  value=account.created_at)
-        .card-header Available Tokens
+        if(language == 0)
+          .card-header Available Tokens
+        else 
+          .card-heade Tokens Disponíveis 
         .card-body
           each token, index in account.tokens 
             form
               .form-row
                 .form-group.col-md-3
-                  label.mb-1(for='type') Type
+                  if(language == 0)
+                    label.mb-1(for='type') Type
+                  else 
+                    label.mb-1(for='type') Tipo
                   input#type.form-control(disabled type='text' value= token.type)
                 .form-group.col-md-3
-                  label.mb-1(for='value') Value
+                  if(language == 0)
+                    label.mb-1(for='value') Value
+                  else 
+                    label.mb-1(for='value') Valor
                   input#value.form-control.bio-money(disabled type='text'  value=token.value)
                 .form-group.col-md-3
-                  label.mb-1(for='payment-intention-id') PaymentIntentionId
+                  if(language == 0)
+                    label.mb-1(for='payment-intention-id') PaymentIntentionId
+                  else 
+                    label.mb-1(for='payment-intention-id') Id de Intenção de Pagamento
                   input#payment-intention-id.form-control(disabled type='text' value= token.payment_intention_id)
                 .form-group.col-md-3
-                  label.mb-1(for='expiration-date') Expiration Date
+                  if(language == 0)
+                    label.mb-1(for='expiration-date') Expiration Date
+                  else 
+                    label.mb-1(for='expiration-date') Data de Validade
                   input#expiration_date.form-control(disabled type='text'  value=token.expiration_date)
             
 

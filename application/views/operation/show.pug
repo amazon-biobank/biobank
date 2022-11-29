@@ -16,7 +16,10 @@ block content
                 = operation.details.data_id
           .form-row
             .form-group.col-md-6
-              label.mb-1(for='type') Type
+              if(language == 0)
+                label.mb-1(for='type') Type
+              else 
+                label.mb-1(for='type') Tipo
               input#type.form-control(disabled type='text' value= operation.type)
             .form-group.col-md-6
               label.mb-1(for='id') Operation ID

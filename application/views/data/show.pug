@@ -5,30 +5,54 @@ block append header
 
 block content
   .container.mt-4
-    h1 Show Data
+    if(language == 0)
+      h1 Show Data
+    else 
+      h1 Ver Dados
     .card.mb-4
       .card-header.d-flex.justify-content-between.align-items-center
-        | Data
+        if(language == 0)
+          | Data
+        else 
+          | Dados
         div
           if(dnaContract)
             a.btn.btn-primary.btn-sm.mr-4(href='/dnaContract/'+ dnaContract.id)
-              | See Smart Contract
+              if(language == 0)
+                | See Smart Contract
+              else 
+                | Ver Contrato Inteligente
           else if(data.process_request_id)
             a.btn.btn-primary.btn-sm.text-white.mr-2(data-toggle="modal" data-target="#endorseModal" title="Buy DNA")
-              | Endorse DNA
+              if(language == 0)
+                | Endorse DNA
+              else 
+                | Validar DNA
           else if( !data.process_request_id )
             a.btn.btn-danger.btn-sm.mr-4(href='/dnaContract/new/'+data.id)
-              | Create Smart Contract
+              if(language == 0)
+                | Create Smart Contract
+              else 
+                | Criar Contrato Inteligente
 
           if(data.type=='Raw')
             a.btn.btn-primary.btn-sm.mr-4(href='/process-request?search='+data.key)
-              | See Processing Request
+              if(language == 0)
+                | See Processing Request
+              else 
+                | Ver Requisição de Processamento
               
           a.btn.btn-secondary.btn-sm.mr-4(href=data.key+'/list-operations')
-            | See History Operation
-          
+            if(language == 0)
+              | See History Operation
+            else 
+              | Ver Histórico de Operação
+
           a.btn.btn-primary.btn-sm(href='/dnaKey/' + data.id)
-            | See Decryption Key
+            if(language == 0)
+              | See Decryption Key
+            else 
+              | Ver chave de descriptografia
       include components/data-show-form.pug
     .card
       .card-header List of Owners
@@ -37,7 +61,10 @@ block content
           table#dataTable.table.table-bordered(width='100%' cellspacing='0')
             thead
               tr 
-                th Owner ID
+                if(language == 0)
+                  th Owner ID
+                else 
+                  th ID do Dono
             tbody
               each ownerId, index in data.owners
                 tr
