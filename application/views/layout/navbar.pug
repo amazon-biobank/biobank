@@ -101,8 +101,9 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
     // Nav Item - User Information
     li.nav-item.dropdown.no-arrow
       a#userDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-        span.mr-2.d-none.d-lg-inline.text-gray-600.small Toshi
-        img.img-profile.rounded-circle(src='https://source.unsplash.com/QAB-WJcbgJk/60x60')
+        span.mr-2.d-none.d-lg-inline.text-gray-600.small #{account.name}
+        img.img-profile.rounded-circle(src='https://images.unsplash.com/photo-1495231916356-a86217efff12?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGZsb3dlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60')
+        //(src='https://source.unsplash.com/QAB-WJcbgJk/60x60')
       // Dropdown - User Information
       .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby='userDropdown')
         a.dropdown-item(href='/account/show-my-account')

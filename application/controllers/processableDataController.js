@@ -1,6 +1,5 @@
 const DataContract = require('../contract/dataContract');
 const ControllerUtil = require('./ControllerUtil.js');
-
 const DnaContractContract = require('../contract/dnaContractContract');
 
 exports.index = async function(req, res, next){
@@ -22,11 +21,11 @@ exports.index = async function(req, res, next){
     }
   })
 
-  res.render('processableData/index', { datas: formattedDatas  });
+  res.render('processableData/index', { datas: formattedDatas });
 };
 
 exports.show = async function(req, res, next){
-  res.render('processableData/show', {  });
+  res.render('processableData/show', { });
 };
 
 exports.showData = async function(req, res, next){

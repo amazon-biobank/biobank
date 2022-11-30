@@ -1,2 +1,6 @@
 /fabric-details/wallet
 /executables/*
+/.env
+/package-lock.json
+/build/*
+/encryptCertificate/binding.gyp

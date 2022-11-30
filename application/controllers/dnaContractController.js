@@ -8,6 +8,7 @@ const CONFIG = require('../config.json');
 exports.new = async function(req, res, next){
   const dnaId = req.params.dnaId
   const contractParameters = CONFIG.dnaContract
+
   res.render('dnaContract/new', { dnaId, contractParameters });
 };
 

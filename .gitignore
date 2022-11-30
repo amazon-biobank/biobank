@@ -2,8 +2,11 @@ node_modules/
 application/fabric-details/remote-connection.json
 application/fabric-details/remote-certs/remoteadmin.id
 application/fabric-details/remote-certs/remoteAppUser.id
+application/encryptCertificate/build/
+application/encryptCertificate/credentials/
+blockchain/currency-contract/config.json
+blockchain/biobank-contract/config.json
 blockchain/currency-contract/package-lock.json
-application/.env
 application/package-lock.json
 blockchain/currency-contract/config.json
 encryptCertificate/build

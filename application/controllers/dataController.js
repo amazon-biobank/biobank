@@ -22,7 +22,7 @@ exports.index = async function(req, res, next){
     }
   })
 
-  res.render('data/index', { datas: formattedDatas });
+  res.render('data/index', { datas: formattedDatas});
 };
 
 

@@ -1,7 +1,6 @@
 const ProcessorContract = require('../contract/processorContract');
 const ControllerUtil = require('./ControllerUtil.js');
 
-
 exports.index = async function(req, res, next){
   const processorContract = new ProcessorContract();
   const processors = await processorContract.getAllProcessor();

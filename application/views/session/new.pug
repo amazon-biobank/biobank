@@ -3,6 +3,7 @@ extends ../layout/loginLayout.pug
 block append header
 
 block content
+      body.bkimg
         .container
             .row.justify-content-center
                 .col-lg-7
@@ -44,13 +45,19 @@ block content
                                         a.small(href='auth-password-basic.html') Forgot my password
                                     else 
                                         a.small(href='auth-password-basic.html') Esqueci minha senha
-                                    input.btn.btn-primary.px-3(type='submit' value='Add')
+                                    input.btn.btn-secondary.px-3(type='submit' value='Sign In')
                         .card-footer.text-center
-                            .small
-                            if(language == 0)
-                                a(href='auth-register-basic.html') YOu need Certificate? Click here!
-                            else 
-                                a(href='auth-register-basic.html') Você precisa de um Certificado? Clique aqui!
+                            if(messages.error)
+                                .alert.alert-danger.alert-dismissible.fade.show(role=alert)
+                                    = messages.error
+                            .large
+                                a.btn.btn-primary.btn-icon-split.btn-lg(href='http://amazonbiobank.duckdns.org:3000/home' target="_blank")
+                                    span.icon.text-white-50
+                                        i.fas.fa-flag
+                                        if(language == 0)
+                                            span.text Create an Account
+                                        else 
+                                            span.text Criar uma conta
 
 
 block append scripts

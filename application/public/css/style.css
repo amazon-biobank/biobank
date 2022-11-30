@@ -10,6 +10,9 @@ a {
   font-size: xx-small;
 }
 
-#content {
-  background-color: #bdc8ea59;
+.bkimg {
+  background-image: url("images/AmazonBiobank.jpg");
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
 }

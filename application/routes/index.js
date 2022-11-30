@@ -31,3 +31,4 @@ async function requireCertificate(req, res, next) {
     res.redirect("/session/new")
   }
 }
+

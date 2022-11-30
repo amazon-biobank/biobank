@@ -64,7 +64,6 @@ class ControllerUtil {
     return Dinero({ amount: value, precision: 9 }).toFormat('0.000000000')
   }
 
-
   static generateId(){
     return uuidv4();
   }
@@ -93,8 +92,16 @@ class ControllerUtil {
     message = message[message.length-1]
     return message
   }
-  
-}
 
+  static formatAccount(account){
+    account.balance = ControllerUtil.formatMoney(account.balance)
+    account.created_at = ControllerUtil.formatDate(new Date(account.created_at))
+    account.tokens = account.tokens.map((token) => {
+      token.value = ControllerUtil.formatMoney(token.value)
+      return token
+    })
+    return account
+  }
+}
 
 module.exports = ControllerUtil;
