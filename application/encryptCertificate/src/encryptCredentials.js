@@ -1,19 +1,29 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const { Buffer, } = require('buffer');
+const path = require('path');
 const lyra2 = require ('../../build/Release/lyra2');
 const LyraHash = (input, salt, saltLength) => lyra2.getHash(input, salt, saltLength);
 const generateSalt = (saltLength) => lyra2.getSalt(saltLength);
 
 const algorithm = 'aes-256-cfb';
-const password = 'teste'
 
 const KEY_SIZE = 32;
 const SALT_LENGTH = 16;
 
+const walletPath = process.argv[2]
+const identity = process.argv[3]
+const password = process.argv[4]
+
+if(walletPath == undefined || identity == undefined || password == undefined){
+  throw new Error("usage: node encryptCredentials.js <walletPath> <identity> <password>")
+}
+
+
 const getCertificate = () => { //certificate in local folder
   try {
-    const jsonString = fs.readFileSync('../credentials/admin-id.json')
+    inputFile = path.join(walletPath, identity);
+    const jsonString = fs.readFileSync(inputFile)
     const decipheredCertificate = JSON.parse(jsonString)
     const sdecipheredCertificate = JSON.stringify(decipheredCertificate)
     return sdecipheredCertificate;
@@ -86,12 +96,13 @@ const writeEncrypted = (password) => {
   };
 
   var credentialsstring = JSON.stringify(credentials);
-  fs.writeFile("../credentials/credentialsAdmin.json", credentialsstring, function(err, result) {
+  fs.writeFile("e-admin.id", credentialsstring, function(err, result) {
   if(err) console.log('error', err);
   });
  
 }
  
 writeEncrypted(password)
+
 
 exports.encryptionScript = encryptionScript;

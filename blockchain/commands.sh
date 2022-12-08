@@ -72,8 +72,8 @@ export CORE_PEER_ADDRESS=localhost:9051
 # -------------------------------- IBM BLOCKCHAIN Microfab--------------------------
 
 # Start Microfab
-START_IMAGE="ibmcom/ibp-microfab:0.0.14"
-docker run -e MICROFAB_CONFIG --label fabric-environment-name="1 Org Local Fabric Microfab" -p 8080:8080 $START_IMAGE
+START_IMAGE="ibmcom/ibp-microfab:0.0.15"
+docker run -e MICROFAB_CONFIG --label fabric-environment-name="1 Org Local Fabric Microfab" -p 8080:8080 $START_IMAGE -d
 
 
 # clear Microfab
@@ -89,7 +89,7 @@ docker volume prune -f
 export MICROFAB_CONFIG='{"port":8080,  "endorsing_organizations": [{"name": "Org1"}],"channels": [{"name": "mychannel","endorsing_organizations": ["Org1"]}]}'
 
 
-# Microfab config - 2 channel
+# Microfab config - 2 channel - 2 ORG
 export MICROFAB_CONFIG='{
     "port": 8080,
     "endorsing_organizations":[
@@ -119,7 +119,7 @@ export MICROFAB_CONFIG='{
     "timeout": "60s"
 }'
 
-# Microfab config - 2 channel
+# Microfab config - 2 channel - 1 org
 export MICROFAB_CONFIG='{
     "port": 8080,
     "endorsing_organizations":[

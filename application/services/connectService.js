@@ -14,7 +14,8 @@ class ConnectService {
     
     if(process.env.CONTEXT=='microfabric'){
       this.walletPath = path.join(process.cwd(), 'fabric-details/wallet');
-      this.connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'connection.json');
+      this.connectionProfilePath = path.resolve(__dirname, '..', '..', '..', '.fabric-vscode/v2/environments/biobank/gateways/Org1 Gateway.json');
+      // this.connectionProfilePath = path.resolve(__dirname, '..', 'fabric-details', 'connection.json');
       this.asLocalhost = true
     }
     else if(process.env.CONTEXT=='remote'){
