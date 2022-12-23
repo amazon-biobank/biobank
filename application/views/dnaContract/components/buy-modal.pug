@@ -9,13 +9,9 @@
         button.close(type='button' data-dismiss='modal' aria-label='Close')
           span(aria-hidden='true') &times;
       if(language == 'en')
-        .modal-body Click in &quot;Buy&quot; below to buy DNA for 
-          = dnaContract.raw_dna_price
-          |  Biocoins
+        .modal-body Click in &quot;Buy&quot; below to buy DNA data
       else 
-        .modal-body Clique em &quot;Comprar&quot; abaixo para comprar o DNA por 
-          = dnaContract.raw_dna_price
-          |  Biocoins        
+        .modal-body Clique em &quot;Comprar&quot; abaixo para comprar o dado de DNA.      
       .modal-footer.justify-content-start
         form.user(action='execute-contract/' + dnaContract.id method='post')
           .form-row
@@ -24,9 +20,15 @@
               if(language == 'en')
                 label.form-check-label(for='radioRawData')
                     | Raw Data
+                    p.ml-2
+                      = dnaContract.raw_data_price
+                      |  Biocoins
               else 
                 label.form-check-label(for='radioRawData')
-                    | Dado bruto             
+                    | Dado bruto     
+                    p.ml-2
+                      = dnaContract.raw_data_price
+                      |  Biocoins        
           if(dnaContract.accepted_processed_data)
             .form-row
               .form-check
@@ -34,9 +36,15 @@
                   if(language == 'en')
                     label.form-check-label(for='radioProcessedData')
                         | Processed Data
+                        p.ml-2
+                          = dnaContract.processed_data_price
+                          |  Biocoins      
                   else 
                     label.form-check-label(for='radioProcessedData')
-                        | Dado Processado                  
+                        | Dado Processado  
+                        p.ml-2
+                          = dnaContract.raw_data_price
+                          |  Biocoins                      
           .form-row.justify-content-end.mt-4
             button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
             input.btn.btn-primary.btn-user(type='submit' value='BUY')

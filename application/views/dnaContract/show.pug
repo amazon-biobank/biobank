@@ -11,15 +11,16 @@ block content
     .card.mb-4
       if(language == 'en')
         .card-header.card-header.d-flex.justify-content-between.align-items-center Smart Contract
+          div 
+            a.btn.btn-primary.btn-sm.text-white(data-toggle="modal" data-target="#buyModal" title="Buy DNA")
+              i.fas.fa-shopping-cart.mr-2
+              | Buy DNA
       else 
         .card-header.card-header.d-flex.justify-content-between.align-items-center Contrato Inteligente
           div 
             a.btn.btn-primary.btn-sm.text-white(data-toggle="modal" data-target="#buyModal" title="Buy DNA")
               i.fas.fa-shopping-cart.mr-2
-              if(language == 'en') 
-                | Buy DNA
-              else 
-                | Comprar DNA
+              | Comprar DNA
       .card-body
         form
           .form-group

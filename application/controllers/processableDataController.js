@@ -16,7 +16,7 @@ exports.index = async function(req, res, next){
       },
       collector: data.collector,
       created_at: ControllerUtil.formatDate(new Date(data.created_at)),
-      status: ControllerUtil.formatDataStatus(data.status),
+      status: ControllerUtil.formatDataStatus(data.status, res.locals.language),
       price: data.price
     }
   })
@@ -35,7 +35,7 @@ exports.showData = async function(req, res, next){
   const dnaContract = await getDnaContract(data.dna_contract)
 
   data.type = ControllerUtil.formatDataType(data.type);
-  data.status = ControllerUtil.formatDataStatus(data.status);
+  data.status = ControllerUtil.formatDataStatus(data.status, res.locals.language);
   data.created_at = ControllerUtil.formatDate(new Date(data.created_at));
 
   res.render('processableData/show-data', { data, dnaContract} );
