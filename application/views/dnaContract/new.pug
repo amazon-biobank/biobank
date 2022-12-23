@@ -9,7 +9,7 @@ block content
         .col-lg-12
           .p-5
             .text-center
-              if(language == 0)
+              if(language == 'en')
                 h1.h4.text-gray-900.mb-4 Create a Smart Contract
                 p.mb-4 This contract is responsible to define the selling condition of DNA
               else 
@@ -21,7 +21,7 @@ block content
                 input#dnaId.form-control(readonly name='dnaId' type='text' value=dnaId)
               .form-row
                 .form-group.col-md-6
-                  if(language == 0)
+                  if(language == 'en')
                     label.mb-1(for='raw_data_price') Raw Data Price
                   else 
                     label.mb-1(for='raw_data_price') Preço do Dado Bruto
@@ -31,7 +31,7 @@ block content
                       The escrow will be closed after the insertion of processed DNA")
                   input.form-control.bio-money-input(name='raw_data_price' type='text' required)
                 .form-group.col-md-6
-                  if(language == 0)
+                  if(language == 'en')
                     label.mb-1(for='processed_data_price') Processed Data Price
                   else 
                     label.mb-1(for='processed_data_price') Preço do Dado Processado
@@ -40,34 +40,34 @@ block content
                   input.form-control.bio-money-input(name='processed_data_price' type='text' required)
 
               hr.mt-4
-              if(language == 0)
+              if(language == 'en')
                 h6.mb-3  Payment Distribution (in percentage)
               else 
                 h6.mb-3  Distribuição de pagamento (em porcentagem)
               .form-row
                 .form-group.col-md-3
-                  if(language == 0)
+                  if(language == 'en')
                     label.mb-1(for='price') Collector ( #{contractParameters.collector.min} - #{contractParameters.collector.max} )
                   else 
                     label.mb-1(for='price') Coletor ( #{contractParameters.collector.min} - #{contractParameters.collector.max} )
                   a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="You, who inserts the raw DNA.")
                   input#price.form-control.percentage(name='payment_distribution[collector]' type='text' required)
                 .form-group.col-md-3
-                  if(language == 0)
+                  if(language == 'en')
                     label.mb-1(for='price') Processor ( #{contractParameters.processor.min} - #{contractParameters.processor.max} )
                   else 
                     label.mb-1(for='price') Processador ( #{contractParameters.processor.min} - #{contractParameters.processor.max} )
                   a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who process the DNA")
                   input#price.form-control.percentage(name='payment_distribution[processor]' type='text' required)
                 .form-group.col-md-3 
-                  if(language == 0)
+                  if(language == 'en')
                     label.mb-1(for='price') Validators ( #{contractParameters.validators.min} - #{contractParameters.validators.max} )
                   else 
                     label.mb-1(for='price') Validador ( #{contractParameters.validators.min} - #{contractParameters.validators.max} )
                   a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Those who validate the processor work (0-2 validators). The reward will be distributed equaly between then")
                   input#price.form-control.percentage(name='payment_distribution[validators]' type='text' readonly value=0 required)
                 .form-group.col-md-3
-                  if(language == 0)
+                  if(language == 'en')
                     label.mb-1(for='price') Curator ( #{contractParameters.curator.min} - #{contractParameters.curator.max} )
                   else 
                     label.mb-1(for='price') Curador ( #{contractParameters.curator.min} - #{contractParameters.curator.max} )
@@ -75,7 +75,7 @@ block content
                   input#price.form-control.percentage(name='payment_distribution[curator]' type='text' readonly value=0 required)
 
               hr.mt-4
-              if(language == 0)
+              if(language == 'en')
                 h6.mb-3  Royalty Payments
               else 
                 h6.mb-3  Royalty Pagamentos
@@ -84,7 +84,7 @@ block content
 
               hr
               .float-right.mb-4.inline-block
-                if(language == 0)
+                if(language == 'en')
                   a.btn.btn-danger.btn-user.mr-3.px-5(href='/')
                     | Cancel
                 else 

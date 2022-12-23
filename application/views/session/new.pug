@@ -10,7 +10,7 @@ block content
                     // Basic login form
                     .card.shadow-lg.border-0.rounded-lg.mt-5
                         .card-header.justify-content-center
-                            if(language == 0)
+                            if(language == 'en')
                                 h3.font-weight-light.my-4 Add Certificate
                             else 
                                 h3.font-weight-light.my-4 Adicionar Certificado
@@ -19,14 +19,14 @@ block content
                             form.user(action='/session/new' method='post' enctype="multipart/form-data")
                                 // Form Group (email address)
                                 .form-group
-                                    if(language == 0)
+                                    if(language == 'en')
                                         label.small.mb-1(for='inputEmailAddress') Certificate
                                     else    
                                         label.small.mb-1(for='inputEmailAddress') Certificado
                                     input#inputEmailAddress.form-control(name='certificate' type='file' placeholder='Enter email address' )
                                 // Form Group (password)
                                 .form-group
-                                    if(language == 0)
+                                    if(language == 'en')
                                         label.small.mb-1(for='inputPassword') Password
                                     else 
                                         label.small.mb-1(for='inputPassword') Senha
@@ -35,13 +35,13 @@ block content
                                 .form-group
                                     .custom-control.custom-checkbox
                                         input#rememberPasswordCheck.custom-control-input(type='checkbox')
-                                        if(language == 0)
+                                        if(language == 'en')
                                             label.custom-control-label(for='rememberPasswordCheck') Remember Password
                                         else 
                                             label.custom-control-label(for='rememberPasswordCheck') Lembrar Senha
                                 // Form Group (login box)
                                 .form-group.d-flex.align-items-center.justify-content-between.mt-4.mb-0
-                                    if(language == 0)
+                                    if(language == 'en')
                                         a.small(href='auth-password-basic.html') Forgot my password
                                     else 
                                         a.small(href='auth-password-basic.html') Esqueci minha senha
@@ -54,7 +54,7 @@ block content
                                 a.btn.btn-primary.btn-icon-split.btn-lg(href='http://amazonbiobank.duckdns.org:3000/home' target="_blank")
                                     span.icon.text-white-50
                                         i.fas.fa-flag
-                                        if(language == 0)
+                                        if(language == 'en')
                                             span.text Create an Account
                                         else 
                                             span.text Criar uma conta

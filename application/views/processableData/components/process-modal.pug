@@ -2,7 +2,7 @@
   .modal-dialog(role='document')
     .modal-content
       .modal-header
-        if(language == 0)
+        if(language == 'en')
           h5#exampleModalLabel.modal-title Process this DNA?
         else 
           h5#exampleModalLabel.modal-title Processar este DNA?
@@ -14,7 +14,7 @@
           input#collector(hidden name='collector' type='text' value=data.collector)
           input#type(hidden name='type' type='text' value='process')
 
-          if(language == 0)
+          if(language == 'en')
             .mb-3
               | Click in &quot;Process&quot; below to create a process request
           else 

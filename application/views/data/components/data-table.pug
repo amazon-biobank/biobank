@@ -8,7 +8,7 @@
     .table-responsive
       table#dataTable.table.table-bordered(width='100%' cellspacing='0')
         thead
-          if(language == 0)
+          if(language == 'en')
             tr
               th Type
               th Title
@@ -35,7 +35,7 @@
                 = data.created_at
 
               td
-                if(language == 0)
+                if(language == 'en')
                   a.btn.btn-info.btn-sm.btn-circle.mr-2(
                     data-toggle="tooltip" data-placement="top" title="See Details" href="/data/" + data.id
                   )
@@ -45,7 +45,7 @@
                     data-toggle="tooltip" data-placement="top" title="Ver Detalhes" href="/data/" + data.id
                   )
                     i.fas.fa-eye
-                if(language == 0)
+                if(language == 'en')
                   a.btn.btn-secondary.btn-sm.btn-circle.mr-2(
                     data-toggle="tooltip" data-placement="top" title="See History" href="/data/" + data.id + "/list-operations"
                   )

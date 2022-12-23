@@ -1,6 +1,6 @@
 .card.shadow.mb-4
   .card-header.py-3
-    if(language == 0)
+    if(language == 'en')
       h6.m-0.font-weight-bold.text-primary Choose Data to Buy
     else
       h6.m-0.font-weight-bold.text-primary Escolher dado para comprar
@@ -8,7 +8,7 @@
     .table-responsive
       table#dataTable.table.table-bordered(width='100%' cellspacing='0')
         thead
-          if(language == 0)
+          if(language == 'en')
             tr
               th Type
               th Title
@@ -39,7 +39,7 @@
                             data-toggle="tooltip" data-placement="top" title="Buy DNA" href="/data-buy/" + data.id
                           )
                             i.fas.fa-shopping-cart.mr-2
-                              if(language == 0)
+                              if(language == 'en')
                                 | Buy DNA
                               else 
                                 | Comprar DNA

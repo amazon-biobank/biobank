@@ -2,7 +2,7 @@ extends ../layout/layout.pug
   
 block content
   .container-fluid
-    if(language == 0)
+    if(language == 'en')
       h1 Choose Data to insert 
     else
       h1 Escolha o Dado para inserir 
@@ -20,7 +20,7 @@ block content
                       .col.mr-6
                         .align.center.mb-10.inline-block
                           a.btn.btn-primary.btn-user.btn-block.btn-lg.mr-0.px-5(href='/data/raw-data-new')
-                            if(language == 0)  
+                            if(language == 'en')  
                               | Raw Data
                             else 
                               | Dado Bruto
@@ -31,7 +31,7 @@ block content
                       .col.mr-6
                         .align.center.mb-10.inline-block
                           a.btn.btn-primary.btn-user.btn-block.btn-lg.mr-0.px-5(href='/data/processed-data-new')
-                            if(language == 0)  
+                            if(language == 'en')  
                               | Processed Data 
                             else 
                               | Dado Processado                  
@@ -42,7 +42,7 @@ block content
                       .col.mr-6
                         .align.center.mb-10.inline-block
                           a.btn.btn-primary.btn-user.btn-block.btn-lg.mr-0.px-5(href='/')
-                            if(language == 0)
+                            if(language == 'en')
                               | Cancel
                             else 
                               | Cancelar

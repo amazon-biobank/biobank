@@ -10,7 +10,7 @@ block content
         .col-lg-12
           .p-5
             .text-center
-              if(language == 0)
+              if(language == 'en')
                 h1.h4.text-gray-900.mb-4 Add a processor
                 p.mb-4 A processor is responsible for handling the raw DNA data
               else 
@@ -23,7 +23,7 @@ block content
                 input#organization.form-control.form-control-user(name='organization' type='text' placeholder='Organização Responsável')
               hr
               .float-right.mb-4.inline-block
-                if(language == 0)
+                if(language == 'en')
                   a.btn.btn-danger.btn-user.mr-3.px-5(href='/processor')
                     | Cancel
                 else 

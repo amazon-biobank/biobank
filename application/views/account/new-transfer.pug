@@ -4,12 +4,12 @@ block append header
 
 block content
   .container.mt-4
-    if(language == 0)
+    if(language == 'en')
       h1 Transfer Request
     else   
       h1 Solicitação de tranferência
     .card.mb-4
-      if(language == 0)
+      if(language == 'en')
         .card-header Transfer Data 
       else
         .card-header Dados da tranferência
@@ -17,35 +17,35 @@ block content
         form(action = '/account/transfer' method = 'post')
           .form-row
             .form-group.col-md-12
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='name') Name 
               else 
                 label.mb-1(for='name') Nome
               input#name.form-control(disabled type='text' value= account.name)
           .form-row              
             .form-group.col-md-12
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='address') Address 
               else
                 label.mb-1(for='address') Endereço
               input#address.form-control(readonly name='senderAddress' type='text'  value=account.address)
           .form-row
             .form-group.col-md-12
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='balance') Balance 
               else 
                 label.mb-1(for='balance') Saldo
               input#balance.form-control(disabled type='text' value= account.balance)
           .form-row 
             .form-group.col-md-12 
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='address-reciever') Destination Address 
               else
                 label.mb-1(for='address-reciever') Endereço de destino
               input#address-reciever.form-control(name = 'receiverAddress' type='text ')
           .form-row 
             .form-group.col-md-12 
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='amount') Transfer Amount 
               else
                 label.mb-1(for='amount') Valor da transferência 
