@@ -13,7 +13,7 @@ It also provides traceability and auditability, allowing easy association betwee
 | ![inserting-dna](https://user-images.githubusercontent.com/28439483/191984389-24a5c96a-07a2-4063-a087-4e6b173a8a7d.png) | ![buy-dna-data](https://user-images.githubusercontent.com/28439483/191984861-0b1b139f-ebe0-4b2a-afb2-17462a27152f.png) | ![explorer_transaction_detail](https://user-images.githubusercontent.com/28439483/191983731-a57e07b1-4f70-4e9f-b658-8196a8c98900.png) |
 
 ## Install
-* [Windows](https://github.com/amazon-biobank/biobank/releases/tag/v0.1.4)
+* [Windows](https://github.com/amazon-biobank/biobank/releases/tag/v0.1.5)
 
 
 ## Resources
