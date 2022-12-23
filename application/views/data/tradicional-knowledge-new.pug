@@ -10,38 +10,38 @@ block content
         .col-lg-12
           .p-5
             .text-center
-              if(language == 0)
+              if(language == 'en')
                 h1.h4.text-gray-900.mb-4 Send a Tradicional Knowledge data
               else 
                 h1.h4.text-gray-900.mb-4 Enviar um dado de conhecimento tradicional
               p.mb-4
             form.user(action='/tk/tradicional-knowledge-create' method='post')
               .form-group
-                if(language == 0)
+                if(language == 'en')
                   label(for='name') Name
                 else 
                   label(for='name') Nome
                 input#name.form-control.form-control-user(name='metadata[title]' type='text' required)
               .form-group
-                if(language == 0)
+                if(language == 'en')
                   label(for='description') Description
                 else
                   label(for='description') Descrição
                 textarea#exampleFormControlTextarea1.form-control(name='metadata[description]' rows='6' type = 'text' required)
               .form-group 
-                if(language == 0)
+                if(language == 'en')
                   label(for='species') Species 
                 else 
                   label(for='species') Espécies 
                 textarea#exampleFormControlTextarea1.form-control(name='metadata[species]' rows = '1' type = 'text' required)
               .form-group
-                if(language == 0)
+                if(language == 'en')
                   label(for='magnet_link') Magnetic link
                 else 
                   label(for='magnet_link') Link Magnético
                 input#magnet_link.form-control.form-control-user(name='metadata[magnet_link]' type='text' required)
               .form-group
-                if(language == 0)
+                if(language == 'en')
                   label(for='secret_key') Secret Key
                 else 
                   label(for='secret_key') Chave Secreta
@@ -51,7 +51,7 @@ block content
               hr
               .float-right.mb-4.inline-block
                 a.btn.btn-danger.btn-user.mr-3.px-5(href='/tk')
-                  if(language == 0)
+                  if(language == 'en')
                     | Cancel
                   else 
                     | Cancelar

@@ -6,12 +6,12 @@ block append header
 block content
   .container-fluid
     .d-flex.flex-row.justify-content-between.mb-4
-      if(language == 0)
+      if(language == 'en')
         h1.d-inline Processor List
       else 
         h1.d-inline Lista de Processadores
       .align-self-center
-        if(language == 0)
+        if(language == 'en')
           a.btn.btn-primary.btn-user(href='processor/new')
             span.text Add New
         else 

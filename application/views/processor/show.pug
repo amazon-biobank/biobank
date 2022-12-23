@@ -4,25 +4,25 @@ block append header
 
 block content
   .container.mt-4
-    if(language == 0)
+    if(language == 'en')
       h1 Processor Details
     else 
       h1 Detalhes do processador
     .card.mb-4
-      if(language == 0)
+      if(language == 'en')
         .card-header Processor
       else 
         .card-header Processador
       .card-body
         form
           .form-group
-            if(language == 0)
+            if(language == 'en')
               label.mb-1(for='name') Name
             else 
               label.mb-1(for='name') Nome
             input#name.form-control(disabled type='text' value= processor.name)
           .form-group
-            if(language == 0)
+            if(language == 'en')
               label.mb-1(for='organization') Organization
             else 
               label.mb-1(for='organization') Organização
@@ -32,7 +32,7 @@ block content
               label.mb-1(for='id') ID
               input#id.form-control(disabled type='text'  value=processor.id)
             .form-group.col-md-6
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='created_at') Created at
               else 
                 label.mb-1(for='created_at') Criado em

@@ -1,27 +1,27 @@
 .card-body
   form
     .form-group
-      if(language == 0)
+      if(language == 'en')
         label.mb-1(for='title') Title
       else
         label.mb-1(for='title') Título
       input#title.form-control(disabled type='text' value= data.metadata.title)
     .form-group
-      if(language == 0)  
+      if(language == 'en')  
         label.mb-1(for='description') Description
       else 
         label.mb-1(for='description') Descrição
 
       input#description.form-control(disabled type='text' value= data.metadata.description)
     hr.mt-4
-    if(language == 0)
+    if(language == 'en')
       h5.mb-3 Details
     else 
       h5.mb-3 Detalhes 
 
     if (data.process_request_id)
       .form-group
-        if(language == 0)
+        if(language == 'en')
           label.mb-1(for='process_request_id') Process Request ID
         else 
           label.mb-1(for='process_request_id') ID da requisição
@@ -30,20 +30,20 @@
             = data.process_request_id
     .form-row
       .form-group.col-md-6
-        if(language == 0)
+        if(language == 'en')
           label.mb-1(for='type') Type
         else 
           label.mb-1(for='type') Tipo
 
         input#type.form-control(disabled type='text'  value=data.type)
       .form-group.col-md-6
-        if(language == 0)
+        if(language == 'en')
           label.mb-1(for='id') Data Id
         else
           label.mb-1(for='id') Id do Dado
         input#id.form-control(disabled type='text'  value=data.id)
     .form-group
-        if(language == 0)
+        if(language == 'en')
           label.mb-1(for='magnet_link') Data's Magnetic Link
         else 
           label.mb-1(for='magnet_link') Link Magnético do Dado
@@ -51,14 +51,14 @@
 
         input#owners.form-control(disabled type='text' value= data.metadata.magnet_link)
     .form-group
-      if(language == 0)
+      if(language == 'en')
         label.mb-1(for='uploader') Uploader
       else
         label.mb-1(for='uploader') Quem enviou
       input#uploader.form-control(disabled type='text' value= data.uploader)
     .form-row
       .form-group.col-md-6
-        if(language == 0)
+        if(language == 'en')
           label.mb-1(for='created_at') Created At
         else
           label.mb-1(for='created_at') Criado em

@@ -9,7 +9,7 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   li.nav-item
     a.nav-link(href='/')
       i.fas.fa-fw.fa-tachometer-alt
-      if(language == 0)    
+      if(language == 'en')    
         span Home Page
       else
         span Página Inicial
@@ -17,7 +17,7 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
 
   hr.sidebar-divider
   .sidebar-heading
-    if(language == 0)  
+    if(language == 'en')  
       | DNA Data 
     else
       | Dados de DNA
@@ -25,12 +25,12 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   li.nav-item
     a.nav-link.collapsed(data-toggle='collapse' data-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne')
       i.fas.fa-upload
-      if(language == 0)  
+      if(language == 'en')  
         span Upload Data
       else
         span Envio de Dados
       
-    if(language == 0)
+    if(language == 'en')
       #collapseOne.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
         .bg-white.py-2.collapse-inner.rounded
             a.collapse-item(href='/data/raw-data-new') Raw Data
@@ -46,21 +46,21 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   li.nav-item
     a.nav-link(href='/data')
       i.fab.fa-bitcoin
-      if(language == 0)  
+      if(language == 'en')  
         span List Data
       else
         span Lista de Dados
     
   hr.sidebar-divider
   .sidebar-heading
-    if(language == 0)
+    if(language == 'en')
       | Processing
     else
       | Processamento
   li.nav-item
     a.nav-link(href='/processable-data')
       i.fas.fa-cogs
-      if(language == 0)  
+      if(language == 'en')  
         span Process Data
       else
         span Processar Dados
@@ -68,7 +68,7 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   li.nav-item
     a.nav-link(href='/process-request')
       i.fas.fa-fw.fa-file-invoice
-      if(language == 0) 
+      if(language == 'en') 
         span Process Requests
       else
         span Pedidos de Processos
@@ -79,12 +79,12 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   li.nav-item
     a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='true' aria-controls='collapseTwo')
       i.fas.fa-upload
-      if(language == 0)  
+      if(language == 'en')  
         span Blockchain History
       else
         span Histórico
     #collapseTwo.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
-      if(language == 0)  
+      if(language == 'en')  
         .bg-white.py-2.collapse-inner.rounded
           a.collapse-item(href='/history/data') Data History
       else 
@@ -93,14 +93,14 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   
   hr.sidebar-divider
   .sidebar-heading
-    if(language == 0)
+    if(language == 'en')
       | Language 
     else 
       | Língua 
   li.nav-item
     a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseFour' aria-expanded='true' aria-controls='collapseTwo')
       i.fas.fa-book-open
-      if(language == 0)  
+      if(language == 'en')  
         span Language selector
       else
         span Seletor de Língua
@@ -115,12 +115,12 @@ ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordio
   li.nav-item
     a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseThree' aria-expanded='true' aria-controls='collapseOne')
       i.fas.fa-upload
-      if(language == 0)
+      if(language == 'en')
         span My Account
       else
         span Minha Conta
       
-    if(language == 0)  
+    if(language == 'en')  
       #collapseThree.collapse(aria-labelledby='headingTwo' data-parent='#accordionSidebar')
         .bg-white.py-2.collapse-inner.rounded
           a.collapse-item(href='/account/show-my-account') Profile
