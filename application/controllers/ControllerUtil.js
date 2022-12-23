@@ -24,7 +24,7 @@ class ControllerUtil {
   }
 
   static formatDataStatus (status,language) {
-    if(language == 0)
+    if(language == 'en')
       if (status == "unprocessed") return "Not Processed"
       if (status == "processing") return "Processing"
       if (status == "processed") return "Processed"
@@ -43,7 +43,7 @@ class ControllerUtil {
   }
 
   static formatProcessRequestStatus (type,language) {
-    if(language == 0)  
+    if(language == 'en')  
       if (type == "not_processed") return "Not Processed"
       if (type == "processed") return "Processed"
     else
