@@ -25,9 +25,10 @@ async function main() {
             caURL = ccp.certificateAuthorities['org1ca-api.127-0-0-1.nip.io:8080'].url;
         } 
         else if(context == 'remote') {
-            const ccpPath = path.resolve(__dirname, '..', '..', 'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+            // const ccpPath = path.resolve(__dirname, '..', '..', 'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+            const ccpPath = path.resolve(__dirname, '../../../fabric-multihost/setup3/machines/vm1/api-2.0/config/connection-org1.json');
             const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
-            caURL = ccp.certificateAuthorities['ca.org1.example.com'].url;
+            caURL = ccp.certificateAuthorities['ca.org1.amazonbiobank.mooo.com'].url;
         }
         
 

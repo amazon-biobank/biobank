@@ -5,7 +5,8 @@ var app = express();
 
 
 app.get('/connection-profile', function(req, res){
-  const connectionProfilePath = path.resolve(__dirname, '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+  // const connectionProfilePath = path.resolve(__dirname, '..',  'blockchain', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+  const connectionProfilePath = path.resolve(__dirname, '../../fabric-multihost/setup3/machines/vm1/api-2.0/config/connection-org1.json');
   const connectionProfile = fs.readFileSync(connectionProfilePath)
   res.setHeader('Content-Type', 'application/json');
   res.end(connectionProfile);
