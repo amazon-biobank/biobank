@@ -31,6 +31,7 @@ app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, s
 app.use(flash());
 app.use(function(req, res, next){
   res.locals.messages = req.flash();
+  res.locals.env = process.env
   next();
 });
 

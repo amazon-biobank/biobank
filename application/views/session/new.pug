@@ -14,7 +14,7 @@ block content
                                 .col-lg-6.bg-gradient-primary-to-secondary.mr-0.login-info.d-flex.align-items-center.justify-content-center
                                     .d-block
                                         hr.border-white
-                                        a(href='/').login-info-title
+                                        a(href=`${env.PROJECT_HOME_PAGE}` target="_blank").login-info-title
                                             i.fas.fa-dna.sidebar-brand-icon.rotate-n-15.mr-2
                                             | Amazon Biobank
                                         .login-info-subtitle 
@@ -55,7 +55,7 @@ block content
                                             .alert.alert-danger.alert-dismissible.fade.show(role=alert)
                                                 = messages.error
                                         .large
-                                            a(href='http://amazonbiobank.duckdns.org:3000/home' target="_blank")
+                                            a(href=`${env.CREATE_ACCOUNT_URL}` target="_blank")
                                                 span.icon
                                                     if(language == 'en')
                                                         span.text Create an Account
