@@ -1,6 +1,6 @@
 .card.shadow.mb-4
   .card-header.py-3
-    if(language==0)
+    if(language == 'en')
       h6.m-0.font-weight-bold.text-primary List Data
     else 
       h6.m-0.font-weight-bold.text-primary Listar Dados
@@ -55,3 +55,13 @@
                     data-toggle="tooltip" data-placement="top" title="Ver Histórico" href="/data/" + data.id + "/list-operations"
                   )
                     i.fas.fa-history
+                if(language == 'en')
+                  a.btn.btn-primary.btn-sm.btn-circle.mr-2(
+                    data-toggle="tooltip" data-placement="top" title="Buy Data" href="/data-buy/" + data.id
+                  )
+                    i.fas.fa-shopping-cart
+                else 
+                  a.btn.btn-primary.btn-sm.btn-circle.mr-2(
+                    data-toggle="tooltip" data-placement="top" title="Comprar Dado" href="/data-buy/" + data.id 
+                  )
+                    i.fas.fa-shopping-cart
