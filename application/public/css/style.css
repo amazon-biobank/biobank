@@ -16,3 +16,19 @@ a {
   background-size:cover;
   background-position:center;
 }
+
+.login-info {
+  background-color: #719430 !important;
+  background-image: linear-gradient(135deg, #719430 0%, rgba(7, 85, 11, 0.8) 100%) !important;
+  color: #fff;
+}
+
+.login-info-title {
+  font-size: 2.25rem;
+  text-decoration: none !important;
+  color: #fff;
+}
+
+.login-info-subtitle {
+  font-size: 1.15rem;
+}
