@@ -34,14 +34,6 @@ block content
                 | No Contract Avaliable
               else 
                 | Contrato não disponível
-
-          if(data.type=='Raw')
-            a.btn.btn-secondary.btn-sm.mr-4(href='/process-request?search='+data.key)
-              if(language == 'en')
-                | See Processing Request
-              else 
-                | Ver Requisições de Processo
-              
       include components/data-show-form.pug
     .card
       if(language == 'en')

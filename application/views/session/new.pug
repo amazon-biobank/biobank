@@ -6,58 +6,61 @@ block content
       body.bkimg
         .container
             .row.justify-content-center
-                .col-lg-7
+                .col-lg-10
                     // Basic login form
                     .card.shadow-lg.border-0.rounded-lg.mt-5
-                        .card-header.justify-content-center
-                            if(language == 'en')
-                                h3.font-weight-light.my-4 Add Certificate
-                            else 
-                                h3.font-weight-light.my-4 Adicionar Certificado
-                        .card-body
-                            // Login form
-                            form.user(action='/session/new' method='post' enctype="multipart/form-data")
-                                // Form Group (email address)
-                                .form-group
-                                    if(language == 'en')
-                                        label.small.mb-1(for='inputEmailAddress') Certificate
-                                    else    
-                                        label.small.mb-1(for='inputEmailAddress') Certificado
-                                    input#inputEmailAddress.form-control(name='certificate' type='file' placeholder='Enter email address' )
-                                // Form Group (password)
-                                .form-group
-                                    if(language == 'en')
-                                        label.small.mb-1(for='inputPassword') Password
-                                    else 
-                                        label.small.mb-1(for='inputPassword') Senha
-                                    input#inputPassword.form-control(name='password' type='password' placeholder='Enter your password')
-                                // Form Group (remember password checkbox)
-                                .form-group
-                                    .custom-control.custom-checkbox
-                                        input#rememberPasswordCheck.custom-control-input(type='checkbox')
+                        .card-body.p-0
+                            .row
+                                .col-lg-6.bg-gradient-primary-to-secondary.mr-0.login-info.d-flex.align-items-center.justify-content-center
+                                    .d-block
+                                        hr.border-white
+                                        a(href=`${env.PROJECT_HOME_PAGE}` target="_blank").login-info-title
+                                            i.fas.fa-dna.sidebar-brand-icon.rotate-n-15.mr-2
+                                            | Amazon Biobank
+                                        .login-info-subtitle 
+                                            | A Community-based Genetic Database
+                                        hr.border-white
+                                .col-lg-6
+                                    .card-header.justify-content-center
                                         if(language == 'en')
-                                            label.custom-control-label(for='rememberPasswordCheck') Remember Password
+                                            h3.font-weight-light.my-4 Sign in
                                         else 
-                                            label.custom-control-label(for='rememberPasswordCheck') Lembrar Senha
-                                // Form Group (login box)
-                                .form-group.d-flex.align-items-center.justify-content-between.mt-4.mb-0
-                                    if(language == 'en')
-                                        a.small(href='auth-password-basic.html') Forgot my password
-                                    else 
-                                        a.small(href='auth-password-basic.html') Esqueci minha senha
-                                    input.btn.btn-secondary.px-3(type='submit' value='Sign In')
-                        .card-footer.text-center
-                            if(messages.error)
-                                .alert.alert-danger.alert-dismissible.fade.show(role=alert)
-                                    = messages.error
-                            .large
-                                a.btn.btn-primary.btn-icon-split.btn-lg(href='http://amazonbiobank.duckdns.org:3000/home' target="_blank")
-                                    span.icon.text-white-50
-                                        i.fas.fa-flag
-                                        if(language == 'en')
-                                            span.text Create an Account
-                                        else 
-                                            span.text Criar uma conta
+                                            h3.font-weight-light.my-4 Sign in
+                                    .card-body
+                                        // Login form
+                                        form.user(action='/session/new' method='post' enctype="multipart/form-data")
+                                            // Form Group (email address)
+                                            .form-group
+                                                if(language == 'en')
+                                                    label.small.mb-1(for='inputEmailAddress') Certificate
+                                                else    
+                                                    label.small.mb-1(for='inputEmailAddress') Certificado
+                                                input#inputEmailAddress.form-control(name='certificate' type='file' placeholder='Enter email address' )
+                                            // Form Group (password)
+                                            .form-group
+                                                if(language == 'en')
+                                                    label.small.mb-1(for='inputPassword') Password
+                                                else 
+                                                    label.small.mb-1(for='inputPassword') Senha
+                                                input#inputPassword.form-control(name='password' type='password' placeholder='Enter your password')
+                                            // Form Group (login box)
+                                            .form-group.d-flex.align-items-center.justify-content-between.mt-4.mb-0
+                                                if(language == 'en')
+                                                    a(href='auth-password-basic.html') Forgot your password?
+                                                else 
+                                                    a(href='auth-password-basic.html') Esqueci minha senha
+                                                input.btn.btn-primary.px-3(type='submit' value='Sign In')
+                                    .card-footer.text-center
+                                        if(messages.error)
+                                            .alert.alert-danger.alert-dismissible.fade.show(role=alert)
+                                                = messages.error
+                                        .large
+                                            a(href=`${env.CREATE_ACCOUNT_URL}` target="_blank")
+                                                span.icon
+                                                    if(language == 'en')
+                                                        span.text Create an Account
+                                                    else 
+                                                        span.text Criar uma conta
 
 
 block append scripts
