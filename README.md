@@ -1,7 +1,5 @@
 # Amazon Biobank: A community-based genetic database
-A blockchain-based genetic database that provides benefit-sharing
 
-## Overview
 Amazon Biobank combines blockchain and smart contract technologies to provide adequate benefit-sharing among all participants who collect, insert, process, store and validate genomic data. 
 
 It also provides traceability and auditability, allowing easy association between biotechnological research and DNA data
