@@ -4,7 +4,7 @@ block append header
 
 block content
   .container-fluid
-    if(language == 0)
+    if(language == 'en')
       h1.mb-4 Histórico de Dados
     else 
       h1.mb-4 Data History
@@ -32,12 +32,12 @@ block content
             - tabId = 'tab-' + index
             - tabpanelId = 'tabpanel-' + index
             .tab-pane.fade(id=tabpanelId role='tabpanel', class= index===0? 'active show':'')
-              if(language == 0)
+              if(language == 'en')
                 h5.mb-3.card-title Transaction Details
               else 
                 h5.mb-3.card-title Detalhes da Transação
               .row.mb-2
-                if(language == 0)
+                if(language == 'en')
                   strong.col-md-6
                     | Timestamp:
                 else 
@@ -46,7 +46,7 @@ block content
                 .col-md-6
                   = history.timestamp
               .row.mb-5
-                if(language == 0)
+                if(language == 'en')
                   strong.col-md-6
                     | Transaction ID:
                 else 
@@ -55,7 +55,7 @@ block content
                 .col-md-6
                   = history.txId
 
-              if(language == 0)
+              if(language == 'en')
                 h5.mb-3.card-title Data Details
               else 
                 h5.mb-3.card-title Detalhes do Dado

@@ -31,6 +31,7 @@
     "axios": "^0.26.0",
     "bindings": "~1.2.1",
     "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
     "crypto-js": "^4.0.0",
     "dinero.js": "^1.8.1",
     "dotenv": "^10.0.0",

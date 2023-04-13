@@ -31,7 +31,7 @@ exports.show = async function(req, res, next){
   const dnaContract = await getDnaContract(data.dna_contract)
 
   data.type = ControllerUtil.formatDataType(data.type);
-  data.status = ControllerUtil.formatDataStatus(data.status);
+  data.status = ControllerUtil.formatDataStatus(data.status, res.locals.language);
   data.created_at = ControllerUtil.formatDate(new Date(data.created_at));
 
   res.render('data/show-buy', { data, dnaContract });

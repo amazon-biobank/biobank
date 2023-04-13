@@ -9,7 +9,7 @@ block content
         .col-lg-12
           .p-5
             .text-center
-              if(language == 0)
+              if(language == 'en')
                 h1.h4.text-gray-900.mb-4 Search history of data
                 p.mb-4 Through the history it is possible to check all the changes in the blockchain
               else 
@@ -22,7 +22,7 @@ block content
                   input#data-id.form-control.form-control-user(name='dataId' type='text' placeholder='ID do dado')
               hr
               .float-right.mb-4.inline-block
-                if(language == 0)
+                if(language == 'en')
                   a.btn.btn-danger.btn-user.mr-3.px-5(href='/')
                     | Cancel
                 else 

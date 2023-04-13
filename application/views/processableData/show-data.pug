@@ -5,28 +5,28 @@ block append header
 
 block content
   .container.mt-4
-    if(language == 0)
+    if(language == 'en')
       h1 Show Data
     else 
       h1 Mostrar Dado
     .card.mb-4
       .card-header.d-flex.justify-content-between.align-items-center
         i.fas.fa-cogs
-          if(language == 0)
+          if(language == 'en')
             |  Data
           else 
             |  Dados
         div
           if(data.type=='Raw')
             a.btn.btn-primary.btn-sm.mr-4(href='/process-request?search='+data.key)
-              if(language == 0)  
+              if(language == 'en')  
                 | See Processing Request
               else 
                 | Ver requisição de processamento
 
           if(dnaContract)
             a.btn.btn-primary.btn-sm.mr-4(href='/processable-data/show-contract/'+ dnaContract.id)
-              if(language == 0)
+              if(language == 'en')
                 | Next 
               else 
                 | Próximo
@@ -34,21 +34,21 @@ block content
               i.fas.fa-cogs
           else if(data.process_request_id)
             a.btn.btn-primary.btn-sm.text-white.mr-2(data-toggle="modal" data-target="#endorseModal" title="Buy DNA")
-              if(language == 0)
+              if(language == 'en')
                 | Endorse DNA
               else 
                 | Apoiar DNA
           
           else if(!dnaContract)
               a.btn.btn-danger.btn-sm.mr-4(href='/processable-data')
-                if(language == 0)
+                if(language == 'en')
                   | No Contract Avaliable
                 else 
                   | Nenhum Contrato Disponível
 
       include components/data-show-form.pug
     .card
-      if(language == 0)
+      if(language == 'en')
         .card-header List of Owners
       else 
         .card-header Lista de Donos
@@ -56,7 +56,7 @@ block content
         .table-responsive
           table#dataTable.table.table-bordered(width='100%' cellspacing='0')
             thead
-              if(language == 0)
+              if(language == 'en')
                 tr 
                   th Owner ID
               else 

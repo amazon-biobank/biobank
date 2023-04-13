@@ -4,22 +4,23 @@ block append header
 
 block content
   .container.mt-4
-    if(language == 0)  
+    if(language == 'en')  
       h1 Smart Contract Details 
     else 
       h1 Detalhes do Contrato Inteligente
     .card.mb-4
-      if(language == 0)
+      if(language == 'en')
         .card-header.card-header.d-flex.justify-content-between.align-items-center Smart Contract
+          div 
+            a.btn.btn-primary.btn-sm.text-white(data-toggle="modal" data-target="#buyModal" title="Buy DNA")
+              i.fas.fa-shopping-cart.mr-2
+              | Buy DNA
       else 
         .card-header.card-header.d-flex.justify-content-between.align-items-center Contrato Inteligente
           div 
             a.btn.btn-primary.btn-sm.text-white(data-toggle="modal" data-target="#buyModal" title="Buy DNA")
               i.fas.fa-shopping-cart.mr-2
-              if(language == 0) 
-                | Buy DNA
-              else 
-                | Comprar DNA
+              | Comprar DNA
       .card-body
         form
           .form-group
@@ -27,20 +28,20 @@ block content
             input#dnaId.form-control(disabled type='text' value= dnaContract.dna_id)
           .form-row
             .form-group.col-md-6
-              if(language == 0) 
+              if(language == 'en') 
                 label.mb-1(for='id') Contract ID
               else 
                 label.mb-1(for='id') ID de Contrato
               input#id.form-control(disabled type='text'  value=dnaContract.id style='font-size: small')
             .form-group.col-md-6
-              if(language == 0) 
+              if(language == 'en') 
                 label.mb-1(for='created_at') Created At
               else 
                 label.mb-1(for='created_at') Criado em
               input#id.form-control(disabled type='text'  value=dnaContract.created_at)
           .form-row
             .form-group.col-md-6
-              if(language == 0) 
+              if(language == 'en') 
                 label.mb-1(for='raw_data_price') Raw Data Price
               else 
                 label.mb-1(for='raw_data_price') Preço do Dado Bruto
@@ -50,7 +51,7 @@ block content
                   The escrow will be closed after the insertion of processed DNA")
               input#price.form-control.bio-money-input(disabled value=dnaContract.raw_data_price type='text')
             .form-group.col-md-6
-              if(language == 0) 
+              if(language == 'en') 
                 label.mb-1(for='processed_data_price') Processed Data Price
               else 
                 label.mb-1(for='processed_data_price') Preço do Dado Processado
@@ -60,20 +61,20 @@ block content
               
         if(dnaContract.accepted_processed_data)
           hr.mt-4
-          if(language == 0)
+          if(language == 'en')
             h6.mb-3 Accepted Processed Data
           else 
             h6.mb-3 Dado Processado Aceitado
           .form-row
             .form-group.col-md-6
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='price') Processed data ID
               else 
                 label.mb-1(for='price') ID do Dado Processado
               a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="You, who inserts the raw DNA.")
               input#price.form-control(disabled value=dnaContract.accepted_processed_data.processed_data_id type='text')
             .form-group.col-md-6
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='price') Process Request ID
               else 
                 label.mb-1(for='price') ID da Requisição de Processo
@@ -82,34 +83,34 @@ block content
                 
 
         hr.mt-4
-        if(language == 0)
+        if(language == 'en')
           h6.mb-3 Payment Distribution (in percentage)
         else 
           h6.mb-3 Distribuição de Pagamento (em porcentagem)
         .form-row
           .form-group.col-md-3
-            if(language == 0)
+            if(language == 'en')
               label.mb-1(for='price') Collector
             else 
               label.mb-1(for='price') Coletor
             a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="You, who inserts the raw DNA.")
             input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.collector type='text')
           .form-group.col-md-3
-            if(language == 0)
+            if(language == 'en')
               label.mb-1(for='price') Processor
             else 
               label.mb-1(for='price') Processador
             a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Who process the DNA")
             input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.processor type='text')
           .form-group.col-md-3 
-            if(language == 0)
+            if(language == 'en')
               label.mb-1(for='price') Validators
             else 
               label.mb-1(for='price') Validador
             a.fas.fa-info-circle.ml-2(tabindex="0" data-toggle="popover" data-html="true" data-trigger="focus" data-content="Those who validate the processor work (0-2 validators). The reward will be distributed equaly between then")
             input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.validators type='text')
           .form-group.col-md-3
-            if(language == 0)
+            if(language == 'en')
               label.mb-1(for='price') Curator
             else 
               label.mb-1(for='price') Curator
@@ -117,14 +118,14 @@ block content
             input#price.form-control.percentage(disabled value=dnaContract.payment_distribution.curator type='text')
 
         hr.mt-4
-        if(language == 0)  
+        if(language == 'en')  
           h6.mb-3 Royalty Payments
         else 
           h6.mb-3 Pagamentos
         each royalty_payment, index in dnaContract.royalty_payments
           .form-row
             .form-group.col-md-4
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='price') Type
               else 
                 label.mb-1(for='price') Tipo
@@ -138,13 +139,13 @@ block content
                   ")
               input.form-control(disabled value=royalty_payment.type)
             .form-group.col-md-2
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='value') Value
               else 
                 label.mb-1(for='value') Valor
               input.form-control(disabled value=royalty_payment.value)
             .form-group.col-md-2
-              if(language == 0)
+              if(language == 'en')
                 label.mb-1(for='period') Period in months
               else 
                 label.mb-1(for='period') Período em meses

@@ -4,6 +4,7 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     flash = require('connect-flash'),
+    cookieParser = require("cookie-parser"),
     errorhandler = require('errorhandler');
 const ConnectService = require('./services/connectService');
 const result = require('dotenv').config({ path: path.join(__dirname, ".env") })
@@ -23,19 +24,30 @@ app.use(bodyParser.json());
 
 app.use(require('method-override')());
 app.use(express.static(__dirname + '/public'));
+app.use(cookieParser());
 
 
 app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
 app.use(flash());
 app.use(function(req, res, next){
   res.locals.messages = req.flash();
-  res.locals.test = "worked"
+  res.locals.env = process.env
   next();
 });
 
 if (!isProduction) {
   app.use(errorhandler());
 }
+
+app.use((req, res, next) => {
+  var language = req.cookies.language
+  if(!language) {
+    language = 'en'
+    res.cookie('language', language, { maxAge: 900000 })
+  } 
+  res.locals.language = language
+  next();
+})
 
 
 // require('./models/User');

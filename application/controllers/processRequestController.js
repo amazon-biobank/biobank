@@ -9,7 +9,7 @@ exports.index = async function(req, res, next){
 
   const formattedProcessRequests = await Promise.all(processRequests.map(async function(processRequest){
     await getDataAndProcessorForProcessRequest(processRequest)
-    formatProcessRequest(processRequest)
+    formatProcessRequest(processRequest, res.locals.language)
     return processRequest
   }))
 
@@ -21,7 +21,7 @@ exports.show = async function(req, res, next){
 
   const processRequest = await processRequestContract.readProcessRequest(req.params.processRequestId)
   await getDataAndProcessorForProcessRequest(processRequest)
-  formatProcessRequest(processRequest)
+  formatProcessRequest(processRequest, res.locals.language)
 
   console.log(processRequest)
 
@@ -50,9 +50,9 @@ function createProcessorRequestFromRequest(req){
   }
 }
 
-function formatProcessRequest(processRequest){
+function formatProcessRequest(processRequest, language){
   processRequest.created_at = ControllerUtil.formatDate(new Date(processRequest.created_at))
-  processRequest.status = ControllerUtil.formatProcessRequestStatus(processRequest.status);
+  processRequest.status = ControllerUtil.formatProcessRequestStatus(processRequest.status, language);
   return processRequest
 }
 

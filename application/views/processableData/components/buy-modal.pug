@@ -2,13 +2,13 @@
   .modal-dialog(role='document')
     .modal-content
       .modal-header
-        If(language == 0)
+        if(language == 'en')
           h5#exampleModalLabel.modal-title Confirm buying?
         else 
           h5#exampleModalLabel.modal-title Confirmar compra?
         button.close(type='button' data-dismiss='modal' aria-label='Close')
           span(aria-hidden='true') &times;
-      if(language == 0)
+      if(language == 'en')
         .modal-body Click in &quot;Buy&quot; below to buy DNA for 
           = dnaContract.raw_dna_price
           |  Biocoins
@@ -21,7 +21,7 @@
           .form-row
             .form-check
               input#radioRawData.form-check-input(type='radio', name='type' value='buy_raw_data', checked)
-              if(language == 0)
+              if(language == 'en')
                 label.form-check-label(for='radioRawData')
                     | Raw Data
               else 
@@ -31,7 +31,7 @@
             .form-row
               .form-check
                   input#radioProcessedData.form-check-input(type='radio', name='type' value='buy_processed_data')
-                  if(language == 0)
+                  if(language == 'en')
                     label.form-check-label(for='radioProcessedData')
                         | Processed Data
                   else 
