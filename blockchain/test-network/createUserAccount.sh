@@ -5,9 +5,10 @@ WALLET_PATH=$(cat config.json | jq '.walletPath' | tr -d \")
 IDENTITY_NAME=$(cat config.json | jq '.identityName' | tr -d \" )
 cd -
 
+GREEN='\033[0;32m'
+NC='\033[0m'
 
 cd ../../application/encryptCertificate/src/
-echo $ID
 node encryptCredentials.js ~/$WALLET_PATH "${IDENTITY_NAME}.id" teste
-echo "encrypted test user"
+echo -e "${GREEN} generated e-admin.id in" $(pwd) ${NC}
 cd -
