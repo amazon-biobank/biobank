@@ -14,6 +14,10 @@ It also provides traceability and auditability, allowing easy association betwee
 3. Create a [user account](https://github.com/amazon-biobank/biobank/wiki/Create-User-Account)
 4. Explore [tutorials](https://github.com/amazon-biobank/biobank/wiki/Tutorials:-Biobank-app)
 
+## Deploy Amazon Biobank
+* [How to setup Amazon Biobank in your local environment](https://github.com/amazon-biobank/biobank/wiki/Deploy-in-local-environment)
+
+
 ## Learn More
 * [Project page](https://sites.usp.br/ubri/amazon-biobank-preserving-the-biodiversity-of-the-amazon-rainforest-with-blockchain/)
 * XXI Brazilian Symposium on Information and Computational Systems Security (2021) - [Article](https://doi.org/10.5753/sbseg_estendido.2021.17342) and [Video](https://youtu.be/PqujKOURc44)
