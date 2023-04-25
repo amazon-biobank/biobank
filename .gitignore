@@ -7,6 +7,8 @@ application/encryptCertificate/credentials/
 blockchain/currency-contract/config.json
 blockchain/biobank-contract/config.json
 blockchain/currency-contract/package-lock.json
+blockchain/bin/*
+blockchain/config/*
 application/package-lock.json
 blockchain/currency-contract/config.json
 encryptCertificate/build
