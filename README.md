@@ -15,7 +15,8 @@ It also provides traceability and auditability, allowing easy association betwee
 4. Explore [tutorials](https://github.com/amazon-biobank/biobank/wiki/Tutorials:-Biobank-app)
 
 ## Deploy Amazon Biobank
-Click [here](https://github.com/amazon-biobank/biobank/wiki/setup-in-local-environment) to setup Amazon Biobank in your local environment
+* [How to setup Amazon Biobank in your local environment](https://github.com/amazon-biobank/biobank/wiki/Deploy-in-local-environment)
+
 
 ## Learn More
 * [Project page](https://sites.usp.br/ubri/amazon-biobank-preserving-the-biodiversity-of-the-amazon-rainforest-with-blockchain/)
