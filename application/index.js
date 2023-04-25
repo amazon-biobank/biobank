@@ -92,7 +92,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-if(process.env.CONTEXT=='microfabric'){
+if(process.env.CONTEXT=='microfabric' | process.env.CONTEXT=='localhost' ){
   console.log("Starting Biobank-App in local development mode")
   initServer()
 }

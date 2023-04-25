@@ -17,3 +17,4 @@ blockchain/currency-contract/package-lock.json
 blockchain/bin/*
 application/package-lock.json
 api/package-lock.json
+e-admin.id

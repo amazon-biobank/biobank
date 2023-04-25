@@ -10,5 +10,6 @@ NC='\033[0m'
 
 cd ../../application/encryptCertificate/src/
 node encryptCredentials.js ~/$WALLET_PATH "${IDENTITY_NAME}.id" teste
-echo -e "${GREEN} generated e-admin.id in" $(pwd) ${NC}
+mv e-admin.id ./../../../
+echo -e "${GREEN} generated e-admin.id ${NC}
 cd -

@@ -22,6 +22,10 @@ class ConnectService {
       this.connectionProfilePath = path.resolve(os.tmpdir(), 'biobank-app', 'remote-connection-larc.json')
       this.walletPath = path.resolve(os.tmpdir(), 'biobank-app')
       this.asLocalhost = false
+    }else if(process.env.CONTEXT=='localhost'){
+      this.connectionProfilePath = path.resolve(__dirname, '..', '..', 'blockchain/test-network/organizations/peerOrganizations/org1.example.com/connection-org1.json');
+      this.walletPath = path.resolve(os.tmpdir(), 'biobank-app')
+      this.asLocalhost = true
     }
     console.log("connection profile path: ", this.connectionProfilePath)
     console.log("wallet path: ", this.walletPath)
