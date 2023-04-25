@@ -9,7 +9,7 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 cd ../../application/encryptCertificate/src/
-node encryptCredentials.js ~/$WALLET_PATH "${IDENTITY_NAME}.id" teste
+node encryptCredentials.js ~/$WALLET_PATH "${IDENTITY_NAME}.id" amazonbiobank
 mv e-admin.id ./../../../
 echo -e "${GREEN} generated e-admin.id ${NC}
 cd -
