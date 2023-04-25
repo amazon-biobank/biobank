@@ -12,7 +12,7 @@ It also provides traceability and auditability, allowing easy association betwee
 1. Install [biobank-app](https://github.com/amazon-biobank/biobank/wiki/Biobank-Application)
 2. Install [Torrente](https://github.com/amazon-biobank/Torrente/wiki/How-to-install-Torrente)
 3. Create a [user account](https://github.com/amazon-biobank/biobank/wiki/Create-User-Account)
-4. Explore [tutorials](https://github.com/amazon-biobank/biobank/wiki/Tutorials)
+4. Explore [tutorials](https://github.com/amazon-biobank/biobank/wiki/Tutorials:-Biobank-app)
 
 ## Learn More
 * [Project page](https://sites.usp.br/ubri/amazon-biobank-preserving-the-biodiversity-of-the-amazon-rainforest-with-blockchain/)
