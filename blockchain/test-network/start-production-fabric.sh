@@ -27,3 +27,5 @@ cd -
 cd ./../../../keyguard/
 ./start-keyguard.sh remote
 cd -
+GREEN='\033[0;32m'; echo -e "${GREEN}Script 'start-production-fabric' has been executed successfully"
+
