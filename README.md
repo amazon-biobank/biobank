@@ -17,6 +17,7 @@ It also provides traceability and auditability, allowing easy association betwee
 
 ## Learn More
 * [Project page](https://sites.usp.br/ubri/amazon-biobank-preserving-the-biodiversity-of-the-amazon-rainforest-with-blockchain/)
+* IEEE Access (2024) - [Article](https://ieeexplore.ieee.org/abstract/document/10400478)
 * Functional & Integrative Genomics (2023) - [Article](https://doi.org/10.1007/s10142-023-01015-1)
 * XXI Brazilian Symposium on Information and Computational Systems Security (2021) - [Article](https://doi.org/10.5753/sbseg_estendido.2021.17342) and [Video](https://youtu.be/PqujKOURc44)
 * [About the performance of the system](https://github.com/amazon-biobank/biobank/wiki/About-the-performance-of-the-system)
